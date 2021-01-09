@@ -14,7 +14,7 @@ namespace RetroFront.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Data Source=%HOMEPATH%\.retrofront\retrofront.db");
+            optionsBuilder.UseSqlite($"Data Source={Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\retrofront.db");
             //optionsBuilder.UseLazyLoadingProxies();
             base.OnConfiguring(optionsBuilder);
         }

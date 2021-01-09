@@ -14,4 +14,15 @@ namespace RetroFront.Models
         public string Theme { get; set; }
         public virtual ICollection<Emulator> Emulators { get; private set; } = new ObservableCollection<Emulator>();
     }
+
+    public class SystemeList
+    {        public List<XMLSystem> systeme { get; set; }
+    }
+    public class XMLSystem
+    {
+        public string name { get; set; }
+        public string fullname { get; set; }
+        public string platform { get; set; }
+        public string theme { get; set; }
+    }
 }
