@@ -8,4 +8,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RetroFront.Models\RetroFront.Models.csproj" />
+  </ItemGroup>
+
 </Project>
