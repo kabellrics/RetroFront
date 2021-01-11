@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="RetroFront.Admin.Dialogs.Views.AddRetroArchCoreView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RetroFront.Admin.Dialogs.Views"
+             mc:Ignorable="d"  d:DesignHeight="1000" d:DesignWidth="1000"
+             Height="400" Width="600"
+             Background="DarkGray">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>                
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Viewbox Grid.Row="0" Stretch="Uniform">
+                <Label Content="Ajout d'un Core Retroarch"></Label>
+            </Viewbox>
+            <Viewbox Grid.Row="1" Stretch="Uniform" HorizontalAlignment="Left">
+                <Label Content="Choississez une plateforme" HorizontalAlignment="Left"></Label>
+            </Viewbox>
+            <ComboBox Grid.Row="2" ItemsSource="{Binding Systemes}"
+                      DisplayMemberPath="Name" SelectedValuePath="{Binding}"
+                      SelectedItem="{Binding Selectedsysteme,Mode=TwoWay}">
+            </ComboBox>
+            <Viewbox Grid.Row="3" Stretch="Uniform" HorizontalAlignment="Left">
+                <Label Content="Choississez un des Cores" HorizontalAlignment="Left"></Label>
+            </Viewbox>
+            <ComboBox Grid.Row="4" ItemsSource="{Binding RetroarchCores}"
+                      DisplayMemberPath="Name" SelectedValuePath="{Binding}"
+                      SelectedItem="{Binding SelectedRetroarchCore,Mode=TwoWay}">
+            </ComboBox>
+            <Viewbox Grid.Row="5" Stretch="Uniform" HorizontalAlignment="Left">
+                <Label Content="Extensions acceptées" HorizontalAlignment="Left"></Label>
+            </Viewbox>
+            <TextBox Grid.Row="6" Text="{Binding Extension,Mode=TwoWay}"></TextBox>
+            <Grid Grid.Row="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Content="Annuler" Command="{Binding CancelCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"></Button>
+                <Button Grid.Column="3" Content="Valider" Command="{Binding YesCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"></Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

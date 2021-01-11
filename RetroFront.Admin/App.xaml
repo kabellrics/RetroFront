@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:RetroFront.Admin"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <local:ViewModelLocator x:Key="Locator"></local:ViewModelLocator>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

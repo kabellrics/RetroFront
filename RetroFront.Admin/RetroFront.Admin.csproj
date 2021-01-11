@@ -17,12 +17,14 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
+    <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\RetroFront.DataAccess\RetroFront.DataAccess.csproj" />
     <ProjectReference Include="..\RetroFront.Models\RetroFront.Models.csproj" />
     <ProjectReference Include="..\RetroFront.Services\RetroFront.Services.csproj" />
+    <ProjectReference Include="..\RetroFront.ViewModels\RetroFront.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

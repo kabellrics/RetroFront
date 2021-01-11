@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RetroFront.Admin.Dialogs;
 using RetroFront.Models;
 using RetroFront.Services.Implementation;
 using RetroFront.Services.Interface;
+using RetroFront.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -21,6 +23,7 @@ namespace RetroFront.Admin
     {
 
         private readonly IHost host;
+        public static IServiceProvider ServiceProvider { get; private set; }
         public App()
         {
             host = Host.CreateDefaultBuilder()
@@ -29,6 +32,7 @@ namespace RetroFront.Admin
                        ConfigureServices(context.Configuration, services);
                    })
                    .Build();
+            ServiceProvider = host.Services;
         }
         private void ConfigureServices(IConfiguration configuration,
         IServiceCollection services)
@@ -37,6 +41,11 @@ namespace RetroFront.Admin
             services.AddSingleton<IFileJSONService, FileJSONService>();
             services.AddSingleton<IMainService, MainService>();
             services.AddSingleton<IRetroarchService, RetroarchService>();
+            services.AddSingleton<IDialogService, DialogService>();
+            services.AddSingleton<IEmulateurService, EmulateurService>();
+
+            services.AddSingleton<MainPageViewModel>();
+
             services.AddTransient(typeof(MainWindow));
         }
         protected override async void OnStartup(StartupEventArgs e)

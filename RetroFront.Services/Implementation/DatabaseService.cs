@@ -42,7 +42,33 @@ namespace RetroFront.Services.Implementation
         {
             return SQLIteContext.Games.Find(id);
         }
-
+        public IEnumerable<Emulator> GetEmulatorsForSysteme(int sysID)
+        {
+            return SQLIteContext.Emulators.Where(x=> x.SystemeID == sysID);
+        }
+        public int GetNbEmulatorForSysteme(int sysID)
+        {
+            return SQLIteContext.Emulators.Where(x => x.SystemeID == sysID).Count();
+        }
+        public int GetNbGamesForPlateforme(int sysID)
+        {
+            var emus = GetEmulatorsForSysteme(sysID);
+            var plateformeGames = SQLIteContext.Games.Where(x=> emus.Select(x=>x.EmulatorID).Contains(x.EmulatorID));
+            return plateformeGames.Count();
+        }
+        public IEnumerable<Game> GetGamesForPlateforme(int sysID)
+        {
+            var emus = GetEmulatorsForSysteme(sysID);
+            return SQLIteContext.Games.Where(x => emus.Select(x => x.EmulatorID).Contains(x.EmulatorID));
+        }
+        public IEnumerable<Game> GetGamesForemulator(int emuID)
+        {
+            return SQLIteContext.Games.Where(x => x.EmulatorID == emuID);
+        }
+        public int GetNbGamesForemulator(int emuID)
+        {
+            return SQLIteContext.Games.Where(x => x.EmulatorID == emuID).Count();
+        }
         public Systeme GetSystemeByName(string shortname)
         {
             return SQLIteContext.Systemes.FirstOrDefault(x => x.Shortname == shortname);

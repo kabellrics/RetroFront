@@ -11,14 +11,12 @@ namespace RetroFront.Services.Implementation
         DatabaseService dbService;
         RetroarchService retroarchService;
         FileJSONService FileJSONService;
-        LocalFileService LocalFileService;
 
         public MainService()
         {
             dbService = new DatabaseService();
             retroarchService = new RetroarchService();
             FileJSONService = new FileJSONService();
-            LocalFileService = new LocalFileService();
             LoadingParam();
         }
 

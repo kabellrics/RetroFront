@@ -14,6 +14,10 @@ namespace RetroFront.Models
         public string Editeur { get; set; }
         public string Dev { get; set; }
         public string Boxart { get; set; }
+        public string Box3dart { get; set; }
+        public string Banner { get; set; }
         public string Fanart { get; set; }
+        public int EmulatorID { get; set; }
+        public virtual Emulator Emulator{ get; set; }
     }
 }

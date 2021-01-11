@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using RetroFront.Models;
+using System.Collections.Generic;
 
 namespace RetroFront.Services.Interface
 {
     public interface IRetroarchService
     {
-        IEnumerable<string> GetInstalledCore();
+        IEnumerable<RetroarchCore> GetInstalledCore();
+        string RetroarchEXEPath();
     }
 }

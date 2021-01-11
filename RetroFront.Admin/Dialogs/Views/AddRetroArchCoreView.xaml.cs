@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,23 +11,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RetroFront.Admin
+namespace RetroFront.Admin.Dialogs.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Logique d'interaction pour AddRetroArchCoreView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AddRetroArchCoreView : UserControl
     {
-        public MainWindow()
+        public AddRetroArchCoreView()
         {
             InitializeComponent();
-        }
-
-        private void WrapPanel_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            var wrap = sender as WrapPanel;
-            wrap.ItemWidth = wrap.ActualWidth;
-            wrap.ItemHeight = wrap.ItemWidth /2;
         }
     }
 }

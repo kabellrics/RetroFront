@@ -3,15 +3,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroFront.Admin", "RetroFront.Admin\RetroFront.Admin.csproj", "{1029DC19-23A9-4EDC-807C-645B6C783955}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroFront.Admin", "RetroFront.Admin\RetroFront.Admin.csproj", "{1029DC19-23A9-4EDC-807C-645B6C783955}"
+	ProjectSection(ProjectDependencies) = postProject
+		{012F7445-CCBD-4623-A962-3D929B292893} = {012F7445-CCBD-4623-A962-3D929B292893}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroFront.Models", "RetroFront.Models\RetroFront.Models.csproj", "{A7BAA70E-060F-4550-A426-9BF841979503}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroFront.Models", "RetroFront.Models\RetroFront.Models.csproj", "{A7BAA70E-060F-4550-A426-9BF841979503}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroFront.DataAccess", "RetroFront.DataAccess\RetroFront.DataAccess.csproj", "{E39C03D6-9B20-45D7-8C75-6C6EC7912D0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroFront.DataAccess", "RetroFront.DataAccess\RetroFront.DataAccess.csproj", "{E39C03D6-9B20-45D7-8C75-6C6EC7912D0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroFront.Services", "RetroFront.Services\RetroFront.Services.csproj", "{2E62DB08-3D12-47F1-9BD3-9081C5860B76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroFront.Services", "RetroFront.Services\RetroFront.Services.csproj", "{2E62DB08-3D12-47F1-9BD3-9081C5860B76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestService", "TestService\TestService.csproj", "{75F0FF1C-D7D5-4680-B7BA-41C72DB8D483}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestService", "TestService\TestService.csproj", "{75F0FF1C-D7D5-4680-B7BA-41C72DB8D483}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroFront.ViewModels", "RetroFront.ViewModels\RetroFront.ViewModels.csproj", "{012F7445-CCBD-4623-A962-3D929B292893}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2E62DB08-3D12-47F1-9BD3-9081C5860B76} = {2E62DB08-3D12-47F1-9BD3-9081C5860B76}
+		{A7BAA70E-060F-4550-A426-9BF841979503} = {A7BAA70E-060F-4550-A426-9BF841979503}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +48,10 @@ Global
 		{75F0FF1C-D7D5-4680-B7BA-41C72DB8D483}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75F0FF1C-D7D5-4680-B7BA-41C72DB8D483}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75F0FF1C-D7D5-4680-B7BA-41C72DB8D483}.Release|Any CPU.Build.0 = Release|Any CPU
+		{012F7445-CCBD-4623-A962-3D929B292893}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{012F7445-CCBD-4623-A962-3D929B292893}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{012F7445-CCBD-4623-A962-3D929B292893}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{012F7445-CCBD-4623-A962-3D929B292893}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

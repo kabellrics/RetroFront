@@ -9,9 +9,11 @@ namespace RetroFront.Models
     {
         public int EmulatorID { get; set; }
         public string Name { get; set; }
-        public string Comand { get; set; }
+        public string Chemin { get; set; }
+        public string Command { get; set; }
         public string Extension { get; set; }
 
+        public int SystemeID { get; set; }
         public virtual Systeme Systeme { get; set; }
         public virtual ICollection<Game> Games { get; private set; } = new ObservableCollection<Game>();
     }

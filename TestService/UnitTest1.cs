@@ -9,7 +9,6 @@ namespace TestService
         [TestMethod]
         public void TestMethod1()
         {
-            var LocalfileService = new LocalFileService();
             var JsonReader = new FileJSONService();
             var syslist = JsonReader.GetAllSysFromJSON();
             Assert.AreNotEqual(string.Empty, syslist);
@@ -21,6 +20,13 @@ namespace TestService
             var mainservice = new MainService();
             var dbservice = new DatabaseService();
             Assert.AreEqual(43,dbservice.GetSystemes());
+        }
+        [TestMethod]
+        public void TestMethod3()
+        {
+            var RetroarchService = new RetroarchService();
+            var listcore = RetroarchService.GetInstalledCore();
+            Assert.AreNotEqual(null, listcore);
         }
     }
 }

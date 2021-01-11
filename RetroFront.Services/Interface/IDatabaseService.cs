@@ -11,6 +11,12 @@ namespace RetroFront.Services.Interface
         Emulator GetEmulator(int id);
         Emulator GetEmulatorByName(string name);
         IEnumerable<Emulator> GetEmulators();
+        IEnumerable<Emulator> GetEmulatorsForSysteme(int sysID);
+        IEnumerable<Game> GetGamesForemulator(int emuID);
+        int GetNbEmulatorForSysteme(int sysID);
+        int GetNbGamesForemulator(int emuID);
+        int GetNbGamesForPlateforme(int sysID);
+        IEnumerable<Game> GetGamesForPlateforme(int sysID);
         Game GetGame(int id);
         Game GetGameByName(string path);
         IEnumerable<Game> GetGames();

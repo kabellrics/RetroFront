@@ -1,12 +1,170 @@
 ﻿<Window x:Class="RetroFront.Admin.MainWindow"
+        x:Name="myWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RetroFront.Admin"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        WindowStyle="SingleBorderWindow"
+        DataContext="{Binding Source={StaticResource Locator}, Path=MainPageVM}"
+        Title="RetroFront Admin">
     <Grid>
-
+        <DockPanel LastChildFill="True">
+            <Menu IsMainMenu="True" DockPanel.Dock="Top">
+                <MenuItem Header="Menu">
+                    <MenuItem Header="Ouvrir RetroArch"></MenuItem>
+                    <MenuItem Header="Ouvrir RetroFront"></MenuItem>
+                    <MenuItem Header="Quitter"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Plateforme" />
+                <MenuItem Header="Emulateur">
+                    <MenuItem Header="Ajouter un Core RetroArch" Command="{Binding AddCoreCommand}"></MenuItem>
+                    <MenuItem Header="Créer un émulateur" Command="{Binding AddEmuCommand}"></MenuItem>
+                    <MenuItem Header="Ajouter explorer.exe pour ce système"
+                              ItemsSource="{Binding Systemes}"
+                              DisplayMemberPath="Name">
+                        <MenuItem.ItemContainerStyle>
+                            <Style TargetType="MenuItem">
+                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem},Path=DataContext.AddExplorerCommand}"></Setter>
+                                <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                            </Style>
+                        </MenuItem.ItemContainerStyle>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Jeux">
+                    <!--<MenuItem Header="Ajouter plusieurs pour cet emulateur" ItemsSource="{Binding FullEmulators}" DisplayMemberPath="Name"></MenuItem>-->
+                    <MenuItem Header="Ajouter un jeux pour cet emulateur" ItemsSource="{Binding FullEmulators}" DisplayMemberPath="Name">
+                        <MenuItem.ItemContainerStyle>
+                            <Style TargetType="MenuItem">
+                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=MenuItem},Path=DataContext.AddSingleGameCommand}"></Setter>
+                                <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                            </Style>
+                        </MenuItem.ItemContainerStyle>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Thème" />
+                <MenuItem Header="Paramètres" />
+            </Menu>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1" VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="8*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" Grid.Row="0">
+                        <Label Content="Liste des Plateformes"></Label>
+                    </Viewbox>
+                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Systemes}" Grid.Row="1"
+                                  HorizontalContentAlignment="Stretch"
+                                  IsSynchronizedWithCurrentItem="true"
+                              SelectedItem="{Binding SelectedSystemeViewModel,Mode=TwoWay}"
+                                  Margin="20">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="5*"></RowDefinition>
+                                            <RowDefinition Height="1*"></RowDefinition>
+                                            <RowDefinition Height="1*"></RowDefinition>
+                                            <RowDefinition Height="1*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Viewbox Grid.Row="0" Stretch="Uniform">
+                                            <Label Content="{Binding Name}"></Label>
+                                        </Viewbox>
+                                        <Viewbox Grid.Row="1" Stretch="Uniform">
+                                            <Label Content="{Binding Theme}"></Label>
+                                        </Viewbox>
+                                        <Viewbox Grid.Row="2" Stretch="Uniform">
+                                            <Label Content="{Binding NBEmu}"></Label>
+                                        </Viewbox>
+                                        <Viewbox Grid.Row="3" Stretch="Uniform">
+                                            <Label Content="{Binding NBGame}"></Label>
+                                        </Viewbox>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Vertical" SizeChanged="WrapPanel_SizeChanged"></WrapPanel>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                        </ListView>
+                </Grid>
+                <Grid Grid.Column="2" VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="8*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" Grid.Row="0">
+                        <Label Content="Liste des Emulateurs"></Label>
+                    </Viewbox>
+                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Emulators}" Grid.Row="1"
+                                  HorizontalContentAlignment="Stretch"
+                                  IsSynchronizedWithCurrentItem="true"
+                              SelectedItem="{Binding SelectedEmulator,Mode=TwoWay}"
+                                  Margin="20">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="3*"></RowDefinition>
+                                        <RowDefinition Height="1*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Viewbox Grid.Row="0" Stretch="Uniform">
+                                        <Label Content="{Binding Name}"></Label>
+                                    </Viewbox>
+                                    <Viewbox Grid.Row="1" Stretch="Uniform">
+                                        <Label Content="{Binding NBGame}"></Label>
+                                    </Viewbox>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Vertical" SizeChanged="WrapPanel_SizeChanged"></WrapPanel>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                    </ListView>
+                </Grid>
+                <Grid Grid.Column="3" VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="8*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" Grid.Row="0">
+                        <Label Content="Liste des Jeux"></Label>
+                    </Viewbox>
+                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Games}" Grid.Row="1"
+                                  HorizontalContentAlignment="Stretch"
+                                  IsSynchronizedWithCurrentItem="true"
+                                  Margin="20">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Viewbox Stretch="Uniform">
+                                        <Label Content="{Binding Name}"></Label>
+                                    </Viewbox>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Vertical" SizeChanged="WrapPanel_SizeChanged"></WrapPanel>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                    </ListView>
+                </Grid>
+            </Grid>
+        </DockPanel>
     </Grid>
 </Window>

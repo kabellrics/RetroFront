@@ -17,6 +17,8 @@ namespace RetroFront.Services.Implementation
         public AppSettings appSettings { get; set; }
         public FileJSONService()
         {
+            System.IO.Directory.CreateDirectory($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront");
+            System.IO.Directory.CreateDirectory($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\themes"); 
             var jsonString = File.ReadAllText($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\AppSettings.json");
             appSettings = JsonConvert.DeserializeObject<AppSettings>(jsonString);
         }
