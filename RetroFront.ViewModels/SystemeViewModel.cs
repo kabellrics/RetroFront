@@ -23,10 +23,16 @@ namespace RetroFront.ViewModels
             {
                 Systeme = systeme;
                 Name = Systeme.Name;
-                Theme = Systeme.Theme;               
+                Theme = Systeme.Theme;
+                Emulators = new ObservableCollection<EmulatorViewModel>();
             }
         }
-
+        private ObservableCollection<EmulatorViewModel> _emulators;
+        public ObservableCollection<EmulatorViewModel> Emulators
+        {
+            get { return _emulators; }
+            set { _emulators = value;RaisePropertyChanged(); }
+        }
         private string _name;
         public string Name
         {

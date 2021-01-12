@@ -9,12 +9,13 @@ namespace RetroFront.Services.Implementation
 {
     public class RetroarchService : IRetroarchService
     {
-        private const string RetroarchPath = @"C:\Users\yflec\AppData\Roaming\RetroArch";
-        private const string RetroarchCMD = "%RetroarchPath% -L %RetroArchCore% %ROM_RAW%";
+        private FileJSONService FileJSONService = new FileJSONService();
+        //private const string RetroarchPath = @"C:\Users\yflec\AppData\Roaming\RetroArch";
+        //private const string RetroarchCMD = "%RetroarchPath% -L %RetroArchCore% %ROM_RAW%";
         //private const string RetroarchFile = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.emulationstation";
         public IEnumerable<RetroarchCore> GetInstalledCore()
         {
-            var cores = System.IO.Directory.EnumerateFiles(System.IO.Path.Combine(RetroarchPath, "cores"));
+            var cores = System.IO.Directory.EnumerateFiles(System.IO.Path.Combine(FileJSONService.appSettings.RetroarchPath, "cores"));
             TextInfo textInfo = new CultureInfo("fr-FR", false).TextInfo;
             foreach (var core in cores)
             {
@@ -27,7 +28,7 @@ namespace RetroFront.Services.Implementation
             }
         }
         public string RetroarchEXEPath()
-        { return $"{RetroarchPath}\retroarch.exe"; }
+        { return $"{FileJSONService.appSettings.RetroarchPath}\retroarch.exe"; }
 
     }
 }

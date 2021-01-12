@@ -100,7 +100,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             emu.Chemin = Chemin;
             emu.Command = Command;
             emu.Extension = Extension;
-            emu.Name = Name;
+            emu.Name = $"{Selectedsysteme.Name} - {Name}";
             emu.SystemeID = Selectedsysteme.SystemeID;
             return JsonConvert.SerializeObject(emu);
         }

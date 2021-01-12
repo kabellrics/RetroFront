@@ -17,10 +17,27 @@ namespace RetroFront.Services.Implementation
         public AppSettings appSettings { get; set; }
         public FileJSONService()
         {
-            System.IO.Directory.CreateDirectory($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront");
-            System.IO.Directory.CreateDirectory($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\themes"); 
-            var jsonString = File.ReadAllText($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\AppSettings.json");
-            appSettings = JsonConvert.DeserializeObject<AppSettings>(jsonString);
+            //System.IO.Directory.CreateDirectory($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront");
+            //System.IO.Directory.CreateDirectory($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\themes");
+            if (File.Exists($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\AppSettings.json"))
+            {
+                var jsonString = File.ReadAllText($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\AppSettings.json");
+                appSettings = JsonConvert.DeserializeObject<AppSettings>(jsonString);
+            }
+            else
+            {
+                appSettings = new AppSettings();
+                appSettings.CurrentTheme = "simple";
+                appSettings.AppSettingsFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront";
+                appSettings.AppSettingsLocation = $"{appSettings.AppSettingsFolder}\\AppSettings.json";
+                appSettings.RetroarchPath = @"";
+                appSettings.RetroarchCMD = "%RetroarchPath% -L %RetroArchCore% %ROM_RAW%";
+                var jsonApp =  JsonConvert.SerializeObject(appSettings);
+                File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
+            }
+            System.IO.Directory.CreateDirectory(appSettings.AppSettingsFolder);
+            System.IO.Directory.CreateDirectory($"{appSettings.AppSettingsFolder}\\themes");
+
         }
         public IEnumerable<Systeme> GetAllSysFromJSON()
         {

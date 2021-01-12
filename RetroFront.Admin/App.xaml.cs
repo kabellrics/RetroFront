@@ -43,6 +43,7 @@ namespace RetroFront.Admin
             services.AddSingleton<IRetroarchService, RetroarchService>();
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<IEmulateurService, EmulateurService>();
+            services.AddSingleton<IGameService, GameService>();
 
             services.AddSingleton<MainPageViewModel>();
 

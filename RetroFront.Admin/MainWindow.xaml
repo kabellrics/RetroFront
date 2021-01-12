@@ -48,7 +48,7 @@
                 <MenuItem Header="Thème" />
                 <MenuItem Header="Paramètres" />
             </Menu>
-            <Grid>
+            <Grid DataContext="{Binding Systemes}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -64,11 +64,11 @@
                     <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" Grid.Row="0">
                         <Label Content="Liste des Plateformes"></Label>
                     </Viewbox>
-                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Systemes}" Grid.Row="1"
+                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding}" Grid.Row="1"
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
-                              SelectedItem="{Binding SelectedSystemeViewModel,Mode=TwoWay}"
                                   Margin="20">
+                        <!--SelectedItem="{Binding SelectedSystemeViewModel,Mode=TwoWay}"-->
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
@@ -105,14 +105,26 @@
                         <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="8*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" Grid.Row="0">
-                        <Label Content="Liste des Emulateurs"></Label>
-                    </Viewbox>
-                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Emulators}" Grid.Row="1"
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Viewbox Stretch="Uniform" Grid.Row="0">
+                            <Label Content="Liste des émulateurs pour"></Label>
+                        </Viewbox>
+                        <Viewbox Stretch="Uniform" Grid.Row="1">
+                            <Label Content="{Binding Path=Name}"></Label>
+                        </Viewbox>
+                    </Grid>
+                    <!--<Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" Grid.Row="0">
+                        <Label Content="{Binding Path=Name}"></Label>
+                    </Viewbox>-->
+                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Path=Emulators}" Grid.Row="1"
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
-                              SelectedItem="{Binding SelectedEmulator,Mode=TwoWay}"
                                   Margin="20">
+                        <!--SelectedItem="{Binding SelectedEmulator,Mode=TwoWay}"-->
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -141,10 +153,22 @@
                         <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="8*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" Grid.Row="0">
-                        <Label Content="Liste des Jeux"></Label>
-                    </Viewbox>
-                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Games}" Grid.Row="1"
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Viewbox Stretch="Uniform" Grid.Row="0">
+                            <Label Content="Liste des Jeux pour"></Label>
+                        </Viewbox>
+                        <Viewbox Stretch="Uniform" Grid.Row="1">
+                            <Label Content="{Binding Path=Emulators/Name}"></Label>
+                        </Viewbox>
+                    </Grid>
+                    <!--<Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" Grid.Row="0">
+                        <Label Content="{Binding Path=Emulators/Name}"></Label>
+                    </Viewbox>-->
+                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Path=Emulators/Games}" Grid.Row="1"
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
                                   Margin="20">

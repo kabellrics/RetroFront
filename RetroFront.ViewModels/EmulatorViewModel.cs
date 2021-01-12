@@ -2,6 +2,7 @@
 using RetroFront.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace RetroFront.ViewModels
@@ -27,11 +28,18 @@ namespace RetroFront.ViewModels
             set { _nBGame = value; RaisePropertyChanged(); }
             //get { return $"{Systeme?.Emulators.SelectMany(x => x.Games).Count()} Jeux"; }
         }
+        private ObservableCollection<GameViewModel> _games;
+        public ObservableCollection<GameViewModel> Games
+        {
+            get { return _games; }
+            set { _games = value;RaisePropertyChanged(); }
+        }
         public EmulatorViewModel(Emulator emulator)
         {
             Emulator = emulator;
             Name = Emulator.Name;
             NBGame = $"{Emulator?.Games.Count} Jeux";
+            Games = new ObservableCollection<GameViewModel>();
         }
     }
 }

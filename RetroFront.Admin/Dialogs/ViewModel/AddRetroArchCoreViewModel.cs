@@ -97,7 +97,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         private string GetJsonEmu()
         {
             Emulator emu = new Emulator();
-            emu.Name = $"Retroarch {SelectedRetroarchCore.Name}";
+            emu.Name = $"{Selectedsysteme.Name} - Retroarch {SelectedRetroarchCore.Name}";
             emu.Extension = Extension;
             emu.SystemeID = Selectedsysteme.SystemeID;
             emu.Chemin = _retroarchService.RetroarchEXEPath();

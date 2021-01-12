@@ -7,5 +7,12 @@ namespace RetroFront.Models
     public class AppSettings
     {
         public string CurrentTheme { get; set; }
+        public string ScreenScraperID { get; set; }
+        public string ScreenScraperPWD { get; set; }
+        public string AppSettingsLocation { get; set; }
+        public string AppSettingsFolder { get; set; }
+        public string RetroarchPath { get; set; }
+        public string RetroarchCMD { get; set; }
+
     }
 }

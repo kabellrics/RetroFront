@@ -20,6 +20,7 @@ namespace RetroFront.ViewModels
         private IRetroarchService _retroarchService;
         private IEmulateurService _emulateurService;
         private IDialogService _dialogService;
+        private IGameService _gameService;
         private ObservableCollection<SystemeViewModel> _systemes;
         public ObservableCollection<SystemeViewModel> Systemes
         {
@@ -30,7 +31,7 @@ namespace RetroFront.ViewModels
         public SystemeViewModel SelectedSystemeViewModel
         {
             get { return _selectedsystemeViewModel; }
-            set { _selectedsystemeViewModel = value;RaisePropertyChanged(); LoadEmulator(); }
+            set { _selectedsystemeViewModel = value;RaisePropertyChanged(); /*LoadEmulator();*/ }
         }
         private ObservableCollection<EmulatorViewModel> _emulators;
         public ObservableCollection<EmulatorViewModel> Emulators
@@ -48,7 +49,7 @@ namespace RetroFront.ViewModels
         public EmulatorViewModel SelectedEmulator
         {
             get { return _selectedEmulator; }
-            set { _selectedEmulator = value;RaisePropertyChanged(); LoadGames(); }
+            set { _selectedEmulator = value;RaisePropertyChanged();/* LoadGames();*/ }
         }
         private ObservableCollection<GameViewModel> _games;
         public ObservableCollection<GameViewModel> Games
@@ -97,7 +98,7 @@ namespace RetroFront.ViewModels
             }
         }
 
-        public MainPageViewModel(IDatabaseService databaseService, IFileJSONService fileJSONService, IMainService mainService, IRetroarchService retroarchService,IEmulateurService emulateurService, IDialogService dialogService)
+        public MainPageViewModel(IDatabaseService databaseService, IFileJSONService fileJSONService, IMainService mainService, IRetroarchService retroarchService,IEmulateurService emulateurService, IDialogService dialogService, IGameService gameService)
         {
             _databaseService = databaseService;
             _fileJSONService = fileJSONService;
@@ -105,49 +106,33 @@ namespace RetroFront.ViewModels
             _retroarchService = retroarchService;
             _emulateurService = emulateurService;
             _dialogService = dialogService;
-            FullEmulators = new ObservableCollection<EmulatorViewModel>();
-            var emus = _databaseService.GetEmulators();
-            foreach(var emu in emus)
-            {
-                FullEmulators.Add(new EmulatorViewModel(emu));
-            }
+            _gameService = gameService;
+            //ReloadFullEmulators();
             ReloadData();
         }
+
         private void ReloadData()
         {
             Systemes = new ObservableCollection<SystemeViewModel>();
-
             foreach (var sys in _databaseService.GetSystemes().OrderBy(x=> x.Name))
             {
                 var sysvm = new SystemeViewModel(sys);
                 sysvm.NBEmu = $"{_databaseService.GetNbEmulatorForSysteme(sys.SystemeID)} Emulateurs";
                 sysvm.NBGame = $"{_databaseService.GetNbGamesForPlateforme(sys.SystemeID)} Jeux";
-                //sysvm.NBGame = $"{Systeme?.Emulators.SelectMany(x => x.Games).Count()} Jeux";
-                Systemes.Add(sysvm);
-            }
-        }
-        private void LoadEmulator()
-        {
-            if (SelectedSystemeViewModel != null)
-            {
-                Emulators = new ObservableCollection<EmulatorViewModel>();
-                foreach (var emu in _databaseService.GetEmulatorsForSysteme(SelectedSystemeViewModel.Systeme.SystemeID).OrderBy(x => x.Name))
+                var emus = _databaseService.GetEmulatorsForSysteme(sys.SystemeID);
+                foreach(var emu in emus.OrderBy(x=>x.Name))
                 {
                     var emuvm = new EmulatorViewModel(emu);
                     emuvm.NBGame = $"{_databaseService.GetNbGamesForemulator(emu.EmulatorID)} Jeux";
-                    Emulators.Add(emuvm);
-                } 
-            }
-        }
-        private void LoadGames()
-        {
-            if(SelectedEmulator != null)
-            {
-                Games = new ObservableCollection<GameViewModel>();
-                foreach(var game in _databaseService.GetGamesForemulator(SelectedEmulator.Emulator.EmulatorID).OrderBy(XMLSystem=>XMLSystem.Name))
-                {
-                    Games.Add(new GameViewModel(game));
+                    var games = _databaseService.GetGamesForemulator(emu.EmulatorID);
+                    foreach(var game in games)
+                    {
+                        emuvm.Games.Add(new GameViewModel(game));
+                    }
+                    sysvm.Emulators.Add(emuvm);
                 }
+                //sysvm.NBGame = $"{Systeme?.Emulators.SelectMany(x => x.Games).Count()} Jeux";
+                Systemes.Add(sysvm);
             }
         }
         private void AddCore()
@@ -157,8 +142,8 @@ namespace RetroFront.ViewModels
             {
                 var newemu = JsonConvert.DeserializeObject<Emulator>(emujson);
                 _databaseService.AddEmulator(newemu);
-                ReloadData();
             }
+            //ReloadFullEmulators();
         }
         private void AddEmu()
         {
@@ -167,40 +152,22 @@ namespace RetroFront.ViewModels
             {
                 var newemu = JsonConvert.DeserializeObject<Emulator>(emujson);
                 _databaseService.AddEmulator(newemu);
-                ReloadData(); 
+                //ReloadFullEmulators(); 
             }
         }
         private void AddExplorer(SystemeViewModel obj)
         {
-            Emulator emuexe = new Emulator();
-            emuexe.Name = "Explorer.exe";
-            emuexe.Chemin = @"C:\Windows\explorer.exe";
-            emuexe.Command = "%ROMPATH% --fullscreen";
-            emuexe.SystemeID = obj.Systeme.SystemeID;
-            emuexe.Extension = ".exe .EXE .lnk .url";
-            _databaseService.AddEmulator(emuexe);
+            _databaseService.AddEmulator(_emulateurService.AddExplorer(obj.Systeme));
             ReloadData();
         }
         private void AddSingleGame(EmulatorViewModel obj)
         {
-            var gamefiles = _dialogService.OpenMultiFileDialog(FormatExtension(obj));
+            var gamefiles = _dialogService.OpenMultiFileDialog(_emulateurService.FormatExtension(obj.Emulator));
             foreach (var gamefile in gamefiles)
             {
-                Game game = new Game();
-                game.Path = gamefile;
-                game.Name = System.IO.Path.GetFileNameWithoutExtension(gamefile);
-                game.EmulatorID = obj.Emulator.EmulatorID;
-                _databaseService.AddGame(game); 
+                _databaseService.AddGame(_gameService.CreateGame(gamefile, obj.Emulator));
             }
         }
 
-        private string FormatExtension(EmulatorViewModel ext)
-        {
-            //. Exemple : \"Fichiers image (*.bmp, *.jpg)|*.bmp;*.jpg|Tous les fichiers (*.*)|*.*\"'
-            string str = ext.Emulator.Extension.Replace(".","*.");
-            var extlist = str.Split(" ").ToList();
-            var exext = $"({string.Join(", ", extlist)})|{string.Join("; ", extlist)}";
-            return $"Fichier pour {ext.Name} {exext} ";
-        }
     }
 }
