@@ -15,6 +15,12 @@
         <DataTemplate DataType="{x:Type vms:AddRetroArchCoreViewModel}">
             <vm:AddRetroArchCoreView></vm:AddRetroArchCoreView>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:SystemeDetailViewModel}">
+            <vm:SystemeDetailView></vm:SystemeDetailView>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:GameDetailViewModel}">
+            <vm:GameDetailView></vm:GameDetailView>
+        </DataTemplate>
     </Window.Resources>
     <ContentPresenter x:Name="ContentPresenter" Content="{Binding}"></ContentPresenter>
 </Window>

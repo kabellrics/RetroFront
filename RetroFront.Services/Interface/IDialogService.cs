@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RetroFront.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,5 +15,7 @@ namespace RetroFront.Services.Interface
         IEnumerable<string> OpenMultiFileDialog(string filter);
         string CreateJsonEmu();
         string CreateRetroarchCore();
+        bool ShowSystemeDetail(Systeme sys);
+        bool ShowGameDetail(Game game);
     }
 }

@@ -21,6 +21,19 @@ namespace RetroFront.ViewModels
         private IEmulateurService _emulateurService;
         private IDialogService _dialogService;
         private IGameService _gameService;
+        private IThemeService _themeService;
+        private Theme _currentTheme;
+        public Theme CurrentTheme
+        {
+            get { return _currentTheme; }
+            set { _currentTheme = value;RaisePropertyChanged(); }
+        }
+        private ObservableCollection<Theme> _themes;
+        public ObservableCollection<Theme> Themes
+        {
+            get { return _themes; }
+            set { _themes = value;RaisePropertyChanged(); }
+        }
         private ObservableCollection<SystemeViewModel> _systemes;
         public ObservableCollection<SystemeViewModel> Systemes
         {
@@ -62,6 +75,8 @@ namespace RetroFront.ViewModels
         private ICommand _AddCoreCommand;
         private ICommand _AddExplorerCommand;
         private ICommand _AddSingleGameCommand;
+        private ICommand _ShowDetailSystemeGameCommand;
+        private ICommand _ShowDetailGameGameCommand;
         public ICommand ReloadCommand
         {
             get
@@ -97,8 +112,22 @@ namespace RetroFront.ViewModels
                 return _AddSingleGameCommand ?? (_AddSingleGameCommand = new RelayCommand<EmulatorViewModel>(AddSingleGame));
             }
         }
+        public ICommand ShowDetailSystemeGameCommand
+        {
+            get
+            {
+                return _ShowDetailSystemeGameCommand ?? (_ShowDetailSystemeGameCommand = new RelayCommand<SystemeViewModel>(ShowDetailSystemeGame));
+            }
+        } 
+        public ICommand ShowDetailGameGameCommand
+        {
+            get
+            {
+                return _ShowDetailGameGameCommand ?? (_ShowDetailGameGameCommand = new RelayCommand<GameViewModel>(ShowDetailGameGame));
+            }
+        }
 
-        public MainPageViewModel(IDatabaseService databaseService, IFileJSONService fileJSONService, IMainService mainService, IRetroarchService retroarchService,IEmulateurService emulateurService, IDialogService dialogService, IGameService gameService)
+        public MainPageViewModel(IDatabaseService databaseService, IFileJSONService fileJSONService, IMainService mainService, IRetroarchService retroarchService,IEmulateurService emulateurService, IDialogService dialogService, IGameService gameService, IThemeService themeService)
         {
             _databaseService = databaseService;
             _fileJSONService = fileJSONService;
@@ -107,10 +136,20 @@ namespace RetroFront.ViewModels
             _emulateurService = emulateurService;
             _dialogService = dialogService;
             _gameService = gameService;
-            //ReloadFullEmulators();
+            _themeService = themeService;
+            Themes = new ObservableCollection<Theme>(_themeService.GetInstalledTheme());
+            CurrentTheme = _themeService.GetCurrentTheme();
             ReloadData();
         }
-
+        private void ReloadFullEmulators()
+        {
+            FullEmulators = new ObservableCollection<EmulatorViewModel>();
+            var emus = _databaseService.GetEmulators();
+            foreach(var emu in emus)
+            {
+                FullEmulators.Add(new EmulatorViewModel(emu));
+            }
+        }
         private void ReloadData()
         {
             Systemes = new ObservableCollection<SystemeViewModel>();
@@ -131,9 +170,9 @@ namespace RetroFront.ViewModels
                     }
                     sysvm.Emulators.Add(emuvm);
                 }
-                //sysvm.NBGame = $"{Systeme?.Emulators.SelectMany(x => x.Games).Count()} Jeux";
                 Systemes.Add(sysvm);
             }
+            ReloadFullEmulators();
         }
         private void AddCore()
         {
@@ -142,8 +181,8 @@ namespace RetroFront.ViewModels
             {
                 var newemu = JsonConvert.DeserializeObject<Emulator>(emujson);
                 _databaseService.AddEmulator(newemu);
+                ReloadFullEmulators();
             }
-            //ReloadFullEmulators();
         }
         private void AddEmu()
         {
@@ -152,13 +191,14 @@ namespace RetroFront.ViewModels
             {
                 var newemu = JsonConvert.DeserializeObject<Emulator>(emujson);
                 _databaseService.AddEmulator(newemu);
-                //ReloadFullEmulators(); 
+                ReloadFullEmulators();
             }
         }
         private void AddExplorer(SystemeViewModel obj)
         {
             _databaseService.AddEmulator(_emulateurService.AddExplorer(obj.Systeme));
-            ReloadData();
+
+            ReloadFullEmulators();
         }
         private void AddSingleGame(EmulatorViewModel obj)
         {
@@ -168,6 +208,13 @@ namespace RetroFront.ViewModels
                 _databaseService.AddGame(_gameService.CreateGame(gamefile, obj.Emulator));
             }
         }
-
+        private void ShowDetailSystemeGame(SystemeViewModel sys)
+        {
+            _dialogService.ShowSystemeDetail(sys.Systeme);
+        }
+        private void ShowDetailGameGame(GameViewModel obj)
+        {
+            _dialogService.ShowGameDetail(obj.Game);
+        }
     }
 }

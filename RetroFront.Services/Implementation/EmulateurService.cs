@@ -38,5 +38,4 @@ namespace RetroFront.Services.Implementation
             return $"Fichier pour {ext.Name} {exext} ";
         }
     }
-    }
 }

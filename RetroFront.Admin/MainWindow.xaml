@@ -9,6 +9,7 @@
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
         WindowStyle="SingleBorderWindow"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainPageVM}"
         Title="RetroFront Admin">
     <Grid>
@@ -19,7 +20,8 @@
                     <MenuItem Header="Ouvrir RetroFront"></MenuItem>
                     <MenuItem Header="Quitter"></MenuItem>
                 </MenuItem>
-                <MenuItem Header="Plateforme" />
+                <MenuItem Header="Plateforme">
+                </MenuItem>
                 <MenuItem Header="Emulateur">
                     <MenuItem Header="Ajouter un Core RetroArch" Command="{Binding AddCoreCommand}"></MenuItem>
                     <MenuItem Header="Créer un émulateur" Command="{Binding AddEmuCommand}"></MenuItem>
@@ -45,7 +47,9 @@
                         </MenuItem.ItemContainerStyle>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Thème" />
+                <MenuItem Header="Thème">
+                        <MenuItem Header="Themes Installés" ItemsSource="{Binding Themes}" DisplayMemberPath="Name"></MenuItem>
+                </MenuItem>
                 <MenuItem Header="Paramètres" />
             </Menu>
             <Grid DataContext="{Binding Systemes}">
@@ -67,9 +71,15 @@
                     <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding}" Grid.Row="1"
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
-                                  Margin="20">
-                        <!--SelectedItem="{Binding SelectedSystemeViewModel,Mode=TwoWay}"-->
-                            <ListView.ItemTemplate>
+                                  Margin="20"
+                        SelectedItem="{Binding SelectedSystemeViewModel,Mode=TwoWay}">
+                        <!--<i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction
+                                   Command="{Binding ShowDetailSystemeGameCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>-->
+                        <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
                                         <Grid.RowDefinitions>
@@ -79,8 +89,10 @@
                                             <RowDefinition Height="1*"></RowDefinition>
                                         </Grid.RowDefinitions>
                                         <Viewbox Grid.Row="0" Stretch="Uniform">
+                                        <Button Command="{Binding DataContext.ShowDetailSystemeGameCommand, ElementName=myWindow}" CommandParameter="{Binding}">
                                             <Label Content="{Binding Name}"></Label>
-                                        </Viewbox>
+                                        </Button>
+                                    </Viewbox>
                                         <Viewbox Grid.Row="1" Stretch="Uniform">
                                             <Label Content="{Binding Theme}"></Label>
                                         </Viewbox>
@@ -91,7 +103,7 @@
                                             <Label Content="{Binding NBGame}"></Label>
                                         </Viewbox>
                                     </Grid>
-                                </DataTemplate>
+                            </DataTemplate>
                             </ListView.ItemTemplate>
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -174,11 +186,16 @@
                                   Margin="20">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
-                                    <Viewbox Stretch="Uniform">
-                                        <Label Content="{Binding Name}"></Label>
-                                    </Viewbox>
-                                </Grid>
+                                <Button Command="{Binding DataContext.ShowDetailGameGameCommand, ElementName=myWindow}" CommandParameter="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Source="{Binding Boxart}"></Image>
+                                        <TextBlock Grid.Column="1" TextWrapping="WrapWithOverflow" Text="{Binding Name}"></TextBlock>
+                                    </Grid>
+                                </Button>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                         <ListView.ItemsPanel>

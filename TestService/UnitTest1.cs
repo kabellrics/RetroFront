@@ -28,5 +28,12 @@ namespace TestService
             var listcore = RetroarchService.GetInstalledCore();
             Assert.AreNotEqual(null, listcore);
         }
+        [TestMethod]
+        public void TestMethod4()
+        {
+            var ThemeService = new ThemeService();
+            var listcore = ThemeService.GetLogoForTheme("gba","simple");
+            Assert.AreNotEqual(null, listcore);
+        }
     }
 }

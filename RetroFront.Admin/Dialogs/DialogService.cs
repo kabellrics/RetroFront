@@ -1,7 +1,9 @@
 ﻿using Microsoft.Win32;
 using RetroFront.Admin.Dialogs.ViewModel;
 using RetroFront.Admin.Dialogs.Views;
+using RetroFront.Models;
 using RetroFront.Services.Interface;
+using RetroFront.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -86,6 +88,21 @@ namespace RetroFront.Admin.Dialogs
                 return vm.ResultJson;
             }
             return null;
+        }
+        public bool ShowSystemeDetail(Systeme sys)
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new SystemeDetailViewModel(sys);
+            modalWindow.DataContext = vm;
+            return modalWindow.ShowDialog().Value;
+        }
+
+        public bool ShowGameDetail(Game game)
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new GameDetailViewModel(game);
+            modalWindow.DataContext = vm;
+            return modalWindow.ShowDialog().Value;
         }
     }
 }

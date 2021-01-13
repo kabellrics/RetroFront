@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using RetroFront.Models;
+using RetroFront.Services.Interface;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
