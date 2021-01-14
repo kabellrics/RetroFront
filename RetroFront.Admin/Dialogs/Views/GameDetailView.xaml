@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:RetroFront.Admin.Dialogs.Views"
              mc:Ignorable="d"
              Height="450" Width="800"
@@ -17,16 +18,16 @@
             <RowDefinition Height="12*"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBox Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding Name,Mode=TwoWay}"></TextBox>
+        <TextBox Style="{DynamicResource MaterialDesignTextBox}" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding Name,Mode=TwoWay}"></TextBox>
         <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Content="Annuler" Grid.Column="0"></Button>
-            <Button Content="Scrape" Grid.Column="1"></Button>
-            <Button Content="Valider" Grid.Column="2"></Button>
+            <Button Style="{DynamicResource MaterialDesignToolButton}" Content="Annuler" Grid.Column="0"></Button>
+            <Button Style="{DynamicResource MaterialDesignToolButton}" Content="Scrape" Grid.Column="1"></Button>
+            <Button Style="{DynamicResource MaterialDesignToolButton}" Content="Valider" Grid.Column="2"></Button>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.RowDefinitions>
@@ -37,24 +38,24 @@
                 <RowDefinition Height="2*"></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Vertical">
-                <Label Content="Chemin"></Label>
-                <Label Content="{Binding Path}"></Label>
+                <Label Content="Chemin" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                <Label Content="{Binding Path}" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Vertical">
-                <Label Content="Editeur"></Label>
-                <Label Content="{Binding Editeur}"></Label>
+                <Label Content="Editeur" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                <Label Content="{Binding Editeur}" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Vertical">
-                <Label Content="Dev"></Label>
-                <Label Content="{Binding Dev}"></Label>
+                <Label Content="Dev" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                <Label Content="{Binding Dev}" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </StackPanel>
             <StackPanel Grid.Row="3" Orientation="Vertical">
-                <Label Content="Année"></Label>
-                <Label Content="{Binding Year}"></Label>
+                <Label Content="Année" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                <Label Content="{Binding Year}" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </StackPanel>
             <StackPanel Grid.Row="4" Orientation="Vertical">
-                <Label Content="Desc"></Label>
-                <TextBlock Text="{Binding Desc}" TextWrapping="WrapWithOverflow" VerticalAlignment="Stretch"></TextBlock>
+                <Label Content="Desc" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                <TextBlock Text="{Binding Desc}" TextWrapping="WrapWithOverflow" VerticalAlignment="Stretch" Style="{DynamicResource MaterialDesignTextBlock}"></TextBlock>
             </StackPanel>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="1">

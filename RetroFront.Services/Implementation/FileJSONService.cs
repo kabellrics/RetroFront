@@ -39,6 +39,16 @@ namespace RetroFront.Services.Implementation
             System.IO.Directory.CreateDirectory($"{appSettings.AppSettingsFolder}\\themes");
 
         }
+        public void ChangeCurrentTheme(Theme th)
+        {
+            appSettings.CurrentTheme = th.FolderName;
+            var jsonApp = JsonConvert.SerializeObject(appSettings);
+            File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
+        }
+        public string GetCurrentTheme()
+        {
+            return appSettings.CurrentTheme;
+        }
         public IEnumerable<Systeme> GetAllSysFromJSON()
         {
             var jsonString = File.ReadAllText($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\SystemList.json");

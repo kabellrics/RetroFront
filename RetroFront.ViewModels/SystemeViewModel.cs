@@ -53,7 +53,12 @@ namespace RetroFront.ViewModels
             set { _nBEmu = value; RaisePropertyChanged(); }
             //get { return $"{Systeme?.Emulators?.Count} Emulateurs"; }
         }
-
+        private string _Bck;
+        public string Bck
+        {
+            get { return _Bck; }
+            set { _Bck = value; RaisePropertyChanged(); }
+        }
         private string _nBGame;
         public string NBGame
         {

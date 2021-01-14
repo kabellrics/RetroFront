@@ -6,5 +6,7 @@ namespace RetroFront.Services.Interface
     public interface IFileJSONService
     {
         IEnumerable<Systeme> GetAllSysFromJSON();
+        void ChangeCurrentTheme(Theme th);
+        string GetCurrentTheme();
     }
 }

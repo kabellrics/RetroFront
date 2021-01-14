@@ -1,18 +1,33 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using Microsoft.Extensions.DependencyInjection;
 using RetroFront.Models;
+using RetroFront.Services.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 
 namespace RetroFront.Admin.Dialogs.ViewModel
 {
     public class GameDetailViewModel : ViewModelBase
     {
+        private IGameService _gameService;
         public Game GameCurrent { get; set; }
+        private ICommand _ScrapeGameCommand;
+        public ICommand ScrapeGameCommand
+        {
+            get
+            {
+                return _ScrapeGameCommand ?? (_ScrapeGameCommand = new RelayCommand(ScrapeGame));
+            }
+        }
+        #region Properties
         private string _Name;
         public string Name
-        { get { return _Name; }
-            set { _Name = value;RaisePropertyChanged(); }
+        {
+            get { return _Name; }
+            set { _Name = value; RaisePropertyChanged(); }
         }
         private string _Path;
         public string Path
@@ -67,9 +82,11 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         {
             get { return _Fanart; }
             set { _Fanart = value; RaisePropertyChanged(); }
-        }
+        } 
+        #endregion
         public GameDetailViewModel(Game game)
         {
+            _gameService = App.ServiceProvider.GetRequiredService<IGameService>();
             LoadingGame(game);
         }
         private void LoadingGame(Game game)
@@ -85,6 +102,10 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             Box3dart = game.Box3dart;
             Banner = game.Banner;
             Fanart = game.Fanart;
+        }
+        private void ScrapeGame()
+        {
+            LoadingGame(_gameService.ScrapeGame(GameCurrent));
         }
     }
 }

@@ -22,14 +22,14 @@ namespace RetroFront.ViewModels
         private IDialogService _dialogService;
         private IGameService _gameService;
         private IThemeService _themeService;
-        private Theme _currentTheme;
-        public Theme CurrentTheme
+        private ThemeViewModel _currentTheme;
+        public ThemeViewModel CurrentTheme
         {
             get { return _currentTheme; }
             set { _currentTheme = value;RaisePropertyChanged(); }
         }
-        private ObservableCollection<Theme> _themes;
-        public ObservableCollection<Theme> Themes
+        private ObservableCollection<ThemeViewModel> _themes;
+        public ObservableCollection<ThemeViewModel> Themes
         {
             get { return _themes; }
             set { _themes = value;RaisePropertyChanged(); }
@@ -77,6 +77,7 @@ namespace RetroFront.ViewModels
         private ICommand _AddSingleGameCommand;
         private ICommand _ShowDetailSystemeGameCommand;
         private ICommand _ShowDetailGameGameCommand;
+        private ICommand _CHangeCurrentThemeCommand;
         public ICommand ReloadCommand
         {
             get
@@ -126,7 +127,13 @@ namespace RetroFront.ViewModels
                 return _ShowDetailGameGameCommand ?? (_ShowDetailGameGameCommand = new RelayCommand<GameViewModel>(ShowDetailGameGame));
             }
         }
-
+        public ICommand CHangeCurrentThemeCommand
+        {
+            get
+            {
+                return _CHangeCurrentThemeCommand ?? (_CHangeCurrentThemeCommand = new RelayCommand<ThemeViewModel>(CHangeCurrentTheme));
+            }
+        }
         public MainPageViewModel(IDatabaseService databaseService, IFileJSONService fileJSONService, IMainService mainService, IRetroarchService retroarchService,IEmulateurService emulateurService, IDialogService dialogService, IGameService gameService, IThemeService themeService)
         {
             _databaseService = databaseService;
@@ -137,10 +144,23 @@ namespace RetroFront.ViewModels
             _dialogService = dialogService;
             _gameService = gameService;
             _themeService = themeService;
-            Themes = new ObservableCollection<Theme>(_themeService.GetInstalledTheme());
-            CurrentTheme = _themeService.GetCurrentTheme();
+            LoadThemeSettings();
             ReloadData();
         }
+
+        private void LoadThemeSettings()
+        {
+            Themes = new ObservableCollection<ThemeViewModel>();
+            var ths = _themeService.GetInstalledTheme();
+            var currentthemefolder = _fileJSONService.GetCurrentTheme();
+            CurrentTheme = new ThemeViewModel(ths.First(x=> x.FolderName == currentthemefolder));
+            foreach (var th in ths)
+            {
+                if (th.FolderName != CurrentTheme.Folder)
+                    Themes.Add(new ThemeViewModel(th));
+            }
+        }
+
         private void ReloadFullEmulators()
         {
             FullEmulators = new ObservableCollection<EmulatorViewModel>();
@@ -156,6 +176,7 @@ namespace RetroFront.ViewModels
             foreach (var sys in _databaseService.GetSystemes().OrderBy(x=> x.Name))
             {
                 var sysvm = new SystemeViewModel(sys);
+                sysvm.Bck = _themeService.GetBckForTheme(sys.Platform, _fileJSONService.GetCurrentTheme());
                 sysvm.NBEmu = $"{_databaseService.GetNbEmulatorForSysteme(sys.SystemeID)} Emulateurs";
                 sysvm.NBGame = $"{_databaseService.GetNbGamesForPlateforme(sys.SystemeID)} Jeux";
                 var emus = _databaseService.GetEmulatorsForSysteme(sys.SystemeID);
@@ -216,5 +237,12 @@ namespace RetroFront.ViewModels
         {
             _dialogService.ShowGameDetail(obj.Game);
         }
+        private void CHangeCurrentTheme(ThemeViewModel obj)
+        {
+            _fileJSONService.ChangeCurrentTheme(obj.Theme);
+            LoadThemeSettings();
+            ReloadData();
+        }
+
     }
 }

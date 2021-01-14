@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using Microsoft.Extensions.DependencyInjection;
 using RetroFront.Models;
 using RetroFront.Services.Interface;
+using RetroFront.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,14 +16,14 @@ namespace RetroFront.Admin.Dialogs.ViewModel
     {
         private IThemeService _themeService;
         #region Properties
-        private Theme _currentTheme;
-        public Theme CurrentTheme
+        private ThemePlateformeViewModel _currentTheme;
+        public ThemePlateformeViewModel CurrentTheme
         {
             get { return _currentTheme; }
             set { _currentTheme = value; RaisePropertyChanged(); }
         }
-        private ObservableCollection<Theme> _themes;
-        public ObservableCollection<Theme> Themes
+        private ObservableCollection<ThemePlateformeViewModel> _themes;
+        public ObservableCollection<ThemePlateformeViewModel> Themes
         {
             get { return _themes; }
             set { _themes = value; RaisePropertyChanged(); }
@@ -73,52 +74,52 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         }
         #endregion
 
-        private ICommand _previousthemeCommand;
-        private ICommand _nextthemeCommand;
-        public ICommand PreviousthemeCommand
-        {
-            get
-            {
-                return _previousthemeCommand ?? (_previousthemeCommand = new RelayCommand(Previoustheme));
-            }
-        }
+        //private ICommand _previousthemeCommand;
+        //private ICommand _nextthemeCommand;
+        //public ICommand PreviousthemeCommand
+        //{
+        //    get
+        //    {
+        //        return _previousthemeCommand ?? (_previousthemeCommand = new RelayCommand(Previoustheme));
+        //    }
+        //}
 
-        public ICommand NextthemeCommand
-        {
-            get
-            {
-                return _nextthemeCommand ?? (_nextthemeCommand = new RelayCommand(Nexttheme));
-            }
-        }
+        //public ICommand NextthemeCommand
+        //{
+        //    get
+        //    {
+        //        return _nextthemeCommand ?? (_nextthemeCommand = new RelayCommand(Nexttheme));
+        //    }
+        //}
 
-        private void Nexttheme()
-        {
-            try
-            {
-                CurrentTheme = Themes[SelectedThemeIndex++];
-                ChangeImg();
-            }
-            catch (Exception ex)
-            {
-                SelectedThemeIndex = 0;
-                CurrentTheme = Themes[SelectedThemeIndex];
-                ChangeImg();
-            }
-        }
-        private void Previoustheme()
-        {
-            try
-            {
-                CurrentTheme = Themes[SelectedThemeIndex--];
-                ChangeImg();
-            }
-            catch (Exception ex)
-            {
-                SelectedThemeIndex = Themes.Count-1;
-                CurrentTheme = Themes[SelectedThemeIndex];
-                ChangeImg();
-            }
-        }
+        //private void Nexttheme()
+        //{
+        //    try
+        //    {
+        //        CurrentTheme = Themes[SelectedThemeIndex++];
+        //        ChangeImg();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        SelectedThemeIndex = 0;
+        //        CurrentTheme = Themes[SelectedThemeIndex];
+        //        ChangeImg();
+        //    }
+        //}
+        //private void Previoustheme()
+        //{
+        //    try
+        //    {
+        //        CurrentTheme = Themes[SelectedThemeIndex--];
+        //        ChangeImg();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        SelectedThemeIndex = Themes.Count-1;
+        //        CurrentTheme = Themes[SelectedThemeIndex];
+        //        ChangeImg();
+        //    }
+        //}
         public SystemeDetailViewModel(Systeme sys)
         {
             Sys = sys;
@@ -127,15 +128,25 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             Theme = sys.Theme;
             Plateforme = sys.Platform;
             _themeService = App.ServiceProvider.GetRequiredService<IThemeService>();
-            Themes = new ObservableCollection<Theme>(_themeService.GetInstalledTheme());
+            Themes = new ObservableCollection<ThemePlateformeViewModel>();
+            foreach(var th in _themeService.GetInstalledTheme())
+            {
+                ThemePlateformeViewModel thvm = new ThemePlateformeViewModel(Plateforme, th);
+                thvm.Bck = ChargeBck(th.FolderName);
+                thvm.Logo = ChargeLogo(th.FolderName);
+                Themes.Add(thvm);
+            }
             SelectedThemeIndex = 0;
-            CurrentTheme = Themes[SelectedThemeIndex];
-            ChangeImg();
+            //CurrentTheme = Themes[SelectedThemeIndex];
+            //ChangeImg();
         }
-        public void ChangeImg()
+        public string ChargeLogo(string foldername)
         {
-            Logo = _themeService.GetLogoForTheme(Plateforme, CurrentTheme.FolderName);
-            Bck = _themeService.GetBckForTheme(Plateforme, CurrentTheme.FolderName);
+            return _themeService.GetLogoForTheme(Plateforme, foldername);
+        }
+        public string ChargeBck(string foldername)
+        {
+            return _themeService.GetBckForTheme(Plateforme, foldername);
         }
     }
 }

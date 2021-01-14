@@ -16,5 +16,10 @@ namespace RetroFront.Services.Implementation
             game.EmulatorID = emulator.EmulatorID;
             return game;
         }
+
+        public Game ScrapeGame(Game game)
+        {
+            return game;
+        }
     }
 }
