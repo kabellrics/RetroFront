@@ -74,6 +74,12 @@ namespace RetroFront.ViewModels
             get { return _fanart; }
             set { _fanart = value; RaisePropertyChanged(); }
         }
+        private string _logo;
+        public string Logo
+        {
+            get { return _logo; }
+            set { _logo = value;RaisePropertyChanged(); }
+        }
 
         public GameViewModel(Game game)
         {
@@ -88,6 +94,7 @@ namespace RetroFront.ViewModels
             Box3dart = game.Box3dart;
             Banner = game.Banner;
             Fanart = game.Fanart;
+            Logo = game.Logo;
         }
     }
 }

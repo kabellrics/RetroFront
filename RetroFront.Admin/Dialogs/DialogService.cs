@@ -78,6 +78,17 @@ namespace RetroFront.Admin.Dialogs
             }
             return null;
         }
+        public string OpenDetailEmu(Emulator emu)
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new CreateEmulateurModalViewModel(emu);
+            modalWindow.DataContext = vm;
+            if (modalWindow.ShowDialog().Value)
+            {
+                return vm.ResultJson;
+            }
+            return null;
+        }
         public string CreateRetroarchCore()
         {
             ModalWindow modalWindow = new ModalWindow();

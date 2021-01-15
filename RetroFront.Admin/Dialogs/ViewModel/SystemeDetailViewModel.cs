@@ -60,18 +60,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             get { return _shortname; }
             set { _shortname = value; RaisePropertyChanged(); }
         }
-        private string _theme;
-        public string Theme
-        {
-            get { return _theme; }
-            set { _theme = value; RaisePropertyChanged(); }
-        }
-        private string _plateforme;
-        public string Plateforme
-        {
-            get { return _plateforme; }
-            set { _plateforme = value; RaisePropertyChanged(); }
-        }
+
         #endregion
 
         //private ICommand _previousthemeCommand;
@@ -125,13 +114,11 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             Sys = sys;
             Name = sys.Name;
             ShortName = sys.Shortname;
-            Theme = sys.Theme;
-            Plateforme = sys.Platform;
             _themeService = App.ServiceProvider.GetRequiredService<IThemeService>();
             Themes = new ObservableCollection<ThemePlateformeViewModel>();
             foreach(var th in _themeService.GetInstalledTheme())
             {
-                ThemePlateformeViewModel thvm = new ThemePlateformeViewModel(Plateforme, th);
+                ThemePlateformeViewModel thvm = new ThemePlateformeViewModel(ShortName, th);
                 thvm.Bck = ChargeBck(th.FolderName);
                 thvm.Logo = ChargeLogo(th.FolderName);
                 Themes.Add(thvm);
@@ -142,11 +129,11 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         }
         public string ChargeLogo(string foldername)
         {
-            return _themeService.GetLogoForTheme(Plateforme, foldername);
+            return _themeService.GetLogoForTheme(ShortName, foldername);
         }
         public string ChargeBck(string foldername)
         {
-            return _themeService.GetBckForTheme(Plateforme, foldername);
+            return _themeService.GetBckForTheme(ShortName, foldername);
         }
     }
 }

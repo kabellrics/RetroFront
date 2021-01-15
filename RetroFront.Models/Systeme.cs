@@ -10,8 +10,6 @@ namespace RetroFront.Models
         public int SystemeID { get; set; }
         public string Name { get; set; }
         public string Shortname { get; set; }
-        public string Platform { get; set; }
-        public string Theme { get; set; }
         public virtual ICollection<Emulator> Emulators { get; private set; } = new ObservableCollection<Emulator>();
     }
 

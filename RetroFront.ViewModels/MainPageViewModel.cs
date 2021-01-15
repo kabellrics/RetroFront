@@ -70,13 +70,21 @@ namespace RetroFront.ViewModels
             get { return _games; }
             set { _games = value;RaisePropertyChanged(); }
         }
+        private GameViewModel _selectedgames;
+        public GameViewModel SelectedGames
+        {
+            get { return _selectedgames; }
+            set { _selectedgames = value;RaisePropertyChanged(); }
+        }
         private ICommand _reloadCommand;
         private ICommand _AddEmuCommand;
         private ICommand _AddCoreCommand;
+        private ICommand _AddPlateformeCommand;
         private ICommand _AddExplorerCommand;
         private ICommand _AddSingleGameCommand;
         private ICommand _ShowDetailSystemeGameCommand;
         private ICommand _ShowDetailGameGameCommand;
+        private ICommand _ShowDetailEmulatorCommand;
         private ICommand _CHangeCurrentThemeCommand;
         public ICommand ReloadCommand
         {
@@ -99,6 +107,14 @@ namespace RetroFront.ViewModels
                 return _AddCoreCommand ?? (_AddCoreCommand = new RelayCommand(AddCore));
             }
         }
+        public ICommand AddPlateformeCommand
+        {
+            get
+            {
+                return _AddPlateformeCommand ?? (_AddPlateformeCommand = new RelayCommand(AddPlateforme));
+            }
+        }
+
         public ICommand AddExplorerCommand
         {
             get
@@ -127,6 +143,13 @@ namespace RetroFront.ViewModels
                 return _ShowDetailGameGameCommand ?? (_ShowDetailGameGameCommand = new RelayCommand<GameViewModel>(ShowDetailGameGame));
             }
         }
+        public ICommand ShowDetailEmulatorCommand
+        {
+            get
+            {
+                return _ShowDetailEmulatorCommand ?? (_ShowDetailEmulatorCommand = new RelayCommand<EmulatorViewModel>(ShowDetailEmulator));
+            }
+        }
         public ICommand CHangeCurrentThemeCommand
         {
             get
@@ -150,14 +173,20 @@ namespace RetroFront.ViewModels
 
         private void LoadThemeSettings()
         {
-            Themes = new ObservableCollection<ThemeViewModel>();
-            var ths = _themeService.GetInstalledTheme();
-            var currentthemefolder = _fileJSONService.GetCurrentTheme();
-            CurrentTheme = new ThemeViewModel(ths.First(x=> x.FolderName == currentthemefolder));
-            foreach (var th in ths)
+            try
             {
-                if (th.FolderName != CurrentTheme.Folder)
-                    Themes.Add(new ThemeViewModel(th));
+                Themes = new ObservableCollection<ThemeViewModel>();
+                var ths = _themeService.GetInstalledTheme();
+                var currentthemefolder = _fileJSONService.GetCurrentTheme();
+                CurrentTheme = new ThemeViewModel(ths.FirstOrDefault(x => x.FolderName == currentthemefolder));
+                foreach (var th in ths)
+                {
+                    if (th.FolderName != CurrentTheme.Folder)
+                        Themes.Add(new ThemeViewModel(th));
+                }
+            }
+            catch (Exception ex)
+            {
             }
         }
 
@@ -176,7 +205,7 @@ namespace RetroFront.ViewModels
             foreach (var sys in _databaseService.GetSystemes().OrderBy(x=> x.Name))
             {
                 var sysvm = new SystemeViewModel(sys);
-                sysvm.Bck = _themeService.GetBckForTheme(sys.Platform, _fileJSONService.GetCurrentTheme());
+                sysvm.Bck = _themeService.GetBckForTheme(sys.Shortname, _fileJSONService.GetCurrentTheme());
                 sysvm.NBEmu = $"{_databaseService.GetNbEmulatorForSysteme(sys.SystemeID)} Emulateurs";
                 sysvm.NBGame = $"{_databaseService.GetNbGamesForPlateforme(sys.SystemeID)} Jeux";
                 var emus = _databaseService.GetEmulatorsForSysteme(sys.SystemeID);
@@ -204,6 +233,10 @@ namespace RetroFront.ViewModels
                 _databaseService.AddEmulator(newemu);
                 ReloadFullEmulators();
             }
+        }
+        private void AddPlateforme()
+        {
+            throw new NotImplementedException();
         }
         private void AddEmu()
         {
@@ -236,6 +269,10 @@ namespace RetroFront.ViewModels
         private void ShowDetailGameGame(GameViewModel obj)
         {
             _dialogService.ShowGameDetail(obj.Game);
+        }
+        private void ShowDetailEmulator(EmulatorViewModel obj)
+        {
+            _dialogService.OpenDetailEmu(obj.Emulator);
         }
         private void CHangeCurrentTheme(ThemeViewModel obj)
         {

@@ -30,7 +30,7 @@ namespace RetroFront.Services.Implementation
                 appSettings.CurrentTheme = "simple";
                 appSettings.AppSettingsFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront";
                 appSettings.AppSettingsLocation = $"{appSettings.AppSettingsFolder}\\AppSettings.json";
-                appSettings.RetroarchPath = @"";
+                appSettings.RetroarchPath = @"C:\Users\yflec\AppData\Roaming\RetroArch";
                 appSettings.RetroarchCMD = "%RetroarchPath% -L %RetroArchCore% %ROM_RAW%";
                 var jsonApp =  JsonConvert.SerializeObject(appSettings);
                 File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
@@ -60,8 +60,6 @@ namespace RetroFront.Services.Implementation
                 Systeme sys = new Systeme();
                 sys.Name = jsonsys.fullname;
                 sys.Shortname = jsonsys.name;
-                sys.Platform = jsonsys.platform;
-                sys.Theme = jsonsys.theme;
                 yield return sys;
             }
         }

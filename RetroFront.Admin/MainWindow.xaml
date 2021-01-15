@@ -22,6 +22,7 @@
                     <MenuItem Header="Quitter" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Plateforme" Style="{DynamicResource MaterialDesignMenuItem}">
+                    <MenuItem Header="Ajouter une Plateforme" Command="{Binding AddPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Emulateur" Style="{DynamicResource MaterialDesignMenuItem}">
                     <MenuItem Header="Ajouter un Core RetroArch" Command="{Binding AddCoreCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
@@ -49,9 +50,10 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Thème" Style="{DynamicResource MaterialDesignMenuItem}">
-                    <MenuItem Header="Theme Actuel" Style="{DynamicResource MaterialDesignMenuItem}">
+                    <!--<MenuItem Header="Theme Actuel" Style="{DynamicResource MaterialDesignMenuItem}">
                         <MenuItem Header="{Binding CurrentTheme.Name}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
-                    </MenuItem>
+                    </MenuItem>-->
+                    <MenuItem Header="Récupérer les logos et backgrouns d'un thème EmulationStation" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                     <MenuItem Header="Themes Installés" ItemsSource="{Binding Themes}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
                         <MenuItem.ItemContainerStyle>
                             <Style TargetType="MenuItem">
@@ -83,7 +85,13 @@
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
                                   Margin="20" Style="{DynamicResource MaterialDesignCardsListBox}"
-                        SelectedItem="{Binding SelectedSystemeViewModel,Mode=TwoWay}">
+                        SelectedItem="{Binding DataContext.SelectedSystemeViewModel, ElementName=myWindow ,Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction Command="{Binding  DataContext.ShowDetailSystemeGameCommand, ElementName=myWindow}"
+                                                       CommandParameter="{Binding DataContext.SelectedSystemeViewModel, ElementName=myWindow}"></i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
@@ -91,9 +99,6 @@
                                         <VisualBrush>
                                             <VisualBrush.Visual>
                                                 <Image Source="{Binding Bck}" Stretch="UniformToFill" Opacity="0.60" >
-                                                    <!--<Image.Effect>
-                                                        <BlurEffect Radius="50"></BlurEffect>
-                                                    </Image.Effect>-->
                                                 </Image>
                                             </VisualBrush.Visual>
                                         </VisualBrush>
@@ -105,11 +110,9 @@
                                             <RowDefinition Height="1*"></RowDefinition>
                                         </Grid.RowDefinitions>
                                         <Viewbox Grid.Row="0" Stretch="Uniform">
-                                        <Button Command="{Binding DataContext.ShowDetailSystemeGameCommand, ElementName=myWindow}" CommandParameter="{Binding}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{DynamicResource MaterialDesignToolButton}">
                                             <Viewbox Stretch="UniformToFill">
                                             <Label Content="{Binding Name}" Style="{DynamicResource MaterialDesignLabel}"></Label>
                                             </Viewbox>
-                                        </Button>
                                     </Viewbox>
                                         <Viewbox Grid.Row="1" Stretch="Uniform">
                                         <Label Content="{Binding Theme}" Style="{DynamicResource MaterialDesignLabel}"></Label>
@@ -147,15 +150,18 @@
                             <Label Content="{Binding Path=Name}" Style="{DynamicResource MaterialDesignLabel}"></Label>
                         </Viewbox>
                     </Grid>
-                    <!--<Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" Grid.Row="0">
-                        <Label Content="{Binding Path=Name}"></Label>
-                    </Viewbox>-->
                     <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Path=Emulators}" Grid.Row="1"
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
                               Style="{DynamicResource MaterialDesignCardsListBox}"
+                        SelectedItem="{Binding DataContext.SelectedEmulator, ElementName=myWindow ,Mode=TwoWay}"
                                   Margin="20">
-                        <!--SelectedItem="{Binding SelectedEmulator,Mode=TwoWay}"-->
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction Command="{Binding  DataContext.ShowDetailEmulatorCommand, ElementName=myWindow}"
+                                                       CommandParameter="{Binding DataContext.SelectedEmulator, ElementName=myWindow}"></i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -196,17 +202,21 @@
                             <Label Content="{Binding Path=Emulators/Name}" Style="{DynamicResource MaterialDesignLabel}"></Label>
                         </Viewbox>
                     </Grid>
-                    <!--<Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" Grid.Row="0">
-                        <Label Content="{Binding Path=Emulators/Name}"></Label>
-                    </Viewbox>-->
                     <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Path=Emulators/Games}" Grid.Row="1"
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
                               Style="{DynamicResource MaterialDesignCardsListBox}"
+                        SelectedItem="{Binding DataContext.SelectedGames, ElementName=myWindow ,Mode=TwoWay}"
                                   Margin="20">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction Command="{Binding  DataContext.ShowDetailGameGameCommand, ElementName=myWindow}"
+                                                       CommandParameter="{Binding DataContext.SelectedGames, ElementName=myWindow}"></i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Button Style="{DynamicResource MaterialDesignToolButton}" Command="{Binding DataContext.ShowDetailGameGameCommand, ElementName=myWindow}" CommandParameter="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <!--<Button Style="{DynamicResource MaterialDesignToolButton}" Command="{Binding DataContext.ShowDetailGameGameCommand, ElementName=myWindow}" CommandParameter="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -215,7 +225,7 @@
                                         <Image Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Source="{Binding Boxart}"></Image>
                                         <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" Grid.Column="1" TextWrapping="WrapWithOverflow" Text="{Binding Name}"></TextBlock>
                                     </Grid>
-                                </Button>
+                                <!--</Button>-->
                             </DataTemplate>
                         </ListView.ItemTemplate>
                         <ListView.ItemsPanel>

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 
 namespace RetroFront.Admin.Dialogs.ViewModel
 {
@@ -45,14 +46,14 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             set { _extension = value; RaisePropertyChanged(); }
         }
 
-        private ObservableCollection<Systeme> _systemes;
-        private Systeme _Selectedsysteme;
-        public Systeme Selectedsysteme
+        private ObservableCollection<SystemeDetailViewModel> _systemes;
+        private SystemeDetailViewModel _Selectedsysteme;
+        public SystemeDetailViewModel Selectedsysteme
         {
             get { return _Selectedsysteme; }
             set { _Selectedsysteme = value; RaisePropertyChanged(); }
         }
-        public ObservableCollection<Systeme> Systemes
+        public ObservableCollection<SystemeDetailViewModel> Systemes
         {
             get { return _systemes; }
             set { _systemes = value; RaisePropertyChanged(); }
@@ -62,8 +63,26 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         {
             _databaseService = App.ServiceProvider.GetRequiredService<IDatabaseService>();
             var plateformes = _databaseService.GetSystemes();
-            Systemes = new ObservableCollection<Systeme>(plateformes);
-            
+            Systemes = new ObservableCollection<SystemeDetailViewModel>();
+            foreach(var sys in plateformes.OrderBy(x => x.Name))
+            {
+                Systemes.Add(new SystemeDetailViewModel(sys));
+            }
+        } 
+        public CreateEmulateurModalViewModel(Emulator emu)
+        {
+            _databaseService = App.ServiceProvider.GetRequiredService<IDatabaseService>();
+            var plateformes = _databaseService.GetSystemes();
+            Systemes = new ObservableCollection<SystemeDetailViewModel>();
+            foreach (var sys in plateformes.OrderBy(x => x.Name))
+            {
+                Systemes.Add(new SystemeDetailViewModel(sys));
+            }
+            Name = emu.Name;
+            Chemin = emu.Chemin;
+            Command = emu.Command;
+            Extension = emu.Extension;
+            Selectedsysteme = new SystemeDetailViewModel(_databaseService.GetSysteme(emu.SystemeID));
         }
         public void CloseDialogWithResult(Window dialog, bool result)
         {
@@ -101,7 +120,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             emu.Command = Command;
             emu.Extension = Extension;
             emu.Name = $"{Selectedsysteme.Name} - {Name}";
-            emu.SystemeID = Selectedsysteme.SystemeID;
+            emu.SystemeID = Selectedsysteme.Sys.SystemeID;
             return JsonConvert.SerializeObject(emu);
         }
     }

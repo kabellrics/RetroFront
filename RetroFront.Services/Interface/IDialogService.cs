@@ -14,6 +14,7 @@ namespace RetroFront.Services.Interface
         string OpenUniqueFileDialog(string filter);
         IEnumerable<string> OpenMultiFileDialog(string filter);
         string CreateJsonEmu();
+        string OpenDetailEmu(Emulator emu);
         string CreateRetroarchCore();
         bool ShowSystemeDetail(Systeme sys);
         bool ShowGameDetail(Game game);

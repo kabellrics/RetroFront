@@ -31,14 +31,6 @@
             <Label Content="ShortName" Style="{DynamicResource MaterialDesignLabel}"></Label>
             <Label Content="{Binding ShortName}" Style="{DynamicResource MaterialDesignLabel}"></Label>
         </StackPanel>
-        <StackPanel Grid.Column="0" Grid.Row="5">
-            <Label Content="Platforme" Style="{DynamicResource MaterialDesignLabel}"></Label>
-            <Label Content="{Binding Plateforme}" Style="{DynamicResource MaterialDesignLabel}"></Label>            
-        </StackPanel>
-        <StackPanel Grid.Column="0" Grid.Row="6">
-            <Label Content="Theme" Style="{DynamicResource MaterialDesignLabel}"></Label>
-            <Label Content="{Binding Theme}" Style="{DynamicResource MaterialDesignLabel}"></Label>            
-        </StackPanel>
         <materialDesign:Transitioner 
             Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="6"
             SelectedIndex="{Binding SelectedThemeIndex,Mode=TwoWay}"

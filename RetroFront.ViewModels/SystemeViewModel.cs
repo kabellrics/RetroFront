@@ -24,7 +24,7 @@ namespace RetroFront.ViewModels
             {
                 Systeme = systeme;
                 Name = Systeme.Name;
-                Theme = Systeme.Theme;
+                Theme = Systeme.Shortname;
                 Emulators = new ObservableCollection<EmulatorViewModel>();
             }
         }

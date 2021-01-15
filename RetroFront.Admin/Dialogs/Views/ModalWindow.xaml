@@ -21,6 +21,9 @@
         <DataTemplate DataType="{x:Type vms:GameDetailViewModel}">
             <vm:GameDetailView></vm:GameDetailView>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:AddSystemeViewModel}">
+            <vm:AddSystemeView></vm:AddSystemeView>
+        </DataTemplate>
     </Window.Resources>
     <ContentPresenter x:Name="ContentPresenter" Content="{Binding}"></ContentPresenter>
 </Window>

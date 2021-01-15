@@ -29,8 +29,8 @@ namespace RetroFront.ViewModels
         public ThemeViewModel(Theme th)
         {
             Theme = th;
-            Name = th.Name;
-            Folder = th.FolderName;
+            Name = th?.Name;
+            Folder = th?.FolderName;
         }
     }
 }
