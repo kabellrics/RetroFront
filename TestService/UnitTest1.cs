@@ -35,5 +35,12 @@ namespace TestService
             var listcore = ThemeService.GetLogoForTheme("gba","simple");
             Assert.AreNotEqual(null, listcore);
         }
+        [TestMethod]
+        public void TestMethod5()
+        {
+            var SteamService = new SteamService();
+            //SteamService.GetSteamGame(@"C:\Program Files (x86)\Steam\steam.exe");
+            Assert.AreNotEqual(null, null);
+        }
     }
 }

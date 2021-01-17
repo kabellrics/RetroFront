@@ -37,6 +37,7 @@ namespace RetroFront.Services.Implementation
             }
             System.IO.Directory.CreateDirectory(appSettings.AppSettingsFolder);
             System.IO.Directory.CreateDirectory($"{appSettings.AppSettingsFolder}\\themes");
+            System.IO.Directory.CreateDirectory($"{appSettings.AppSettingsFolder}\\media");
 
         }
         public void ChangeCurrentTheme(Theme th)

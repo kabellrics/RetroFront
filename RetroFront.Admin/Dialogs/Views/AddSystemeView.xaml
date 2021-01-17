@@ -4,9 +4,51 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RetroFront.Admin.Dialogs.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d"             
+             Height="300" Width="300"
+             Background="DarkGray">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Viewbox Grid.Row="0" Stretch="Uniform">
+                <Label Content="Création d'un système" Style="{DynamicResource MaterialDesignLabel}"></Label>
+            </Viewbox>
+            <Viewbox Grid.Row="1" Stretch="Uniform" HorizontalAlignment="Left">
+                <Label Content="Nom du système" HorizontalAlignment="Left" Style="{DynamicResource MaterialDesignLabel}"></Label>
+            </Viewbox>
+            <TextBox Grid.Row="2" Text="{Binding Name,Mode=TwoWay}" Style="{DynamicResource MaterialDesignTextBox}"></TextBox>
+            <Viewbox Grid.Row="3" Stretch="Uniform" HorizontalAlignment="Left">
+                <Label Content="Shortname" HorizontalAlignment="Left" Style="{DynamicResource MaterialDesignLabel}"></Label>
+            </Viewbox>
+            <TextBox Grid.Row="4" Text="{Binding ShortName,Mode=TwoWay}" Style="{DynamicResource MaterialDesignTextBox}"></TextBox>
+            <Grid Grid.Row="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Content="Annuler" Command="{Binding CancelCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                        Style="{DynamicResource MaterialDesignToolButton}"></Button>
+                <Button Grid.Column="3" Content="Valider" Command="{Binding YesCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                        Style="{DynamicResource MaterialDesignToolButton}"></Button>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

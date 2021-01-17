@@ -67,6 +67,17 @@ namespace RetroFront.Admin.Dialogs
             else
                 return null;
         }
+        public string CreateJsonSys()
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new AddSystemeViewModel();
+            modalWindow.DataContext = vm;
+            if (modalWindow.ShowDialog().Value)
+            {
+                return vm.ResultJson;
+            }
+            return null;
+        }
         public string CreateJsonEmu()
         {
             ModalWindow modalWindow = new ModalWindow();
@@ -108,12 +119,31 @@ namespace RetroFront.Admin.Dialogs
             return modalWindow.ShowDialog().Value;
         }
 
-        public bool ShowGameDetail(Game game)
+        public bool ShowGameDetail(GameRom game)
         {
             ModalWindow modalWindow = new ModalWindow();
             var vm = new GameDetailViewModel(game);
             modalWindow.DataContext = vm;
             return modalWindow.ShowDialog().Value;
+        }
+        public bool ShowParameters()
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new SettingsViewModel();
+            modalWindow.DataContext = vm;
+            return modalWindow.ShowDialog().Value;
+        }
+
+        public List<GameRom> ShowSteamGamesFounded(List<GameRom> foundedgame)
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new SteamGamesFoundedViewModel(foundedgame);
+            modalWindow.DataContext = vm;
+            if (modalWindow.ShowDialog().Value)
+            {
+                return vm.Resultgame;
+            }
+            return null;
         }
     }
 }

@@ -11,6 +11,7 @@
         WindowState="Maximized"
         WindowStyle="SingleBorderWindow"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        Background="{DynamicResource MaterialDesignSelection}"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainPageVM}"
         Title="RetroFront Admin">
     <Grid>
@@ -23,6 +24,7 @@
                 </MenuItem>
                 <MenuItem Header="Plateforme" Style="{DynamicResource MaterialDesignMenuItem}">
                     <MenuItem Header="Ajouter une Plateforme" Command="{Binding AddPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
+                    <MenuItem Header="Intégrer Les Jeux Steam installés" Command="{Binding AddSteamPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Emulateur" Style="{DynamicResource MaterialDesignMenuItem}">
                     <MenuItem Header="Ajouter un Core RetroArch" Command="{Binding AddCoreCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
@@ -48,6 +50,14 @@
                             </Style>
                         </MenuItem.ItemContainerStyle>
                     </MenuItem>
+                    <MenuItem Header="Importer des jeux depuis un fichier gamelist.xml" ItemsSource="{Binding FullEmulators}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
+                        <MenuItem.ItemContainerStyle>
+                            <Style TargetType="MenuItem">
+                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=MenuItem},Path=DataContext.AddGamelistCommand}"></Setter>
+                                <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                            </Style>
+                        </MenuItem.ItemContainerStyle>
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Thème" Style="{DynamicResource MaterialDesignMenuItem}">
                     <!--<MenuItem Header="Theme Actuel" Style="{DynamicResource MaterialDesignMenuItem}">
@@ -63,14 +73,14 @@
                         </MenuItem.ItemContainerStyle>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Paramètres" Style="{DynamicResource MaterialDesignMenuItem}" />
+                <MenuItem Header="Paramètres" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding ShowSettingsCommand}" />
             </Menu>
             <Grid DataContext="{Binding Systemes}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="1" VerticalAlignment="Stretch">
@@ -103,24 +113,27 @@
                                             </VisualBrush.Visual>
                                         </VisualBrush>
                                     </Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="5*"></RowDefinition>
+                                            <RowDefinition Height="4*"></RowDefinition>
                                             <RowDefinition Height="1*"></RowDefinition>
                                             <RowDefinition Height="1*"></RowDefinition>
                                             <RowDefinition Height="1*"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Viewbox Grid.Row="0" Stretch="Uniform">
-                                            <Viewbox Stretch="UniformToFill">
-                                            <Label Content="{Binding Name}" Style="{DynamicResource MaterialDesignLabel}"></Label>
-                                            </Viewbox>
+                                        <Viewbox Grid.Row="0" Grid.Column="1" Stretch="Uniform">
+                                        <TextBlock Text="{Binding Name}" Style="{DynamicResource MaterialDesignHeadline1TextBlock}"></TextBlock>
                                     </Viewbox>
-                                        <Viewbox Grid.Row="1" Stretch="Uniform">
+                                    <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
                                         <Label Content="{Binding Theme}" Style="{DynamicResource MaterialDesignLabel}"></Label>
                                         </Viewbox>
-                                        <Viewbox Grid.Row="2" Stretch="Uniform">
+                                    <Viewbox Grid.Row="2" Grid.Column="1" Stretch="Uniform">
                                         <Label Content="{Binding NBEmu}" Style="{DynamicResource MaterialDesignLabel}"></Label>
                                         </Viewbox>
-                                        <Viewbox Grid.Row="3" Stretch="Uniform">
+                                    <Viewbox Grid.Row="3" Grid.Column="1" Stretch="Uniform">
                                         <Label Content="{Binding NBGame}" Style="{DynamicResource MaterialDesignLabel}"></Label>
                                         </Viewbox>
                                     </Grid>
@@ -165,14 +178,19 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width=".25*"></ColumnDefinition>
+                                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                                        <ColumnDefinition Width=".25*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="3*"></RowDefinition>
                                         <RowDefinition Height="1*"></RowDefinition>
                                     </Grid.RowDefinitions>
-                                    <Viewbox Grid.Row="0" Stretch="Uniform">
-                                        <Label Content="{Binding Name}" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                                    <Viewbox Grid.Row="0" Grid.Column="1" Stretch="Uniform">
+                                        <TextBlock Text="{Binding Name}" Style="{DynamicResource MaterialDesignHeadline1TextBlock}"></TextBlock>
                                     </Viewbox>
-                                    <Viewbox Grid.Row="1" Stretch="Uniform">
+                                    <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
                                         <Label Content="{Binding NBGame}" Style="{DynamicResource MaterialDesignLabel}"></Label>
                                     </Viewbox>
                                 </Grid>
@@ -219,11 +237,43 @@
                                 <!--<Button Style="{DynamicResource MaterialDesignToolButton}" Command="{Binding DataContext.ShowDetailGameGameCommand, ElementName=myWindow}" CommandParameter="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                                            <ColumnDefinition Width=".25*"></ColumnDefinition>
+                                            <ColumnDefinition Width="10*"></ColumnDefinition>
+                                            <ColumnDefinition Width="10*"></ColumnDefinition>
+                                            <ColumnDefinition Width=".25*"></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
-                                        <Image Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Source="{Binding Boxart}"></Image>
-                                        <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" Grid.Column="1" TextWrapping="WrapWithOverflow" Text="{Binding Name}"></TextBlock>
+                                        <Image Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="{Binding Boxart}"></Image>
+                                    <Grid Grid.Column="2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width=".25*"></ColumnDefinition>
+                                            <ColumnDefinition Width="10*"></ColumnDefinition>
+                                            <ColumnDefinition Width=".25*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="4*"></RowDefinition>
+                                            <RowDefinition Height="2*"></RowDefinition>
+                                            <RowDefinition Height="2*"></RowDefinition>
+                                            <RowDefinition Height="2*"></RowDefinition>
+                                            <RowDefinition Height="2*"></RowDefinition>
+                                            <RowDefinition Height="5*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Viewbox Grid.Row="0" Grid.Column="1" Stretch="Uniform" HorizontalAlignment="Left" >
+                                            <TextBlock Style="{DynamicResource MaterialDesignHeadline1TextBlock}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" TextAlignment="Left" Text="{Binding Name}"></TextBlock>
+                                        </Viewbox>
+                                        <Viewbox Grid.Row="1" Grid.Column="1"  Stretch="Uniform" HorizontalAlignment="Left" >
+                                            <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" TextAlignment="Left" Text="{Binding Editeur}"></TextBlock>
+                                        </Viewbox>
+                                        <Viewbox Grid.Row="2" Grid.Column="1"  Stretch="Uniform" HorizontalAlignment="Left" >
+                                            <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" TextAlignment="Left" Text="{Binding Dev}"></TextBlock>
+                                        </Viewbox>
+                                        <Viewbox Grid.Row="3" Grid.Column="1"  Stretch="Uniform" HorizontalAlignment="Left" >
+                                            <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" TextAlignment="Left" Text="{Binding Year}"></TextBlock>
+                                        </Viewbox>
+                                        <Viewbox Grid.Row="4" Grid.Column="1"  Stretch="Uniform" HorizontalAlignment="Left" >
+                                            <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" TextAlignment="Left" Text="{Binding Genre}"></TextBlock>
+                                        </Viewbox>
+                                        <TextBlock Grid.Row="5" Grid.Column="1"  Style="{DynamicResource MaterialDesignTextBlock}" TextWrapping="WrapWithOverflow" Text="{Binding Desc}"></TextBlock>
+                                    </Grid>
                                     </Grid>
                                 <!--</Button>-->
                             </DataTemplate>

@@ -1,0 +1,125 @@
+﻿
+using RetroFront.Services.Interface;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Gameloop.Vdf;
+using System.Text;
+using Gameloop.Vdf.Linq;
+using RetroFront.Models;
+using System.Linq;
+using System.Net;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using System.Runtime.Serialization.Json;
+using Newtonsoft.Json.Linq;
+
+namespace RetroFront.Services.Implementation
+{
+    public class SteamService : ISteamService
+    {
+        private FileJSONService FileJSONService = new FileJSONService();
+        private DatabaseService dbService = new DatabaseService();
+        private string LogoPath = @"https://cdn.cloudflare.steamstatic.com/steam/apps/%STEAMID%/logo.png";
+        private string BoxPath = @"https://cdn.cloudflare.steamstatic.com/steam/apps/%STEAMID%/library_600x900.jpg";
+        public List<GameRom> GetSteamGame(string steamexepath, Emulator emu)
+        {
+            var steamfolder = Path.GetDirectoryName(steamexepath);
+            List<string> foldersTosearch = new List<string>();
+            foldersTosearch.Add(Path.Combine(steamfolder, "steamapps"));
+            VProperty volvo = VdfConvert.Deserialize(File.ReadAllText(Path.Combine(steamfolder, "steamapps", "libraryfolders.vdf")));
+            var childs = volvo.Value.Children();
+            foreach(var child in childs)
+            {
+                if(Directory.Exists(((VProperty)child).Value.ToString()))
+                {
+                    foldersTosearch.Add(Path.Combine(((VProperty)child).Value.ToString(), "steamapps"));
+                }
+            }
+            List<GameRom> gamesfind = new List<GameRom>();
+            List<String> appmanifestfiles = new List<string>();
+            foreach (string foldertoSeek in foldersTosearch)
+            {
+                appmanifestfiles.AddRange(Directory.GetFiles(foldertoSeek, "appmanifest_*.acf").ToList());
+            }
+
+            foreach (var file in appmanifestfiles)
+            {
+                dynamic appfile = VdfConvert.Deserialize(File.ReadAllText(file));
+                GameRom game = new GameRom();
+                game.EmulatorID = emu.EmulatorID;
+                game.SteamID = int.Parse(appfile.Value.appid.Value);
+                game.Name = appfile.Value.name.Value;
+                
+                gamesfind.Add(game);
+            }
+            return gamesfind;
+        }
+
+        public GameRom GetSteamInfos(GameRom game, Emulator emu)
+        {
+            var urlinfos = @"https://store.steampowered.com/api/appdetails?appids="+game.SteamID;
+            var plateforme = dbService.GetSysteme(emu.SystemeID);
+            string imgfolder = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme.Shortname);
+            var newgame = game;
+            try
+            {
+                string jsoninfos;
+                using (WebClient wc = new WebClient())
+                {
+                    jsoninfos = wc.DownloadString(urlinfos);
+                }
+                JObject json = JObject.Parse(jsoninfos);
+                var datajson = json[newgame.SteamID.ToString()]["data"];
+                if (datajson != null)
+                {
+                    var data = JsonConvert.DeserializeObject<Data>(datajson.ToString());
+
+                    newgame.Path = $"steam://rungameid/{newgame.SteamID.ToString()}";
+                    newgame.Genre = string.Join(", ", data.genres.Select(x=>x.description));
+                    newgame.Editeur = string.Join(", ", data.publishers);
+                    newgame.Dev = string.Join(", ", data.developers);
+                    newgame.Desc = data.short_description;
+                    newgame.Year = DateTime.Parse(data.release_date.date).Year.ToString();
+                    Directory.CreateDirectory(Path.Combine(imgfolder, "box2dfront"));
+                    Directory.CreateDirectory(Path.Combine(imgfolder, "fanart"));
+                    Directory.CreateDirectory(Path.Combine(imgfolder, "images"));
+                    Directory.CreateDirectory(Path.Combine(imgfolder, "wheel"));
+                    var box = File.Create(Path.Combine(imgfolder, "box2dfront", $"{newgame.SteamID.ToString()}.jpg"));
+                    box.Close();
+                    var fanart = File.Create(Path.Combine(imgfolder, "fanart", $"{newgame.SteamID.ToString()}.jpg"));
+                    fanart.Close();
+                    var screen = File.Create(Path.Combine(imgfolder, "images", $"{newgame.SteamID.ToString()}.jpg"));
+                    screen.Close();
+                    var wheel = File.Create(Path.Combine(imgfolder, "wheel", $"{newgame.SteamID.ToString()}.png"));
+                    wheel.Close();
+                    newgame.Boxart = Path.Combine(imgfolder, "box2dfront", $"{newgame.SteamID.ToString()}.jpg");
+                    newgame.Fanart = Path.Combine(imgfolder, "fanart", $"{newgame.SteamID.ToString()}.jpg");
+                    newgame.Screenshoot = Path.Combine(imgfolder, "images", $"{newgame.SteamID.ToString()}.jpg");
+                    newgame.Logo = Path.Combine(imgfolder, "wheel", $"{newgame.SteamID.ToString()}.png");
+
+                    DownloadSteamImg(data.header_image, newgame.Fanart);
+                    DownloadSteamImg(data.screenshots.First().path_full, newgame.Screenshoot);
+                    DownloadSteamImg(LogoPath.Replace("%STEAMID%", newgame.SteamID.ToString()), newgame.Logo);
+                    DownloadSteamImg(BoxPath.Replace("%STEAMID%", newgame.SteamID.ToString()), newgame.Boxart);
+
+                    game = newgame;
+                }
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
+
+            return game;
+        }
+
+        public void DownloadSteamImg(string dllpath,string target)
+        {
+            using (WebClient client = new WebClient())
+            {
+                client.DownloadFile(dllpath, target);
+            }
+        }
+    }
+}

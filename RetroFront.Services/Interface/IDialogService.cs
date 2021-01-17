@@ -14,9 +14,12 @@ namespace RetroFront.Services.Interface
         string OpenUniqueFileDialog(string filter);
         IEnumerable<string> OpenMultiFileDialog(string filter);
         string CreateJsonEmu();
+        string CreateJsonSys();
         string OpenDetailEmu(Emulator emu);
         string CreateRetroarchCore();
         bool ShowSystemeDetail(Systeme sys);
-        bool ShowGameDetail(Game game);
+        bool ShowGameDetail(GameRom game);
+        bool ShowParameters();
+        List<GameRom> ShowSteamGamesFounded(List<GameRom> foundedgame);
     }
 }

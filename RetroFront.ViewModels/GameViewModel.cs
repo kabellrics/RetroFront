@@ -8,8 +8,8 @@ namespace RetroFront.ViewModels
 {
     public class GameViewModel : ViewModelBase
     {
-        private Game _game;
-        public Game Game
+        private GameRom _game;
+        public GameRom Game
         {
             get { return _game; }
             set { _game = value;RaisePropertyChanged(); }
@@ -50,6 +50,12 @@ namespace RetroFront.ViewModels
             get { return _dev; }
             set { _dev = value; RaisePropertyChanged(); }
         }
+        private string _genre;
+        public string Genre
+        {
+            get { return _genre; }
+            set { _genre = value; RaisePropertyChanged(); }
+        }
         private string _boxart;
         public string Boxart
         {
@@ -63,7 +69,7 @@ namespace RetroFront.ViewModels
             set { _box3dart = value; RaisePropertyChanged(); }
         }
         private string _banner;
-        public string Banner
+        public string Sxreenshoot
         {
             get { return _banner; }
             set { _banner = value; RaisePropertyChanged(); }
@@ -80,8 +86,13 @@ namespace RetroFront.ViewModels
             get { return _logo; }
             set { _logo = value;RaisePropertyChanged(); }
         }
-
-        public GameViewModel(Game game)
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set { _isSelected = value;RaisePropertyChanged(); }
+        }
+        public GameViewModel(GameRom game)
         {
             Game = game;
             Name = game.Name;
@@ -90,9 +101,9 @@ namespace RetroFront.ViewModels
             Year = game.Year;
             Editeur = game.Editeur;
             Dev = game.Dev;
+            Genre = game.Genre;
             Boxart = game.Boxart;
-            Box3dart = game.Box3dart;
-            Banner = game.Banner;
+            Sxreenshoot = game.Screenshoot;
             Fanart = game.Fanart;
             Logo = game.Logo;
         }

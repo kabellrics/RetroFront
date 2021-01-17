@@ -1,10 +1,12 @@
 ﻿using RetroFront.Models;
+using System.Collections.Generic;
 
 namespace RetroFront.Services.Interface
 {
     public interface IGameService
     {
-        Game CreateGame(string gamefile, Emulator emulator);
-        Game ScrapeGame(Game game);
+        GameRom CreateGame(string gamefile, Emulator emulator);
+        GameRom ScrapeGame(GameRom game);
+        IEnumerable<GameRom> ImportGame(string gamelistpath, Emulator emulator);
     }
 }

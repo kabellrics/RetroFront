@@ -16,11 +16,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroFront.Services", "Retr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestService", "TestService\TestService.csproj", "{75F0FF1C-D7D5-4680-B7BA-41C72DB8D483}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroFront.ViewModels", "RetroFront.ViewModels\RetroFront.ViewModels.csproj", "{012F7445-CCBD-4623-A962-3D929B292893}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroFront.ViewModels", "RetroFront.ViewModels\RetroFront.ViewModels.csproj", "{012F7445-CCBD-4623-A962-3D929B292893}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2E62DB08-3D12-47F1-9BD3-9081C5860B76} = {2E62DB08-3D12-47F1-9BD3-9081C5860B76}
 		{A7BAA70E-060F-4550-A426-9BF841979503} = {A7BAA70E-060F-4550-A426-9BF841979503}
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroFront", "RetroFront\RetroFront.csproj", "{9518A069-DE05-448C-95B7-744AA2CA1840}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +54,10 @@ Global
 		{012F7445-CCBD-4623-A962-3D929B292893}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{012F7445-CCBD-4623-A962-3D929B292893}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{012F7445-CCBD-4623-A962-3D929B292893}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9518A069-DE05-448C-95B7-744AA2CA1840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9518A069-DE05-448C-95B7-744AA2CA1840}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9518A069-DE05-448C-95B7-744AA2CA1840}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9518A069-DE05-448C-95B7-744AA2CA1840}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

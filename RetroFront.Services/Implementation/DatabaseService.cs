@@ -25,7 +25,7 @@ namespace RetroFront.Services.Implementation
         {
             return SQLIteContext.Emulators;
         }
-        public IEnumerable<Game> GetGames()
+        public IEnumerable<GameRom> GetGames()
         {
             return SQLIteContext.Games;
         }
@@ -38,7 +38,7 @@ namespace RetroFront.Services.Implementation
         {
             return SQLIteContext.Emulators.Find(id);
         }
-        public Game GetGame(int id)
+        public GameRom GetGame(int id)
         {
             return SQLIteContext.Games.Find(id);
         }
@@ -56,12 +56,12 @@ namespace RetroFront.Services.Implementation
             var plateformeGames = SQLIteContext.Games.Where(x=> emus.Select(x=>x.EmulatorID).Contains(x.EmulatorID));
             return plateformeGames.Count();
         }
-        public IEnumerable<Game> GetGamesForPlateforme(int sysID)
+        public IEnumerable<GameRom> GetGamesForPlateforme(int sysID)
         {
             var emus = GetEmulatorsForSysteme(sysID);
             return SQLIteContext.Games.Where(x => emus.Select(x => x.EmulatorID).Contains(x.EmulatorID));
         }
-        public IEnumerable<Game> GetGamesForemulator(int emuID)
+        public IEnumerable<GameRom> GetGamesForemulator(int emuID)
         {
             return SQLIteContext.Games.Where(x => x.EmulatorID == emuID);
         }
@@ -77,7 +77,7 @@ namespace RetroFront.Services.Implementation
         {
             return SQLIteContext.Emulators.FirstOrDefault(x => x.Name == name);
         }
-        public Game GetGameByName(string path)
+        public GameRom GetGameByName(string path)
         {
             return SQLIteContext.Games.FirstOrDefault(x => x.Path == path);
         }
@@ -92,7 +92,7 @@ namespace RetroFront.Services.Implementation
             SQLIteContext.Emulators.Add(sys);
             SQLIteContext.SaveChanges();
         }
-        public void AddGame(Game sys)
+        public void AddGame(GameRom sys)
         {
             SQLIteContext.Games.Add(sys);
             SQLIteContext.SaveChanges();
@@ -107,7 +107,7 @@ namespace RetroFront.Services.Implementation
             SQLIteContext.Emulators.Remove(sys);
             SQLIteContext.SaveChanges();
         }
-        public void RemoveGame(Game sys)
+        public void RemoveGame(GameRom sys)
         {
             SQLIteContext.Games.Remove(sys);
             SQLIteContext.SaveChanges();

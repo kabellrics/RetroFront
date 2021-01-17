@@ -14,7 +14,5 @@ namespace RetroFront.Models
         public string Extension { get; set; }
 
         public int SystemeID { get; set; }
-        public virtual Systeme Systeme { get; set; }
-        public virtual ICollection<Game> Games { get; private set; } = new ObservableCollection<Game>();
     }
 }

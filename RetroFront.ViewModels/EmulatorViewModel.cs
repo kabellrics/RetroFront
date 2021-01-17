@@ -38,7 +38,6 @@ namespace RetroFront.ViewModels
         {
             Emulator = emulator;
             Name = Emulator.Name;
-            NBGame = $"{Emulator?.Games.Count} Jeux";
             Games = new ObservableCollection<GameViewModel>();
         }
     }

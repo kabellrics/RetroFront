@@ -45,6 +45,7 @@ namespace RetroFront.Admin
             services.AddSingleton<IEmulateurService, EmulateurService>();
             services.AddSingleton<IGameService, GameService>();
             services.AddSingleton<IThemeService, ThemeService>();
+            services.AddSingleton<ISteamService, SteamService>();
 
             services.AddSingleton<MainPageViewModel>();
 
@@ -52,10 +53,10 @@ namespace RetroFront.Admin
         }
         protected override async void OnStartup(StartupEventArgs e)
         {
-            await host.StartAsync();
+            //await host.StartAsync();
 
-            var mainWindow = host.Services.GetRequiredService<MainWindow>();
-            mainWindow.Show();
+            //var mainWindow = host.Services.GetRequiredService<MainWindow>();
+            //mainWindow.Show();
 
             base.OnStartup(e);
         }

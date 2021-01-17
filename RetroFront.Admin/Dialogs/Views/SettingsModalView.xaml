@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="RetroFront.Admin.Dialogs.Views.SettingsModalView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RetroFront.Admin.Dialogs.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="500"
+             Height="700" Width="500" Background="DarkGray">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height=".25*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Viewbox Stretch="Uniform" Grid.Row="0">
+            <Label Content="Parametres" Style="{DynamicResource MaterialDesignLabel}"></Label>
+        </Viewbox>        
+        <Viewbox Stretch="Uniform" Grid.Row="1" HorizontalAlignment="Left">
+            <Label Content="Theme actuel" Style="{DynamicResource MaterialDesignLabel}"></Label>
+        </Viewbox>
+        <Viewbox Stretch="Uniform" Grid.Row="3" HorizontalAlignment="Left">
+            <Label Content="ScreenScraper ID" Style="{DynamicResource MaterialDesignLabel}"></Label>
+        </Viewbox>
+        <TextBox Grid.Row="4" Text="{Binding ScreenScraperID, Mode=TwoWay}" Style="{DynamicResource MaterialDesignTextBox}"></TextBox>
+        <Viewbox Stretch="Uniform" Grid.Row="5" HorizontalAlignment="Left">
+            <Label Content="ScreenScraper Password" Style="{DynamicResource MaterialDesignLabel}"></Label>
+        </Viewbox>
+        <TextBox Grid.Row="6" Text="{Binding ScreenScraperPWD, Mode=TwoWay}" Style="{DynamicResource MaterialDesignTextBox}"></TextBox>
+        <Viewbox Stretch="Uniform" Grid.Row="7" HorizontalAlignment="Left">
+            <Label Content="Emplacement Paramètres" Style="{DynamicResource MaterialDesignLabel}"></Label>
+        </Viewbox>
+        <TextBlock Grid.Row="8" Style="{DynamicResource MaterialDesignTextBlock}" Text="{Binding AppSettingsLocation}"></TextBlock>
+        <Viewbox Stretch="Uniform" Grid.Row="9" HorizontalAlignment="Left">
+            <Label Content="Dossier Paramètres" Style="{DynamicResource MaterialDesignLabel}"></Label>
+        </Viewbox>
+        <TextBlock Grid.Row="10" Style="{DynamicResource MaterialDesignTextBlock}" Text="{Binding AppSettingsFolder}"></TextBlock>
+        <Viewbox Stretch="Uniform" Grid.Row="11" HorizontalAlignment="Left">
+            <Label Content="Ligne de Commandes Retroarch" Style="{DynamicResource MaterialDesignLabel}"></Label>
+        </Viewbox>
+        <TextBlock Grid.Row="12" Style="{DynamicResource MaterialDesignTextBlock}" Text="{Binding RetroarchCMD}"></TextBlock>
+        <Viewbox Stretch="Uniform" Grid.Row="13" HorizontalAlignment="Left">
+            <Label Content="Dossier Retroarch" Style="{DynamicResource MaterialDesignLabel}"></Label>
+        </Viewbox>
+        <TextBox Grid.Row="14" Text="{Binding RetroarchPath, Mode=TwoWay}" Style="{DynamicResource MaterialDesignTextBox}"></TextBox>
+        <Grid Grid.Row="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Style="{DynamicResource MaterialDesignToolButton}" Content="Annuler"></Button>
+            <Button Grid.Column="3" Style="{DynamicResource MaterialDesignToolButton}" Content="Valider"></Button>
+        </Grid>
+    </Grid>
+</UserControl>

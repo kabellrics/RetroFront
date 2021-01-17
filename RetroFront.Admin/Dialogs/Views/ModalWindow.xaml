@@ -7,7 +7,8 @@
         xmlns:vms="clr-namespace:RetroFront.Admin.Dialogs.ViewModel"
         xmlns:vm="clr-namespace:RetroFront.Admin.Dialogs.Views"
         mc:Ignorable="d"
-        WindowStartupLocation="CenterOwner" SizeToContent="WidthAndHeight">
+        WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight"
+             Background="DarkGray">
     <Window.Resources>
         <DataTemplate DataType="{x:Type vms:CreateEmulateurModalViewModel}">
             <vm:CreateEmulateurModalView></vm:CreateEmulateurModalView>
@@ -23,6 +24,12 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type vms:AddSystemeViewModel}">
             <vm:AddSystemeView></vm:AddSystemeView>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:SettingsViewModel}">
+            <vm:SettingsModalView></vm:SettingsModalView>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:SteamGamesFoundedViewModel}">
+            <vm:SteamGamesFoundedView></vm:SteamGamesFoundedView>
         </DataTemplate>
     </Window.Resources>
     <ContentPresenter x:Name="ContentPresenter" Content="{Binding}"></ContentPresenter>

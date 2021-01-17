@@ -13,7 +13,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
     public class GameDetailViewModel : ViewModelBase
     {
         private IGameService _gameService;
-        public Game GameCurrent { get; set; }
+        public GameRom GameCurrent { get; set; }
         private ICommand _ScrapeGameCommand;
         public ICommand ScrapeGameCommand
         {
@@ -59,6 +59,12 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             get { return _Dev; }
             set { _Dev = value; RaisePropertyChanged(); }
         }
+        private string _genre;
+        public string Genre
+        {
+            get { return _genre; }
+            set { _genre = value; RaisePropertyChanged(); }
+        }
         private string _Boxart;
         public string Boxart
         {
@@ -72,7 +78,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             set { _Box3dart = value; RaisePropertyChanged(); }
         }
         private string _Banner;
-        public string Banner
+        public string Screenshoot
         {
             get { return _Banner; }
             set { _Banner = value; RaisePropertyChanged(); }
@@ -83,13 +89,19 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             get { return _Fanart; }
             set { _Fanart = value; RaisePropertyChanged(); }
         } 
+        private string _logo;
+        public string Logo
+        {
+            get { return _logo; }
+            set { _logo = value; RaisePropertyChanged(); }
+        } 
         #endregion
-        public GameDetailViewModel(Game game)
+        public GameDetailViewModel(GameRom game)
         {
             _gameService = App.ServiceProvider.GetRequiredService<IGameService>();
             LoadingGame(game);
         }
-        private void LoadingGame(Game game)
+        private void LoadingGame(GameRom game)
         {
             GameCurrent = game;
             Name = game.Name;
@@ -98,10 +110,11 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             Year = game.Year;
             Editeur = game.Editeur;
             Dev = game.Dev;
+            Genre = game.Genre;
             Boxart = game.Boxart;
-            Box3dart = game.Box3dart;
-            Banner = game.Banner;
+            Screenshoot = game.Screenshoot;
             Fanart = game.Fanart;
+            Logo = game.Logo;
         }
         private void ScrapeGame()
         {

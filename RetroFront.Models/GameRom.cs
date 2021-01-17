@@ -4,21 +4,21 @@ using System.Text;
 
 namespace RetroFront.Models
 {
-    public class Game
+    public class GameRom
     {
-        public int GameID { get; set; }
+        public int ID { get; set; }
+        public int SteamID { get; set; }
         public string Name { get; set; }
         public string Path { get; set; }
         public string Desc { get; set; }
         public string Year { get; set; }
         public string Editeur { get; set; }
         public string Dev { get; set; }
+        public string Genre { get; set; }
         public string Boxart { get; set; }
-        public string Box3dart { get; set; }
         public string Logo { get; set; }
-        public string Banner { get; set; }
+        public string Screenshoot { get; set; }
         public string Fanart { get; set; }
         public int EmulatorID { get; set; }
-        public virtual Emulator Emulator{ get; set; }
     }
 }
