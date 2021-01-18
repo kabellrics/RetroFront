@@ -3,6 +3,7 @@ using RetroFront.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace RetroFront.ViewModels
 {
@@ -80,6 +81,18 @@ namespace RetroFront.ViewModels
             get { return _fanart; }
             set { _fanart = value; RaisePropertyChanged(); }
         }
+        private string _RecalView;
+        public string RecalView
+        {
+            get { return _RecalView; }
+            set { _RecalView = value; RaisePropertyChanged(); }
+        }
+        private string _TitleScreen;
+        public string TitleScreen
+        {
+            get { return _TitleScreen; }
+            set { _TitleScreen = value; RaisePropertyChanged(); }
+        }
         private string _logo;
         public string Logo
         {
@@ -104,8 +117,18 @@ namespace RetroFront.ViewModels
             Genre = game.Genre;
             Boxart = game.Boxart;
             Sxreenshoot = game.Screenshoot;
-            Fanart = game.Fanart;
             Logo = game.Logo;
+            RecalView = game.RecalView;
+            TitleScreen = game.TitleScreen;
+            Fanart = game.Fanart;
+            if (File.Exists(game.Fanart) == false)
+            {
+                Fanart = TitleScreen;
+                if (File.Exists(game.TitleScreen) == false)
+                {
+                    Fanart = RecalView;
+                }
+            }
         }
     }
 }

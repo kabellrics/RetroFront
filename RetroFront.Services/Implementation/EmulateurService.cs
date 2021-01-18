@@ -9,6 +9,7 @@ namespace RetroFront.Services.Implementation
 {
     public class EmulateurService : IEmulateurService
     {
+        private DatabaseService dbService = new DatabaseService();
         public Emulator CreateEmulateur(Systeme platform, string Name, string Command, string Extension)
         {
             Emulator emu = new Emulator();

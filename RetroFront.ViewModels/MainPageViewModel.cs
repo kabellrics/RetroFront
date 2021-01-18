@@ -25,6 +25,26 @@ namespace RetroFront.ViewModels
         private IGameService _gameService;
         private IThemeService _themeService;
         private ThemeViewModel _currentTheme;
+
+        private int _selectedIndexSys;
+        private int _selectedIndexEmu;
+        private int _selectedIndexGame;
+
+        public int SelectedIndexSys
+        {
+            get { return _selectedIndexSys; }
+            set { _selectedIndexSys = value;RaisePropertyChanged(); }
+        }
+        public int SelectedIndexEmu
+        {
+            get { return _selectedIndexEmu; }
+            set { _selectedIndexEmu = value; RaisePropertyChanged(); }
+        }
+        public int SelectedIndexGame
+        {
+            get { return _selectedIndexGame; }
+            set { _selectedIndexGame = value; RaisePropertyChanged(); }
+        }
         public ThemeViewModel CurrentTheme
         {
             get { return _currentTheme; }
@@ -339,12 +359,15 @@ namespace RetroFront.ViewModels
         private void AddGamelist(EmulatorViewModel obj)
         {
             var gamelistfile = _dialogService.OpenUniqueFileDialog($"Fichier Gamelist (*.xml)|*.xml");
-            var gamelist = _gameService.ImportGame(gamelistfile,obj.Emulator);
-            foreach (var gamefile in gamelist)
+            if (gamelistfile != null)
             {
-                _databaseService.AddGame(gamefile);
+                var gamelist = _gameService.ImportGame(gamelistfile, obj.Emulator);
+                foreach (var gamefile in gamelist)
+                {
+                    _databaseService.AddGame(gamefile);
+                }
+                ReloadData(); 
             }
-            ReloadData();
         }
         private void ShowDetailSystemeGame(SystemeViewModel sys)
         {

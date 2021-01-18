@@ -59,14 +59,18 @@
         <TextBox Grid.Row="14" Text="{Binding RetroarchPath, Mode=TwoWay}" Style="{DynamicResource MaterialDesignTextBox}"></TextBox>
         <Grid Grid.Row="16">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Style="{DynamicResource MaterialDesignToolButton}" Content="Annuler"></Button>
-            <Button Grid.Column="3" Style="{DynamicResource MaterialDesignToolButton}" Content="Valider"></Button>
+            <Button Grid.Column="1" Content="Annuler" Command="{Binding CancelCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                        Style="{DynamicResource MaterialDesignToolButton}"></Button>
+            <Button Grid.Column="3" Content="Valider" Command="{Binding YesCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                        Style="{DynamicResource MaterialDesignToolButton}"></Button>
         </Grid>
     </Grid>
 </UserControl>

@@ -82,20 +82,23 @@ namespace RetroFront.Services.Implementation
             return SQLIteContext.Games.FirstOrDefault(x => x.Path == path);
         }
 
-        public void AddSystem(Systeme sys)
+        public Systeme AddSystem(Systeme sys)
         {
             SQLIteContext.Systemes.Add(sys);
             SQLIteContext.SaveChanges();
+            return sys;
         }
-        public void AddEmulator(Emulator sys)
+        public Emulator AddEmulator(Emulator sys)
         {
             SQLIteContext.Emulators.Add(sys);
             SQLIteContext.SaveChanges();
+            return sys;
         }
-        public void AddGame(GameRom sys)
+        public GameRom AddGame(GameRom sys)
         {
             SQLIteContext.Games.Add(sys);
             SQLIteContext.SaveChanges();
+            return sys;
         }
         public void RemoveSystem(Systeme sys)
         {

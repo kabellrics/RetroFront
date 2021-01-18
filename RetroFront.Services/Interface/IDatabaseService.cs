@@ -5,9 +5,9 @@ namespace RetroFront.Services.Interface
 {
     public interface IDatabaseService
     {
-        void AddEmulator(Emulator sys);
-        void AddGame(GameRom sys);
-        void AddSystem(Systeme sys);
+        Emulator AddEmulator(Emulator sys);
+        GameRom AddGame(GameRom sys);
+        Systeme AddSystem(Systeme sys);
         Emulator GetEmulator(int id);
         Emulator GetEmulatorByName(string name);
         IEnumerable<Emulator> GetEmulators();

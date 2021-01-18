@@ -40,6 +40,12 @@ namespace RetroFront.Services.Implementation
             System.IO.Directory.CreateDirectory($"{appSettings.AppSettingsFolder}\\media");
 
         }
+        public void UpdateSettings(AppSettings apps)
+        {
+            appSettings = apps;
+            var jsonApp = JsonConvert.SerializeObject(appSettings);
+            File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
+        }
         public void ChangeCurrentTheme(Theme th)
         {
             appSettings.CurrentTheme = th.FolderName;

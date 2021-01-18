@@ -19,6 +19,8 @@ namespace RetroFront.Models
         public string Logo { get; set; }
         public string Screenshoot { get; set; }
         public string Fanart { get; set; }
+        public string RecalView { get; set; }
+        public string TitleScreen { get; set; }
         public int EmulatorID { get; set; }
     }
 }

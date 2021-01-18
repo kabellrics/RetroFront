@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using System.IO;
 
 namespace RetroFront.Admin.Dialogs.ViewModel
 {
@@ -94,7 +95,19 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         {
             get { return _logo; }
             set { _logo = value; RaisePropertyChanged(); }
-        } 
+        }
+        private string _RecalView;
+        public string RecalView
+        {
+            get { return _RecalView; }
+            set { _RecalView = value; RaisePropertyChanged(); }
+        }
+        private string _TitleScreen;
+        public string TitleScreen
+        {
+            get { return _TitleScreen; }
+            set { _TitleScreen = value; RaisePropertyChanged(); }
+        }
         #endregion
         public GameDetailViewModel(GameRom game)
         {
@@ -113,8 +126,18 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             Genre = game.Genre;
             Boxart = game.Boxart;
             Screenshoot = game.Screenshoot;
-            Fanart = game.Fanart;
             Logo = game.Logo;
+            RecalView = game.RecalView;
+            TitleScreen = game.TitleScreen;
+            Fanart = game.Fanart;
+            if (File.Exists(game.Fanart) == false)
+            {
+                Fanart = TitleScreen;
+                if (File.Exists(game.TitleScreen) == false)
+                {
+                    Fanart = RecalView;
+                }
+            }
         }
         private void ScrapeGame()
         {

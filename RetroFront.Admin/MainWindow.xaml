@@ -95,6 +95,7 @@
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
                                   Margin="20" Style="{DynamicResource MaterialDesignCardsListBox}"
+                              SelectedIndex="{Binding DataContext.SelectedIndexSys, ElementName=myWindow ,Mode=TwoWay}"
                         SelectedItem="{Binding DataContext.SelectedSystemeViewModel, ElementName=myWindow ,Mode=TwoWay}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseDoubleClick">
@@ -167,6 +168,7 @@
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
                               Style="{DynamicResource MaterialDesignCardsListBox}"
+                              SelectedIndex="{Binding DataContext.SelectedIndexEmu, ElementName=myWindow ,Mode=TwoWay}"
                         SelectedItem="{Binding DataContext.SelectedEmulator, ElementName=myWindow ,Mode=TwoWay}"
                                   Margin="20">
                         <i:Interaction.Triggers>
@@ -224,6 +226,7 @@
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
                               Style="{DynamicResource MaterialDesignCardsListBox}"
+                              SelectedIndex="{Binding DataContext.SelectedIndexGame, ElementName=myWindow ,Mode=TwoWay}"
                         SelectedItem="{Binding DataContext.SelectedGames, ElementName=myWindow ,Mode=TwoWay}"
                                   Margin="20">
                         <i:Interaction.Triggers>
