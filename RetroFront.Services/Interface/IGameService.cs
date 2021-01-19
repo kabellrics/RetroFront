@@ -8,5 +8,6 @@ namespace RetroFront.Services.Interface
         GameRom CreateGame(string gamefile, Emulator emulator);
         GameRom ScrapeGame(GameRom game);
         IEnumerable<GameRom> ImportGame(string gamelistpath, Emulator emulator);
+        GameRom DuplicateGame(GameRom game);
     }
 }

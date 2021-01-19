@@ -32,54 +32,44 @@
             <Button Style="{DynamicResource MaterialDesignToolButton}" Content="Scrape" Grid.Column="1"></Button>
             <Button Style="{DynamicResource MaterialDesignToolButton}" Content="Valider" Grid.Column="2"></Button>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*"></RowDefinition>
-                <RowDefinition Height="2*"></RowDefinition>
-                <RowDefinition Height="2*"></RowDefinition>
-                <RowDefinition Height="2*"></RowDefinition>
-                <RowDefinition Height="2*"></RowDefinition>
-                <RowDefinition Height="5*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="4*"></RowDefinition>
+                <RowDefinition Height="6*"></RowDefinition>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
             <StackPanel Grid.Row="0" Orientation="Vertical">
-                <!--<Label Content="Chemin" Style="{DynamicResource MaterialDesignLabel}"></Label>-->
                 <Label Content="{Binding Path}" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Vertical">
-                <!--<Label Content="Editeur" Style="{DynamicResource MaterialDesignLabel}"></Label>-->
                 <Label Content="{Binding Editeur}" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Vertical">
-                <!--<Label Content="Dev" Style="{DynamicResource MaterialDesignLabel}"></Label>-->
                 <Label Content="{Binding Dev}" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </StackPanel>
             <StackPanel Grid.Row="3" Orientation="Vertical">
-                <!--<Label Content="Année" Style="{DynamicResource MaterialDesignLabel}"></Label>-->
                 <Label Content="{Binding Year}" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </StackPanel>
             <StackPanel Grid.Row="4" Orientation="Vertical">
-                <!--<Label Content="Année" Style="{DynamicResource MaterialDesignLabel}"></Label>-->
                 <Label Content="{Binding Genre}" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </StackPanel>
             <StackPanel Grid.Row="5" Orientation="Vertical">
-                <!--<Label Content="Desc" Style="{DynamicResource MaterialDesignLabel}"></Label>-->
                 <TextBlock Text="{Binding Desc}" TextWrapping="WrapWithOverflow" VerticalAlignment="Stretch" Style="{DynamicResource MaterialDesignTextBlock}"></TextBlock>
             </StackPanel>
-        </Grid>
-        <Grid Grid.Column="1" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="3*"></RowDefinition>
-                <RowDefinition Height="3*"></RowDefinition>
-                <RowDefinition Height="3*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Grid.Row="0" Stretch="Uniform" Source="{Binding Boxart}"></Image>
-            <Image Grid.Column="1" Grid.Row="0" Stretch="Uniform" Source="{Binding Logo}"></Image>
-            <Image Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Stretch="Uniform" Source="{Binding Screenshoot}"></Image>
-            <Image Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Stretch="Uniform" Source="{Binding Fanart}"></Image>
+            <Image Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" Stretch="Uniform" Source="{Binding Boxart}"></Image>
+            <Image Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Stretch="Uniform" Source="{Binding Logo}"></Image>
+            <Image Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Grid.ColumnSpan="2" Stretch="Uniform" Source="{Binding Screenshoot}"></Image>
+            <Image Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" Stretch="Uniform" Source="{Binding Fanart}"></Image>
+            <MediaElement Grid.Column="0" Grid.Row="6" Stretch="Fill" Source="{Binding Video}"></MediaElement>
         </Grid>
     </Grid>
 </UserControl>

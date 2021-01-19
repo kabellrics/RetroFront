@@ -39,7 +39,6 @@ namespace RetroFront.Admin
         {
             services.AddSingleton<IDatabaseService, DatabaseService>();
             services.AddSingleton<IFileJSONService, FileJSONService>();
-            services.AddSingleton<IMainService, MainService>();
             services.AddSingleton<IRetroarchService, RetroarchService>();
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<IEmulateurService, EmulateurService>();

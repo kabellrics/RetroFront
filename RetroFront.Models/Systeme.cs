@@ -10,7 +10,10 @@ namespace RetroFront.Models
         public int SystemeID { get; set; }
         public string Name { get; set; }
         public string Shortname { get; set; }
+        public SysType Type {get;set;}
     }
+
+
 
     public class SystemeList
     {        public List<XMLSystem> systeme { get; set; }

@@ -96,6 +96,12 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             get { return _logo; }
             set { _logo = value; RaisePropertyChanged(); }
         }
+        private string _video;
+        public string Video
+        {
+            get { return _video; }
+            set { _video = value; RaisePropertyChanged(); }
+        }
         private string _RecalView;
         public string RecalView
         {
@@ -130,6 +136,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             RecalView = game.RecalView;
             TitleScreen = game.TitleScreen;
             Fanart = game.Fanart;
+            Video = game.Video;
             if (File.Exists(game.Fanart) == false)
             {
                 Fanart = TitleScreen;

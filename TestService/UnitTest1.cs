@@ -14,13 +14,12 @@ namespace TestService
             Assert.AreNotEqual(string.Empty, syslist);
         }
 
-        [TestMethod]
-        public void TestMethod2()
-        {
-            var mainservice = new MainService();
-            var dbservice = new DatabaseService();
-            Assert.AreEqual(43,dbservice.GetSystemes());
-        }
+        //[TestMethod]
+        //public void TestMethod2()
+        //{
+        //    var dbservice = new DatabaseService();
+        //    Assert.AreEqual(43,dbservice.GetSystemes());
+        //}
         [TestMethod]
         public void TestMethod3()
         {

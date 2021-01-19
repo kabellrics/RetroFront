@@ -26,7 +26,28 @@ namespace RetroFront.Services.Implementation
             game.Logo = Path.Combine(imgfolder,"wheel", $"{game.Name}.png");
             game.TitleScreen = Path.Combine(imgfolder, "screentitle", $"{game.Name}.png");
             game.RecalView = Path.Combine(imgfolder, "recalview", $"{game.Name}.png");
+            game.Video = Path.Combine(imgfolder, "videos", $"{game.Name}.mp4");
             return LookForData(game);
+        }
+        public GameRom DuplicateGame(GameRom game)
+        {
+            GameRom duplicate = new GameRom();
+            duplicate.Path = game.Path;
+            duplicate.Name = game.Name;
+            duplicate.Boxart = game.Boxart;
+            duplicate.Fanart = game.Fanart;
+            duplicate.Screenshoot = game.Screenshoot;
+            duplicate.Logo = game.Logo;
+            duplicate.TitleScreen = game.TitleScreen;
+            duplicate.RecalView = game.RecalView;
+            duplicate.Video = game.Video;
+            duplicate.Desc = game.Desc;
+            duplicate.Dev = game.Dev;
+            duplicate.Editeur = game.Editeur;
+            duplicate.Year = game.Year;
+            duplicate.Genre = game.Genre;
+            duplicate.Name = game.Name;
+            return duplicate;
         }
         public IEnumerable<GameRom> ImportGame(string gamelistpath, Emulator emulator)
         {
@@ -54,6 +75,7 @@ namespace RetroFront.Services.Implementation
                         newgame.Logo = Path.Combine(imgfolder, "wheel", $"{newgame.Name}.png");
                         newgame.TitleScreen = Path.Combine(imgfolder, "screentitle", $"{newgame.Name}.png");
                         newgame.RecalView = Path.Combine(imgfolder, "recalview", $"{newgame.Name}.png");
+                        newgame.Video = Path.Combine(imgfolder, "videos", $"{newgame.Name}.mp4");
                         newgame = ScrapeGamefromGamelist(newgame, folderpath, gamedata);
                         yield return newgame;
                     }

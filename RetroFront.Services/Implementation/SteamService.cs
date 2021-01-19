@@ -58,7 +58,7 @@ namespace RetroFront.Services.Implementation
 
         public GameRom GetSteamInfos(GameRom game, Emulator emu)
         {
-            var urlinfos = @"https://store.steampowered.com/api/appdetails?appids="+game.SteamID;
+            var urlinfos = @"https://store.steampowered.com/api/appdetails?appids="+game.SteamID+ "&cc=fr";
             var plateforme = dbService.GetSysteme(emu.SystemeID);
             string imgfolder = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme.Shortname);
             var newgame = game;
@@ -85,23 +85,26 @@ namespace RetroFront.Services.Implementation
                     Directory.CreateDirectory(Path.Combine(imgfolder, "fanart"));
                     Directory.CreateDirectory(Path.Combine(imgfolder, "images"));
                     Directory.CreateDirectory(Path.Combine(imgfolder, "wheel"));
-                    var box = File.Create(Path.Combine(imgfolder, "box2dfront", $"{newgame.SteamID.ToString()}.jpg"));
-                    box.Close();
-                    var fanart = File.Create(Path.Combine(imgfolder, "fanart", $"{newgame.SteamID.ToString()}.jpg"));
-                    fanart.Close();
-                    var screen = File.Create(Path.Combine(imgfolder, "images", $"{newgame.SteamID.ToString()}.jpg"));
-                    screen.Close();
-                    var wheel = File.Create(Path.Combine(imgfolder, "wheel", $"{newgame.SteamID.ToString()}.png"));
-                    wheel.Close();
+                    Directory.CreateDirectory(Path.Combine(imgfolder, "videos"));
+                    //var box = File.Create(Path.Combine(imgfolder, "box2dfront", $"{newgame.SteamID.ToString()}.jpg"));
+                    //box.Close();
+                    //var fanart = File.Create(Path.Combine(imgfolder, "fanart", $"{newgame.SteamID.ToString()}.jpg"));
+                    //fanart.Close();
+                    //var screen = File.Create(Path.Combine(imgfolder, "images", $"{newgame.SteamID.ToString()}.jpg"));
+                    //screen.Close();
+                    //var wheel = File.Create(Path.Combine(imgfolder, "wheel", $"{newgame.SteamID.ToString()}.png"));
+                    //wheel.Close();
                     newgame.Boxart = Path.Combine(imgfolder, "box2dfront", $"{newgame.SteamID.ToString()}.jpg");
                     newgame.Fanart = Path.Combine(imgfolder, "fanart", $"{newgame.SteamID.ToString()}.jpg");
                     newgame.Screenshoot = Path.Combine(imgfolder, "images", $"{newgame.SteamID.ToString()}.jpg");
                     newgame.Logo = Path.Combine(imgfolder, "wheel", $"{newgame.SteamID.ToString()}.png");
+                    newgame.Video = Path.Combine(imgfolder, "videos", $"{newgame.SteamID.ToString()}.mp4");
 
-                    DownloadSteamImg(data.header_image, newgame.Fanart);
-                    DownloadSteamImg(data.screenshots.First().path_full, newgame.Screenshoot);
-                    DownloadSteamImg(LogoPath.Replace("%STEAMID%", newgame.SteamID.ToString()), newgame.Logo);
-                    DownloadSteamImg(BoxPath.Replace("%STEAMID%", newgame.SteamID.ToString()), newgame.Boxart);
+                    DownloadSteamData(data.header_image, newgame.Fanart);
+                    DownloadSteamData(data.screenshots.First().path_full, newgame.Screenshoot);
+                    DownloadSteamData(LogoPath.Replace("%STEAMID%", newgame.SteamID.ToString()), newgame.Logo);
+                    DownloadSteamData(BoxPath.Replace("%STEAMID%", newgame.SteamID.ToString()), newgame.Boxart);
+                    DownloadSteamData(data.movies.First().mp4.max, newgame.Video);
 
                     game = newgame;
                 }
@@ -114,11 +117,15 @@ namespace RetroFront.Services.Implementation
             return game;
         }
 
-        public void DownloadSteamImg(string dllpath,string target)
+        public void DownloadSteamData(string dllpath,string target)
         {
-            using (WebClient client = new WebClient())
+            using (var file = File.Create(target))
             {
-                client.DownloadFile(dllpath, target);
+                using (WebClient client = new WebClient())
+                {
+                    file.Write(client.DownloadData(dllpath));
+                    //client.DownloadFile(dllpath, file);
+                }
             }
         }
     }

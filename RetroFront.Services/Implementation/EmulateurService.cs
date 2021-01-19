@@ -9,7 +9,6 @@ namespace RetroFront.Services.Implementation
 {
     public class EmulateurService : IEmulateurService
     {
-        private DatabaseService dbService = new DatabaseService();
         public Emulator CreateEmulateur(Systeme platform, string Name, string Command, string Extension)
         {
             Emulator emu = new Emulator();
@@ -18,7 +17,15 @@ namespace RetroFront.Services.Implementation
             emu.Extension = Extension;
             return emu;
         }
-
+        public Emulator DuplicateEmulator(Emulator emulator)
+        {
+            Emulator duplicate = new Emulator();
+            duplicate.Name = emulator.Name;
+            duplicate.Command = emulator.Command;
+            duplicate.Extension = emulator.Extension;
+            duplicate.Chemin = emulator.Chemin;
+            return duplicate;
+        }
         public Emulator AddExplorer(Systeme systeme)
         {
             Emulator emuexe = new Emulator();
