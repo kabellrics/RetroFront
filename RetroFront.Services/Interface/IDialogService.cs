@@ -21,5 +21,6 @@ namespace RetroFront.Services.Interface
         bool ShowGameDetail(GameRom game);
         bool ShowParameters();
         List<GameRom> ShowSteamGamesFounded(List<GameRom> foundedgame);
+        List<GameRom> AddGamesToCollection(string collecName, IEnumerable<GameRom> foundedgame);
     }
 }

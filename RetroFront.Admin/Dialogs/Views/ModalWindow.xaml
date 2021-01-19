@@ -31,6 +31,9 @@
         <DataTemplate DataType="{x:Type vms:SteamGamesFoundedViewModel}">
             <vm:SteamGamesFoundedView></vm:SteamGamesFoundedView>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:AddGamesToCollectionViewModel}">
+            <vm:AddGamesToCollectionView></vm:AddGamesToCollectionView>
+        </DataTemplate>
     </Window.Resources>
     <ContentPresenter x:Name="ContentPresenter" Content="{Binding}"></ContentPresenter>
 </Window>

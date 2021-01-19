@@ -1,31 +1,47 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Newtonsoft.Json;
 using RetroFront.Models;
+using RetroFront.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
 namespace RetroFront.Admin.Dialogs.ViewModel
 {
-    public class AddSystemeViewModel:ViewModelBase
+    public class AddGamesToCollectionViewModel : ViewModelBase
     {
         private ICommand _cancelCommand;
         private ICommand _yesCommand;
-        public string ResultJson { get; set; }
-        private string _name;
-        public string Name
+        private List<GameViewModel> _foundedgame;
+        private List<GameRom> _resultgame;
+        private String _collecName;
+        public String CollecName
         {
-            get { return _name; }
-            set { _name = value; RaisePropertyChanged(); }
+            get { return _collecName; }
+            set { _collecName = value;RaisePropertyChanged(); }
         }
-        private string _shortname;
-        public string Shortname
+        public List<GameViewModel> FoundedGame
         {
-            get { return _shortname; }
-            set { _shortname = value; RaisePropertyChanged(); }
+            get { return _foundedgame; }
+            set { _foundedgame = value; RaisePropertyChanged(); }
+        }
+        public List<GameRom> Resultgame
+        {
+            get { return _resultgame; }
+            set { _resultgame = value; RaisePropertyChanged(); }
+        }
+        public AddGamesToCollectionViewModel(String sys, IEnumerable<GameRom> foundedgame)
+        {
+            CollecName = sys;
+            FoundedGame = new List<GameViewModel>();
+            Resultgame = new List<GameRom>();
+            foreach (var game in foundedgame.OrderBy(x=>x.EmulatorID).ThenBy(x => x.Name))
+            {
+                FoundedGame.Add(new GameViewModel(game));
+            }
         }
         public void CloseDialogWithResult(Window dialog, bool result)
         {
@@ -52,15 +68,8 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         }
         private void ValidateClick(object parameter)
         {
-            ResultJson = GetJsonSys();
+            Resultgame = FoundedGame.Where(x => x.IsSelected == true).Select(s => s.Game).ToList();
             CloseDialogWithResult(parameter as Window, true);
-        }
-        private string GetJsonSys()
-        {
-            Systeme sys = new Systeme();
-            sys.Name = Name;
-            sys.Shortname = Shortname.ToLower();
-            return JsonConvert.SerializeObject(sys);
         }
     }
 }

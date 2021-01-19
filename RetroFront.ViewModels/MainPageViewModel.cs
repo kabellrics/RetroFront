@@ -421,7 +421,36 @@ namespace RetroFront.ViewModels
         }
         private void AddCustomList()
         {
-            throw new NotImplementedException();
+            var sysjson = _dialogService.CreateJsonSys();
+            if (sysjson != null)
+            {
+                var newsys = JsonConvert.DeserializeObject<Systeme>(sysjson);
+                newsys.Type = SysType.Collection;
+                newsys = _databaseService.AddSystem(newsys);
+                var allgames = _databaseService.GetGames();
+                var gamestoadd = _dialogService.AddGamesToCollection(newsys.Name, allgames);
+                if(gamestoadd != null)
+                {
+                    var groupedGames = from game in gamestoadd
+                                       group game by game.EmulatorID into groupedgame
+                                       orderby groupedgame.Key
+                                       select groupedgame;
+
+                    foreach(var grp in groupedGames)
+                    {
+                        var newemu = _emulateurService.DuplicateEmulator(_databaseService.GetEmulator(grp.Key));
+                        newemu.SystemeID = newsys.SystemeID;
+                        _databaseService.AddEmulator(newemu);
+                        foreach(var game in grp)
+                        {
+                            var dupligame = _gameService.DuplicateGame(game);
+                            dupligame.EmulatorID = newemu.EmulatorID;
+                            _databaseService.AddGame(dupligame);
+                        }
+                    }
+                }
+                ReloadData();
+            }
         }
     }
 }

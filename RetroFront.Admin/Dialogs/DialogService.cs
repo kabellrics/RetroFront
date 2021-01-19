@@ -145,5 +145,16 @@ namespace RetroFront.Admin.Dialogs
             }
             return null;
         }
+        public List<GameRom> AddGamesToCollection(string collecName, IEnumerable<GameRom> foundedgame)
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new AddGamesToCollectionViewModel(collecName,foundedgame);
+            modalWindow.DataContext = vm;
+            if (modalWindow.ShowDialog().Value)
+            {
+                return vm.Resultgame;
+            }
+            return null;
+        }
     }
 }

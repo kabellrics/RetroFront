@@ -33,7 +33,7 @@
             <Viewbox Grid.Row="3" Stretch="Uniform" HorizontalAlignment="Left">
                 <Label Content="Shortname" HorizontalAlignment="Left" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </Viewbox>
-            <TextBox Grid.Row="4" Text="{Binding ShortName,Mode=TwoWay}" Style="{DynamicResource MaterialDesignTextBox}"></TextBox>
+            <TextBox Grid.Row="4" Text="{Binding Shortname,Mode=TwoWay}" Style="{DynamicResource MaterialDesignTextBox}"></TextBox>
             <Grid Grid.Row="6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
