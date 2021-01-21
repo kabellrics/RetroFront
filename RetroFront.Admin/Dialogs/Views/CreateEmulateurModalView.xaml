@@ -39,7 +39,7 @@
             <ComboBox Grid.Row="2" ItemsSource="{Binding Systemes}"
                       DisplayMemberPath="Name" SelectedValuePath="{Binding}"
                       SelectedItem="{Binding Selectedsysteme,Mode=TwoWay}"
-                      Style="{DynamicResource MaterialDesignFilledComboBox}">                
+                      Style="{DynamicResource MaterialDesignFloatingHintComboBox}">                
             </ComboBox>
             <Viewbox Grid.Row="3" Stretch="Uniform" HorizontalAlignment="Left">
                 <Label Content="Nom de l'émulateur" HorizontalAlignment="Left" Style="{DynamicResource MaterialDesignLabel}"></Label>

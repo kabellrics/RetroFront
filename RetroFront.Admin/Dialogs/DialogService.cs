@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+//using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace RetroFront.Admin.Dialogs
 {
@@ -45,6 +46,29 @@ namespace RetroFront.Admin.Dialogs
             else
                 return false;
         }
+        public string showInputDialog(string title = null)
+        {
+            var modaltitle = string.IsNullOrEmpty(title) ? "Entrez le nom de votre thème" : title;
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new CreateThemeViewModel(modaltitle);
+            modalWindow.DataContext = vm;
+            if (modalWindow.ShowDialog().Value)
+            {
+                return vm.ResultJson;
+            }
+            return null;
+        }
+        public string showImgPickerForPlateformeDialog(Systeme title, string themename)
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new GetPictureForSystemViewModel(title, themename);
+            modalWindow.DataContext = vm;
+            if (modalWindow.ShowDialog().Value)
+            {
+                return vm.ResultPath;
+            }
+            return null;
+        }
         public string OpenUniqueFileDialog(string filter)
         {
             var openFileDialog = new OpenFileDialog();
@@ -67,6 +91,16 @@ namespace RetroFront.Admin.Dialogs
             else
                 return null;
         }
+        //public string OpenFolderPicker()
+        //{
+        //    var dialog = new CommonOpenFileDialog();
+        //    dialog.IsFolderPicker = true;
+        //    CommonFileDialogResult dialogresult = dialog.ShowDialog();
+        //    if (dialogresult == CommonFileDialogResult.Ok)
+        //        return dialog.FileName;
+        //    else
+        //        return null;
+        //}
         public string CreateJsonSys()
         {
             ModalWindow modalWindow = new ModalWindow();

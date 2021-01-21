@@ -42,11 +42,17 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             get { return _logo; }
             set { _logo = value; RaisePropertyChanged(); }
         }
-        private string _Bck;
-        public string Bck
+        private string _wheelcarbon;
+        public string WheelCarbon
         {
-            get { return _Bck; }
-            set { _Bck = value; RaisePropertyChanged(); }
+            get { return _wheelcarbon; }
+            set { _wheelcarbon = value; RaisePropertyChanged(); }
+        }
+        private string _wheelsteel;
+        public string WheelSteel
+        {
+            get { return _wheelsteel; }
+            set { _wheelsteel = value; RaisePropertyChanged(); }
         }
         private string _name;
         public string Name
@@ -120,16 +126,14 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             {
                 ThemePlateformeViewModel thvm = new ThemePlateformeViewModel(ShortName, th);
                 thvm.Bck = ChargeBck(th.FolderName);
-                thvm.Logo = ChargeLogo(th.FolderName);
                 Themes.Add(thvm);
             }
             SelectedThemeIndex = 0;
+            Logo = _themeService.GetLogoForTheme(ShortName);
+            WheelCarbon = _themeService.GetWheelCarbonForTheme(ShortName);
+            WheelSteel = _themeService.GetWheelSteelForTheme(ShortName);
             //CurrentTheme = Themes[SelectedThemeIndex];
             //ChangeImg();
-        }
-        public string ChargeLogo(string foldername)
-        {
-            return _themeService.GetLogoForTheme(ShortName, foldername);
         }
         public string ChargeBck(string foldername)
         {

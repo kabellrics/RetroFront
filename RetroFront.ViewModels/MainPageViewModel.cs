@@ -74,6 +74,12 @@ namespace RetroFront.ViewModels
             get { return _systemes; }
             set { _systemes = value;RaisePropertyChanged(); }
         }
+        private ObservableCollection<SystemeViewModel> _customList;
+        public ObservableCollection<SystemeViewModel> CustomList
+        {
+            get { return _customList; }
+            set { _customList = value;RaisePropertyChanged(); }
+        }
         private SystemeViewModel _selectedsystemeViewModel;
         public SystemeViewModel SelectedSystemeViewModel
         {
@@ -111,13 +117,16 @@ namespace RetroFront.ViewModels
             set { _selectedgames = value;RaisePropertyChanged(); }
         }
         private ICommand _reloadCommand;
+        private ICommand _LoadDefaultBCKCommand;
         private ICommand _AddEmuCommand;
         private ICommand _AddCoreCommand;
         private ICommand _AddCustomListCommand;
+        private ICommand _AddGameCustomCommand;
         private ICommand _AddPlateformeCommand;
         private ICommand _AddSteamPlateformeCommand;
         private ICommand _AddExplorerCommand;
         private ICommand _AddSingleGameCommand;
+        private ICommand _CreateBckPackCommand;
         private ICommand _AddGamelistCommand;
         private ICommand _ShowDetailSystemeGameCommand;
         private ICommand _ShowDetailGameGameCommand;
@@ -129,6 +138,13 @@ namespace RetroFront.ViewModels
             get
             {
                 return _reloadCommand ?? (_reloadCommand = new RelayCommand(ReloadData));
+            }
+        }
+        public ICommand LoadDefaultBCKCommand
+        {
+            get
+            {
+                return _LoadDefaultBCKCommand ?? (_LoadDefaultBCKCommand = new RelayCommand(LoadDefaultBCK));
             }
         }
         public ICommand ShowSettingsCommand
@@ -181,6 +197,13 @@ namespace RetroFront.ViewModels
                 return _AddExplorerCommand ?? (_AddExplorerCommand = new RelayCommand<SystemeViewModel>(AddExplorer));
             }
         }
+        public ICommand AddGameCustomCommand
+        {
+            get
+            {
+                return _AddGameCustomCommand ?? (_AddGameCustomCommand = new RelayCommand<SystemeViewModel>(AddGameCustom));
+            }
+        }
         public ICommand AddSingleGameCommand
         {
             get
@@ -188,6 +211,14 @@ namespace RetroFront.ViewModels
                 return _AddSingleGameCommand ?? (_AddSingleGameCommand = new RelayCommand<EmulatorViewModel>(AddSingleGame));
             }
         }
+        public ICommand CreateBckPackCommand
+        {
+            get
+            {
+                return _CreateBckPackCommand ?? (_CreateBckPackCommand = new RelayCommand<string>(CreateBckPack));
+            }
+        }
+
         public ICommand AddGamelistCommand
         {
             get
@@ -248,7 +279,7 @@ namespace RetroFront.ViewModels
                 CurrentTheme = new ThemeViewModel(ths.FirstOrDefault(x => x.FolderName == currentthemefolder));
                 foreach (var th in ths)
                 {
-                    if (th.FolderName != CurrentTheme.Folder)
+                    //if (th.FolderName != CurrentTheme.Folder)
                         Themes.Add(new ThemeViewModel(th));
                 }
             }
@@ -261,11 +292,29 @@ namespace RetroFront.ViewModels
             _dialogService.ShowParameters();
         }
 
+        private void CreateBckPack(string newtheme = null)
+        {
+            if(newtheme == null)
+                newtheme = _dialogService.showInputDialog();
+            if (newtheme != null)
+            {
+                var sysInPack = AllSystemes.Where(x => x.Emulators.SelectMany(g => g.Games).Count() > 0);
+                foreach (var sys in sysInPack)
+                {
+                    var imgpath = _dialogService.showImgPickerForPlateformeDialog(sys.Systeme, newtheme);
+                    if (imgpath != null)
+                    {
+                        _themeService.LoadBckForSysteme(sys.Systeme, newtheme, imgpath);
+                    }
+                }
+            }
+            ReloadData();
+        }
         private void ReloadFullEmulators()
         {
             FullEmulators = new ObservableCollection<EmulatorViewModel>();
             var emus = _databaseService.GetEmulators();
-            foreach(var emu in emus)
+            foreach(var emu in emus.Where(x => x.IsDuplicate == false))
             {
                 FullEmulators.Add(new EmulatorViewModel(emu));
             }
@@ -274,6 +323,7 @@ namespace RetroFront.ViewModels
         {
             AllSystemes = new ObservableCollection<SystemeViewModel>();
             Systemes = new ObservableCollection<SystemeViewModel>();
+            CustomList = new ObservableCollection<SystemeViewModel>();
             foreach (var sys in _databaseService.GetSystemes().OrderBy(x=> x.Name))
             {
                 var sysvm = new SystemeViewModel(sys);
@@ -295,6 +345,7 @@ namespace RetroFront.ViewModels
                 Systemes.Add(sysvm);
                 AllSystemes.Add(sysvm);
             }
+            CustomList = new ObservableCollection<SystemeViewModel>(AllSystemes.Where(x=> x.Systeme.Type == SysType.Collection));
             LoadSpecific();
             ReloadFullEmulators();
         }
@@ -401,6 +452,15 @@ namespace RetroFront.ViewModels
                 ReloadData(); 
             }
         }
+        private void LoadDefaultBCK()
+        {
+            var plateformesbcks = AllSystemes.Where(x => x.Emulators.SelectMany(g => g.Games).Count() > 0);
+            foreach(var plateform in plateformesbcks)
+            {
+                _themeService.LoadDefaultBckForSysteme(plateform.Systeme);
+            }
+            ReloadData();
+        }
         private void ShowDetailSystemeGame(SystemeViewModel sys)
         {
             _dialogService.ShowSystemeDetail(sys.Systeme);
@@ -419,6 +479,36 @@ namespace RetroFront.ViewModels
             LoadThemeSettings();
             ReloadData();
         }
+        private void AddGameCustom(SystemeViewModel obj)
+        {
+            var allgames = _databaseService.GetGames().Where(x=> x.IsDuplicate == false);
+            var gamesalreadyIn = _databaseService.GetGamesForPlateforme(obj.Systeme.SystemeID);
+            if (gamesalreadyIn != null)
+            {
+                var gameschoosing = allgames.Where(x => !gamesalreadyIn.Any(g => g.Path == x.Path));
+                var gamestoadd = _dialogService.AddGamesToCollection(obj.Systeme.Name, gameschoosing); 
+                if(gamestoadd != null)
+                {
+                    var groupedGames = from game in gamestoadd
+                                       group game by game.EmulatorID into groupedgame
+                                       orderby groupedgame.Key
+                                       select groupedgame;
+
+                    foreach (var grp in groupedGames)
+                    {
+                        var newemu = _emulateurService.DuplicateEmulator(_databaseService.GetEmulator(grp.Key));
+                        newemu.SystemeID = obj.Systeme.SystemeID;
+                        _databaseService.AddEmulator(newemu);
+                        foreach (var game in grp)
+                        {
+                            var dupligame = _gameService.DuplicateGame(game);
+                            dupligame.EmulatorID = newemu.EmulatorID;
+                            _databaseService.AddGame(dupligame);
+                        }
+                    }
+                }
+            }
+        }
         private void AddCustomList()
         {
             var sysjson = _dialogService.CreateJsonSys();
@@ -428,7 +518,7 @@ namespace RetroFront.ViewModels
                 newsys.Type = SysType.Collection;
                 newsys = _databaseService.AddSystem(newsys);
                 var allgames = _databaseService.GetGames();
-                var gamestoadd = _dialogService.AddGamesToCollection(newsys.Name, allgames);
+                var gamestoadd = _dialogService.AddGamesToCollection(newsys.Name, allgames.Where(x => x.IsDuplicate == false));
                 if(gamestoadd != null)
                 {
                     var groupedGames = from game in gamestoadd

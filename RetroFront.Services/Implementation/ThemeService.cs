@@ -27,8 +27,32 @@ namespace RetroFront.Services.Implementation
                 yield return th;
             }
         }
-
-
+        public void LoadDefaultBckForSysteme(Systeme systeme)
+        {
+            try
+            {
+                var defaulttheme = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", "default", systeme.Shortname);
+                Directory.CreateDirectory(defaulttheme);
+                File.Copy(@"default_BCK.jpg", Path.Combine(defaulttheme, "bck.jpg"), true);
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
+        }
+        public void LoadBckForSysteme(Systeme systeme,string themename,string imgpath)
+        {
+            try
+            {
+                var defaulttheme = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", themename, systeme.Shortname);
+                Directory.CreateDirectory(defaulttheme);
+                File.Copy(imgpath, Path.Combine(defaulttheme, "bck.jpg"), true);
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
+        }
 
         public string GetLogoForTheme(string plateforme,string theme)
         {
@@ -53,15 +77,40 @@ namespace RetroFront.Services.Implementation
         {
             try
             {
-                var xmltheme = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme, "theme.xml");
-                var doc = XDocument.Load(xmltheme);
-                var results = doc.Element("theme")
-                    .Elements("view")
-                    .First(e => (string)e.Attribute("name") == "system");
-                var logonode = results.Elements("image")
-                    .First(e => (string)e.Attribute("name") == "background");
-                var logopath = logonode.Element("path").Value;
-                return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme, logopath.Substring(2).Replace("/", "\\"));
+                return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme,"bck.jpg");
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+        }
+        public string GetLogoForTheme(string plateforme)
+        {
+            try
+            {
+                return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, "logo.png");
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+        }
+        public string GetWheelCarbonForTheme(string plateforme)
+        {
+            try
+            {
+                return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, "wheelcarbon.png");
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+        }
+        public string GetWheelSteelForTheme(string plateforme)
+        {
+            try
+            {
+                return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, "wheelsteel.png");
             }
             catch (Exception ex)
             {

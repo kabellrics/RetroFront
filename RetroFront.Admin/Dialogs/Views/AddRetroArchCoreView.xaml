@@ -35,7 +35,7 @@
             <ComboBox Grid.Row="2" ItemsSource="{Binding Systemes}"
                       DisplayMemberPath="Name" SelectedValuePath="{Binding}"
                       SelectedItem="{Binding Selectedsysteme,Mode=TwoWay}"
-                      Style="{DynamicResource MaterialDesignComboBox}">
+                      Style="{DynamicResource MaterialDesignFloatingHintComboBox}">
             </ComboBox>
             <Viewbox Grid.Row="3" Stretch="Uniform" HorizontalAlignment="Left">
                 <Label Content="Choississez un des Cores" HorizontalAlignment="Left" Style="{DynamicResource MaterialDesignLabel}"></Label>
@@ -43,7 +43,7 @@
             <ComboBox Grid.Row="4" ItemsSource="{Binding RetroarchCores}"
                       DisplayMemberPath="Name" SelectedValuePath="{Binding}"
                       SelectedItem="{Binding SelectedRetroarchCore,Mode=TwoWay}"
-                      Style="{DynamicResource MaterialDesignComboBox}">
+                      Style="{DynamicResource MaterialDesignFloatingHintComboBox}">
             </ComboBox>
             <Viewbox Grid.Row="5" Stretch="Uniform" HorizontalAlignment="Left">
                 <Label Content="Extensions acceptées" HorizontalAlignment="Left" Style="{DynamicResource MaterialDesignLabel}"></Label>

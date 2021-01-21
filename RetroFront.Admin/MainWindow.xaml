@@ -42,7 +42,6 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Jeux" Style="{DynamicResource MaterialDesignMenuItem}">
-                    <!--<MenuItem Header="Ajouter plusieurs pour cet emulateur" ItemsSource="{Binding FullEmulators}" DisplayMemberPath="Name"></MenuItem>-->
                     <MenuItem Header="Ajouter un jeux pour cet emulateur" ItemsSource="{Binding FullEmulators}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
                         <MenuItem.ItemContainerStyle>
                             <Style TargetType="MenuItem">
@@ -59,16 +58,34 @@
                             </Style>
                         </MenuItem.ItemContainerStyle>
                     </MenuItem>
-                </MenuItem>
-                <MenuItem Header="Thème" Style="{DynamicResource MaterialDesignMenuItem}">
-                    <!--<MenuItem Header="Theme Actuel" Style="{DynamicResource MaterialDesignMenuItem}">
-                        <MenuItem Header="{Binding CurrentTheme.Name}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
-                    </MenuItem>-->
-                    <MenuItem Header="Récupérer les logos et backgrouns d'un thème EmulationStation" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
-                    <MenuItem Header="Themes Installés" ItemsSource="{Binding Themes}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
+                    <MenuItem Header="Ajouter des jeux à une collection" ItemsSource="{Binding CustomList}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
                         <MenuItem.ItemContainerStyle>
                             <Style TargetType="MenuItem">
-                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=MenuItem},Path=DataContext.CHangeCurrentThemeCommand}"></Setter>
+                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=MenuItem},Path=DataContext.AddGameCustomCommand}"></Setter>
+                                <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                            </Style>
+                        </MenuItem.ItemContainerStyle>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Thème" Style="{DynamicResource MaterialDesignMenuItem}">
+                    <MenuItem Header="Récupérer Les Backgrounds Screenscraper" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
+                    <MenuItem Header="Scraper les logos des Sytemes" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
+                    <MenuItem Header="Installer les backgrounds par défaut pour les systèmes avec les gens" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding LoadDefaultBCKCommand}"></MenuItem>
+                    <MenuItem Header="Créer un pack de fond d'écran" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding CreateBckPackCommand}"></MenuItem>
+                    <MenuItem Header="Modifier un pack d'image" ItemsSource="{Binding Themes}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
+                            <MenuItem.ItemContainerStyle>
+                                <Style TargetType="MenuItem">
+                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=MenuItem},Path=DataContext.CreateBckPackCommand}"></Setter>
+                                    <Setter Property="CommandParameter" Value="{Binding Folder}"></Setter>
+                                </Style>
+                            </MenuItem.ItemContainerStyle>
+                    </MenuItem>
+                    <MenuItem Header="Scraper tous les jeux du système"
+                              ItemsSource="{Binding Systemes}"
+                              DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
+                        <MenuItem.ItemContainerStyle>
+                            <Style TargetType="MenuItem">
+                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem}}"></Setter>
                                 <Setter Property="CommandParameter" Value="{Binding}"></Setter>
                             </Style>
                         </MenuItem.ItemContainerStyle>

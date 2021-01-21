@@ -57,6 +57,9 @@ namespace RetroFront.Admin
             //var mainWindow = host.Services.GetRequiredService<MainWindow>();
             //mainWindow.Show();
 
+            var dbcontext = host.Services.GetRequiredService<IDatabaseService>();
+            dbcontext.SQLIteContext.Database.EnsureCreated();
+
             base.OnStartup(e);
         }
         protected override async void OnExit(ExitEventArgs e)

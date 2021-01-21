@@ -22,6 +22,7 @@ namespace RetroFront.Models
         public string RecalView { get; set; }
         public string Video { get; set; }
         public string TitleScreen { get; set; }
+        public bool IsDuplicate { get; set; }
         public int EmulatorID { get; set; }
     }
 }

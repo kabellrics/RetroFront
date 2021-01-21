@@ -3,8 +3,11 @@ using GalaSoft.MvvmLight.Command;
 using Microsoft.Extensions.DependencyInjection;
 using RetroFront.Models;
 using RetroFront.Services.Interface;
+using RetroFront.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -14,14 +17,21 @@ namespace RetroFront.Admin.Dialogs.ViewModel
     public class SettingsViewModel : ViewModelBase
     {
         private IFileJSONService _FileJson;
+        private IThemeService themeService;
         private AppSettings settings;
         private ICommand _cancelCommand;
         private ICommand _yesCommand;
-        private string _CurrentTheme;
-        public string CurrentTheme
+        private ThemeViewModel _CurrentTheme;
+        public ThemeViewModel CurrentTheme
         {
             get { return _CurrentTheme; }
-            set { _CurrentTheme = value; RaisePropertyChanged(); } 
+            set { _CurrentTheme = value; RaisePropertyChanged(); }
+        }
+        private ObservableCollection<ThemeViewModel> _themes;
+        public ObservableCollection<ThemeViewModel> Themes
+        {
+            get { return _themes; }
+            set { _themes = value; RaisePropertyChanged(); }
         }
         private string _ScreenScraperID;
         public string ScreenScraperID
@@ -63,7 +73,29 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         public SettingsViewModel()
         {
             _FileJson = App.ServiceProvider.GetRequiredService<IFileJSONService>();
+            themeService = App.ServiceProvider.GetRequiredService<IThemeService>();
+            Getthemes();
+            settings = _FileJson.appSettings;
+            ScreenScraperID = settings?.ScreenScraperID;
+            ScreenScraperPWD = settings?.ScreenScraperPWD;
+            AppSettingsLocation = settings.AppSettingsLocation;
+            AppSettingsFolder = settings.AppSettingsFolder;
+            RetroarchCMD = settings.RetroarchCMD;
+            RetroarchPath = settings?.RetroarchPath;
 
+        }
+
+        private void Getthemes()
+        {
+            Themes = new ObservableCollection<ThemeViewModel>();
+            var ths = themeService.GetInstalledTheme();
+            foreach (var th in ths)
+            {
+                //if (th.FolderName != CurrentTheme.Folder)
+                Themes.Add(new ThemeViewModel(th));
+            }
+            var currentthemefolder = _FileJson.GetCurrentTheme();
+            CurrentTheme = Themes.FirstOrDefault(x => x.Folder == currentthemefolder);
         }
 
         public void CloseDialogWithResult(Window dialog, bool result)
@@ -91,7 +123,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         }
         private void ValidateClick(object parameter)
         {
-             settings.CurrentTheme = CurrentTheme;
+             settings.CurrentTheme = CurrentTheme.Folder;
              settings.ScreenScraperID = ScreenScraperID;
              settings.ScreenScraperPWD = ScreenScraperPWD;
              settings.AppSettingsLocation = AppSettingsLocation;

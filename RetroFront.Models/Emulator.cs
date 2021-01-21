@@ -12,6 +12,7 @@ namespace RetroFront.Models
         public string Chemin { get; set; }
         public string Command { get; set; }
         public string Extension { get; set; }
+        public bool IsDuplicate { get; set; }
 
         public int SystemeID { get; set; }
     }

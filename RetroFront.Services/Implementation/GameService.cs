@@ -27,6 +27,7 @@ namespace RetroFront.Services.Implementation
             game.TitleScreen = Path.Combine(imgfolder, "screentitle", $"{game.Name}.png");
             game.RecalView = Path.Combine(imgfolder, "recalview", $"{game.Name}.png");
             game.Video = Path.Combine(imgfolder, "videos", $"{game.Name}.mp4");
+            game.IsDuplicate = false;
             return LookForData(game);
         }
         public GameRom DuplicateGame(GameRom game)
@@ -47,6 +48,7 @@ namespace RetroFront.Services.Implementation
             duplicate.Year = game.Year;
             duplicate.Genre = game.Genre;
             duplicate.Name = game.Name;
+            duplicate.IsDuplicate = true;
             return duplicate;
         }
         public IEnumerable<GameRom> ImportGame(string gamelistpath, Emulator emulator)
@@ -77,6 +79,7 @@ namespace RetroFront.Services.Implementation
                         newgame.RecalView = Path.Combine(imgfolder, "recalview", $"{newgame.Name}.png");
                         newgame.Video = Path.Combine(imgfolder, "videos", $"{newgame.Name}.mp4");
                         newgame = ScrapeGamefromGamelist(newgame, folderpath, gamedata);
+                        newgame.IsDuplicate = false;
                         yield return newgame;
                     }
                 }

@@ -9,12 +9,6 @@ namespace RetroFront.ViewModels
 {
     public class ThemePlateformeViewModel : ViewModelBase
     {
-        private string _logo;
-        public string Logo
-        {
-            get { return _logo; }
-            set { _logo = value; RaisePropertyChanged(); }
-        }
         private string _Bck;
         public string Bck
         {

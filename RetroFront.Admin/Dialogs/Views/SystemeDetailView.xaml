@@ -12,6 +12,7 @@
     <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True">
         <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="6*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="6*"></ColumnDefinition>
@@ -20,23 +21,47 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="5*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="5*"></RowDefinition>
                 <RowDefinition Height="5*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Viewbox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Stretch="Uniform">
+            <Viewbox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Stretch="Uniform">
                 <Label Content="{Binding Name}" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </Viewbox>
-            <StackPanel Grid.Column="0" Grid.Row="3">
-                <Label Content="ShortName" Style="{DynamicResource MaterialDesignLabel}"></Label>
-                <Label Content="{Binding ShortName}" Style="{DynamicResource MaterialDesignLabel}"></Label>
-            </StackPanel>
-            <materialDesign:Transitioner 
-            Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="6"
+            <Grid Grid.Column="1" Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Viewbox Grid.Row="0" Stretch="Uniform">
+                    <Label Content="ShortName" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                </Viewbox>
+                <Viewbox Grid.Row="1" Stretch="Uniform">
+                    <Label Content="{Binding ShortName}" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                </Viewbox>
+            </Grid>
+            <Image Grid.Row="2" Grid.Column="3" Stretch="Uniform" Source="{Binding Logo}"></Image>
+            <Image Grid.Row="4" Grid.Column="1" Stretch="Uniform" Source="{Binding WheelCarbon}"></Image>
+            <Image Grid.Row="5" Grid.Column="1" Stretch="Uniform" Source="{Binding WheelSteel}"></Image> 
+            <materialDesign:Transitioner x:Name="Transitioner"
+            Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="2"
             SelectedIndex="{Binding SelectedThemeIndex,Mode=TwoWay}"
             ItemsSource="{Binding Themes}">
+                <materialDesign:Transitioner.ItemContainerStyle>
+                    <Style TargetType="materialDesign:TransitionerSlide">
+                        <Setter Property="BackwardWipe">
+                            <Setter.Value>
+                                <materialDesign:FadeWipe Duration="0:0:0.3"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="ForwardWipe">
+                            <Setter.Value>
+                                <materialDesign:FadeWipe Duration="0:0:0.5" />
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </materialDesign:Transitioner.ItemContainerStyle>
                 <materialDesign:Transitioner.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -47,28 +72,31 @@
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"></RowDefinition>
-                                <RowDefinition Height="2*"></RowDefinition>
                                 <RowDefinition Height="4*"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Label Content="{Binding Name}" Style="{DynamicResource MaterialDesignLabel}" Grid.Row="0" Grid.Column="1"></Label>
-                            <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Command="{x:Static materialDesign:Transitioner.MovePreviousCommand}">
+                            <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="0" Grid.Column="0"
+                                    Grid.RowSpan="3" Command="{x:Static materialDesign:Transitioner.MovePreviousCommand}"
+                                     CommandTarget="{Binding ElementName=Transitioner}">
                                 <!--Command="{Binding PreviousthemeCommand}">-->
                                 <Viewbox Stretch="Uniform">
                                     <Label Content="&lt;&lt;" Style="{DynamicResource MaterialDesignLabel}"></Label>
                                 </Viewbox>
                             </Button>
-                            <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" Command="{x:Static materialDesign:Transitioner.MoveNextCommand}">
+                            <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="0" Grid.Column="2"
+                                    Grid.RowSpan="4" Command="{x:Static materialDesign:Transitioner.MoveNextCommand}"
+                                     CommandTarget="{Binding ElementName=Transitioner}">
                                 <!--Command="{Binding NextthemeCommand}">-->
                                 <Viewbox Stretch="Uniform">
                                     <Label Content="&gt;&gt;" Style="{DynamicResource MaterialDesignLabel}"></Label>
                                 </Viewbox>
                             </Button>
-                            <Image Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="{Binding Logo}"></Image>
-                            <Image Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="{Binding Bck}"></Image>
+                            <Image Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="{Binding Bck}"></Image>
                         </Grid>
                     </DataTemplate>
                 </materialDesign:Transitioner.ItemTemplate>
             </materialDesign:Transitioner>
+           
         </Grid>
     </DockPanel>
 </UserControl>

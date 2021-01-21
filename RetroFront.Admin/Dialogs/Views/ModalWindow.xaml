@@ -34,6 +34,12 @@
         <DataTemplate DataType="{x:Type vms:AddGamesToCollectionViewModel}">
             <vm:AddGamesToCollectionView></vm:AddGamesToCollectionView>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:CreateThemeViewModel}">
+            <vm:CreateThemeView></vm:CreateThemeView>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:GetPictureForSystemViewModel}">
+            <vm:GetPictureForSystemView></vm:GetPictureForSystemView>
+        </DataTemplate>
     </Window.Resources>
     <ContentPresenter x:Name="ContentPresenter" Content="{Binding}"></ContentPresenter>
 </Window>

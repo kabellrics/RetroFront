@@ -1,4 +1,5 @@
-﻿using RetroFront.Models;
+﻿using RetroFront.DataAccess;
+using RetroFront.Models;
 using System.Collections.Generic;
 
 namespace RetroFront.Services.Interface
@@ -27,5 +28,7 @@ namespace RetroFront.Services.Interface
         void RemoveGame(GameRom sys);
         void RemoveSystem(Systeme sys);
         void SaveUpdate();
+
+        AppSQLIteContext SQLIteContext { get; set; }
     }
 }

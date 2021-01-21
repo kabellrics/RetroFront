@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="RetroFront.Admin.Dialogs.Views.GetPictureForSystemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RetroFront.Admin.Dialogs.Views"
+             mc:Ignorable="d" 
+             Height="600" Width="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height=".25*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height=".25*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Viewbox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="8" Stretch="Uniform">
+            <Label Style="{DynamicResource MaterialDesignLabel}" Content="{Binding Title}"></Label>
+        </Viewbox>
+        <TextBox Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding ImgPath,Mode=TwoWay}" IsEnabled="False" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="6"></TextBox>
+        <Button Content="Chercher" Style="{DynamicResource MaterialDesignToolButton}" Grid.Column="7" Grid.Row="2" Grid.ColumnSpan="2" Command="{Binding SearchpictureCommand}"></Button>
+        <Image Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="8" Stretch="Uniform" Source="{Binding ImgPath}"></Image>
+        <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" Content="Annuler" Command="{Binding CancelCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"></Button>
+        <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="6" Grid.Column="6" Grid.ColumnSpan="3" Content="Valider" Command="{Binding YesCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"></Button>
+    </Grid>
+</UserControl>

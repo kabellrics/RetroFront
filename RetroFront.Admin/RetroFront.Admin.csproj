@@ -29,4 +29,10 @@
     <ProjectReference Include="..\RetroFront.ViewModels\RetroFront.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="default_BCK.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

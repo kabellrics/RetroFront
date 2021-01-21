@@ -10,114 +10,116 @@ namespace RetroFront.Services.Implementation
 {
     public class DatabaseService : IDatabaseService
     {
-        private AppSQLIteContext SQLIteContext;
+        private AppSQLIteContext _SQLIteContext;
+
+        public AppSQLIteContext SQLIteContext { get => _SQLIteContext; set => _SQLIteContext = value; }
 
         public DatabaseService()
         {
-            SQLIteContext = new AppSQLIteContext();
+            _SQLIteContext = new AppSQLIteContext();
         }
 
         public IEnumerable<Systeme> GetSystemes()
         {
-            return SQLIteContext.Systemes;
+            return _SQLIteContext.Systemes;
         }
         public IEnumerable<Emulator> GetEmulators()
         {
-            return SQLIteContext.Emulators;
+            return _SQLIteContext.Emulators;
         }
         public IEnumerable<GameRom> GetGames()
         {
-            return SQLIteContext.Games;
+            return _SQLIteContext.Games;
         }
 
         public Systeme GetSysteme(int id)
         {
-            return SQLIteContext.Systemes.Find(id);
+            return _SQLIteContext.Systemes.Find(id);
         }
         public Emulator GetEmulator(int id)
         {
-            return SQLIteContext.Emulators.Find(id);
+            return _SQLIteContext.Emulators.Find(id);
         }
         public GameRom GetGame(int id)
         {
-            return SQLIteContext.Games.Find(id);
+            return _SQLIteContext.Games.Find(id);
         }
         public IEnumerable<Emulator> GetEmulatorsForSysteme(int sysID)
         {
-            return SQLIteContext.Emulators.Where(x=> x.SystemeID == sysID);
+            return _SQLIteContext.Emulators.Where(x=> x.SystemeID == sysID);
         }
         public int GetNbEmulatorForSysteme(int sysID)
         {
-            return SQLIteContext.Emulators.Where(x => x.SystemeID == sysID).Count();
+            return _SQLIteContext.Emulators.Where(x => x.SystemeID == sysID).Count();
         }
         public int GetNbGamesForPlateforme(int sysID)
         {
             var emus = GetEmulatorsForSysteme(sysID);
-            var plateformeGames = SQLIteContext.Games.Where(x=> emus.Select(x=>x.EmulatorID).Contains(x.EmulatorID));
+            var plateformeGames = _SQLIteContext.Games.Where(x=> emus.Select(x=>x.EmulatorID).Contains(x.EmulatorID));
             return plateformeGames.Count();
         }
         public IEnumerable<GameRom> GetGamesForPlateforme(int sysID)
         {
             var emus = GetEmulatorsForSysteme(sysID);
-            return SQLIteContext.Games.Where(x => emus.Select(x => x.EmulatorID).Contains(x.EmulatorID));
+            return _SQLIteContext.Games.Where(x => emus.Select(x => x.EmulatorID).Contains(x.EmulatorID));
         }
         public IEnumerable<GameRom> GetGamesForemulator(int emuID)
         {
-            return SQLIteContext.Games.Where(x => x.EmulatorID == emuID);
+            return _SQLIteContext.Games.Where(x => x.EmulatorID == emuID);
         }
         public int GetNbGamesForemulator(int emuID)
         {
-            return SQLIteContext.Games.Where(x => x.EmulatorID == emuID).Count();
+            return _SQLIteContext.Games.Where(x => x.EmulatorID == emuID).Count();
         }
         public Systeme GetSystemeByName(string shortname)
         {
-            return SQLIteContext.Systemes.FirstOrDefault(x => x.Shortname == shortname);
+            return _SQLIteContext.Systemes.FirstOrDefault(x => x.Shortname == shortname);
         }
         public Emulator GetEmulatorByName(string name)
         {
-            return SQLIteContext.Emulators.FirstOrDefault(x => x.Name == name);
+            return _SQLIteContext.Emulators.FirstOrDefault(x => x.Name == name);
         }
         public GameRom GetGameByName(string path)
         {
-            return SQLIteContext.Games.FirstOrDefault(x => x.Path == path);
+            return _SQLIteContext.Games.FirstOrDefault(x => x.Path == path);
         }
 
         public Systeme AddSystem(Systeme sys)
         {
-            SQLIteContext.Systemes.Add(sys);
-            SQLIteContext.SaveChanges();
+            _SQLIteContext.Systemes.Add(sys);
+            _SQLIteContext.SaveChanges();
             return sys;
         }
         public Emulator AddEmulator(Emulator sys)
         {
-            SQLIteContext.Emulators.Add(sys);
-            SQLIteContext.SaveChanges();
+            _SQLIteContext.Emulators.Add(sys);
+            _SQLIteContext.SaveChanges();
             return sys;
         }
         public GameRom AddGame(GameRom sys)
         {
-            SQLIteContext.Games.Add(sys);
-            SQLIteContext.SaveChanges();
+            _SQLIteContext.Games.Add(sys);
+            _SQLIteContext.SaveChanges();
             return sys;
         }
         public void RemoveSystem(Systeme sys)
         {
-            SQLIteContext.Systemes.Remove(sys);
-            SQLIteContext.SaveChanges();
+            _SQLIteContext.Systemes.Remove(sys);
+            _SQLIteContext.SaveChanges();
         }
         public void RemoveEmulator(Emulator sys)
         {
-            SQLIteContext.Emulators.Remove(sys);
-            SQLIteContext.SaveChanges();
+            _SQLIteContext.Emulators.Remove(sys);
+            _SQLIteContext.SaveChanges();
         }
         public void RemoveGame(GameRom sys)
         {
-            SQLIteContext.Games.Remove(sys);
-            SQLIteContext.SaveChanges();
+            _SQLIteContext.Games.Remove(sys);
+            _SQLIteContext.SaveChanges();
         }
         public void SaveUpdate()
         {
-            SQLIteContext.SaveChanges();
+            _SQLIteContext.SaveChanges();
         }
     }
 }

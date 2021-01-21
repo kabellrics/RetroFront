@@ -13,6 +13,9 @@ namespace RetroFront.Services.Interface
         bool showMessageYesNo(string title, string message);
         string OpenUniqueFileDialog(string filter);
         IEnumerable<string> OpenMultiFileDialog(string filter);
+        string showInputDialog(string title = null);
+        string showImgPickerForPlateformeDialog(Systeme title, string themename);
+        //string OpenFolderPicker();
         string CreateJsonEmu();
         string CreateJsonSys();
         string OpenDetailEmu(Emulator emu);

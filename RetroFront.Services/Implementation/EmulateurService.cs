@@ -15,6 +15,7 @@ namespace RetroFront.Services.Implementation
             emu.Name = Name;
             emu.Command = Command;
             emu.Extension = Extension;
+            emu.IsDuplicate = false;
             return emu;
         }
         public Emulator DuplicateEmulator(Emulator emulator)
@@ -24,6 +25,7 @@ namespace RetroFront.Services.Implementation
             duplicate.Command = emulator.Command;
             duplicate.Extension = emulator.Extension;
             duplicate.Chemin = emulator.Chemin;
+            duplicate.IsDuplicate = true;
             return duplicate;
         }
         public Emulator AddExplorer(Systeme systeme)
@@ -34,6 +36,7 @@ namespace RetroFront.Services.Implementation
             emuexe.Command = "%ROMPATH% --fullscreen";
             emuexe.SystemeID = systeme.SystemeID;
             emuexe.Extension = ".exe .EXE .lnk .url";
+            emuexe.IsDuplicate = false;
             return emuexe;
         }
 

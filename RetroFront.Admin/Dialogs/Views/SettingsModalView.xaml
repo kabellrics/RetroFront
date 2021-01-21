@@ -33,6 +33,11 @@
         <Viewbox Stretch="Uniform" Grid.Row="1" HorizontalAlignment="Left">
             <Label Content="Theme actuel" Style="{DynamicResource MaterialDesignLabel}"></Label>
         </Viewbox>
+        <ComboBox Grid.Row="2" ItemsSource="{Binding Themes}"
+                      DisplayMemberPath="Name" SelectedValuePath="{Binding}"
+                      SelectedItem="{Binding CurrentTheme,Mode=TwoWay}"
+                      Style="{DynamicResource MaterialDesignFloatingHintComboBox}">
+        </ComboBox>
         <Viewbox Stretch="Uniform" Grid.Row="3" HorizontalAlignment="Left">
             <Label Content="ScreenScraper ID" Style="{DynamicResource MaterialDesignLabel}"></Label>
         </Viewbox>
