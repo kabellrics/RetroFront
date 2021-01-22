@@ -24,6 +24,14 @@ namespace RetroFront.Admin.Dialogs.ViewModel
                 return _ScrapeGameCommand ?? (_ScrapeGameCommand = new RelayCommand(ScrapeGame));
             }
         }
+        private ICommand _SGDBBoxFinderCommand;
+        public ICommand SGDBBoxFinderCommand
+        {
+            get
+            {
+                return _SGDBBoxFinderCommand ?? (_SGDBBoxFinderCommand = new RelayCommand(SGDBBoxFinder));
+            }
+        }
         #region Properties
         private string _Name;
         public string Name
@@ -147,6 +155,12 @@ namespace RetroFront.Admin.Dialogs.ViewModel
                     Fanart = RecalView;
                 }
             }
+        }
+
+        private void SGDBBoxFinder()
+        {
+            var resultimg =  dialogService.SearchImgInSteamGridDB(GameCurrent, SGDBType.boxart);
+            if(resultimg !=null) { }
         }
         private void ScrapeGame()
         {

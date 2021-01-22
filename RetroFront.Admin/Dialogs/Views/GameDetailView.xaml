@@ -6,6 +6,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:RetroFront.Admin.Dialogs.Views"
              mc:Ignorable="d"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:viewmodel="clr-namespace:RetroFront.Admin.Dialogs.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:GameDetailViewModel}"
              Height="900" Width="900"
              Background="DarkGray">
     <Grid>
@@ -65,7 +67,11 @@
             <StackPanel Grid.Row="5" Orientation="Vertical">
                 <TextBlock Text="{Binding Desc}" TextWrapping="WrapWithOverflow" VerticalAlignment="Stretch" Style="{DynamicResource MaterialDesignTextBlock}"></TextBlock>
             </StackPanel>
-            <Image Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" Stretch="Uniform" Source="{Binding Boxart}"></Image>
+            <Image  Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" Stretch="Uniform" Source="{Binding Boxart}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Image.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBBoxFinderCommand}"></MouseBinding>
+                </Image.InputBindings>
+            </Image>
             <Image Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Stretch="Uniform" Source="{Binding Logo}"></Image>
             <Image Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Grid.ColumnSpan="2" Stretch="Uniform" Source="{Binding Screenshoot}"></Image>
             <Image Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" Stretch="Uniform" Source="{Binding Fanart}"></Image>

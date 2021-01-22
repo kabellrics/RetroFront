@@ -4,8 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RetroFront.Admin.Dialogs.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converter="clr-namespace:RetroFront.Admin.Converter"
              mc:Ignorable="d" 
              Height="500" Width="600" Background="DarkGray">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converter:IndexConverter x:Key="IndexConverter" />
+            <converter:AreEqualMultiValueConverter x:Key="AreEqualMultiValueConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -14,12 +22,116 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="8*"></RowDefinition>
+            <RowDefinition Height=".25*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="5*"></RowDefinition>
-            <RowDefinition Height="5*"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
+        <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
+            <Label Style="{DynamicResource MaterialDesignLabel}" Content="{Binding Title}"></Label>
+        </Viewbox>
+        <materialDesign:Transitioner x:Name="Transitioner"
+            Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="2"
+            SelectedIndex="{Binding SelectedImgIndex,Mode=TwoWay}"
+            ItemsSource="{Binding ResultImgs}">
+            <materialDesign:Transitioner.ItemContainerStyle>
+                <Style TargetType="materialDesign:TransitionerSlide">
+                    <Setter Property="BackwardWipe">
+                        <Setter.Value>
+                            <materialDesign:FadeWipe Duration="0:0:0.3"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="ForwardWipe">
+                        <Setter.Value>
+                            <materialDesign:FadeWipe Duration="0:0:0.5" />
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </materialDesign:Transitioner.ItemContainerStyle>
+            <materialDesign:Transitioner.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="1" Stretch="Uniform" Source="{Binding}"></Image>
+                        <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Column="0"
+                                    Command="{x:Static materialDesign:Transitioner.MovePreviousCommand}"
+                                     CommandTarget="{Binding ElementName=Transitioner}">
+                            <!--Command="{Binding PreviousthemeCommand}">-->
+                            <Viewbox Stretch="Uniform">
+                                <Label Content="&lt;&lt;" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                            </Viewbox>
+                        </Button>
+                        <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Column="2"
+                                    Command="{x:Static materialDesign:Transitioner.MoveNextCommand}"
+                                     CommandTarget="{Binding ElementName=Transitioner}">
+                            <!--Command="{Binding NextthemeCommand}">-->
+                            <Viewbox Stretch="Uniform">
+                                <Label Content="&gt;&gt;" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                            </Viewbox>
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </materialDesign:Transitioner.ItemTemplate>
+        </materialDesign:Transitioner>
+
+        <ItemsControl Grid.Column="1" Grid.Row="5"
+                      HorizontalAlignment="Center"
+                      ItemsSource="{Binding Converter={StaticResource IndexConverter}}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Ellipse Margin="10,0">
+                        <Ellipse.Style>
+                            <Style TargetType="Ellipse">
+                                <Setter Property="Width" Value="10" />
+                                <Setter Property="Height" Value="10" />
+                                <Setter Property="Fill" Value="{StaticResource ValidationErrorBrush}" />
+                                <Style.Triggers>
+                                    <DataTrigger Value="True">
+                                        <DataTrigger.Binding>
+                                            <MultiBinding Converter="{StaticResource AreEqualMultiValueConverter}">
+                                                <Binding Path="SelectedIndex" ElementName="Transitioner" />
+                                                <Binding />
+                                            </MultiBinding>
+                                        </DataTrigger.Binding>
+                                        <Setter Property="Width" Value="15" />
+                                        <Setter Property="Height" Value="15" />
+                                        <Setter Property="Fill" Value="{StaticResource MaterialDesignBody}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Ellipse.Style>
+                    </Ellipse>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        
+        <Grid Grid.Row="7" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Content="Annuler" Command="{Binding CancelCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                        Style="{DynamicResource MaterialDesignToolButton}"></Button>
+            <Button Grid.Column="3" Content="Valider" Command="{Binding YesCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                        Style="{DynamicResource MaterialDesignToolButton}"></Button>
+        </Grid>
     </Grid>
 </UserControl>

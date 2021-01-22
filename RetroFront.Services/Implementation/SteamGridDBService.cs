@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace RetroFront.Services.Implementation
 {
@@ -24,9 +25,10 @@ namespace RetroFront.Services.Implementation
         {
             try
             {
-                var request = new RestRequest($"/search/autocomplete/{name}", DataFormat.Json);
+                var request = new RestRequest($"/search/autocomplete/{name}", Method.GET, DataFormat.Json);
                 var response = client.Get(request);
-                var result = JsonConvert.DeserializeObject<SearchByNameResult>(response.Content);
+                var content = response.Content;
+                var result = JsonConvert.DeserializeObject<SearchByNameResult>(content);
                 return result.data;
             }
             catch (Exception ex)
@@ -35,14 +37,17 @@ namespace RetroFront.Services.Implementation
                 return null;
             }
         }
-        public IEnumerable<DataSearch> GetGameSteamId(int steamId)
+        public DataSearch GetGameSteamId(string steamId)
         {
             try
             {
-                var request = new RestRequest($"games/steam/{steamId}", DataFormat.Json);
+                var request = new RestRequest($"games/steam/{steamId}",Method.GET);
                 var response = client.Get(request);
-                var result = JsonConvert.DeserializeObject<SearchByNameResult>(response.Content);
-                return result.data;
+                var content = response.Content;
+                JObject json = JObject.Parse(content);
+                var datajson = json["data"];
+                var result = JsonConvert.DeserializeObject<DataSearch>(datajson.ToString());
+                return result;
             }
             catch (Exception ex)
             {
@@ -56,7 +61,8 @@ namespace RetroFront.Services.Implementation
             {
                 var request = new RestRequest($"heroes/game/{gameId}", DataFormat.Json);
                 var response = client.Get(request);
-                var result = JsonConvert.DeserializeObject<SearchHeroesByIdResult>(response.Content);
+                var content = response.Content;
+                var result = JsonConvert.DeserializeObject<SearchHeroesByIdResult>(content);
                 return result.data;
             }
             catch (Exception ex)
@@ -71,7 +77,8 @@ namespace RetroFront.Services.Implementation
             {
                 var request = new RestRequest($"logos/game/{gameId}", DataFormat.Json);
                 var response = client.Get(request);
-                var result = JsonConvert.DeserializeObject<SearchLogoByIdResult>(response.Content);
+                var content = response.Content;
+                var result = JsonConvert.DeserializeObject<SearchLogoByIdResult>(content);
                 return result.data;
             }
             catch (Exception ex)
@@ -80,13 +87,30 @@ namespace RetroFront.Services.Implementation
                 return null;
             }
         }
-        public IEnumerable<ImgResult> GetGridsForId(int gameId)
+        public IEnumerable<ImgResult> GetGridBoxartForId(int gameId)
         {
             try
             {
-                var request = new RestRequest($"grids/game/{gameId}", DataFormat.Json);
+                var request = new RestRequest($"grids/game/{gameId}?dimensions=600x900,342x482,660x930", DataFormat.Json);
                 var response = client.Get(request);
-                var result = JsonConvert.DeserializeObject<SearchGridByIdResult>(response.Content);
+                var content = response.Content;
+                var result = JsonConvert.DeserializeObject<SearchGridByIdResult>(content);
+                return result.data;
+            }
+            catch (Exception ex)
+            {
+                //throw;
+                return null;
+            }
+        }
+        public IEnumerable<ImgResult> GetGridFanartForId(int gameId)
+        {
+            try
+            {
+                var request = new RestRequest($"grids/game/{gameId}?dimensions=460x215,920x430", DataFormat.Json);
+                var response = client.Get(request);
+                var content = response.Content;
+                var result = JsonConvert.DeserializeObject<SearchGridByIdResult>(content);
                 return result.data;
             }
             catch (Exception ex)

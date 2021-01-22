@@ -22,62 +22,93 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         private ISteamGridDBService steamGridDBService;
         private IDialogService dialogService;
         public string ResultPath { get; set; }
-        private string _imgPath;
-        public string ImgPath
-        {
-            get { return _imgPath; }
-            set { _imgPath = value; RaisePropertyChanged(); }
-        }
         private string _title;
         public string Title
         {
             get { return _title; }
             set { _title = value; RaisePropertyChanged(); }
         }
+        private String _ImgPath;
+        public String ImgPath
+        {
+            get { return _ImgPath; }
+            set { _ImgPath = value; RaisePropertyChanged(); }
+        }
+        private int _selectedImgIndex;
+        public int SelectedImgIndex
+        {
+            get { return _selectedImgIndex; }
+            set { _selectedImgIndex = value; RaisePropertyChanged(); }
+        }
+        private int _nbImg;
+        public int NBImg
+        {
+            get { return _nbImg; }
+            set { _nbImg = value; RaisePropertyChanged(); }
+        }
         private ObservableCollection<String> _resultImgs;
         public ObservableCollection<String> ResultImgs
         {
             get { return _resultImgs; }
-            set { _resultImgs = value;RaisePropertyChanged(); }
+            set { _resultImgs = value; RaisePropertyChanged(); }
         }
-        public SteamGridSearchViewModel(GameRom game, string type, string target = null)
+        public SteamGridSearchViewModel(GameRom game, SGDBType type)
         {
-            ImgPath = target;
             steamGridDBService = App.ServiceProvider.GetRequiredService<ISteamGridDBService>();
             dialogService = App.ServiceProvider.GetRequiredService<IDialogService>();
+            Title = $"Recherche de {type.ToString()} pour {game.Name}";
             ResultImgs = new ObservableCollection<string>();
             DataSearch steamgridgame = new DataSearch(); ;
             if (game.SteamID != -1)
             {
-                steamgridgame = steamGridDBService.GetGameSteamId(game.SteamID).FirstOrDefault();
-            }else
+                steamgridgame = steamGridDBService.GetGameSteamId(game.SteamID.ToString());
+            }
+            else
             {
                 steamgridgame = dialogService.SearchSteamGridDBByName(game.Name);
             }
-            if(type == "Logo")
+            if (type == SGDBType.logo)
             {
                 var result = steamGridDBService.GetLogoForId(steamgridgame.id);
-                foreach(var img in result)
+                if (result != null)
                 {
-                    ResultImgs.Add(img.url);
+                    foreach (var img in result)
+                    {
+                        ResultImgs.Add(img.url);
+                    }
                 }
             }
-            else if(type == "heroes")
+            else if (type == SGDBType.background)
             {
-                var result = steamGridDBService.GetHeroesForId(steamgridgame.id);
-                foreach (var img in result)
+                var result = steamGridDBService.GetHeroesForId(steamgridgame.id); if (result != null)
                 {
-                    ResultImgs.Add(img.url);
+                    foreach (var img in result)
+                    {
+                        ResultImgs.Add(img.url);
+                    }
                 }
             }
-            else if(type == "grid")
+            else if (type == SGDBType.fanart)
             {
-                var result = steamGridDBService.GetGridsForId(steamgridgame.id);
-                foreach (var img in result)
+                var result = steamGridDBService.GetGridFanartForId(steamgridgame.id); if (result != null)
                 {
-                    ResultImgs.Add(img.url);
+                    foreach (var img in result)
+                    {
+                        ResultImgs.Add(img.url);
+                    }
                 }
             }
+            else if (type == SGDBType.boxart)
+            {
+                var result = steamGridDBService.GetGridBoxartForId(steamgridgame.id); if (result != null)
+                {
+                    foreach (var img in result)
+                    {
+                        ResultImgs.Add(img.url);
+                    }
+                }
+            }
+            NBImg = ResultImgs.Count;
         }
 
         public void CloseDialogWithResult(Window dialog, bool result)

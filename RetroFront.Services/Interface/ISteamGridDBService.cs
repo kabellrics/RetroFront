@@ -8,9 +8,10 @@ namespace RetroFront.Services.Interface
     public interface ISteamGridDBService
     {
         IEnumerable<DataSearch> SearchByName(string name);
-        IEnumerable<DataSearch> GetGameSteamId(int steamId);
+        DataSearch GetGameSteamId(string steamId);
         IEnumerable<ImgResult> GetHeroesForId(int gameId);
         IEnumerable<ImgResult> GetLogoForId(int gameId);
-        IEnumerable<ImgResult> GetGridsForId(int gameId);
+        IEnumerable<ImgResult> GetGridBoxartForId(int gameId);
+        IEnumerable<ImgResult> GetGridFanartForId(int gameId);
     }
 }

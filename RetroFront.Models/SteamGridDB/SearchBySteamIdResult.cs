@@ -10,6 +10,6 @@ namespace RetroFront.Models.SteamGridDB
     public class SearchBySteamIdResult
     {
         public bool success { get; set; }
-        public DataSearch data { get; set; }
+        public List<DataSearch> data { get; set; }
     }
 }

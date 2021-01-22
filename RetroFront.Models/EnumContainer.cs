@@ -15,4 +15,11 @@ namespace RetroFront.Models
         GameStore,
         Collection
     }
+    public enum SGDBType
+    {
+        logo,
+        background,
+        fanart,
+        boxart
+    }
 }

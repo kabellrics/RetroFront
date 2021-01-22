@@ -202,10 +202,10 @@ namespace RetroFront.Admin.Dialogs
             }
             return null;
         }
-        public string SearchImgInSteamGridDB(GameRom game, string type, string target = null)
+        public string SearchImgInSteamGridDB(GameRom game, SGDBType type)
         {
             ModalWindow modalWindow = new ModalWindow();
-            var vm = new SteamGridSearchViewModel(game,type,target);
+            var vm = new SteamGridSearchViewModel(game,type);
             modalWindow.DataContext = vm;
             if (modalWindow.ShowDialog().Value)
             {
