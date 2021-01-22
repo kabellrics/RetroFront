@@ -12,6 +12,39 @@
         <ResourceDictionary>
             <converter:IndexConverter x:Key="IndexConverter" />
             <converter:AreEqualMultiValueConverter x:Key="AreEqualMultiValueConverter" />
+            <DataTemplate x:Key="ItemTemplate">
+                <Ellipse Margin="10,0">
+                    <Ellipse.Style>
+                        <Style TargetType="Ellipse">
+                            <Setter Property="Width" Value="10" />
+                            <Setter Property="Height" Value="10" />
+                            <Setter Property="Fill" Value="{StaticResource ValidationErrorBrush}" />
+                        </Style>
+                    </Ellipse.Style>
+                </Ellipse>
+            </DataTemplate>
+            <DataTemplate x:Key="ItemSelectedTemplate">
+                <Ellipse Margin="10,0">
+                    <Ellipse.Style>
+                        <Style TargetType="Ellipse">
+                            <Setter Property="Width" Value="15" />
+                            <Setter Property="Height" Value="15" />
+                            <Setter Property="Fill" Value="{StaticResource MaterialDesignBody}" />
+                        </Style>
+                    </Ellipse.Style>
+                </Ellipse>
+            </DataTemplate>
+            <Style TargetType="ListViewItem" x:Key="ContainerStyle">
+                <Setter Property="Background" Value="Transparent"></Setter>
+                <Setter Property="BorderThickness" Value="0"></Setter>
+                <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                <Setter Property="ContentTemplate" Value="{StaticResource ItemTemplate}" />
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="ContentTemplate" Value="{StaticResource ItemSelectedTemplate}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -82,15 +115,17 @@
             </materialDesign:Transitioner.ItemTemplate>
         </materialDesign:Transitioner>
 
-        <ItemsControl Grid.Column="1" Grid.Row="5"
+        <ListView Grid.Column="1" Grid.Row="5"
                       HorizontalAlignment="Center"
-                      ItemsSource="{Binding Converter={StaticResource IndexConverter}}">
-            <ItemsControl.ItemsPanel>
+                      ItemsSource="{Binding ResultImgs}"
+                    SelectedIndex="{Binding SelectedImgIndex,Mode=TwoWay}"
+                ItemContainerStyle="{StaticResource ContainerStyle}">
+            <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" />
                 </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
+            </ListView.ItemsPanel>
+            <!--<ListView.ItemTemplate>
                 <DataTemplate>
                     <Ellipse Margin="10,0">
                         <Ellipse.Style>
@@ -102,7 +137,7 @@
                                     <DataTrigger Value="True">
                                         <DataTrigger.Binding>
                                             <MultiBinding Converter="{StaticResource AreEqualMultiValueConverter}">
-                                                <Binding Path="SelectedIndex" ElementName="Transitioner" />
+                                                <Binding Path="SelectedImgIndex" ElementName="Transitioner" />
                                                 <Binding />
                                             </MultiBinding>
                                         </DataTrigger.Binding>
@@ -115,8 +150,8 @@
                         </Ellipse.Style>
                     </Ellipse>
                 </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+            </ListView.ItemTemplate>-->
+        </ListView>
         
         <Grid Grid.Row="7" Grid.Column="1">
             <Grid.ColumnDefinitions>

@@ -109,6 +109,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
                 }
             }
             NBImg = ResultImgs.Count;
+            SelectedImgIndex = 0;
         }
 
         public void CloseDialogWithResult(Window dialog, bool result)

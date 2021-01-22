@@ -9,5 +9,6 @@ namespace RetroFront.Services.Interface
     {
         List<GameRom> GetSteamGame(string steamfolderpath, Emulator emu);
         GameRom GetSteamInfos(GameRom game, Emulator emu);
+        void DownloadSteamData(string dllpath, string target);
     }
 }

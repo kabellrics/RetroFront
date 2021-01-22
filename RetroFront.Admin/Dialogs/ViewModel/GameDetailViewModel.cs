@@ -160,7 +160,10 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         private void SGDBBoxFinder()
         {
             var resultimg =  dialogService.SearchImgInSteamGridDB(GameCurrent, SGDBType.boxart);
-            if(resultimg !=null) { }
+            if(resultimg !=null)
+            {
+
+            }
         }
         private void ScrapeGame()
         {

@@ -13,8 +13,8 @@ namespace RetroFront.Admin.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            //return ((SteamGridSearchViewModel)value).ResultImgs.Select((x, i) => i).ToList();
-            return ((IEnumerable)value).OfType<object>().Select((x, i) => i).ToList();
+            return ((SteamGridSearchViewModel)value).ResultImgs.Select((x, i) => i).ToList();
+            //return ((IEnumerable)value).OfType<object>().Select((x, i) => i).ToList();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
