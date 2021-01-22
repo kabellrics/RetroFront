@@ -8,8 +8,11 @@ namespace RetroFront.Models
     {
     }
     public enum SysType
-    {
-        Plateforme,
+    {        
+        Arcade,
+        Console,
+        ConsolePortable,
+        GameStore,
         Collection
     }
 }

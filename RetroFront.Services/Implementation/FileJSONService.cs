@@ -19,7 +19,6 @@ namespace RetroFront.Services.Implementation
         public AppSettings appSettings { get; set; }
         public FileJSONService()
         {
-            LoadingParam();
             //System.IO.Directory.CreateDirectory($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront");
             //System.IO.Directory.CreateDirectory($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\themes");
             if (File.Exists($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\AppSettings.json"))
@@ -43,18 +42,7 @@ namespace RetroFront.Services.Implementation
             System.IO.Directory.CreateDirectory($"{appSettings.AppSettingsFolder}\\media");
 
         }
-        public void LoadingParam()
-        {
-            var jsonparam = GetAllSysFromJSON();
-            foreach (var jsonsys in jsonparam)
-            {
-                jsonsys.Type = SysType.Plateforme;
-                if (dbService.GetSystemeByName(jsonsys.Shortname) == null)
-                {
-                    dbService.AddSystem(jsonsys);
-                }
-            }
-        }
+
         public void UpdateSettings(AppSettings apps)
         {
             appSettings = apps;
@@ -82,6 +70,7 @@ namespace RetroFront.Services.Implementation
                 Systeme sys = new Systeme();
                 sys.Name = jsonsys.fullname;
                 sys.Shortname = jsonsys.name;
+                sys.Type = (SysType)jsonsys.Type;
                 yield return sys;
             }
         }

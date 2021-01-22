@@ -23,6 +23,15 @@
                     <MenuItem Header="Quitter" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Plateforme" Style="{DynamicResource MaterialDesignMenuItem}">
+                    <MenuItem Header="Ajouter une Plateforme prédéfinie" ItemsSource="{Binding AllSystemes}"
+                              DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
+                        <MenuItem.ItemContainerStyle>
+                            <Style TargetType="MenuItem">
+                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem},Path=DataContext.AddPlateformeCommand}"></Setter>
+                                <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                            </Style>
+                        </MenuItem.ItemContainerStyle>
+                    </MenuItem>
                     <MenuItem Header="Ajouter une Plateforme" Command="{Binding AddPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                     <MenuItem Header="Intégrer Les Jeux Steam installés" Command="{Binding AddSteamPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                     <MenuItem Header="Créer une Liste Particulière" Command="{Binding AddCustomListCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
@@ -68,9 +77,9 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Thème" Style="{DynamicResource MaterialDesignMenuItem}">
-                    <MenuItem Header="Récupérer Les Backgrounds Screenscraper" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
-                    <MenuItem Header="Scraper les logos des Sytemes" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
-                    <MenuItem Header="Installer les backgrounds par défaut pour les systèmes avec les gens" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding LoadDefaultBCKCommand}"></MenuItem>
+                    <!--<MenuItem Header="Récupérer Les Backgrounds Screenscraper" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>-->
+                    <!--<MenuItem Header="Scraper les logos des Sytemes" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>-->
+                    <!--<MenuItem Header="Installer les backgrounds par défaut pour les systèmes avec les gens" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding LoadDefaultBCKCommand}"></MenuItem>-->
                     <MenuItem Header="Créer un pack de fond d'écran" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding CreateBckPackCommand}"></MenuItem>
                     <MenuItem Header="Modifier un pack d'image" ItemsSource="{Binding Themes}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
                             <MenuItem.ItemContainerStyle>
@@ -103,17 +112,19 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="1" VerticalAlignment="Stretch">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height=".50*"></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="8*"></RowDefinition>
                     </Grid.RowDefinitions>
-                        <Viewbox Stretch="Fill" HorizontalAlignment="Stretch" Grid.Row="0">
-                            <CheckBox IsChecked="{Binding DataContext.ShowOnlyWithamesGame,ElementName=myWindow,Mode=TwoWay}" Content="Afficher uniquement les systemès avec des jeux"></CheckBox>
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" Grid.Row="0">
+                            <Label Content="Liste des Plateformes" Style="{DynamicResource MaterialDesignLabel}"></Label>
                         </Viewbox>
-                    <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" Grid.Row="1">
-                        <Label Content="Liste des Plateformes" Style="{DynamicResource MaterialDesignLabel}"></Label>
-                    </Viewbox>
-                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding}" Grid.Row="2"
+                    </Grid>
+                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding}" Grid.Row="1"
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
                                   Margin="20" Style="{DynamicResource MaterialDesignCardsListBox}"
@@ -171,11 +182,10 @@
                 </Grid>
                 <Grid Grid.Column="2" VerticalAlignment="Stretch">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height=".50*"></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="8*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
@@ -187,7 +197,7 @@
                             <Label Content="{Binding Path=Name}" Style="{DynamicResource MaterialDesignLabel}"></Label>
                         </Viewbox>
                     </Grid>
-                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Path=Emulators}" Grid.Row="2"
+                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Path=Emulators}" Grid.Row="1"
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
                               Style="{DynamicResource MaterialDesignCardsListBox}"
@@ -230,11 +240,10 @@
                 </Grid>
                 <Grid Grid.Column="3" VerticalAlignment="Stretch">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height=".50*"></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="8*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
@@ -246,7 +255,7 @@
                             <Label Content="{Binding Path=Emulators/Name}" Style="{DynamicResource MaterialDesignLabel}"></Label>
                         </Viewbox>
                     </Grid>
-                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Path=Emulators/Games}" Grid.Row="2"
+                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Path=Emulators/Games}" Grid.Row="1"
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
                               Style="{DynamicResource MaterialDesignCardsListBox}"

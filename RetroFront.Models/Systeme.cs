@@ -22,7 +22,6 @@ namespace RetroFront.Models
     {
         public string name { get; set; }
         public string fullname { get; set; }
-        public string platform { get; set; }
-        public string theme { get; set; }
+        public int Type { get; set; }
     }
 }

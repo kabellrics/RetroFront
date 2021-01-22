@@ -14,6 +14,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
     public class GameDetailViewModel : ViewModelBase
     {
         private IGameService _gameService;
+        private IDialogService dialogService;
         public GameRom GameCurrent { get; set; }
         private ICommand _ScrapeGameCommand;
         public ICommand ScrapeGameCommand
@@ -118,6 +119,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         public GameDetailViewModel(GameRom game)
         {
             _gameService = App.ServiceProvider.GetRequiredService<IGameService>();
+            dialogService = App.ServiceProvider.GetRequiredService<IDialogService>();
             LoadingGame(game);
         }
         private void LoadingGame(GameRom game)

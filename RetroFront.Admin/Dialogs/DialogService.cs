@@ -2,6 +2,7 @@
 using RetroFront.Admin.Dialogs.ViewModel;
 using RetroFront.Admin.Dialogs.Views;
 using RetroFront.Models;
+using RetroFront.Models.SteamGridDB;
 using RetroFront.Services.Interface;
 using RetroFront.ViewModels;
 using System;
@@ -187,6 +188,28 @@ namespace RetroFront.Admin.Dialogs
             if (modalWindow.ShowDialog().Value)
             {
                 return vm.Resultgame;
+            }
+            return null;
+        }
+        public DataSearch SearchSteamGridDBByName(string name)
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new SteamGridDBGameFinderViewModel(name);
+            modalWindow.DataContext = vm;
+            if (modalWindow.ShowDialog().Value)
+            {
+                return vm.Resultgame;
+            }
+            return null;
+        }
+        public string SearchImgInSteamGridDB(GameRom game, string type, string target = null)
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new SteamGridSearchViewModel(game,type,target);
+            modalWindow.DataContext = vm;
+            if (modalWindow.ShowDialog().Value)
+            {
+                return vm.ResultPath;
             }
             return null;
         }

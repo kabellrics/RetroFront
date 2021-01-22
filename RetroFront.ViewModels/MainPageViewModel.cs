@@ -28,18 +28,11 @@ namespace RetroFront.ViewModels
         private int _selectedIndexSys;
         private int _selectedIndexEmu;
         private int _selectedIndexGame;
-        private bool _showOnlyWithamesGame;
-
-        public bool ShowOnlyWithamesGame
-        {
-            get { return _showOnlyWithamesGame; }
-            set { _showOnlyWithamesGame = value;RaisePropertyChanged();LoadSpecific(); }
-        }
 
         public int SelectedIndexSys
         {
             get { return _selectedIndexSys; }
-            set { _selectedIndexSys = value;RaisePropertyChanged(); }
+            set { _selectedIndexSys = value; RaisePropertyChanged(); }
         }
         public int SelectedIndexEmu
         {
@@ -54,43 +47,43 @@ namespace RetroFront.ViewModels
         public ThemeViewModel CurrentTheme
         {
             get { return _currentTheme; }
-            set { _currentTheme = value;RaisePropertyChanged(); }
+            set { _currentTheme = value; RaisePropertyChanged(); }
         }
         private ObservableCollection<ThemeViewModel> _themes;
         public ObservableCollection<ThemeViewModel> Themes
         {
             get { return _themes; }
-            set { _themes = value;RaisePropertyChanged(); }
+            set { _themes = value; RaisePropertyChanged(); }
         }
         private ObservableCollection<SystemeViewModel> _allsystemes;
         public ObservableCollection<SystemeViewModel> AllSystemes
         {
             get { return _allsystemes; }
-            set { _allsystemes = value;RaisePropertyChanged(); }
+            set { _allsystemes = value; RaisePropertyChanged(); }
         }
         private ObservableCollection<SystemeViewModel> _systemes;
         public ObservableCollection<SystemeViewModel> Systemes
         {
             get { return _systemes; }
-            set { _systemes = value;RaisePropertyChanged(); }
+            set { _systemes = value; RaisePropertyChanged(); }
         }
         private ObservableCollection<SystemeViewModel> _customList;
         public ObservableCollection<SystemeViewModel> CustomList
         {
             get { return _customList; }
-            set { _customList = value;RaisePropertyChanged(); }
+            set { _customList = value; RaisePropertyChanged(); }
         }
         private SystemeViewModel _selectedsystemeViewModel;
         public SystemeViewModel SelectedSystemeViewModel
         {
             get { return _selectedsystemeViewModel; }
-            set { _selectedsystemeViewModel = value;RaisePropertyChanged(); /*LoadEmulator();*/ }
+            set { _selectedsystemeViewModel = value; RaisePropertyChanged(); /*LoadEmulator();*/ }
         }
         private ObservableCollection<EmulatorViewModel> _emulators;
         public ObservableCollection<EmulatorViewModel> Emulators
         {
             get { return _emulators; }
-            set { _emulators = value;RaisePropertyChanged(); }
+            set { _emulators = value; RaisePropertyChanged(); }
         }
         private ObservableCollection<EmulatorViewModel> _fullemulators;
         public ObservableCollection<EmulatorViewModel> FullEmulators
@@ -102,20 +95,21 @@ namespace RetroFront.ViewModels
         public EmulatorViewModel SelectedEmulator
         {
             get { return _selectedEmulator; }
-            set { _selectedEmulator = value;RaisePropertyChanged();/* LoadGames();*/ }
+            set { _selectedEmulator = value; RaisePropertyChanged();/* LoadGames();*/ }
         }
         private ObservableCollection<GameViewModel> _games;
         public ObservableCollection<GameViewModel> Games
         {
             get { return _games; }
-            set { _games = value;RaisePropertyChanged(); }
+            set { _games = value; RaisePropertyChanged(); }
         }
         private GameViewModel _selectedgames;
         public GameViewModel SelectedGames
         {
             get { return _selectedgames; }
-            set { _selectedgames = value;RaisePropertyChanged(); }
+            set { _selectedgames = value; RaisePropertyChanged(); }
         }
+        #region Command
         private ICommand _reloadCommand;
         private ICommand _LoadDefaultBCKCommand;
         private ICommand _AddEmuCommand;
@@ -180,7 +174,7 @@ namespace RetroFront.ViewModels
         {
             get
             {
-                return _AddPlateformeCommand ?? (_AddPlateformeCommand = new RelayCommand(AddPlateforme));
+                return _AddPlateformeCommand ?? (_AddPlateformeCommand = new RelayCommand<SystemeViewModel>(AddPlateforme));
             }
         }
         public ICommand AddSteamPlateformeCommand
@@ -232,7 +226,7 @@ namespace RetroFront.ViewModels
             {
                 return _ShowDetailSystemeGameCommand ?? (_ShowDetailSystemeGameCommand = new RelayCommand<SystemeViewModel>(ShowDetailSystemeGame));
             }
-        } 
+        }
         public ICommand ShowDetailGameGameCommand
         {
             get
@@ -254,7 +248,8 @@ namespace RetroFront.ViewModels
                 return _CHangeCurrentThemeCommand ?? (_CHangeCurrentThemeCommand = new RelayCommand<ThemeViewModel>(CHangeCurrentTheme));
             }
         }
-        public MainPageViewModel(IDatabaseService databaseService, IFileJSONService fileJSONService, IRetroarchService retroarchService,IEmulateurService emulateurService, IDialogService dialogService, IGameService gameService, IThemeService themeService, ISteamService steamService)
+        #endregion
+        public MainPageViewModel(IDatabaseService databaseService, IFileJSONService fileJSONService, IRetroarchService retroarchService, IEmulateurService emulateurService, IDialogService dialogService, IGameService gameService, IThemeService themeService, ISteamService steamService)
         {
             _databaseService = databaseService;
             _fileJSONService = fileJSONService;
@@ -264,7 +259,6 @@ namespace RetroFront.ViewModels
             _gameService = gameService;
             _steamService = steamService;
             _themeService = themeService;
-            ShowOnlyWithamesGame = false;
             LoadThemeSettings();
             ReloadData();
         }
@@ -280,7 +274,7 @@ namespace RetroFront.ViewModels
                 foreach (var th in ths)
                 {
                     //if (th.FolderName != CurrentTheme.Folder)
-                        Themes.Add(new ThemeViewModel(th));
+                    Themes.Add(new ThemeViewModel(th));
                 }
             }
             catch (Exception ex)
@@ -294,7 +288,7 @@ namespace RetroFront.ViewModels
 
         private void CreateBckPack(string newtheme = null)
         {
-            if(newtheme == null)
+            if (newtheme == null)
                 newtheme = _dialogService.showInputDialog();
             if (newtheme != null)
             {
@@ -314,7 +308,7 @@ namespace RetroFront.ViewModels
         {
             FullEmulators = new ObservableCollection<EmulatorViewModel>();
             var emus = _databaseService.GetEmulators();
-            foreach(var emu in emus.Where(x => x.IsDuplicate == false))
+            foreach (var emu in emus.Where(x => x.IsDuplicate == false))
             {
                 FullEmulators.Add(new EmulatorViewModel(emu));
             }
@@ -322,43 +316,35 @@ namespace RetroFront.ViewModels
         private void ReloadData()
         {
             AllSystemes = new ObservableCollection<SystemeViewModel>();
+            foreach (var sys in _fileJSONService.GetAllSysFromJSON().OrderBy(x => x.Name))
+            {
+                AllSystemes.Add(new SystemeViewModel(sys));
+            }
             Systemes = new ObservableCollection<SystemeViewModel>();
             CustomList = new ObservableCollection<SystemeViewModel>();
-            foreach (var sys in _databaseService.GetSystemes().OrderBy(x=> x.Name))
+            foreach (var sys in _databaseService.GetSystemes().OrderBy(x => x.Name))
             {
                 var sysvm = new SystemeViewModel(sys);
                 sysvm.Bck = _themeService.GetBckForTheme(sys.Shortname, _fileJSONService.GetCurrentTheme());
                 sysvm.NBEmu = $"{_databaseService.GetNbEmulatorForSysteme(sys.SystemeID)} Emulateurs";
                 sysvm.NBGame = $"{_databaseService.GetNbGamesForPlateforme(sys.SystemeID)} Jeux";
                 var emus = _databaseService.GetEmulatorsForSysteme(sys.SystemeID);
-                foreach(var emu in emus.OrderBy(x=>x.Name))
+                foreach (var emu in emus.OrderBy(x => x.Name))
                 {
                     var emuvm = new EmulatorViewModel(emu);
                     emuvm.NBGame = $"{_databaseService.GetNbGamesForemulator(emu.EmulatorID)} Jeux";
                     var games = _databaseService.GetGamesForemulator(emu.EmulatorID);
-                    foreach(var game in games.OrderBy(x => x.Name))
+                    foreach (var game in games.OrderBy(x => x.Name))
                     {
                         emuvm.Games.Add(new GameViewModel(game));
                     }
                     sysvm.Emulators.Add(emuvm);
                 }
                 Systemes.Add(sysvm);
-                AllSystemes.Add(sysvm);
             }
-            CustomList = new ObservableCollection<SystemeViewModel>(AllSystemes.Where(x=> x.Systeme.Type == SysType.Collection));
-            LoadSpecific();
+            Systemes = new ObservableCollection<SystemeViewModel>(Systemes.OrderBy(x => x.Systeme.Type).ThenBy(x => x.Name));
+            CustomList = new ObservableCollection<SystemeViewModel>(AllSystemes.Where(x => x.Systeme.Type == SysType.Collection));
             ReloadFullEmulators();
-        }
-        private void LoadSpecific()
-        {
-            if(ShowOnlyWithamesGame)
-            {
-                Systemes = new ObservableCollection<SystemeViewModel>(AllSystemes.Where(x => x.Emulators.SelectMany(g => g.Games).Count() > 0));
-            }
-            else
-            {
-                Systemes = AllSystemes;
-            }
         }
         private void AddCore()
         {
@@ -374,10 +360,10 @@ namespace RetroFront.ViewModels
         private void AddSteamPlateforme()
         {
             var steamexepath = _dialogService.OpenUniqueFileDialog($"Steam Executable (*steam.exe)|*steam.exe");
-            if(!string.IsNullOrEmpty(steamexepath))
+            if (!string.IsNullOrEmpty(steamexepath))
             {
                 Systeme sys = _databaseService.GetSystemeByName("steam");
-                if(sys == null)
+                if (sys == null)
                 {
                     sys = new Systeme();
                     sys.Name = "Steam";
@@ -385,13 +371,13 @@ namespace RetroFront.ViewModels
                     sys = _databaseService.AddSystem(sys);
                 }
                 var emu = _databaseService.AddEmulator(_emulateurService.AddExplorer(sys));
-                var findedsteamgames = _steamService.GetSteamGame(steamexepath,emu);
+                var findedsteamgames = _steamService.GetSteamGame(steamexepath, emu);
                 var games = _databaseService.GetGames();
                 findedsteamgames = findedsteamgames.Where(x => !games.Any(g => g.SteamID == x.SteamID)).ToList();
                 var validategames = _dialogService.ShowSteamGamesFounded(findedsteamgames);
-                if(validategames != null)
+                if (validategames != null)
                 {
-                    foreach(var game in validategames)
+                    foreach (var game in validategames)
                     {
                         _databaseService.AddGame(_steamService.GetSteamInfos(game, emu));
                     }
@@ -399,15 +385,19 @@ namespace RetroFront.ViewModels
                 ReloadData();
             }
         }
-        private void AddPlateforme()
+        private void AddPlateforme(SystemeViewModel sysvm = null)
         {
-           var sysjson = _dialogService.CreateJsonSys();
-            if (sysjson != null)
+            if (sysvm == null)
             {
-                var newsys = JsonConvert.DeserializeObject<Systeme>(sysjson);
-                _databaseService.AddSystem(newsys);
-                ReloadData();
+                var sysjson = _dialogService.CreateJsonSys();
+                if (sysjson != null)
+                {
+                    sysvm = new SystemeViewModel(JsonConvert.DeserializeObject<Systeme>(sysjson));
+                }
             }
+            var sys = _databaseService.AddSystem(sysvm.Systeme);
+            _themeService.LoadDefaultBckForSysteme(sys);
+            ReloadData();
         }
         private void AddEmu()
         {
@@ -436,7 +426,7 @@ namespace RetroFront.ViewModels
                 {
                     _databaseService.AddGame(_gameService.CreateGame(gamefile, obj.Emulator));
                 }
-                ReloadData(); 
+                ReloadData();
             }
         }
         private void AddGamelist(EmulatorViewModel obj)
@@ -449,13 +439,13 @@ namespace RetroFront.ViewModels
                 {
                     _databaseService.AddGame(gamefile);
                 }
-                ReloadData(); 
+                ReloadData();
             }
         }
         private void LoadDefaultBCK()
         {
             var plateformesbcks = AllSystemes.Where(x => x.Emulators.SelectMany(g => g.Games).Count() > 0);
-            foreach(var plateform in plateformesbcks)
+            foreach (var plateform in plateformesbcks)
             {
                 _themeService.LoadDefaultBckForSysteme(plateform.Systeme);
             }
@@ -481,13 +471,13 @@ namespace RetroFront.ViewModels
         }
         private void AddGameCustom(SystemeViewModel obj)
         {
-            var allgames = _databaseService.GetGames().Where(x=> x.IsDuplicate == false);
+            var allgames = _databaseService.GetGames().Where(x => x.IsDuplicate == false);
             var gamesalreadyIn = _databaseService.GetGamesForPlateforme(obj.Systeme.SystemeID);
             if (gamesalreadyIn != null)
             {
                 var gameschoosing = allgames.Where(x => !gamesalreadyIn.Any(g => g.Path == x.Path));
-                var gamestoadd = _dialogService.AddGamesToCollection(obj.Systeme.Name, gameschoosing); 
-                if(gamestoadd != null)
+                var gamestoadd = _dialogService.AddGamesToCollection(obj.Systeme.Name, gameschoosing);
+                if (gamestoadd != null)
                 {
                     var groupedGames = from game in gamestoadd
                                        group game by game.EmulatorID into groupedgame
@@ -519,19 +509,19 @@ namespace RetroFront.ViewModels
                 newsys = _databaseService.AddSystem(newsys);
                 var allgames = _databaseService.GetGames();
                 var gamestoadd = _dialogService.AddGamesToCollection(newsys.Name, allgames.Where(x => x.IsDuplicate == false));
-                if(gamestoadd != null)
+                if (gamestoadd != null)
                 {
                     var groupedGames = from game in gamestoadd
                                        group game by game.EmulatorID into groupedgame
                                        orderby groupedgame.Key
                                        select groupedgame;
 
-                    foreach(var grp in groupedGames)
+                    foreach (var grp in groupedGames)
                     {
                         var newemu = _emulateurService.DuplicateEmulator(_databaseService.GetEmulator(grp.Key));
                         newemu.SystemeID = newsys.SystemeID;
                         _databaseService.AddEmulator(newemu);
-                        foreach(var game in grp)
+                        foreach (var game in grp)
                         {
                             var dupligame = _gameService.DuplicateGame(game);
                             dupligame.EmulatorID = newemu.EmulatorID;

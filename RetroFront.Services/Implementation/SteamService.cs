@@ -58,7 +58,7 @@ namespace RetroFront.Services.Implementation
 
         public GameRom GetSteamInfos(GameRom game, Emulator emu)
         {
-            var urlinfos = @"https://store.steampowered.com/api/appdetails?appids="+game.SteamID+ "&cc=fr";
+            var urlinfos = @"https://store.steampowered.com/api/appdetails?appids="+game.SteamID+ "&l=french";
             var plateforme = dbService.GetSysteme(emu.SystemeID);
             string imgfolder = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme.Shortname);
             var newgame = game;

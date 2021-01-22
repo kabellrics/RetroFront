@@ -31,9 +31,28 @@ namespace RetroFront.Services.Implementation
         {
             try
             {
-                var defaulttheme = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", "default", systeme.Shortname);
+                var defaulttheme = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", "Space", systeme.Shortname);
                 Directory.CreateDirectory(defaulttheme);
-                File.Copy(@"default_BCK.jpg", Path.Combine(defaulttheme, "bck.jpg"), true);
+                if(systeme.Type == SysType.Arcade)
+                {
+                    File.Copy(@"default_BCK.jpg", Path.Combine(defaulttheme, "bck.jpg"), true);
+                }
+                else if (systeme.Type == SysType.Console)
+                {
+                    File.Copy(@"default_BCK2.jpg", Path.Combine(defaulttheme, "bck.jpg"), true);
+                }
+                else if (systeme.Type == SysType.ConsolePortable)
+                {
+                    File.Copy(@"default_BCK3.jpg", Path.Combine(defaulttheme, "bck.jpg"), true);
+                }
+                else if (systeme.Type == SysType.GameStore)
+                {
+                    File.Copy(@"default_BCK4.jpg", Path.Combine(defaulttheme, "bck.jpg"), true);
+                }
+                else if (systeme.Type == SysType.Collection)
+                {
+                    File.Copy(@"default_BCK5.jpg", Path.Combine(defaulttheme, "bck.jpg"), true);
+                }
             }
             catch (Exception ex)
             {

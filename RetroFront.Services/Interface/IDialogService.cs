@@ -1,4 +1,5 @@
 ﻿using RetroFront.Models;
+using RetroFront.Models.SteamGridDB;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,5 +26,7 @@ namespace RetroFront.Services.Interface
         bool ShowParameters();
         List<GameRom> ShowSteamGamesFounded(List<GameRom> foundedgame);
         List<GameRom> AddGamesToCollection(string collecName, IEnumerable<GameRom> foundedgame);
+        DataSearch SearchSteamGridDBByName(string name);
+        string SearchImgInSteamGridDB(Game game, string type, string target = null);
     }
 }
