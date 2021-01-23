@@ -154,12 +154,16 @@ namespace RetroFront.Admin.Dialogs
             return modalWindow.ShowDialog().Value;
         }
 
-        public bool ShowGameDetail(GameRom game)
+        public GameRom ShowGameDetail(GameRom game)
         {
             ModalWindow modalWindow = new ModalWindow();
             var vm = new GameDetailViewModel(game);
             modalWindow.DataContext = vm;
-            return modalWindow.ShowDialog().Value;
+            if (modalWindow.ShowDialog().Value)
+            {
+                return vm.GameCurrent;
+            }
+            return null;
         }
         public bool ShowParameters()
         {

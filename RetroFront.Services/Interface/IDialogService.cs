@@ -22,7 +22,7 @@ namespace RetroFront.Services.Interface
         string OpenDetailEmu(Emulator emu);
         string CreateRetroarchCore();
         bool ShowSystemeDetail(Systeme sys);
-        bool ShowGameDetail(GameRom game);
+        GameRom ShowGameDetail(GameRom game);
         bool ShowParameters();
         List<GameRom> ShowSteamGamesFounded(List<GameRom> foundedgame);
         List<GameRom> AddGamesToCollection(string collecName, IEnumerable<GameRom> foundedgame);

@@ -96,7 +96,12 @@ namespace RetroFront.Services.Implementation
         {
             try
             {
-                return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme,"bck.jpg");
+                if (File.Exists(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme, "bck.png")))
+                    return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme, "bck.png");
+                else if (File.Exists(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme, "bck.jpg")))
+                    return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme, "bck.jpg");
+                else
+                    return string.Empty;
             }
             catch (Exception ex)
             {

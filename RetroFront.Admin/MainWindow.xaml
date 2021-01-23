@@ -18,7 +18,7 @@
         <DockPanel LastChildFill="True">
             <Menu IsMainMenu="True" DockPanel.Dock="Top" Style="{DynamicResource MaterialDesignMenu}">
                 <MenuItem Header="Menu" Style="{DynamicResource MaterialDesignMenuItem}">
-                    <MenuItem Header="Ouvrir RetroArch" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
+                    <MenuItem Header="Ouvrir RetroArch" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding OpenRetroarchCommand}"></MenuItem>
                     <MenuItem Header="Ouvrir RetroFront" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                     <MenuItem Header="Quitter" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                 </MenuItem>

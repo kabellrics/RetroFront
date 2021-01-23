@@ -6,6 +6,7 @@ using RetroFront.Services.Interface;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -111,6 +112,7 @@ namespace RetroFront.ViewModels
         }
         #region Command
         private ICommand _reloadCommand;
+        private ICommand _OpenRetroarchCommand;
         private ICommand _LoadDefaultBCKCommand;
         private ICommand _AddEmuCommand;
         private ICommand _AddCoreCommand;
@@ -132,6 +134,13 @@ namespace RetroFront.ViewModels
             get
             {
                 return _reloadCommand ?? (_reloadCommand = new RelayCommand(ReloadData));
+            }
+        }
+        public ICommand OpenRetroarchCommand
+        {
+            get
+            {
+                return _OpenRetroarchCommand ?? (_OpenRetroarchCommand = new RelayCommand(OpenRetroarch));
             }
         }
         public ICommand LoadDefaultBCKCommand
@@ -284,6 +293,7 @@ namespace RetroFront.ViewModels
         private void ShowSettings()
         {
             _dialogService.ShowParameters();
+            ReloadData();
         }
 
         private void CreateBckPack(string newtheme = null)
@@ -370,7 +380,11 @@ namespace RetroFront.ViewModels
                     sys.Shortname = "steam";
                     sys = _databaseService.AddSystem(sys);
                 }
-                var emu = _databaseService.AddEmulator(_emulateurService.AddExplorer(sys));
+                var emu = _databaseService.GetEmulatorsForSysteme(sys.SystemeID).FirstOrDefault(x => x.Chemin.Contains("Windows\\explorer.exe"));
+                if(emu == null)
+                {
+                    emu = _databaseService.AddEmulator(_emulateurService.AddExplorer(sys));
+                }
                 var findedsteamgames = _steamService.GetSteamGame(steamexepath, emu);
                 var games = _databaseService.GetGames();
                 findedsteamgames = findedsteamgames.Where(x => !games.Any(g => g.SteamID == x.SteamID)).ToList();
@@ -451,13 +465,50 @@ namespace RetroFront.ViewModels
             }
             ReloadData();
         }
+        private void OpenRetroarch()
+        {
+            var retroarchpath = $"{_fileJSONService.appSettings.RetroarchPath}\\retroarch.exe";
+            Process.Start(retroarchpath);
+        }
         private void ShowDetailSystemeGame(SystemeViewModel sys)
         {
             _dialogService.ShowSystemeDetail(sys.Systeme);
         }
         private void ShowDetailGameGame(GameViewModel obj)
         {
-            _dialogService.ShowGameDetail(obj.Game);
+            var game = _dialogService.ShowGameDetail(obj.Game);
+            if (game != null)
+            {
+                //if (game.Boxart.StartsWith("http"))
+                //{
+                //    var targetfolder = _gameService.GetImgPathForGame(game, SGDBType.boxart);
+                //    var targetfile = $"{targetfolder}{Path.GetExtension(game.Boxart)}";
+                //    game.Boxart = targetfile;
+                //    _gameService.DownloadImgData(game.Boxart, targetfile);
+                //}
+                //if (game.Fanart.StartsWith("http"))
+                //{
+                //    var targetfolder = _gameService.GetImgPathForGame(game, SGDBType.fanart);
+                //    var targetfile = $"{targetfolder}{Path.GetExtension(game.Fanart)}";
+                //    game.Fanart = targetfile;
+                //    _gameService.DownloadImgData(game.Fanart, targetfile);
+                //}
+                //if (game.Screenshoot.StartsWith("http"))
+                //{
+                //    var targetfolder = _gameService.GetImgPathForGame(game, SGDBType.background);
+                //    var targetfile = $"{targetfolder}{Path.GetExtension(game.Screenshoot)}";
+                //    game.Screenshoot = targetfile;
+                //    _gameService.DownloadImgData(game.Screenshoot, targetfile);
+                //}
+                //if (game.Logo.StartsWith("http"))
+                //{
+                //    var targetfolder = _gameService.GetImgPathForGame(game, SGDBType.logo);
+                //    var targetfile = $"{targetfolder}{Path.GetExtension(game.Logo)}";
+                //    game.Logo = targetfile;
+                //    _gameService.DownloadImgData(game.Logo, targetfile);
+                //}
+                //_databaseService.SaveUpdate();
+            }
         }
         private void ShowDetailEmulator(EmulatorViewModel obj)
         {

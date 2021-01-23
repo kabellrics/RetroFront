@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using System.IO;
+using System.Windows;
 
 namespace RetroFront.Admin.Dialogs.ViewModel
 {
@@ -15,6 +16,9 @@ namespace RetroFront.Admin.Dialogs.ViewModel
     {
         private IGameService _gameService;
         private IDialogService dialogService;
+        private IDatabaseService databaseService;
+        private ICommand _cancelCommand;
+        private ICommand _yesCommand;
         public GameRom GameCurrent { get; set; }
         private ICommand _ScrapeGameCommand;
         public ICommand ScrapeGameCommand
@@ -32,6 +36,31 @@ namespace RetroFront.Admin.Dialogs.ViewModel
                 return _SGDBBoxFinderCommand ?? (_SGDBBoxFinderCommand = new RelayCommand(SGDBBoxFinder));
             }
         }
+        private ICommand _SGDBLogoFinderCommand;
+        public ICommand SGDBLogoFinderCommand
+        {
+            get
+            {
+                return _SGDBLogoFinderCommand ?? (_SGDBLogoFinderCommand = new RelayCommand(SGDBLogoFinder));
+            }
+        }
+        private ICommand _SGDBScreenFinderCommand;
+        public ICommand SGDBScreenFinderCommand
+        {
+            get
+            {
+                return _SGDBScreenFinderCommand ?? (_SGDBScreenFinderCommand = new RelayCommand(SGDBScreenFinder));
+            }
+        }
+        private ICommand _SGDBFanartFinderCommand;
+        public ICommand SGDBFanartFinderCommand
+        {
+            get
+            {
+                return _SGDBFanartFinderCommand ?? (_SGDBFanartFinderCommand = new RelayCommand(SGDBFanartFinder));
+            }
+        }
+
         #region Properties
         private string _Name;
         public string Name
@@ -128,6 +157,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         {
             _gameService = App.ServiceProvider.GetRequiredService<IGameService>();
             dialogService = App.ServiceProvider.GetRequiredService<IDialogService>();
+            databaseService = App.ServiceProvider.GetRequiredService<IDatabaseService>();
             LoadingGame(game);
         }
         private void LoadingGame(GameRom game)
@@ -162,12 +192,68 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             var resultimg =  dialogService.SearchImgInSteamGridDB(GameCurrent, SGDBType.boxart);
             if(resultimg !=null)
             {
-
+                Boxart = resultimg;                
+            }
+        }
+        private void SGDBLogoFinder()
+        {
+            var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, SGDBType.logo);
+            if (resultimg != null)
+            {
+                Logo = resultimg;
+            }
+        }
+        private void SGDBScreenFinder()
+        {
+            var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, SGDBType.background);
+            if (resultimg != null)
+            {
+                Screenshoot = resultimg;
+            }
+        }
+        private void SGDBFanartFinder()
+        {
+            var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, SGDBType.fanart);
+            if (resultimg != null)
+            {
+                Fanart = resultimg;
             }
         }
         private void ScrapeGame()
         {
             LoadingGame(_gameService.ScrapeGame(GameCurrent));
+        }
+
+        public void CloseDialogWithResult(Window dialog, bool result)
+        {
+            if (dialog != null)
+                dialog.DialogResult = result;
+        }
+        public ICommand CancelCommand
+        {
+            get
+            {
+                return _cancelCommand ?? (_cancelCommand = new RelayCommand<object>(CancelClick));
+            }
+        }
+        private void CancelClick(object parameter)
+        {
+            CloseDialogWithResult(parameter as Window, false);
+        }
+        public ICommand YesCommand
+        {
+            get
+            {
+                return _yesCommand ?? (_yesCommand = new RelayCommand<object>(ValidateClick));
+            }
+        }
+        private void ValidateClick(object parameter)
+        {
+            GameCurrent.Boxart = Boxart;
+            GameCurrent.Fanart = Fanart;
+            GameCurrent.Logo = Logo;
+            GameCurrent.Screenshoot = Screenshoot;
+            CloseDialogWithResult(parameter as Window, true);
         }
     }
 }

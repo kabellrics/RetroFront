@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
+using System.Net;
 
 namespace RetroFront.Services.Implementation
 {
@@ -109,6 +110,33 @@ namespace RetroFront.Services.Implementation
             return game;
         }
 
+        public string GetImgPathForGame(GameRom game, SGDBType sGDBType)
+        {
+            var emulator = dbService.GetEmulator(game.EmulatorID);
+            var plateforme = dbService.GetSysteme(emulator.SystemeID);
+            string imgfolder = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme.Shortname);
+            if(sGDBType == SGDBType.background)
+            {
+                return Path.Combine(imgfolder, "images", $"{game.Name}");
+            }
+            else if (sGDBType == SGDBType.boxart) 
+            {
+                return Path.Combine(imgfolder, "box2dfront", $"{game.Name}");
+            }
+            else if (sGDBType == SGDBType.fanart)
+            {
+                return Path.Combine(imgfolder, "fanart", $"{game.Name}");
+            }
+            else if (sGDBType == SGDBType.logo)
+            {
+                return Path.Combine(imgfolder, "wheel", $"{game.Name}");
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
         private GameRom ScrapeGamefromGamelist(GameRom game, string filefolder, Game gamedata)
         {
             game.Desc = gamedata.Desc;
@@ -119,8 +147,17 @@ namespace RetroFront.Services.Implementation
             game.Name = gamedata.Name;
             return game;
         }
+        public string DownloadImgData(string dllpath, string target)
+        {
+            //string newfile = Path.Combine(Path.GetDirectoryName(target), Path.GetFileName(dllpath));
+            using (WebClient client = new WebClient())
+            {
+                //file.Write(client.DownloadData(dllpath));
+                client.DownloadFile(new Uri(dllpath), target);
+                return target;
+            }
+        }
 
-       
         public GameRom ScrapeGame(GameRom game)
         {
             return game;

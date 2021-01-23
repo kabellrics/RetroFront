@@ -30,9 +30,13 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Style="{DynamicResource MaterialDesignToolButton}" Content="Annuler" Grid.Column="0"></Button>
+            <Button Content="Annuler" Command="{Binding CancelCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                        Style="{DynamicResource MaterialDesignToolButton}" Grid.Column="0"></Button>
             <Button Style="{DynamicResource MaterialDesignToolButton}" Content="Scrape" Grid.Column="1"></Button>
-            <Button Style="{DynamicResource MaterialDesignToolButton}" Content="Valider" Grid.Column="2"></Button>
+            <Button Content="Valider" Command="{Binding YesCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                        Style="{DynamicResource MaterialDesignToolButton}" Grid.Column="2"></Button>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
@@ -72,9 +76,21 @@
                     <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBBoxFinderCommand}"></MouseBinding>
                 </Image.InputBindings>
             </Image>
-            <Image Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Stretch="Uniform" Source="{Binding Logo}"></Image>
-            <Image Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Grid.ColumnSpan="2" Stretch="Uniform" Source="{Binding Screenshoot}"></Image>
-            <Image Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" Stretch="Uniform" Source="{Binding Fanart}"></Image>
+            <Image Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Stretch="Uniform" Source="{Binding Logo}">
+                <Image.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBLogoFinderCommand}"></MouseBinding>
+                </Image.InputBindings>
+            </Image>
+            <Image Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Grid.ColumnSpan="2" Stretch="Uniform" Source="{Binding Screenshoot}">
+                <Image.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBScreenFinderCommand}"></MouseBinding>
+                </Image.InputBindings>
+            </Image>
+            <Image Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" Stretch="Uniform" Source="{Binding Fanart}">
+                <Image.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBFanartFinderCommand}"></MouseBinding>
+                </Image.InputBindings>
+            </Image>
             <MediaElement Grid.Column="0" Grid.Row="6" Stretch="Fill" Source="{Binding Video}"></MediaElement>
         </Grid>
     </Grid>
