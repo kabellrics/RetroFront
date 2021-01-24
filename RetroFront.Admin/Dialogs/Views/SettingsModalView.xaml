@@ -24,6 +24,8 @@
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height=".25*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
@@ -62,7 +64,11 @@
             <Label Content="Dossier Retroarch" Style="{DynamicResource MaterialDesignLabel}"></Label>
         </Viewbox>
         <TextBox Grid.Row="14" Text="{Binding RetroarchPath, Mode=TwoWay}" Style="{DynamicResource MaterialDesignTextBox}"></TextBox>
-        <Grid Grid.Row="16">
+        <Viewbox Stretch="Uniform" Grid.Row="15" HorizontalAlignment="Left">
+            <Label Content="SteamGridDB Key" Style="{DynamicResource MaterialDesignLabel}"></Label>
+        </Viewbox>
+        <TextBox Grid.Row="16" Text="{Binding SGDBKey, Mode=TwoWay}" Style="{DynamicResource MaterialDesignTextBox}"></TextBox>
+        <Grid Grid.Row="18">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>

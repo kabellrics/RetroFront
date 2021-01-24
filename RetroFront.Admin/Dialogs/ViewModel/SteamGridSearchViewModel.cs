@@ -67,49 +67,52 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             {
                 steamgridgame = steamGridDBService.GetGameSteamId(game.SteamID.ToString());
             }
-            if (type == SGDBType.logo)
+            if (steamgridgame != null)
             {
-                var result = steamGridDBService.GetLogoForId(steamgridgame.id);
-                if (result != null)
+                if (type == SGDBType.logo)
                 {
-                    foreach (var img in result)
+                    var result = steamGridDBService.GetLogoForId(steamgridgame.id);
+                    if (result != null)
                     {
-                        ResultImgs.Add(img.url);
+                        foreach (var img in result)
+                        {
+                            ResultImgs.Add(img.url);
+                        }
                     }
                 }
-            }
-            else if (type == SGDBType.background)
-            {
-                var result = steamGridDBService.GetHeroesForId(steamgridgame.id); if (result != null)
+                else if (type == SGDBType.background)
                 {
-                    foreach (var img in result)
+                    var result = steamGridDBService.GetHeroesForId(steamgridgame.id); if (result != null)
                     {
-                        ResultImgs.Add(img.url);
+                        foreach (var img in result)
+                        {
+                            ResultImgs.Add(img.url);
+                        }
                     }
                 }
-            }
-            else if (type == SGDBType.fanart)
-            {
-                var result = steamGridDBService.GetGridFanartForId(steamgridgame.id); if (result != null)
+                else if (type == SGDBType.fanart)
                 {
-                    foreach (var img in result)
+                    var result = steamGridDBService.GetGridFanartForId(steamgridgame.id); if (result != null)
                     {
-                        ResultImgs.Add(img.url);
+                        foreach (var img in result)
+                        {
+                            ResultImgs.Add(img.url);
+                        }
                     }
                 }
-            }
-            else if (type == SGDBType.boxart)
-            {
-                var result = steamGridDBService.GetGridBoxartForId(steamgridgame.id); if (result != null)
+                else if (type == SGDBType.boxart)
                 {
-                    foreach (var img in result)
+                    var result = steamGridDBService.GetGridBoxartForId(steamgridgame.id); if (result != null)
                     {
-                        ResultImgs.Add(img.url);
+                        foreach (var img in result)
+                        {
+                            ResultImgs.Add(img.url);
+                        }
                     }
                 }
+                NBImg = ResultImgs.Count;
+                SelectedImgIndex = 0; 
             }
-            NBImg = ResultImgs.Count;
-            SelectedImgIndex = 0;
         }
 
         public void CloseDialogWithResult(Window dialog, bool result)

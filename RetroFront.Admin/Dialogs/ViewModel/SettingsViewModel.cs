@@ -69,6 +69,12 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             get { return _RetroarchCMD; }
             set { _RetroarchCMD = value; RaisePropertyChanged(); }
         }
+        private string _SGDBKey;
+        public string SGDBKey
+        {
+            get { return _SGDBKey; }
+            set { _SGDBKey = value; RaisePropertyChanged(); }
+        }
 
         public SettingsViewModel()
         {
@@ -82,7 +88,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             AppSettingsFolder = settings.AppSettingsFolder;
             RetroarchCMD = settings.RetroarchCMD;
             RetroarchPath = settings?.RetroarchPath;
-
+            SGDBKey = settings?.SGDBKey;
         }
 
         private void Getthemes()
@@ -130,6 +136,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
              settings.AppSettingsFolder = AppSettingsFolder;
              settings.RetroarchCMD = RetroarchCMD;
              settings.RetroarchPath = RetroarchPath;
+            settings.SGDBKey = SGDBKey;
             _FileJson.UpdateSettings(settings);
             CloseDialogWithResult(parameter as Window, true);
         }

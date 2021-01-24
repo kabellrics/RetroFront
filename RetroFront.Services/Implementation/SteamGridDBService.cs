@@ -12,13 +12,13 @@ namespace RetroFront.Services.Implementation
 {
     public class SteamGridDBService : ISteamGridDBService
     {
-        private string key = "1ff404b93100e8b9faabad0901044380";
         private string apipath = @"https://www.steamgriddb.com/api/v2";
+        private FileJSONService  jSONService = new FileJSONService();
         private RestClient client;
         public SteamGridDBService()
         {
             client = new RestClient(apipath);
-            client.Authenticator = new JwtAuthenticator(key);
+            client.Authenticator = new JwtAuthenticator(jSONService.appSettings.SGDBKey);
         }
 
         public IEnumerable<DataSearch> SearchByName(string name)
