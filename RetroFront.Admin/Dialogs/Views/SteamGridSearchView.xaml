@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:converter="clr-namespace:RetroFront.Admin.Converter"
              mc:Ignorable="d" 
-             Height="500" Width="600" Background="DarkGray">
+             MinHeight="500" MinWidth="600" Background="DarkGray">
     <UserControl.Resources>
         <ResourceDictionary>
             <converter:IndexConverter x:Key="IndexConverter" />

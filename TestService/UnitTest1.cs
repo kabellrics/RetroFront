@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RetroFront.Services.Implementation;
+using System.Threading.Tasks;
 
 namespace TestService
 {
@@ -34,12 +35,19 @@ namespace TestService
             var listcore = ThemeService.GetLogoForTheme("gba","simple");
             Assert.AreNotEqual(null, listcore);
         }
-        [TestMethod]
-        public void TestMethod5()
-        {
-            var SteamService = new SteamService();
-            //SteamService.GetSteamGame(@"C:\Program Files (x86)\Steam\steam.exe");
-            Assert.AreNotEqual(null, null);
-        }
+        //[TestMethod]
+        //public void TestMethod5()
+        //{
+        //    var SteamService = new SteamService();
+        //    //SteamService.GetSteamGame(@"C:\Program Files (x86)\Steam\steam.exe");
+        //    Assert.AreNotEqual(null, null);
+        //}
+        //[TestMethod]
+        //public void TestMethod6()
+        //{
+        //    var IGDBService = new IGDBService();
+        //    var result = IGDBService.GetPlatformByName("Nintendo GameCube").Result;
+        //    Assert.AreNotEqual(null, result);
+        //}
     }
 }

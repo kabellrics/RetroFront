@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:RetroFront.Admin.Dialogs.Views"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800"
-             Height="600" Width="800"
+             MinHeight="600" MinWidth="800"
              Background="DarkGray">
     <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True">
         <Grid>
@@ -19,33 +19,28 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="5*"></RowDefinition>
+                <RowDefinition Height="3*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="5*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="5*"></RowDefinition>
-                <RowDefinition Height="5*"></RowDefinition>
+                <RowDefinition Height="8*"></RowDefinition>
             </Grid.RowDefinitions>
             <Viewbox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Stretch="Uniform">
                 <Label Content="{Binding Name}" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </Viewbox>
-            <Grid Grid.Column="1" Grid.Row="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Viewbox Grid.Row="0" Stretch="Uniform">
+                <Viewbox Grid.Column="1" Grid.Row="2" Stretch="Uniform">
                     <Label Content="ShortName" Style="{DynamicResource MaterialDesignLabel}"></Label>
                 </Viewbox>
-                <Viewbox Grid.Row="1" Stretch="Uniform">
+            <Viewbox Grid.Column="3" Grid.Row="2" Stretch="Uniform">
                     <Label Content="{Binding ShortName}" Style="{DynamicResource MaterialDesignLabel}"></Label>
                 </Viewbox>
-            </Grid>
-            <Image Grid.Row="2" Grid.Column="3" Stretch="Uniform" Source="{Binding Logo}"></Image>
-            <Image Grid.Row="4" Grid.Column="1" Stretch="Uniform" Source="{Binding WheelCarbon}"></Image>
-            <Image Grid.Row="5" Grid.Column="1" Stretch="Uniform" Source="{Binding WheelSteel}"></Image> 
+            <Image Grid.Row="4" Grid.Column="1" Stretch="Uniform" Source="{Binding Logo}">
+                <Image.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBFanartFinderCommand}"></MouseBinding>
+                </Image.InputBindings>
+            </Image>
             <materialDesign:Transitioner x:Name="Transitioner"
-            Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="2"
+            Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3"
             SelectedIndex="{Binding SelectedThemeIndex,Mode=TwoWay}"
             ItemsSource="{Binding Themes}">
                 <materialDesign:Transitioner.ItemContainerStyle>

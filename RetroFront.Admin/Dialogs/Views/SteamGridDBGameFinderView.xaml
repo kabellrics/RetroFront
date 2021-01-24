@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RetroFront.Admin.Dialogs.Views"
              mc:Ignorable="d" 
-             Height="600" Width="800" Background="DarkGray">
+             MinHeight="600" MinWidth="800" Background="DarkGray">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -15,6 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="10*"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
@@ -22,7 +23,15 @@
         <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Label Content="Jeux trouvés" Style="{DynamicResource MaterialDesignLabel}"></Label>
         </Viewbox>
-        <ListView Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Resultgame, Mode=TwoWay}" ItemsSource="{Binding FoundedGame}" Style="{DynamicResource MaterialDesignListView}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding Name,Mode=TwoWay}"></TextBox>
+            <Button Grid.Column="1" Style="{DynamicResource MaterialDesignFlatButton}" Content="Chercher" Command="{Binding SearchCommand}"></Button>
+        </Grid>
+        <ListView Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Resultgame, Mode=TwoWay}" ItemsSource="{Binding FoundedGame}" Style="{DynamicResource MaterialDesignListView}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Nom" DisplayMemberBinding="{Binding name}"></GridViewColumn>
@@ -31,7 +40,7 @@
             </ListView.View>
         </ListView>
 
-        <Grid Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>

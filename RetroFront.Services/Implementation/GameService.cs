@@ -142,17 +142,26 @@ namespace RetroFront.Services.Implementation
             game.Desc = gamedata.Desc;
             game.Dev = gamedata.Developer;
             game.Editeur = gamedata.Publisher;
-            game.Year = gamedata.Releasedate.Substring(0, 4);
+            if(!string.IsNullOrEmpty(gamedata.Releasedate) && !string.IsNullOrWhiteSpace(gamedata.Releasedate))
+                game.Year = gamedata.Releasedate.Substring(0, 4);
             game.Genre = gamedata.Genre;
             game.Name = gamedata.Name;
             return game;
         }
         public string DownloadImgData(string dllpath, string target)
         {
-            using (WebClient client = new WebClient())
+            try
             {
-                client.DownloadFile(new Uri(dllpath), target);
-                return target;
+                using (WebClient client = new WebClient())
+                {
+                    client.DownloadFile(new Uri(dllpath), target);
+                    return target;
+                }
+            }
+            catch (Exception ex)
+            {
+                //throw;
+                return string.Empty;
             }
         }
 

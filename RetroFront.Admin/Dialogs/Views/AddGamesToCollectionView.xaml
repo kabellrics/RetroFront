@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RetroFront.Admin.Dialogs.Views"
-             mc:Ignorable="d" Height="900" Width="900" Background="DarkGray">
+             mc:Ignorable="d" MinHeight="900" MinWidth="900" Background="DarkGray">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -30,8 +30,8 @@
                 <Label Content="{Binding CollecName}" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </Viewbox>
         </Grid>
-
-        <ListView Grid.Row="2" Grid.Column="1" ItemsSource="{Binding FoundedGame}" Style="{DynamicResource MaterialDesignListView}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <ScrollViewer Grid.Row="2" Grid.Column="1" Style="{DynamicResource MaterialDesignScrollViewer}">
+        <ListView ItemsSource="{Binding FoundedGame}" Style="{DynamicResource MaterialDesignListView}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="">
@@ -55,7 +55,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-
+        </ScrollViewer>
         <Grid Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"></ColumnDefinition>

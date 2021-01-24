@@ -7,7 +7,9 @@ using RetroFront.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 
 namespace RetroFront.Admin.Dialogs.ViewModel
@@ -15,6 +17,18 @@ namespace RetroFront.Admin.Dialogs.ViewModel
     public class SystemeDetailViewModel : ViewModelBase
     {
         private IThemeService _themeService;
+        private IDialogService dialogService;
+        private ICommand _cancelCommand;
+        private ICommand _yesCommand;
+        private ICommand _LogoFinderCommand;
+        public ICommand LogoFinderCommand
+        {
+            get
+            {
+                return _LogoFinderCommand ?? (_LogoFinderCommand = new RelayCommand(LogoFinder));
+            }
+        }
+
         #region Properties
         private ThemePlateformeViewModel _currentTheme;
         public ThemePlateformeViewModel CurrentTheme
@@ -41,18 +55,6 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         {
             get { return _logo; }
             set { _logo = value; RaisePropertyChanged(); }
-        }
-        private string _wheelcarbon;
-        public string WheelCarbon
-        {
-            get { return _wheelcarbon; }
-            set { _wheelcarbon = value; RaisePropertyChanged(); }
-        }
-        private string _wheelsteel;
-        public string WheelSteel
-        {
-            get { return _wheelsteel; }
-            set { _wheelsteel = value; RaisePropertyChanged(); }
         }
         private string _name;
         public string Name
@@ -121,6 +123,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             Name = sys.Name;
             ShortName = sys.Shortname;
             _themeService = App.ServiceProvider.GetRequiredService<IThemeService>();
+            dialogService = App.ServiceProvider.GetRequiredService<IDialogService>();
             Themes = new ObservableCollection<ThemePlateformeViewModel>();
             foreach(var th in _themeService.GetInstalledTheme())
             {
@@ -130,14 +133,48 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             }
             SelectedThemeIndex = 0;
             Logo = _themeService.GetLogoForTheme(ShortName);
-            WheelCarbon = _themeService.GetWheelCarbonForTheme(ShortName);
-            WheelSteel = _themeService.GetWheelSteelForTheme(ShortName);
             //CurrentTheme = Themes[SelectedThemeIndex];
             //ChangeImg();
+        }
+        private void LogoFinder()
+        {
+            var newlogo = dialogService.OpenUniqueFileDialog($"Fichier Image (*.png)|*.png");
+            if(newlogo != null)
+            {
+                File.Copy(newlogo, Logo, true);
+                Logo = newlogo;
+            }
         }
         public string ChargeBck(string foldername)
         {
             return _themeService.GetBckForTheme(ShortName, foldername);
+        }
+        public void CloseDialogWithResult(Window dialog, bool result)
+        {
+            if (dialog != null)
+                dialog.DialogResult = result;
+        }
+        public ICommand CancelCommand
+        {
+            get
+            {
+                return _cancelCommand ?? (_cancelCommand = new RelayCommand<object>(CancelClick));
+            }
+        }
+        private void CancelClick(object parameter)
+        {
+            CloseDialogWithResult(parameter as Window, false);
+        }
+        public ICommand YesCommand
+        {
+            get
+            {
+                return _yesCommand ?? (_yesCommand = new RelayCommand<object>(ValidateClick));
+            }
+        }
+        private void ValidateClick(object parameter)
+        {
+            CloseDialogWithResult(parameter as Window, true);
         }
     }
 }

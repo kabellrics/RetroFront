@@ -16,8 +16,10 @@ namespace RetroFront.Admin.Dialogs.ViewModel
     {
         private ICommand _cancelCommand;
         private ICommand _yesCommand;
+        private ICommand _searchCommand;
         private List<DataSearch> _foundedgame;
         private DataSearch _resultgame;
+        private string _name;
         private ISteamGridDBService steamGridDBService;
         public List<DataSearch> FoundedGame
         {
@@ -29,10 +31,31 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             get { return _resultgame; }
             set { _resultgame = value; RaisePropertyChanged(); }
         }
+        public String Name
+        {
+            get { return _name; }
+            set { _name = value; RaisePropertyChanged();}
+        }
+        public ICommand SearchCommand
+        {
+            get
+            {
+                return _searchCommand ?? (_searchCommand = new RelayCommand<object>(Search));
+            }
+        }
         public SteamGridDBGameFinderViewModel(string name)
         {
             steamGridDBService = App.ServiceProvider.GetRequiredService<ISteamGridDBService>();
-            FoundedGame = steamGridDBService.SearchByName(name).ToList();
+            Name = name;
+            SearchByNameResult();
+        }
+        private void Search(object obj)
+        {
+            SearchByNameResult();
+        }
+        private void SearchByNameResult()
+        {
+            FoundedGame = steamGridDBService.SearchByName(Name).ToList();
         }
         public void CloseDialogWithResult(Window dialog, bool result)
         {

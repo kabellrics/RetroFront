@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:RetroFront.Admin.Dialogs.Views"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="500"
-             Height="700" Width="500" Background="DarkGray">
+             MinHeight="700" MinWidth="500" Background="DarkGray">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"></RowDefinition>

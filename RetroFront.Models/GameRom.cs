@@ -8,6 +8,9 @@ namespace RetroFront.Models
     {
         public int ID { get; set; }
         public int SteamID { get; set; }
+        public int SGDBID { get; set; }
+        public int IGDBID { get; set; }
+        public int RAWGID { get; set; }
         public string Name { get; set; }
         public string Path { get; set; }
         public string Desc { get; set; }

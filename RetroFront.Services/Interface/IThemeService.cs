@@ -11,7 +11,6 @@ namespace RetroFront.Services.Interface
         void LoadDefaultBckForSysteme(Systeme systeme);
         void LoadBckForSysteme(Systeme systeme, string themename, string imgpath);
         string GetLogoForTheme(string plateforme);
-        string GetWheelCarbonForTheme(string plateforme);
-        string GetWheelSteelForTheme(string plateforme);
+
     }
 }

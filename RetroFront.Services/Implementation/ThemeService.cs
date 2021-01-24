@@ -119,27 +119,6 @@ namespace RetroFront.Services.Implementation
                 return string.Empty;
             }
         }
-        public string GetWheelCarbonForTheme(string plateforme)
-        {
-            try
-            {
-                return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, "wheelcarbon.png");
-            }
-            catch (Exception ex)
-            {
-                return string.Empty;
-            }
-        }
-        public string GetWheelSteelForTheme(string plateforme)
-        {
-            try
-            {
-                return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, "wheelsteel.png");
-            }
-            catch (Exception ex)
-            {
-                return string.Empty;
-            }
-        }
+
     }
 }

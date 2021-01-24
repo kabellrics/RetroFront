@@ -7,6 +7,8 @@
         xmlns:vms="clr-namespace:RetroFront.Admin.Dialogs.ViewModel"
         xmlns:vm="clr-namespace:RetroFront.Admin.Dialogs.Views"
         mc:Ignorable="d"
+        VerticalContentAlignment="Stretch"
+        HorizontalContentAlignment="Stretch"
         WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight"
              Background="DarkGray">
     <Window.Resources>
@@ -47,5 +49,13 @@
             <vm:SteamGridDBGameFinderView></vm:SteamGridDBGameFinderView>
         </DataTemplate>
     </Window.Resources>
-    <ContentPresenter x:Name="ContentPresenter" Content="{Binding}"></ContentPresenter>
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ContentPresenter Grid.Column="0" Grid.Row="0" x:Name="ContentPresenter" Content="{Binding}"></ContentPresenter>
+    </Grid>
 </Window>

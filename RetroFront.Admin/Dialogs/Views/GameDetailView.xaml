@@ -7,10 +7,14 @@
              xmlns:local="clr-namespace:RetroFront.Admin.Dialogs.Views"
              mc:Ignorable="d"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:viewmodel="clr-namespace:RetroFront.Admin.Dialogs.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:GameDetailViewModel}"
-             Height="900" Width="900"
-             Background="DarkGray">
-    <Grid>
+             xmlns:viewmodel="clr-namespace:RetroFront.Admin.Dialogs.ViewModel"
+             d:DataContext="{d:DesignInstance Type=viewmodel:GameDetailViewModel}"
+             MinHeight="900" MinWidth="900"
+             HorizontalAlignment="Stretch"
+             HorizontalContentAlignment="Stretch"
+             VerticalAlignment="Stretch"
+             VerticalContentAlignment="Stretch">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -53,45 +57,55 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Row="0" Orientation="Vertical">
+            <Grid Grid.Row="0">
                 <Label Content="{Binding Path}" Style="{DynamicResource MaterialDesignLabel}"></Label>
-            </StackPanel>
-            <StackPanel Grid.Row="1" Orientation="Vertical">
+            </Grid>
+            <Grid Grid.Row="1">
                 <Label Content="{Binding Editeur}" Style="{DynamicResource MaterialDesignLabel}"></Label>
-            </StackPanel>
-            <StackPanel Grid.Row="2" Orientation="Vertical">
+            </Grid>
+            <Grid Grid.Row="2">
                 <Label Content="{Binding Dev}" Style="{DynamicResource MaterialDesignLabel}"></Label>
-            </StackPanel>
-            <StackPanel Grid.Row="3" Orientation="Vertical">
+            </Grid>
+            <Grid Grid.Row="3">
                 <Label Content="{Binding Year}" Style="{DynamicResource MaterialDesignLabel}"></Label>
-            </StackPanel>
-            <StackPanel Grid.Row="4" Orientation="Vertical">
+            </Grid>
+            <Grid Grid.Row="4">
                 <Label Content="{Binding Genre}" Style="{DynamicResource MaterialDesignLabel}"></Label>
-            </StackPanel>
-            <StackPanel Grid.Row="5" Orientation="Vertical">
+            </Grid>
+            <Grid Grid.Row="5">
                 <TextBlock Text="{Binding Desc}" TextWrapping="WrapWithOverflow" VerticalAlignment="Stretch" Style="{DynamicResource MaterialDesignTextBlock}"></TextBlock>
-            </StackPanel>
-            <Image  Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" Stretch="Uniform" Source="{Binding Boxart}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Image.InputBindings>
-                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBBoxFinderCommand}"></MouseBinding>
-                </Image.InputBindings>
-            </Image>
-            <Image Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Stretch="Uniform" Source="{Binding Logo}">
-                <Image.InputBindings>
-                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBLogoFinderCommand}"></MouseBinding>
-                </Image.InputBindings>
-            </Image>
-            <Image Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Grid.ColumnSpan="2" Stretch="Uniform" Source="{Binding Screenshoot}">
-                <Image.InputBindings>
-                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBScreenFinderCommand}"></MouseBinding>
-                </Image.InputBindings>
-            </Image>
-            <Image Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" Stretch="Uniform" Source="{Binding Fanart}">
-                <Image.InputBindings>
-                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBFanartFinderCommand}"></MouseBinding>
-                </Image.InputBindings>
-            </Image>
-            <MediaElement Grid.Column="0" Grid.Row="6" Stretch="Fill" Source="{Binding Video}"></MediaElement>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="4">
+                <Image Stretch="Uniform" Source="{Binding Boxart}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBBoxFinderCommand}"></MouseBinding>
+                    </Image.InputBindings>
+                </Image>
+            </Grid>
+            <Grid Grid.Column="2" Grid.Row="0" Grid.RowSpan="4">
+                <Image Stretch="Uniform" Source="{Binding Logo}">
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBLogoFinderCommand}"></MouseBinding>
+                    </Image.InputBindings>
+                </Image>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                <Image Stretch="Uniform" Source="{Binding Screenshoot}">
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBScreenFinderCommand}"></MouseBinding>
+                    </Image.InputBindings>
+                </Image>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" >
+                <Image Stretch="Uniform" Source="{Binding Fanart}">
+                    <Image.InputBindings>
+                        <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBFanartFinderCommand}"></MouseBinding>
+                    </Image.InputBindings>
+                </Image>
+            </Grid>
+            <Grid Grid.Column="0" Grid.Row="6" >
+                <MediaElement Stretch="Fill" Source="{Binding Video}"></MediaElement>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>
