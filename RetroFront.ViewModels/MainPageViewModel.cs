@@ -581,6 +581,7 @@ namespace RetroFront.ViewModels
                         }
                     }
                 }
+
                 ReloadData();
             }
         }
