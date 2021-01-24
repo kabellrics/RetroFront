@@ -479,35 +479,36 @@ namespace RetroFront.ViewModels
             var game = _dialogService.ShowGameDetail(obj.Game);
             if (game != null)
             {
-                //if (game.Boxart.StartsWith("http"))
-                //{
-                //    var targetfolder = _gameService.GetImgPathForGame(game, SGDBType.boxart);
-                //    var targetfile = $"{targetfolder}{Path.GetExtension(game.Boxart)}";
-                //    game.Boxart = targetfile;
-                //    _gameService.DownloadImgData(game.Boxart, targetfile);
-                //}
-                //if (game.Fanart.StartsWith("http"))
-                //{
-                //    var targetfolder = _gameService.GetImgPathForGame(game, SGDBType.fanart);
-                //    var targetfile = $"{targetfolder}{Path.GetExtension(game.Fanart)}";
-                //    game.Fanart = targetfile;
-                //    _gameService.DownloadImgData(game.Fanart, targetfile);
-                //}
-                //if (game.Screenshoot.StartsWith("http"))
-                //{
-                //    var targetfolder = _gameService.GetImgPathForGame(game, SGDBType.background);
-                //    var targetfile = $"{targetfolder}{Path.GetExtension(game.Screenshoot)}";
-                //    game.Screenshoot = targetfile;
-                //    _gameService.DownloadImgData(game.Screenshoot, targetfile);
-                //}
-                //if (game.Logo.StartsWith("http"))
-                //{
-                //    var targetfolder = _gameService.GetImgPathForGame(game, SGDBType.logo);
-                //    var targetfile = $"{targetfolder}{Path.GetExtension(game.Logo)}";
-                //    game.Logo = targetfile;
-                //    _gameService.DownloadImgData(game.Logo, targetfile);
-                //}
-                //_databaseService.SaveUpdate();
+                if (game.Boxart.StartsWith("http"))
+                {
+                    var targetfolder = _gameService.GetImgPathForGame(game, SGDBType.boxart);
+                    var targetfile = $"{targetfolder}{Path.GetExtension(game.Boxart)}";
+                    _gameService.DownloadImgData(game.Boxart, targetfile);
+                    game.Boxart = targetfile;
+                }
+                if (game.Fanart.StartsWith("http"))
+                {
+                    var targetfolder = _gameService.GetImgPathForGame(game, SGDBType.fanart);
+                    var targetfile = $"{targetfolder}{Path.GetExtension(game.Fanart)}";
+                    _gameService.DownloadImgData(game.Fanart, targetfile);
+                    game.Fanart = targetfile;
+                }
+                if (game.Screenshoot.StartsWith("http"))
+                {
+                    var targetfolder = _gameService.GetImgPathForGame(game, SGDBType.background);
+                    var targetfile = $"{targetfolder}{Path.GetExtension(game.Screenshoot)}";
+                    _gameService.DownloadImgData(game.Screenshoot, targetfile);
+                    game.Screenshoot = targetfile;
+                }
+                if (game.Logo.StartsWith("http"))
+                {
+                    var targetfolder = _gameService.GetImgPathForGame(game, SGDBType.logo);
+                    var targetfile = $"{targetfolder}{Path.GetExtension(game.Logo)}";
+                    _gameService.DownloadImgData(game.Logo, targetfile);
+                    game.Logo = targetfile;
+                }
+                _databaseService.SaveUpdate();
+                ReloadData();
             }
         }
         private void ShowDetailEmulator(EmulatorViewModel obj)

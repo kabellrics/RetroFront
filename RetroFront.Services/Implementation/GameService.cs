@@ -149,10 +149,8 @@ namespace RetroFront.Services.Implementation
         }
         public string DownloadImgData(string dllpath, string target)
         {
-            //string newfile = Path.Combine(Path.GetDirectoryName(target), Path.GetFileName(dllpath));
             using (WebClient client = new WebClient())
             {
-                //file.Write(client.DownloadData(dllpath));
                 client.DownloadFile(new Uri(dllpath), target);
                 return target;
             }

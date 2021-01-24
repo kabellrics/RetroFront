@@ -59,13 +59,13 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             Title = $"Recherche de {type.ToString()} pour {game.Name}";
             ResultImgs = new ObservableCollection<string>();
             DataSearch steamgridgame = new DataSearch(); ;
-            if (game.SteamID != -1)
-            {
-                steamgridgame = steamGridDBService.GetGameSteamId(game.SteamID.ToString());
-            }
-            else
+            if (game.SteamID == 0)
             {
                 steamgridgame = dialogService.SearchSteamGridDBByName(game.Name);
+            }
+            else if (game.SteamID != -1)
+            {
+                steamgridgame = steamGridDBService.GetGameSteamId(game.SteamID.ToString());
             }
             if (type == SGDBType.logo)
             {
