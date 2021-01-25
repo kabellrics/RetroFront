@@ -1,17 +1,21 @@
-﻿<Window x:Class="RetroFront.Admin.Dialogs.Views.ModalWindow"
+﻿<mah:MetroWindow x:Class="RetroFront.Admin.Dialogs.Views.ModalWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:RetroFront.Admin.Dialogs.Views"
         xmlns:vms="clr-namespace:RetroFront.Admin.Dialogs.ViewModel"
         xmlns:vm="clr-namespace:RetroFront.Admin.Dialogs.Views"
         mc:Ignorable="d"
         VerticalContentAlignment="Stretch"
         HorizontalContentAlignment="Stretch"
+                 WindowTransitionsEnabled="True"
+                 WindowState="Normal"
+                 WindowStyle="ToolWindow"
         WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight"
              Background="DarkGray">
-    <Window.Resources>
+    <mah:MetroWindow.Resources>
         <DataTemplate DataType="{x:Type vms:CreateEmulateurModalViewModel}">
             <vm:CreateEmulateurModalView></vm:CreateEmulateurModalView>
         </DataTemplate>
@@ -48,7 +52,7 @@
         <DataTemplate DataType="{x:Type vms:SteamGridDBGameFinderViewModel}">
             <vm:SteamGridDBGameFinderView></vm:SteamGridDBGameFinderView>
         </DataTemplate>
-    </Window.Resources>
+    </mah:MetroWindow.Resources>
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -58,4 +62,4 @@
         </Grid.ColumnDefinitions>
         <ContentPresenter Grid.Column="0" Grid.Row="0" x:Name="ContentPresenter" Content="{Binding}"></ContentPresenter>
     </Grid>
-</Window>
+</mah:MetroWindow>

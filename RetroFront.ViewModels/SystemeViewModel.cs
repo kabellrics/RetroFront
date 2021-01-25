@@ -25,6 +25,7 @@ namespace RetroFront.ViewModels
                 Systeme = systeme;
                 Name = Systeme.Name;
                 Theme = Systeme.Shortname;
+                HasLogo = false;
                 Emulators = new ObservableCollection<EmulatorViewModel>();
             }
         }
@@ -58,6 +59,18 @@ namespace RetroFront.ViewModels
         {
             get { return _Bck; }
             set { _Bck = value; RaisePropertyChanged(); }
+        }
+        private string _logo;
+        public string Logo
+        {
+            get { return _logo; }
+            set { _logo = value; RaisePropertyChanged(); }
+        }
+        private bool _hasLogo;
+        public bool HasLogo
+        {
+            get { return _hasLogo; }
+            set { _hasLogo = value; RaisePropertyChanged(); }
         }
         private string _nBGame;
         public string NBGame

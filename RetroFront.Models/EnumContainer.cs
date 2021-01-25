@@ -13,7 +13,8 @@ namespace RetroFront.Models
         Console,
         ConsolePortable,
         GameStore,
-        Collection
+        Collection,
+        Standalone
     }
     public enum SGDBType
     {
@@ -21,5 +22,13 @@ namespace RetroFront.Models
         background,
         fanart,
         boxart
+    }
+
+    public enum SysDisplay
+    {
+        BigLogo,
+        LogoBanner,
+        CarrouselLogo,
+        WheelLogo
     }
 }

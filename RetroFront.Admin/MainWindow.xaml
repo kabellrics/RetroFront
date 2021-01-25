@@ -1,11 +1,13 @@
-﻿<Window x:Class="RetroFront.Admin.MainWindow"
+﻿<mah:MetroWindow x:Class="RetroFront.Admin.MainWindow"
         x:Name="myWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:RetroFront.Admin"
+        xmlns:conv="clr-namespace:RetroFront.Admin.Converter"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
@@ -14,6 +16,108 @@
         Background="{DynamicResource MaterialDesignSelection}"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainPageVM}"
         Title="RetroFront Admin">
+    <mah:MetroWindow.Resources>
+        <DataTemplate x:Key="SystemeBasicTemplate">
+            <Grid>
+                <Grid.Background>
+                    <VisualBrush>
+                        <VisualBrush.Visual>
+                            <Image Source="{Binding Bck}" Stretch="UniformToFill" Opacity="0.60" >
+                            </Image>
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Viewbox Grid.Row="0" Grid.Column="1" Stretch="Uniform">
+                    <TextBlock Text="{Binding Name}" Style="{DynamicResource MaterialDesignHeadline1TextBlock}"></TextBlock>
+                </Viewbox>
+                <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
+                    <Label Content="{Binding Theme}" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                </Viewbox>
+                <Viewbox Grid.Row="2" Grid.Column="1" Stretch="Uniform">
+                    <Label Content="{Binding NBEmu}" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                </Viewbox>
+                <Viewbox Grid.Row="3" Grid.Column="1" Stretch="Uniform">
+                    <Label Content="{Binding NBGame}" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                </Viewbox>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="SystemeLogoTemplate">
+            <Grid>
+                <Grid.Background>
+                    <VisualBrush>
+                        <VisualBrush.Visual>
+                            <Image Source="{Binding Bck}" Stretch="UniformToFill" Opacity="0.60">
+                                <Image.Effect>
+                                    <BlurEffect Radius="0.5"></BlurEffect>
+                                </Image.Effect>
+                            </Image>
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Grid.Background>
+                <Image Source="{Binding Logo}" Stretch="Uniform"></Image>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="GameBasicTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".25*"></ColumnDefinition>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                    <ColumnDefinition Width=".25*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="{Binding Boxart}"></Image>
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".25*"></ColumnDefinition>
+                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                        <ColumnDefinition Width=".25*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="4*"></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="5*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Viewbox Grid.Row="0" Grid.Column="1" Stretch="Uniform" HorizontalAlignment="Left" >
+                        <TextBlock Style="{DynamicResource MaterialDesignHeadline1TextBlock}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" TextAlignment="Left" Text="{Binding Name}"></TextBlock>
+                    </Viewbox>
+                    <Viewbox Grid.Row="1" Grid.Column="1"  Stretch="Uniform" HorizontalAlignment="Left" >
+                        <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" TextAlignment="Left" Text="{Binding Editeur}"></TextBlock>
+                    </Viewbox>
+                    <Viewbox Grid.Row="2" Grid.Column="1"  Stretch="Uniform" HorizontalAlignment="Left" >
+                        <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" TextAlignment="Left" Text="{Binding Dev}"></TextBlock>
+                    </Viewbox>
+                    <Viewbox Grid.Row="3" Grid.Column="1"  Stretch="Uniform" HorizontalAlignment="Left" >
+                        <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" TextAlignment="Left" Text="{Binding Year}"></TextBlock>
+                    </Viewbox>
+                    <Viewbox Grid.Row="4" Grid.Column="1"  Stretch="Uniform" HorizontalAlignment="Left" >
+                        <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" TextAlignment="Left" Text="{Binding Genre}"></TextBlock>
+                    </Viewbox>
+                    <TextBlock Grid.Row="5" Grid.Column="1"  Style="{DynamicResource MaterialDesignTextBlock}" TextWrapping="WrapWithOverflow" Text="{Binding Desc}"></TextBlock>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="GameFanartTemplate">
+            <Grid>
+                <Image Stretch="Fill" Source="{Binding Fanart}"></Image>
+            </Grid>
+        </DataTemplate>
+        <conv:ListViewSysDataTemplateSelector x:Key="SystemTemplateSelector"/>
+        <conv:ListViewGameDataTemplateSelector x:Key="GameTemplateSelector"/>
+    </mah:MetroWindow.Resources>
     <Grid>
         <DockPanel LastChildFill="True">
             <Menu IsMainMenu="True" DockPanel.Dock="Top" Style="{DynamicResource MaterialDesignMenu}">
@@ -127,6 +231,7 @@
                     <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding}" Grid.Row="1"
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
+                              ItemTemplateSelector="{StaticResource SystemTemplateSelector}"
                                   Margin="20" Style="{DynamicResource MaterialDesignCardsListBox}"
                               SelectedIndex="{Binding DataContext.SelectedIndexSys, ElementName=myWindow ,Mode=TwoWay}"
                         SelectedItem="{Binding DataContext.SelectedSystemeViewModel, ElementName=myWindow ,Mode=TwoWay}">
@@ -136,7 +241,7 @@
                                                        CommandParameter="{Binding DataContext.SelectedSystemeViewModel, ElementName=myWindow}"></i:InvokeCommandAction>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                        <ListView.ItemTemplate>
+                        <!--<ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
                                     <Grid.Background>
@@ -172,7 +277,7 @@
                                         </Viewbox>
                                     </Grid>
                             </DataTemplate>
-                            </ListView.ItemTemplate>
+                            </ListView.ItemTemplate>-->
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel Orientation="Vertical" SizeChanged="WrapPanel_SizeChanged"></WrapPanel>
@@ -222,13 +327,26 @@
                                         <RowDefinition Height="3*"></RowDefinition>
                                         <RowDefinition Height="1*"></RowDefinition>
                                     </Grid.RowDefinitions>
-                                    <Viewbox Grid.Row="0" Grid.Column="1" Stretch="Uniform">
+                                    <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
                                         <TextBlock Text="{Binding Name}" Style="{DynamicResource MaterialDesignHeadline1TextBlock}"></TextBlock>
                                     </Viewbox>
-                                    <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
-                                        <Label Content="{Binding NBGame}" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                                    <Viewbox Grid.Row="0" Grid.Column="1" Stretch="Uniform">
+                                        <materialDesign:PackIcon Kind="Settings"></materialDesign:PackIcon>
                                     </Viewbox>
+                                    <!--<Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
+                                        <Label Content="{Binding NBGame}" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                                    </Viewbox>-->
                                 </Grid>
+                                <!--<DockPanel LastChildFill="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <mah:Tile Title="{Binding Name}" Margin="3" 
+                                          mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                          Background="Teal"
+                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                          HorizontalTitleAlignment="Center">
+                                    <materialDesign:PackIcon Kind="Settings"></materialDesign:PackIcon>
+                                    
+                                </mah:Tile>
+                                </DockPanel>-->
                             </DataTemplate>
                         </ListView.ItemTemplate>
                         <ListView.ItemsPanel>
@@ -258,6 +376,7 @@
                     <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Path=Emulators/Games}" Grid.Row="1"
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
+                              ItemTemplateSelector="{StaticResource GameTemplateSelector}"
                               Style="{DynamicResource MaterialDesignCardsListBox}"
                               SelectedIndex="{Binding DataContext.SelectedIndexGame, ElementName=myWindow ,Mode=TwoWay}"
                         SelectedItem="{Binding DataContext.SelectedGames, ElementName=myWindow ,Mode=TwoWay}"
@@ -268,9 +387,9 @@
                                                        CommandParameter="{Binding DataContext.SelectedGames, ElementName=myWindow}"></i:InvokeCommandAction>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                        <ListView.ItemTemplate>
+                        <!--<ListView.ItemTemplate>
                             <DataTemplate>
-                                <!--<Button Style="{DynamicResource MaterialDesignToolButton}" Command="{Binding DataContext.ShowDetailGameGameCommand, ElementName=myWindow}" CommandParameter="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
+                        <Button Style="{DynamicResource MaterialDesignToolButton}" Command="{Binding DataContext.ShowDetailGameGameCommand, ElementName=myWindow}" CommandParameter="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width=".25*"></ColumnDefinition>
@@ -311,9 +430,9 @@
                                         <TextBlock Grid.Row="5" Grid.Column="1"  Style="{DynamicResource MaterialDesignTextBlock}" TextWrapping="WrapWithOverflow" Text="{Binding Desc}"></TextBlock>
                                     </Grid>
                                     </Grid>
-                                <!--</Button>-->
+                               </Button>
                             </DataTemplate>
-                        </ListView.ItemTemplate>
+                        </ListView.ItemTemplate>-->
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel Orientation="Vertical" SizeChanged="WrapPanel_SizeChanged"></WrapPanel>
@@ -324,4 +443,4 @@
             </Grid>
         </DockPanel>
     </Grid>
-</Window>
+</mah:MetroWindow>

@@ -76,35 +76,80 @@
                 <TextBlock Text="{Binding Desc}" TextWrapping="WrapWithOverflow" VerticalAlignment="Stretch" Style="{DynamicResource MaterialDesignTextBlock}"></TextBlock>
             </Grid>
             <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="4">
-                <Image Stretch="Uniform" Source="{Binding Boxart}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <Image.InputBindings>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Image Stretch="Uniform" Source="{Binding Boxart}" Grid.Row="0">
+                    <!--<Image.InputBindings>
                         <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBBoxFinderCommand}"></MouseBinding>
-                    </Image.InputBindings>
+                    </Image.InputBindings>-->
                 </Image>
+                <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5" Command="{Binding SGDBBoxFinderCommand}">
+                    <Viewbox Stretch="Uniform">
+                        <Label Content="Changer le Boxart" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                    </Viewbox>
+                </Button>
             </Grid>
             <Grid Grid.Column="2" Grid.Row="0" Grid.RowSpan="4">
-                <Image Stretch="Uniform" Source="{Binding Logo}">
-                    <Image.InputBindings>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Image Stretch="Uniform" Source="{Binding Logo}" Grid.Row="0" >
+                    <!--<Image.InputBindings>
                         <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBLogoFinderCommand}"></MouseBinding>
-                    </Image.InputBindings>
+                    </Image.InputBindings>-->
                 </Image>
+                <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5" Command="{Binding SGDBLogoFinderCommand}">
+                    <Viewbox Stretch="Uniform">
+                        <Label Content="Changer le Logo" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                    </Viewbox>
+                </Button>
             </Grid>
             <Grid Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Grid.ColumnSpan="2">
-                <Image Stretch="Uniform" Source="{Binding Screenshoot}">
-                    <Image.InputBindings>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Image Stretch="Uniform" Source="{Binding Screenshoot}" Grid.Row="0" >
+                    <!--<Image.InputBindings>
                         <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBScreenFinderCommand}"></MouseBinding>
-                    </Image.InputBindings>
+                    </Image.InputBindings>-->
                 </Image>
+                <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5" Command="{Binding SGDBScreenFinderCommand}">
+                    <Viewbox Stretch="Uniform">
+                        <Label Content="Changer la capture" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                    </Viewbox>
+                </Button>
             </Grid>
             <Grid Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" >
-                <Image Stretch="Uniform" Source="{Binding Fanart}">
-                    <Image.InputBindings>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Image Stretch="Uniform" Source="{Binding Fanart}" Grid.Row="0" >
+                    <!--<Image.InputBindings>
                         <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBFanartFinderCommand}"></MouseBinding>
-                    </Image.InputBindings>
+                    </Image.InputBindings>-->
                 </Image>
+                <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5" Command="{Binding SGDBFanartFinderCommand}">
+                    <Viewbox Stretch="Uniform">
+                        <Label Content="Changer le Fanart" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                    </Viewbox>
+                </Button>
             </Grid>
-            <Grid Grid.Column="0" Grid.Row="6" >
-                <MediaElement Stretch="Fill" Source="{Binding Video}"></MediaElement>
+            <Grid Grid.Column="0" Grid.Row="6">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <MediaElement Stretch="Fill" Source="{Binding Video}" Grid.Row="0" ></MediaElement>
+                <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5" Command="{Binding}">
+                    <Viewbox Stretch="Uniform">
+                        <Label Content="Changer la vidéo" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                    </Viewbox>
+                </Button>
             </Grid>
         </Grid>
     </Grid>

@@ -312,6 +312,7 @@ namespace RetroFront.ViewModels
                     }
                 }
             }
+            LoadThemeSettings();
             ReloadData();
         }
         private void ReloadFullEmulators()
@@ -336,6 +337,12 @@ namespace RetroFront.ViewModels
             {
                 var sysvm = new SystemeViewModel(sys);
                 sysvm.Bck = _themeService.GetBckForTheme(sys.Shortname, _fileJSONService.GetCurrentTheme());
+                var logopath = _themeService.GetLogoForTheme(sys.Shortname);
+                if(File.Exists(logopath))
+                {
+                    sysvm.Logo = logopath;
+                    sysvm.HasLogo = true;
+                }
                 sysvm.NBEmu = $"{_databaseService.GetNbEmulatorForSysteme(sys.SystemeID)} Emulateurs";
                 sysvm.NBGame = $"{_databaseService.GetNbGamesForPlateforme(sys.SystemeID)} Jeux";
                 var emus = _databaseService.GetEmulatorsForSysteme(sys.SystemeID);
@@ -506,6 +513,14 @@ namespace RetroFront.ViewModels
                     var targetfile = $"{targetfolder}{Path.GetExtension(game.Logo)}";
                     _gameService.DownloadImgData(game.Logo, targetfile);
                     game.Logo = targetfile;
+                }
+                var duplicates = _databaseService.GetGames().Where(x => x.Path == game.Path);
+                foreach(var duplicate in duplicates)
+                {
+                    duplicate.Boxart = game.Boxart;
+                    duplicate.Fanart = game.Fanart;
+                    duplicate.Screenshoot = game.Screenshoot;
+                    duplicate.Logo = game.Logo;
                 }
                 _databaseService.SaveUpdate();
                 ReloadData();

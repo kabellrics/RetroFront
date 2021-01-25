@@ -34,11 +34,23 @@
             <Viewbox Grid.Column="3" Grid.Row="2" Stretch="Uniform">
                     <Label Content="{Binding ShortName}" Style="{DynamicResource MaterialDesignLabel}"></Label>
                 </Viewbox>
-            <Image Grid.Row="4" Grid.Column="1" Stretch="Uniform" Source="{Binding Logo}">
-                <Image.InputBindings>
-                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SGDBFanartFinderCommand}"></MouseBinding>
-                </Image.InputBindings>
-            </Image>
+
+            <Grid Grid.Row="4" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Image Stretch="Uniform" Source="{Binding Logo}" Grid.Row="0">
+                    <!--<Image.InputBindings>
+                        <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding LogoFinderCommand}"></MouseBinding>
+                    </Image.InputBindings>-->
+                </Image>
+                <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5" Command="{Binding LogoFinderCommand}">
+                    <Viewbox Stretch="Uniform">
+                        <Label Content="Changer le Logo" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                    </Viewbox>
+                </Button>
+            </Grid>
             <materialDesign:Transitioner x:Name="Transitioner"
             Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3"
             SelectedIndex="{Binding SelectedThemeIndex,Mode=TwoWay}"

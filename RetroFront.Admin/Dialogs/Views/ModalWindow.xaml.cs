@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -15,7 +16,7 @@ namespace RetroFront.Admin.Dialogs.Views
     /// <summary>
     /// Logique d'interaction pour ModalWindow.xaml
     /// </summary>
-    public partial class ModalWindow : Window
+    public partial class ModalWindow : MetroWindow
     {
         public ModalWindow()
         {
