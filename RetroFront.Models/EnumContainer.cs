@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace RetroFront.Models
@@ -26,9 +27,15 @@ namespace RetroFront.Models
 
     public enum SysDisplay
     {
+        [Description("Big Logo")] 
         BigLogo,
+        [Description("Banner")]
         LogoBanner,
+        [Description("Carousel")]
         CarrouselLogo,
-        WheelLogo
+        [Description("Left Spin")]
+        WheelLeftLogo,
+        [Description("Right Spin")]
+        WheelRightLogo
     }
 }

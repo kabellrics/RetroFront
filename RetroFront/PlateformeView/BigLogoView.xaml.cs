@@ -1,9 +1,6 @@
-﻿using MahApps.Metro.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,14 +11,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RetroFront
+namespace RetroFront.PlateformeView
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Logique d'interaction pour BigLogoView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class BigLogoView : UserControl
     {
-        public MainWindow()
+        public BigLogoView()
         {
             InitializeComponent();
         }

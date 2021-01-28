@@ -6,7 +6,7 @@ using System.Text;
 
 namespace RetroFront
 {
-    public class ViewModelLocator
+    public class ViewModelFrontLocator
     {
         public FrontSysViewModel MainPageVM
         => App.ServiceProvider.GetRequiredService<FrontSysViewModel>();

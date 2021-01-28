@@ -35,12 +35,12 @@ namespace RetroFront
         IServiceCollection services)
         {
             services.AddSingleton<IDatabaseService, DatabaseService>();
-            //services.AddSingleton<IFileJSONService, FileJSONService>();
+            services.AddSingleton<IFileJSONService, FileJSONService>();
             //services.AddSingleton<IRetroarchService, RetroarchService>();
             //services.AddSingleton<IDialogService, DialogService>();
             //services.AddSingleton<IEmulateurService, EmulateurService>();
             //services.AddSingleton<IGameService, GameService>();
-            //services.AddSingleton<IThemeService, ThemeService>();
+            services.AddSingleton<IThemeService, ThemeService>();
             //services.AddSingleton<ISteamService, SteamService>();
             //services.AddSingleton<ISteamGridDBService, SteamGridDBService>();
 

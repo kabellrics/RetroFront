@@ -77,15 +77,19 @@ namespace RetroFront.Services.Implementation
         {
             try
             {
-                var xmltheme = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme, "theme.xml");
-                var doc = XDocument.Load(xmltheme);
-                var results = doc.Element("theme")
-                    .Elements("view")
-                    .First(e => (string)e.Attribute("name") == "system");
-                var logonode = results.Elements("image")
-                    .First(e => (string)e.Attribute("name") == "logo");
-                var logopath = logonode.Element("path").Value;
-                return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme, logopath.Substring(2).Replace("/", "\\"));
+                //var xmltheme = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme, "theme.xml");
+                //var doc = XDocument.Load(xmltheme);
+                //var results = doc.Element("theme")
+                //    .Elements("view")
+                //    .First(e => (string)e.Attribute("name") == "system");
+                //var logonode = results.Elements("image")
+                //    .First(e => (string)e.Attribute("name") == "logo");
+                //var logopath = logonode.Element("path").Value;
+                //return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme, logopath.Substring(2).Replace("/", "\\"));
+                if (File.Exists(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme, "logo.png")))
+                    return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme, "logo.png");
+                else
+                    return string.Empty;
             }
             catch (Exception ex)
             {

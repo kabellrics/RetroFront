@@ -119,129 +119,140 @@
         <conv:ListViewGameDataTemplateSelector x:Key="GameTemplateSelector"/>
     </mah:MetroWindow.Resources>
     <Grid>
-        <DockPanel LastChildFill="True">
-            <Menu IsMainMenu="True" DockPanel.Dock="Top" Style="{DynamicResource MaterialDesignMenu}">
-                <MenuItem Header="Menu" Style="{DynamicResource MaterialDesignMenuItem}">
-                    <MenuItem Header="Ouvrir RetroArch" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding OpenRetroarchCommand}"></MenuItem>
-                    <MenuItem Header="Ouvrir RetroFront" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
-                    <MenuItem Header="Quitter" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
-                </MenuItem>
-                <MenuItem Header="Plateforme" Style="{DynamicResource MaterialDesignMenuItem}">
-                    <MenuItem Header="Ajouter une Plateforme prédéfinie" ItemsSource="{Binding AllSystemes}"
-                              DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
-                        <MenuItem.ItemContainerStyle>
-                            <Style TargetType="MenuItem">
-                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem},Path=DataContext.AddPlateformeCommand}"></Setter>
-                                <Setter Property="CommandParameter" Value="{Binding}"></Setter>
-                            </Style>
-                        </MenuItem.ItemContainerStyle>
+        <Border>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Color="LightCyan" Offset="0.0" />
+                    <GradientStop Color="Aqua" Offset="0.5" />
+                    <GradientStop Color="DarkBlue" Offset="1.0" />
+                </LinearGradientBrush>
+            </Border.Background>
+            <DockPanel LastChildFill="True" >
+                <StatusBar Style="{DynamicResource MahApps.Styles.StatusBar}" DockPanel.Dock="Bottom">
+                    
+                </StatusBar>
+                <Menu IsMainMenu="True" Style="{DynamicResource MaterialDesignMenu}" DockPanel.Dock="Top">
+                    <MenuItem Header="Menu" Style="{DynamicResource MaterialDesignMenuItem}">
+                        <MenuItem Header="Ouvrir RetroArch" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding OpenRetroarchCommand}"></MenuItem>
+                        <MenuItem Header="Ouvrir RetroFront" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
+                        <MenuItem Header="Quitter" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                     </MenuItem>
-                    <MenuItem Header="Ajouter une Plateforme" Command="{Binding AddPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
-                    <MenuItem Header="Intégrer Les Jeux Steam installés" Command="{Binding AddSteamPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
-                    <MenuItem Header="Créer une Liste Particulière" Command="{Binding AddCustomListCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
-                </MenuItem>
-                <MenuItem Header="Emulateur" Style="{DynamicResource MaterialDesignMenuItem}">
-                    <MenuItem Header="Ajouter un Core RetroArch" Command="{Binding AddCoreCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
-                    <MenuItem Header="Créer un émulateur" Command="{Binding AddEmuCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
-                    <MenuItem Header="Ajouter explorer.exe pour ce système"
+                    <MenuItem Header="Plateforme" Style="{DynamicResource MaterialDesignMenuItem}">
+                        <MenuItem Header="Ajouter une Plateforme prédéfinie" ItemsSource="{Binding AllSystemes}"
+                              DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
+                            <MenuItem.ItemContainerStyle>
+                                <Style TargetType="MenuItem">
+                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem},Path=DataContext.AddPlateformeCommand}"></Setter>
+                                    <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                                </Style>
+                            </MenuItem.ItemContainerStyle>
+                        </MenuItem>
+                        <MenuItem Header="Ajouter une Plateforme" Command="{Binding AddPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
+                        <MenuItem Header="Intégrer Les Jeux Steam installés" Command="{Binding AddSteamPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
+                        <MenuItem Header="Créer une Liste Particulière" Command="{Binding AddCustomListCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Emulateur" Style="{DynamicResource MaterialDesignMenuItem}">
+                        <MenuItem Header="Ajouter un Core RetroArch" Command="{Binding AddCoreCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
+                        <MenuItem Header="Créer un émulateur" Command="{Binding AddEmuCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
+                        <MenuItem Header="Ajouter explorer.exe pour ce système"
                               ItemsSource="{Binding Systemes}"
                               DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
-                        <MenuItem.ItemContainerStyle>
-                            <Style TargetType="MenuItem">
-                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem},Path=DataContext.AddExplorerCommand}"></Setter>
-                                <Setter Property="CommandParameter" Value="{Binding}"></Setter>
-                            </Style>
-                        </MenuItem.ItemContainerStyle>
+                            <MenuItem.ItemContainerStyle>
+                                <Style TargetType="MenuItem">
+                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem},Path=DataContext.AddExplorerCommand}"></Setter>
+                                    <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                                </Style>
+                            </MenuItem.ItemContainerStyle>
+                        </MenuItem>
                     </MenuItem>
-                </MenuItem>
-                <MenuItem Header="Jeux" Style="{DynamicResource MaterialDesignMenuItem}">
-                    <MenuItem Header="Ajouter un jeux pour cet emulateur" ItemsSource="{Binding FullEmulators}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
-                        <MenuItem.ItemContainerStyle>
-                            <Style TargetType="MenuItem">
-                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=MenuItem},Path=DataContext.AddSingleGameCommand}"></Setter>
-                                <Setter Property="CommandParameter" Value="{Binding}"></Setter>
-                            </Style>
-                        </MenuItem.ItemContainerStyle>
+                    <MenuItem Header="Jeux" Style="{DynamicResource MaterialDesignMenuItem}">
+                        <MenuItem Header="Ajouter un jeux pour cet emulateur" ItemsSource="{Binding FullEmulators}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
+                            <MenuItem.ItemContainerStyle>
+                                <Style TargetType="MenuItem">
+                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=MenuItem},Path=DataContext.AddSingleGameCommand}"></Setter>
+                                    <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                                </Style>
+                            </MenuItem.ItemContainerStyle>
+                        </MenuItem>
+                        <MenuItem Header="Importer des jeux depuis un fichier gamelist.xml" ItemsSource="{Binding FullEmulators}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
+                            <MenuItem.ItemContainerStyle>
+                                <Style TargetType="MenuItem">
+                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=MenuItem},Path=DataContext.AddGamelistCommand}"></Setter>
+                                    <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                                </Style>
+                            </MenuItem.ItemContainerStyle>
+                        </MenuItem>
+                        <MenuItem Header="Ajouter des jeux à une collection" ItemsSource="{Binding CustomList}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
+                            <MenuItem.ItemContainerStyle>
+                                <Style TargetType="MenuItem">
+                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=MenuItem},Path=DataContext.AddGameCustomCommand}"></Setter>
+                                    <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                                </Style>
+                            </MenuItem.ItemContainerStyle>
+                        </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="Importer des jeux depuis un fichier gamelist.xml" ItemsSource="{Binding FullEmulators}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
-                        <MenuItem.ItemContainerStyle>
-                            <Style TargetType="MenuItem">
-                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=MenuItem},Path=DataContext.AddGamelistCommand}"></Setter>
-                                <Setter Property="CommandParameter" Value="{Binding}"></Setter>
-                            </Style>
-                        </MenuItem.ItemContainerStyle>
-                    </MenuItem>
-                    <MenuItem Header="Ajouter des jeux à une collection" ItemsSource="{Binding CustomList}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
-                        <MenuItem.ItemContainerStyle>
-                            <Style TargetType="MenuItem">
-                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=MenuItem},Path=DataContext.AddGameCustomCommand}"></Setter>
-                                <Setter Property="CommandParameter" Value="{Binding}"></Setter>
-                            </Style>
-                        </MenuItem.ItemContainerStyle>
-                    </MenuItem>
-                </MenuItem>
-                <MenuItem Header="Thème" Style="{DynamicResource MaterialDesignMenuItem}">
-                    <!--<MenuItem Header="Récupérer Les Backgrounds Screenscraper" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>-->
-                    <!--<MenuItem Header="Scraper les logos des Sytemes" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>-->
-                    <!--<MenuItem Header="Installer les backgrounds par défaut pour les systèmes avec les gens" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding LoadDefaultBCKCommand}"></MenuItem>-->
-                    <MenuItem Header="Créer un pack de fond d'écran" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding CreateBckPackCommand}"></MenuItem>
-                    <MenuItem Header="Modifier un pack d'image" ItemsSource="{Binding Themes}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
+                    <MenuItem Header="Thème" Style="{DynamicResource MaterialDesignMenuItem}">
+                        <!--<MenuItem Header="Récupérer Les Backgrounds Screenscraper" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>-->
+                        <!--<MenuItem Header="Scraper les logos des Sytemes" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>-->
+                        <!--<MenuItem Header="Installer les backgrounds par défaut pour les systèmes avec les gens" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding LoadDefaultBCKCommand}"></MenuItem>-->
+                        <MenuItem Header="Créer un pack de fond d'écran" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding CreateBckPackCommand}"></MenuItem>
+                        <MenuItem Header="Modifier un pack d'image" ItemsSource="{Binding Themes}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
                             <MenuItem.ItemContainerStyle>
                                 <Style TargetType="MenuItem">
                                     <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=MenuItem},Path=DataContext.CreateBckPackCommand}"></Setter>
                                     <Setter Property="CommandParameter" Value="{Binding Folder}"></Setter>
                                 </Style>
                             </MenuItem.ItemContainerStyle>
-                    </MenuItem>
-                    <MenuItem Header="Scraper tous les jeux du système"
+                        </MenuItem>
+                        <MenuItem Header="Scraper tous les jeux du système"
                               ItemsSource="{Binding Systemes}"
                               DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
-                        <MenuItem.ItemContainerStyle>
-                            <Style TargetType="MenuItem">
-                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem}}"></Setter>
-                                <Setter Property="CommandParameter" Value="{Binding}"></Setter>
-                            </Style>
-                        </MenuItem.ItemContainerStyle>
+                            <MenuItem.ItemContainerStyle>
+                                <Style TargetType="MenuItem">
+                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem}}"></Setter>
+                                    <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                                </Style>
+                            </MenuItem.ItemContainerStyle>
+                        </MenuItem>
                     </MenuItem>
-                </MenuItem>
-                <MenuItem Header="Paramètres" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding ShowSettingsCommand}" />
-            </Menu>
-            <Grid DataContext="{Binding Systemes}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="1" VerticalAlignment="Stretch">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"></RowDefinition>
-                        <RowDefinition Height="8*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
+                    <MenuItem Header="Paramètres" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding ShowSettingsCommand}" />
+                </Menu>
+                <Grid DataContext="{Binding Systemes}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="1" VerticalAlignment="Stretch">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="8*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" Grid.Row="0">
-                            <Label Content="Liste des Plateformes" Style="{DynamicResource MaterialDesignLabel}"></Label>
-                        </Viewbox>
-                    </Grid>
-                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding}" Grid.Row="1"
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" Grid.Row="0">
+                                <Label Content="Liste des Plateformes" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                            </Viewbox>
+                        </Grid>
+                        <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding}" Grid.Row="1"
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
                               ItemTemplateSelector="{StaticResource SystemTemplateSelector}"
                                   Margin="20" Style="{DynamicResource MaterialDesignCardsListBox}"
                               SelectedIndex="{Binding DataContext.SelectedIndexSys, ElementName=myWindow ,Mode=TwoWay}"
                         SelectedItem="{Binding DataContext.SelectedSystemeViewModel, ElementName=myWindow ,Mode=TwoWay}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDoubleClick">
-                                <i:InvokeCommandAction Command="{Binding  DataContext.ShowDetailSystemeGameCommand, ElementName=myWindow}"
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDoubleClick">
+                                    <i:InvokeCommandAction Command="{Binding  DataContext.ShowDetailSystemeGameCommand, ElementName=myWindow}"
                                                        CommandParameter="{Binding DataContext.SelectedSystemeViewModel, ElementName=myWindow}"></i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <!--<ListView.ItemTemplate>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <!--<ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
                                     <Grid.Background>
@@ -284,60 +295,60 @@
                                 </ItemsPanelTemplate>
                             </ListView.ItemsPanel>
                         </ListView>
-                </Grid>
-                <Grid Grid.Column="2" VerticalAlignment="Stretch">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"></RowDefinition>
-                        <RowDefinition Height="8*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Viewbox Stretch="Uniform" Grid.Row="0">
-                            <Label Content="Liste des émulateurs pour" Style="{DynamicResource MaterialDesignLabel}"></Label>
-                        </Viewbox>
-                        <Viewbox Stretch="Uniform" Grid.Row="1">
-                            <Label Content="{Binding Path=Name}" Style="{DynamicResource MaterialDesignLabel}"></Label>
-                        </Viewbox>
                     </Grid>
-                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Path=Emulators}" Grid.Row="1"
+                    <Grid Grid.Column="2" VerticalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="8*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Viewbox Stretch="Uniform" Grid.Row="0">
+                                <Label Content="Liste des émulateurs pour" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                            </Viewbox>
+                            <Viewbox Stretch="Uniform" Grid.Row="1">
+                                <Label Content="{Binding Path=Name}" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                            </Viewbox>
+                        </Grid>
+                        <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Path=Emulators}" Grid.Row="1"
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
                               Style="{DynamicResource MaterialDesignCardsListBox}"
                               SelectedIndex="{Binding DataContext.SelectedIndexEmu, ElementName=myWindow ,Mode=TwoWay}"
                         SelectedItem="{Binding DataContext.SelectedEmulator, ElementName=myWindow ,Mode=TwoWay}"
                                   Margin="20">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDoubleClick">
-                                <i:InvokeCommandAction Command="{Binding  DataContext.ShowDetailEmulatorCommand, ElementName=myWindow}"
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDoubleClick">
+                                    <i:InvokeCommandAction Command="{Binding  DataContext.ShowDetailEmulatorCommand, ElementName=myWindow}"
                                                        CommandParameter="{Binding DataContext.SelectedEmulator, ElementName=myWindow}"></i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width=".25*"></ColumnDefinition>
-                                        <ColumnDefinition Width="10*"></ColumnDefinition>
-                                        <ColumnDefinition Width=".25*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="3*"></RowDefinition>
-                                        <RowDefinition Height="1*"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
-                                        <TextBlock Text="{Binding Name}" Style="{DynamicResource MaterialDesignHeadline1TextBlock}"></TextBlock>
-                                    </Viewbox>
-                                    <Viewbox Grid.Row="0" Grid.Column="1" Stretch="Uniform">
-                                        <materialDesign:PackIcon Kind="Settings"></materialDesign:PackIcon>
-                                    </Viewbox>
-                                    <!--<Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width=".25*"></ColumnDefinition>
+                                            <ColumnDefinition Width="10*"></ColumnDefinition>
+                                            <ColumnDefinition Width=".25*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="3*"></RowDefinition>
+                                            <RowDefinition Height="1*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
+                                            <TextBlock Text="{Binding Name}" Style="{DynamicResource MaterialDesignHeadline1TextBlock}"></TextBlock>
+                                        </Viewbox>
+                                        <Viewbox Grid.Row="0" Grid.Column="1" Stretch="Uniform">
+                                            <materialDesign:PackIcon Kind="Settings"></materialDesign:PackIcon>
+                                        </Viewbox>
+                                        <!--<Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
                                         <Label Content="{Binding NBGame}" Style="{DynamicResource MaterialDesignLabel}"></Label>
                                     </Viewbox>-->
-                                </Grid>
-                                <!--<DockPanel LastChildFill="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    </Grid>
+                                    <!--<DockPanel LastChildFill="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                 <mah:Tile Title="{Binding Name}" Margin="3" 
                                           mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                           Background="Teal"
@@ -347,33 +358,33 @@
                                     
                                 </mah:Tile>
                                 </DockPanel>-->
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Vertical" SizeChanged="WrapPanel_SizeChanged"></WrapPanel>
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                    </ListView>
-                </Grid>
-                <Grid Grid.Column="3" VerticalAlignment="Stretch">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"></RowDefinition>
-                        <RowDefinition Height="8*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Viewbox Stretch="Uniform" Grid.Row="0">
-                            <Label Content="Liste des Jeux pour" Style="{DynamicResource MaterialDesignLabel}"></Label>
-                        </Viewbox>
-                        <Viewbox Stretch="Uniform" Grid.Row="1">
-                            <Label Content="{Binding Path=Emulators/Name}" Style="{DynamicResource MaterialDesignLabel}"></Label>
-                        </Viewbox>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Vertical" SizeChanged="WrapPanel_SizeChanged"></WrapPanel>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                        </ListView>
                     </Grid>
-                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Path=Emulators/Games}" Grid.Row="1"
+                    <Grid Grid.Column="3" VerticalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="8*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Viewbox Stretch="Uniform" Grid.Row="0">
+                                <Label Content="Liste des Jeux pour" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                            </Viewbox>
+                            <Viewbox Stretch="Uniform" Grid.Row="1">
+                                <Label Content="{Binding Path=Emulators/Name}" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                            </Viewbox>
+                        </Grid>
+                        <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Path=Emulators/Games}" Grid.Row="1"
                                   HorizontalContentAlignment="Stretch"
                                   IsSynchronizedWithCurrentItem="true"
                               ItemTemplateSelector="{StaticResource GameTemplateSelector}"
@@ -381,13 +392,13 @@
                               SelectedIndex="{Binding DataContext.SelectedIndexGame, ElementName=myWindow ,Mode=TwoWay}"
                         SelectedItem="{Binding DataContext.SelectedGames, ElementName=myWindow ,Mode=TwoWay}"
                                   Margin="20">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDoubleClick">
-                                <i:InvokeCommandAction Command="{Binding  DataContext.ShowDetailGameGameCommand, ElementName=myWindow}"
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDoubleClick">
+                                    <i:InvokeCommandAction Command="{Binding  DataContext.ShowDetailGameGameCommand, ElementName=myWindow}"
                                                        CommandParameter="{Binding DataContext.SelectedGames, ElementName=myWindow}"></i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <!--<ListView.ItemTemplate>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <!--<ListView.ItemTemplate>
                             <DataTemplate>
                         <Button Style="{DynamicResource MaterialDesignToolButton}" Command="{Binding DataContext.ShowDetailGameGameCommand, ElementName=myWindow}" CommandParameter="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                     <Grid>
@@ -433,14 +444,16 @@
                                </Button>
                             </DataTemplate>
                         </ListView.ItemTemplate>-->
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Vertical" SizeChanged="WrapPanel_SizeChanged"></WrapPanel>
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                    </ListView>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Vertical" SizeChanged="WrapPanel_SizeChanged"></WrapPanel>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                        </ListView>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </DockPanel>
+
+            </DockPanel>
+        </Border>
     </Grid>
 </mah:MetroWindow>
