@@ -30,6 +30,8 @@ namespace RetroFront.Services.Implementation
             {
                 appSettings = new AppSettings();
                 appSettings.CurrentTheme = "simple";
+                appSettings.CurrentGameDisplay = RomDisplay.WallBox;
+                appSettings.CurrentSysDisplay = SysDisplay.BigLogo;
                 appSettings.AppSettingsFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront";
                 appSettings.AppSettingsLocation = $"{appSettings.AppSettingsFolder}\\AppSettings.json";
                 appSettings.RetroarchPath = @"C:\Users\yflec\AppData\Roaming\RetroArch";

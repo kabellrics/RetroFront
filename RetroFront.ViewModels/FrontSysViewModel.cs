@@ -57,7 +57,7 @@ namespace RetroFront.ViewModels
             _databaseService = databaseService;
             _fileJSONService = fileJSONService;
             _themeService = themeService;
-            SysDisplay = SysDisplay.BigLogo;
+            SysDisplay = _fileJSONService.appSettings.CurrentSysDisplay;
             SelectedIndex = 0;
             ReloadData();
         }

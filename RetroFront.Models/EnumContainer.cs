@@ -38,4 +38,20 @@ namespace RetroFront.Models
         [Description("Right Spin")]
         WheelRightLogo
     }
+
+    public enum RomDisplay
+    {
+        [Description("Wall Box")] 
+        WallBox,
+        [Description("Wall Banner")] 
+        WallBanner,
+        [Description("Logo Detail")] 
+        ListLogo,
+        [Description("Banner Detail")] 
+        ListBanner,
+        [Description("Screenshot")] 
+        Screenshot,
+        [Description("Carousel")] 
+        Fanart
+    }
 }

@@ -75,7 +75,31 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             get { return _SGDBKey; }
             set { _SGDBKey = value; RaisePropertyChanged(); }
         }
-
+        private SysDisplay _sysDisplay;
+        public SysDisplay SysDisplay
+        {
+            get { return _sysDisplay; }
+            set { _sysDisplay = value;RaisePropertyChanged(); }
+        }
+    
+        private List<SysDisplay> _sysDisplayList;
+        public List<SysDisplay> SysDisplayList
+        {
+            get { return _sysDisplayList; }
+            set { _sysDisplayList = value;RaisePropertyChanged(); }
+        }
+        private RomDisplay _romDisplay;
+        public RomDisplay RomDisplay
+        {
+            get { return _romDisplay; }
+            set { _romDisplay = value; RaisePropertyChanged(); }
+        }
+        private List<RomDisplay> _romDisplayList;
+        public List<RomDisplay> RomDisplayList
+        {
+            get { return _romDisplayList; }
+            set { _romDisplayList = value; RaisePropertyChanged(); }
+        }
         public SettingsViewModel()
         {
             _FileJson = App.ServiceProvider.GetRequiredService<IFileJSONService>();
@@ -89,6 +113,25 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             RetroarchCMD = settings.RetroarchCMD;
             RetroarchPath = settings?.RetroarchPath;
             SGDBKey = settings?.SGDBKey;
+            SysDisplay = settings.CurrentSysDisplay;
+            RomDisplay = settings.CurrentGameDisplay;
+            this.SysDisplayList = new List<SysDisplay>
+            {
+                    SysDisplay.BigLogo,
+                    SysDisplay.LogoBanner,
+                    SysDisplay.CarrouselLogo,
+                    SysDisplay.WheelLeftLogo,
+                    SysDisplay.WheelRightLogo
+            };
+            this.RomDisplayList = new List<RomDisplay>
+            {
+                    RomDisplay.WallBox,
+                    RomDisplay.WallBanner,
+                    RomDisplay.ListLogo,
+                    RomDisplay.ListBanner,
+                    RomDisplay.Screenshot,
+                    RomDisplay.Fanart
+            };
         }
 
         private void Getthemes()
@@ -129,14 +172,16 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         }
         private void ValidateClick(object parameter)
         {
-             settings.CurrentTheme = CurrentTheme.Folder;
-             settings.ScreenScraperID = ScreenScraperID;
-             settings.ScreenScraperPWD = ScreenScraperPWD;
-             settings.AppSettingsLocation = AppSettingsLocation;
-             settings.AppSettingsFolder = AppSettingsFolder;
-             settings.RetroarchCMD = RetroarchCMD;
-             settings.RetroarchPath = RetroarchPath;
+            settings.CurrentTheme = CurrentTheme.Folder;
+            settings.ScreenScraperID = ScreenScraperID;
+            settings.ScreenScraperPWD = ScreenScraperPWD;
+            settings.AppSettingsLocation = AppSettingsLocation;
+            settings.AppSettingsFolder = AppSettingsFolder;
+            settings.RetroarchCMD = RetroarchCMD;
+            settings.RetroarchPath = RetroarchPath;
             settings.SGDBKey = SGDBKey;
+            settings.CurrentSysDisplay= SysDisplay;
+            settings.CurrentGameDisplay= RomDisplay;
             _FileJson.UpdateSettings(settings);
             CloseDialogWithResult(parameter as Window, true);
         }
