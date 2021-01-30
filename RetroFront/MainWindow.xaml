@@ -29,11 +29,17 @@
         <DataTemplate x:Key="LogoBanner">
             <views:LogoBannerView></views:LogoBannerView>
         </DataTemplate>
+        <DataTemplate x:Key="Carrousel">
+            <views:CarrouselSystemView></views:CarrouselSystemView>
+        </DataTemplate>
         <Style x:Key="MyContentStyle" TargetType="ContentPresenter">
             <Setter Property="ContentTemplate" Value="{StaticResource BigLogo}"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding SysDisplay}" Value="{x:Static enum:SysDisplay.LogoBanner}">
                     <Setter Property="ContentTemplate" Value="{StaticResource LogoBanner}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding SysDisplay}" Value="{x:Static enum:SysDisplay.CarrouselLogo}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource Carrousel}"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>

@@ -8,7 +8,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" >
     <Grid>
-        <mah:FlipView ItemsSource="{Binding Systemes}" IsBannerEnabled="False"
+        <mah:FlipView ItemsSource="{Binding Systemes}" IsBannerEnabled="False" IsNavigationEnabled="False"
             SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}" NavigationButtonsPosition="Inside">
             <mah:FlipView.ItemTemplate>
                 <DataTemplate>
