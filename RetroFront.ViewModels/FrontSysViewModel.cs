@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using MaterialDesignThemes.Wpf;
 using RetroFront.Models;
 using RetroFront.Services.Interface;
 using System;
@@ -9,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using MDIXDialogHost = MaterialDesignThemes.Wpf.DialogHost;
 
 namespace RetroFront.ViewModels
 {
@@ -17,11 +19,24 @@ namespace RetroFront.ViewModels
         private IDatabaseService _databaseService;
         private IThemeService _themeService;
         private IFileJSONService _fileJSONService;
+        private bool _isDialogDisplayOpen;
+        public bool IsDialogDisplayOpen
+        {
+            get { return _isDialogDisplayOpen; }
+            set { _isDialogDisplayOpen = value;RaisePropertyChanged(); }
+        }
         private SysDisplay _sysDisplay;
         public SysDisplay SysDisplay
         {
             get { return _sysDisplay; }
             set { _sysDisplay = value; RaisePropertyChanged(); }
+        }
+
+        private List<SysDisplay> _sysDisplayList;
+        public List<SysDisplay> SysDisplayList
+        {
+            get { return _sysDisplayList; }
+            set { _sysDisplayList = value; RaisePropertyChanged(); }
         }
         private int _selectedIndex;
         public int SelectedIndex
@@ -38,6 +53,8 @@ namespace RetroFront.ViewModels
 
         private ICommand _goDownCommand;
         private ICommand _goUpCommand;
+        private ICommand _openDisplayCommand;
+        private ICommand _CloseOrGoCommand;
         public ICommand GoDownCommand
         {
             get
@@ -52,14 +69,38 @@ namespace RetroFront.ViewModels
                 return _goUpCommand ?? (_goUpCommand = new RelayCommand(GoUp));
             }
         }
+        public ICommand OpenDisplayCommand
+        {
+            get
+            {
+                return _openDisplayCommand ?? (_openDisplayCommand = new RelayCommand(OpenDisplay));
+            }
+        }
+        public ICommand CloseOrGoCommand
+        {
+            get
+            {
+                return _CloseOrGoCommand ?? (_CloseOrGoCommand = new RelayCommand(CloseOrGo));
+            }
+        }
+
         public FrontSysViewModel(IDatabaseService databaseService, IFileJSONService fileJSONService, IThemeService themeService)
         {
+            IsDialogDisplayOpen = false;
             _databaseService = databaseService;
             _fileJSONService = fileJSONService;
             _themeService = themeService;
             SysDisplay = _fileJSONService.appSettings.CurrentSysDisplay;
             SelectedIndex = 0;
             ReloadData();
+            this.SysDisplayList = new List<SysDisplay>
+            {
+                    SysDisplay.BigLogo,
+                    SysDisplay.LogoBanner,
+                    SysDisplay.CarrouselLogo,
+                    SysDisplay.WheelLeftLogo,
+                    SysDisplay.WheelRightLogo
+            };
         }
         private void ReloadData()
         {
@@ -79,6 +120,17 @@ namespace RetroFront.ViewModels
                 Systemes.Add(sysvm);
             }
             Systemes = new ObservableCollection<SystemeViewModel>(Systemes.OrderBy(x => x.Systeme.Type).ThenBy(x => x.Name));
+        }
+        private void OpenDisplay()
+        {
+            IsDialogDisplayOpen = true;
+        }
+        private void CloseOrGo()
+        {
+            if(IsDialogDisplayOpen == true)
+            {
+                IsDialogDisplayOpen = false;
+            }
         }
         private void GoDown()
         {

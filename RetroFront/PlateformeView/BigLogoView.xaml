@@ -29,41 +29,5 @@
                 </DataTemplate>
             </mah:FlipView.ItemTemplate>
         </mah:FlipView>
-        <!--<materialDesign:Transitioner x:Name="Transitioner"
-            SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}"
-            ItemsSource="{Binding Systemes}">
-            <materialDesign:Transitioner.ItemContainerStyle>
-                <Style TargetType="materialDesign:TransitionerSlide" BasedOn="{StaticResource {x:Type materialDesign:TransitionerSlide}}">
-                    <Setter Property="BackwardWipe">
-                        <Setter.Value>
-                            <materialDesign:SlideWipe Direction="Right" Duration="0:0:0.5"/>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="ForwardWipe">
-                        <Setter.Value>
-                            <materialDesign:SlideWipe Direction="Left" Duration="0:0:0.5" />
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </materialDesign:Transitioner.ItemContainerStyle>
-            <materialDesign:Transitioner.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.Background>
-                            <VisualBrush>
-                                <VisualBrush.Visual>
-                                    <Image Source="{Binding Bck}" Stretch="UniformToFill" Opacity="0.80">
-                                        <Image.Effect>
-                                            <BlurEffect Radius="0.9"></BlurEffect>
-                                        </Image.Effect>
-                                    </Image>
-                                </VisualBrush.Visual>
-                            </VisualBrush>
-                        </Grid.Background>
-                        <Image Source="{Binding Logo}" Stretch="Uniform"></Image>
-                    </Grid>
-                </DataTemplate>
-            </materialDesign:Transitioner.ItemTemplate>
-        </materialDesign:Transitioner>-->
     </Grid>
 </UserControl>

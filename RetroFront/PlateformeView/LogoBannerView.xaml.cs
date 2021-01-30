@@ -22,5 +22,6 @@ namespace RetroFront.PlateformeView
         {
             InitializeComponent();
         }
+
     }
 }
