@@ -33,27 +33,29 @@
                 </mah:FlipView.ItemTemplate>
             </mah:FlipView>
         </Border>
-        <Border Grid.Row="1">
-            <!--<Border.Background>
-                <SolidColorBrush Color="Black"></SolidColorBrush>
-            </Border.Background>-->
+        <Grid Grid.Row="1">
             <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" CanContentScroll="True">
-                <ListBox SelectionMode="Single" Style="{DynamicResource MaterialDesignToolToggleFlatListBox}"
-                         extender:ListBoxExtenders.AutoScrollToCurrentItem="True"
+                <ListView x:Name="listicon" SelectionMode="Single" Style="{DynamicResource MaterialDesignListView}"
                          IsSynchronizedWithCurrentItem="True" Background="Transparent"
+                          SelectionChanged="listicon_SelectionChanged"
+                          Padding="0" 
                          ItemsSource="{Binding Systemes}" SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}">
-                    <ListBox.ItemTemplate>
+                    <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding Logo}" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="200"></Image>
+                            <Grid Width="300" MinWidth="300" MaxWidth="300" Height="200" Margin="0">
+                                <Border>
+                                    <Image Source="{Binding Logo}" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Image>
+                                </Border>
+                            </Grid>
                         </DataTemplate>
-                    </ListBox.ItemTemplate>
-                    <ListBox.ItemsPanel>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel Orientation="Horizontal"></VirtualizingStackPanel>
                         </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                </ListBox>
+                    </ListView.ItemsPanel>
+                </ListView>
             </ScrollViewer>
-        </Border>
+        </Grid>
     </Grid>
 </UserControl>
