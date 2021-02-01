@@ -13,11 +13,11 @@ using System.Windows.Shapes;
 namespace RetroFront
 {
     /// <summary>
-    /// Logique d'interaction pour MainWindow.xaml
+    /// Logique d'interaction pour GameWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class GameWindow : Page
     {
-        public MainWindow()
+        public GameWindow()
         {
             InitializeComponent();
         }

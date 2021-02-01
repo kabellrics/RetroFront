@@ -33,7 +33,7 @@ namespace RetroFront.Services.Implementation
             {
                 var defaulttheme = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", "Space", systeme.Shortname);
                 Directory.CreateDirectory(defaulttheme);
-                if(systeme.Type == SysType.Arcade)
+                if (systeme.Type == SysType.Arcade)
                 {
                     File.Copy(@"default_BCK.jpg", Path.Combine(defaulttheme, "bck.jpg"), true);
                 }
@@ -59,7 +59,20 @@ namespace RetroFront.Services.Implementation
                 //throw;
             }
         }
-        public void LoadBckForSysteme(Systeme systeme,string themename,string imgpath)
+        public void LoadLogoForSysteme(Systeme systeme, string themename, string imgpath)
+        {
+            try
+            {
+                var defaulttheme = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", themename, systeme.Shortname);
+                Directory.CreateDirectory(defaulttheme);
+                File.Copy(imgpath, Path.Combine(defaulttheme, "logo.png"), true);
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
+        }
+        public void LoadBckForSysteme(Systeme systeme, string themename, string imgpath)
         {
             try
             {
@@ -73,23 +86,14 @@ namespace RetroFront.Services.Implementation
             }
         }
 
-        public string GetLogoForTheme(string plateforme,string theme)
+        public string GetLogoForTheme(string plateforme, string theme)
         {
             try
             {
-                //var xmltheme = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme, "theme.xml");
-                //var doc = XDocument.Load(xmltheme);
-                //var results = doc.Element("theme")
-                //    .Elements("view")
-                //    .First(e => (string)e.Attribute("name") == "system");
-                //var logonode = results.Elements("image")
-                //    .First(e => (string)e.Attribute("name") == "logo");
-                //var logopath = logonode.Element("path").Value;
-                //return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme, logopath.Substring(2).Replace("/", "\\"));
                 if (File.Exists(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme, "logo.png")))
                     return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes", theme, plateforme, "logo.png");
                 else
-                    return string.Empty;
+                    return GetLogoForTheme(plateforme);
             }
             catch (Exception ex)
             {
@@ -116,7 +120,10 @@ namespace RetroFront.Services.Implementation
         {
             try
             {
-                return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, "logo.png");
+                if (File.Exists(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, "logo.png")))
+                    return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, "logo.png");
+                else
+                    return string.Empty;
             }
             catch (Exception ex)
             {

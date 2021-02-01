@@ -302,7 +302,7 @@ namespace RetroFront.ViewModels
                 newtheme = _dialogService.showInputDialog();
             if (newtheme != null)
             {
-                var sysInPack = Systemes;//AllSystemes.Where(x => x.Emulators.SelectMany(g => g.Games).Count() > 0);
+                var sysInPack = Systemes;
                 foreach (var sys in sysInPack)
                 {
                     var imgpath = _dialogService.showImgPickerForPlateformeDialog(sys.Systeme, newtheme);

@@ -1,0 +1,97 @@
+﻿<Page x:Class="RetroFront.SystemeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:controlzEx="clr-namespace:ControlzEx;assembly=MaterialDesignThemes.Wpf"
+        xmlns:converter="clr-namespace:RetroFront.Converter"
+        xmlns:views="clr-namespace:RetroFront.PlateformeView"
+        xmlns:enum="clr-namespace:RetroFront.Models;assembly=RetroFront.Models"
+        DataContext="{Binding Source={StaticResource ViewModelFrontLocator}, Path=MainPageVM}"
+        mc:Ignorable="d"
+        Title="Retrofront"
+        Background="Black">
+    <Page.InputBindings>
+        <KeyBinding Key="Left" Command="{Binding GoDownCommand}"></KeyBinding>
+        <KeyBinding Key="Right" Command="{Binding GoUpCommand}"></KeyBinding>
+        <KeyBinding Key="Down" Command="{Binding GoUpCommand}"></KeyBinding>
+        <KeyBinding Key="Up" Command="{Binding GoDownCommand}"></KeyBinding>
+        <KeyBinding Key="Space" Command="{Binding OpenDisplayCommand}"></KeyBinding>
+        <KeyBinding Key="Return" Command="{Binding CloseOrGoCommand}"></KeyBinding>
+    </Page.InputBindings>
+
+    <Page.Resources>
+        <DataTemplate x:Key="BigLogo">
+            <views:BigLogoView></views:BigLogoView>
+        </DataTemplate>
+        <DataTemplate x:Key="LogoBanner">
+            <views:LogoBannerView></views:LogoBannerView>
+        </DataTemplate>
+        <DataTemplate x:Key="Carrousel">
+            <views:CarrouselSystemView></views:CarrouselSystemView>
+        </DataTemplate>
+        <DataTemplate x:Key="RightWheel">
+            <views:RightWheelView></views:RightWheelView>
+        </DataTemplate>
+        <DataTemplate x:Key="LeftWheel">
+            <views:LeftWheelView></views:LeftWheelView>
+        </DataTemplate>
+        <Style x:Key="MyContentStyle" TargetType="ContentPresenter">
+            <Setter Property="ContentTemplate" Value="{StaticResource BigLogo}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SysDisplay}" Value="{x:Static enum:SysDisplay.LogoBanner}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource LogoBanner}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding SysDisplay}" Value="{x:Static enum:SysDisplay.CarrouselLogo}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource Carrousel}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding SysDisplay}" Value="{x:Static enum:SysDisplay.WheelRightLogo}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource RightWheel}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding SysDisplay}" Value="{x:Static enum:SysDisplay.WheelLeftLogo}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource LeftWheel}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    <md:DialogHost IsOpen="{Binding IsDialogDisplayOpen}" CloseOnClickAway="True">
+        <md:DialogHost.Resources>
+            <converter:EnumDescriptionConverter x:Key="enumConverter"/>
+        </md:DialogHost.Resources>
+        <md:DialogHost.PopupStyle>
+            <Style BasedOn="{StaticResource MaterialDesignDialogHostPopup}" TargetType="{x:Type controlzEx:PopupEx}">
+                <Style.Resources>
+                    <SolidColorBrush x:Key="MaterialDesignCardBackground">Red</SolidColorBrush>
+                </Style.Resources>
+                <Setter Property="StaysOpen" Value="True" />
+                <Setter Property="AllowsTransparency" Value="True" />
+                <Setter Property="PopupAnimation" Value="None" />
+                <Setter Property="Placement" Value="Center" />
+            </Style>
+        </md:DialogHost.PopupStyle>
+        <md:DialogHost.DialogContent>
+            <Grid>
+                <Grid.Background>
+                    <SolidColorBrush Color="WhiteSmoke"></SolidColorBrush>    
+                </Grid.Background>
+                <ListBox ItemsSource="{Binding SysDisplayList}"
+                         SelectedItem="{Binding SysDisplay,Mode=TwoWay}" Width="220" Height="Auto">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="80">
+                                <Viewbox Stretch="Uniform" Margin="5">
+                                    <Label Content="{Binding Converter={StaticResource enumConverter}}" HorizontalAlignment="Center"/>
+                                </Viewbox>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </md:DialogHost.DialogContent>
+        <Grid>
+            <ContentPresenter Style="{StaticResource MyContentStyle}" Content="{Binding}"/>
+        </Grid>
+    </md:DialogHost>
+</Page>

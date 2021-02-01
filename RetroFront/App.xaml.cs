@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RetroFront.Converter;
 using RetroFront.Services.Implementation;
 using RetroFront.Services.Interface;
 using RetroFront.ViewModels;
@@ -34,6 +35,14 @@ namespace RetroFront
         private void ConfigureServices(IConfiguration configuration,
         IServiceCollection services)
         {
+            services.AddScoped<INavigationService,NavigationService>(ServiceProvider =>
+            {
+                var navigationservice = new NavigationService();
+                navigationservice.Configure("Systeme",new Uri("../SystemeWindow.xaml",UriKind.Relative));
+                navigationservice.Configure("Games", new Uri("../GameWindow.xaml", UriKind.Relative));
+                return navigationservice;
+            });
+
             services.AddSingleton<IDatabaseService, DatabaseService>();
             services.AddSingleton<IFileJSONService, FileJSONService>();
             //services.AddSingleton<IRetroarchService, RetroarchService>();
@@ -43,23 +52,36 @@ namespace RetroFront
             services.AddSingleton<IThemeService, ThemeService>();
             //services.AddSingleton<ISteamService, SteamService>();
             //services.AddSingleton<ISteamGridDBService, SteamGridDBService>();
+            services.AddSingleton<IEnumService, EnumService>();
 
             //Add Pages ViewModel
             services.AddSingleton<FrontSysViewModel>();
+            services.AddSingleton<FrontGameViewModel>();
+            services.AddSingleton<LaunchFrontViewModel>();
 
-            services.AddTransient(typeof(MainWindow));
+            services.AddTransient(typeof(SystemeWindow));
+            services.AddTransient(typeof(GameWindow));
         }
         protected override async void OnStartup(StartupEventArgs e)
         {
-            //await host.StartAsync();
+            #region Commentaires
+            await host.StartAsync();
 
             //var mainWindow = host.Services.GetRequiredService<MainWindow>();
             //mainWindow.Show();
 
             var dbcontext = host.Services.GetRequiredService<IDatabaseService>();
             dbcontext.SQLIteContext.Database.EnsureCreated();
-
             base.OnStartup(e);
+            #endregion
+
+            //await host.StartAsync();
+            //var dbcontext = host.Services.GetRequiredService<IDatabaseService>();
+            //dbcontext.SQLIteContext.Database.EnsureCreated();
+            ////var navigationService =
+            ////    ServiceProvider.GetRequiredService<INavigationService>();
+            ////await navigationService.ShowAsync("Systeme");
+            //base.OnStartup(e);
         }
         protected override async void OnExit(ExitEventArgs e)
         {

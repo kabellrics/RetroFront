@@ -11,5 +11,9 @@ namespace RetroFront
         public FrontSysViewModel MainPageVM
         => App.ServiceProvider.GetRequiredService<FrontSysViewModel>();
 
+        public FrontGameViewModel GamesVM
+            => App.ServiceProvider.GetRequiredService<FrontGameViewModel>();
+        public LaunchFrontViewModel StartVM
+            => App.ServiceProvider.GetRequiredService<LaunchFrontViewModel>();
     }
 }

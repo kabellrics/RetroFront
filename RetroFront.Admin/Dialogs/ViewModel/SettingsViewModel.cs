@@ -22,6 +22,8 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         private ICommand _cancelCommand;
         private ICommand _yesCommand;
         private ThemeViewModel _CurrentTheme;
+        private IEnumService _enumService;
+        #region Properties
         public ThemeViewModel CurrentTheme
         {
             get { return _CurrentTheme; }
@@ -79,14 +81,14 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         public SysDisplay SysDisplay
         {
             get { return _sysDisplay; }
-            set { _sysDisplay = value;RaisePropertyChanged(); }
+            set { _sysDisplay = value; RaisePropertyChanged(); }
         }
-    
+
         private List<SysDisplay> _sysDisplayList;
         public List<SysDisplay> SysDisplayList
         {
             get { return _sysDisplayList; }
-            set { _sysDisplayList = value;RaisePropertyChanged(); }
+            set { _sysDisplayList = value; RaisePropertyChanged(); }
         }
         private RomDisplay _romDisplay;
         public RomDisplay RomDisplay
@@ -99,9 +101,11 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         {
             get { return _romDisplayList; }
             set { _romDisplayList = value; RaisePropertyChanged(); }
-        }
+        } 
+        #endregion
         public SettingsViewModel()
         {
+            _enumService = App.ServiceProvider.GetRequiredService<IEnumService>();
             _FileJson = App.ServiceProvider.GetRequiredService<IFileJSONService>();
             themeService = App.ServiceProvider.GetRequiredService<IThemeService>();
             Getthemes();
@@ -115,23 +119,25 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             SGDBKey = settings?.SGDBKey;
             SysDisplay = settings.CurrentSysDisplay;
             RomDisplay = settings.CurrentGameDisplay;
-            this.SysDisplayList = new List<SysDisplay>
-            {
-                    SysDisplay.BigLogo,
-                    SysDisplay.LogoBanner,
-                    SysDisplay.CarrouselLogo,
-                    SysDisplay.WheelLeftLogo,
-                    SysDisplay.WheelRightLogo
-            };
-            this.RomDisplayList = new List<RomDisplay>
-            {
-                    RomDisplay.WallBox,
-                    RomDisplay.WallBanner,
-                    RomDisplay.ListLogo,
-                    RomDisplay.ListBanner,
-                    RomDisplay.Screenshot,
-                    RomDisplay.Fanart
-            };
+            this.SysDisplayList = _enumService.GetSysDisplays();
+            //this.SysDisplayList = new List<SysDisplay>
+            //{
+            //        SysDisplay.BigLogo,
+            //        SysDisplay.LogoBanner,
+            //        SysDisplay.CarrouselLogo,
+            //        SysDisplay.WheelLeftLogo,
+            //        SysDisplay.WheelRightLogo
+            //};
+            this.RomDisplayList = _enumService.GetRomDisplays();
+            //this.RomDisplayList = new List<RomDisplay>
+            //{
+            //        RomDisplay.WallBox,
+            //        RomDisplay.WallBanner,
+            //        RomDisplay.ListLogo,
+            //        RomDisplay.ListBanner,
+            //        RomDisplay.Screenshot,
+            //        RomDisplay.Fanart
+            //};
         }
 
         private void Getthemes()
