@@ -15,12 +15,12 @@ using System.Windows.Shapes;
 namespace RetroFront.PlateformeView
 {
     /// <summary>
-    /// Logique d'interaction pour CarrouselSystemView.xaml
+    /// Logique d'interaction pour LeftWheelView.xaml
     /// </summary>
-    public partial class CarrouselSystemView : UserControl
+    public partial class LeftWheelView : UserControl
     {
         private double CentralPix = -1; 
-        public CarrouselSystemView()
+        public LeftWheelView()
         {
             InitializeComponent();
         }
@@ -29,13 +29,13 @@ namespace RetroFront.PlateformeView
         {
             try
             {
-                var splitbyheight = this.ActualWidth / 8;
+                var splitbyheight = this.ActualHeight / 8;
                 CentralPix = splitbyheight * 3;
-                int itemwidht = 316;
+                int itemheight = 150;
                 var previousmargin = listicon.Margin;
                 var nextmargin = previousmargin;
-                //nextmargin.Left = -itemwidht * listicon.SelectedIndex;
-                nextmargin.Left = CentralPix - (listicon.SelectedIndex * itemwidht);
+                //nextmargin.Top = -itemheight * listicon.SelectedIndex;
+                nextmargin.Top = CentralPix - (listicon.SelectedIndex * itemheight);
                 var sb = new Storyboard();
                 var ta = new ThicknessAnimation();
                 ta.BeginTime = new TimeSpan(0);
