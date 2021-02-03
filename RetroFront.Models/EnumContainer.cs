@@ -24,6 +24,22 @@ namespace RetroFront.Models
         fanart,
         boxart
     }
+    public enum ScraperSource
+    {
+        IGDB,
+        SGDB,
+        Screenscraper
+    }
+    public enum ScraperType
+    {
+        Full,
+        Metadata,
+        Logo,
+        Boxart,
+        ArtWork,
+        Banner,
+        Video
+    }
 
     public enum SysDisplay
     {

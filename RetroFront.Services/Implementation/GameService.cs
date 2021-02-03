@@ -22,7 +22,7 @@ namespace RetroFront.Services.Implementation
             game.Name = System.IO.Path.GetFileNameWithoutExtension(gamefile);
             game.EmulatorID = emulator.EmulatorID;
             game.Boxart = Path.Combine(imgfolder, "box2dfront",$"{game.Name}.png");
-            game.Fanart = Path.Combine(imgfolder,"fanart", $"{game.Name}.jpg");
+            game.Fanart = Path.Combine(imgfolder,"steamgrid", $"{game.Name}.jpg");
             game.Screenshoot = Path.Combine(imgfolder,"images", $"{game.Name}.png");
             game.Logo = Path.Combine(imgfolder,"wheel", $"{game.Name}.png");
             game.TitleScreen = Path.Combine(imgfolder, "screentitle", $"{game.Name}.png");
@@ -73,7 +73,7 @@ namespace RetroFront.Services.Implementation
                         newgame.Path = Path.Combine(folderpath, gamedata.Path.Substring(2));
                         newgame.EmulatorID = emulator.EmulatorID;
                         newgame.Boxart = Path.Combine(imgfolder, "box2dfront", $"{newgame.Name}.png");
-                        newgame.Fanart = Path.Combine(imgfolder, "fanart", $"{newgame.Name}.jpg");
+                        newgame.Fanart = Path.Combine(imgfolder, "steamgrid", $"{newgame.Name}.jpg");
                         newgame.Screenshoot = Path.Combine(imgfolder, "images", $"{newgame.Name}.png");
                         newgame.Logo = Path.Combine(imgfolder, "wheel", $"{newgame.Name}.png");
                         newgame.TitleScreen = Path.Combine(imgfolder, "screentitle", $"{newgame.Name}.png");
@@ -125,7 +125,7 @@ namespace RetroFront.Services.Implementation
             }
             else if (sGDBType == SGDBType.fanart)
             {
-                return Path.Combine(imgfolder, "fanart", $"{game.Name}");
+                return Path.Combine(imgfolder, "steamgrid", $"{game.Name}");
             }
             else if (sGDBType == SGDBType.logo)
             {

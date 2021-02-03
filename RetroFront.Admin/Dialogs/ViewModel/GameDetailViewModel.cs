@@ -127,7 +127,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         {
             get { return _Fanart; }
             set { _Fanart = value; RaisePropertyChanged(); }
-        } 
+        }
         private string _logo;
         public string Logo
         {
@@ -179,20 +179,24 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             Video = game.Video;
             if (File.Exists(game.Fanart) == false)
             {
-                Fanart = TitleScreen;
-                if (File.Exists(game.TitleScreen) == false)
+                if (File.Exists(game.Fanart.Replace(".jpg", ".png")))
                 {
-                    Fanart = RecalView;
+                    Fanart = game.Fanart.Replace(".jpg", ".png");
                 }
+                //    Fanart = TitleScreen;
+                //    if (File.Exists(game.TitleScreen) == false)
+                //    {
+                //        Fanart = RecalView;
+                //    }
             }
         }
 
         private void SGDBBoxFinder()
         {
-            var resultimg =  dialogService.SearchImgInSteamGridDB(GameCurrent, SGDBType.boxart);
-            if(resultimg !=null)
+            var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, SGDBType.boxart);
+            if (resultimg != null)
             {
-                Boxart = resultimg;                
+                Boxart = resultimg;
             }
         }
         private void SGDBLogoFinder()

@@ -30,7 +30,7 @@ namespace RetroFront.Admin.Converter
         {
             FrameworkElement elemnt = container as FrameworkElement;
             GameViewModel game = item as GameViewModel;
-            if (File.Exists(game.Game.Fanart))
+            if (File.Exists(game.Game.Fanart)|| File.Exists(game.Game.Fanart.Replace(".jpg", ".png")))
             {
                 return elemnt.FindResource("GameFanartTemplate") as DataTemplate;
             }

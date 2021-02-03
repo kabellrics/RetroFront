@@ -6,9 +6,9 @@
              xmlns:local="clr-namespace:RetroFront.PlateformeView"
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d">
+             mc:Ignorable="d" Loaded="UserControl_Loaded">
     <Grid>
-        <mah:FlipView ItemsSource="{Binding Systemes}" IsBannerEnabled="False" IsNavigationEnabled="False"
+        <mah:FlipView x:Name="flip" ItemsSource="{Binding Systemes}" IsBannerEnabled="False" IsNavigationEnabled="False"
             SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}" NavigationButtonsPosition="Inside">
             <mah:FlipView.ItemTemplate>
                 <DataTemplate>

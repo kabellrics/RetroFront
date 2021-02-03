@@ -86,16 +86,8 @@ namespace RetroFront.Services.Implementation
                     Directory.CreateDirectory(Path.Combine(imgfolder, "images"));
                     Directory.CreateDirectory(Path.Combine(imgfolder, "wheel"));
                     Directory.CreateDirectory(Path.Combine(imgfolder, "videos"));
-                    //var box = File.Create(Path.Combine(imgfolder, "box2dfront", $"{newgame.SteamID.ToString()}.jpg"));
-                    //box.Close();
-                    //var fanart = File.Create(Path.Combine(imgfolder, "fanart", $"{newgame.SteamID.ToString()}.jpg"));
-                    //fanart.Close();
-                    //var screen = File.Create(Path.Combine(imgfolder, "images", $"{newgame.SteamID.ToString()}.jpg"));
-                    //screen.Close();
-                    //var wheel = File.Create(Path.Combine(imgfolder, "wheel", $"{newgame.SteamID.ToString()}.png"));
-                    //wheel.Close();
                     newgame.Boxart = Path.Combine(imgfolder, "box2dfront", $"{newgame.SteamID.ToString()}.jpg");
-                    newgame.Fanart = Path.Combine(imgfolder, "fanart", $"{newgame.SteamID.ToString()}.jpg");
+                    newgame.Fanart = Path.Combine(imgfolder, "steamgrid", $"{newgame.SteamID.ToString()}.jpg");
                     newgame.Screenshoot = Path.Combine(imgfolder, "images", $"{newgame.SteamID.ToString()}.jpg");
                     newgame.Logo = Path.Combine(imgfolder, "wheel", $"{newgame.SteamID.ToString()}.png");
                     newgame.Video = Path.Combine(imgfolder, "videos", $"{newgame.SteamID.ToString()}.mp4");

@@ -12,7 +12,8 @@
         DataContext="{Binding Source={StaticResource ViewModelFrontLocator}, Path=MainPageVM}"
         mc:Ignorable="d"
         Title="Retrofront"
-        Background="Black">
+        Background="Black"
+      Loaded="Page_Loaded">
     <Page.InputBindings>
         <KeyBinding Key="Left" Command="{Binding GoDownCommand}"></KeyBinding>
         <KeyBinding Key="Right" Command="{Binding GoUpCommand}"></KeyBinding>
@@ -21,7 +22,6 @@
         <KeyBinding Key="Space" Command="{Binding OpenDisplayCommand}"></KeyBinding>
         <KeyBinding Key="Return" Command="{Binding CloseOrGoCommand}"></KeyBinding>
     </Page.InputBindings>
-
     <Page.Resources>
         <DataTemplate x:Key="BigLogo">
             <views:BigLogoView></views:BigLogoView>
@@ -91,7 +91,7 @@
             </Grid>
         </md:DialogHost.DialogContent>
         <Grid>
-            <ContentPresenter Style="{StaticResource MyContentStyle}" Content="{Binding}"/>
+            <ContentPresenter x:Name="contentpres" Style="{StaticResource MyContentStyle}" Content="{Binding}"/>
         </Grid>
     </md:DialogHost>
 </Page>

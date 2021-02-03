@@ -103,7 +103,7 @@ namespace RetroFront.Services.Implementation
                 return null;
             }
         }
-        public IEnumerable<ImgResult> GetGridFanartForId(int gameId)
+        public IEnumerable<ImgResult> GetGridBannerForId(int gameId)
         {
             try
             {

@@ -7,6 +7,7 @@
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:RetroFront.Admin"
+        xmlns:enum="clr-namespace:RetroFront.Models;assembly=RetroFront.Models"
         xmlns:conv="clr-namespace:RetroFront.Admin.Converter"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
@@ -112,7 +113,7 @@
         </DataTemplate>
         <DataTemplate x:Key="GameFanartTemplate">
             <Grid>
-                <Image Stretch="Fill" Source="{Binding Fanart}"></Image>
+                <Image Stretch="Fill" Source="{Binding Banner}"></Image>
             </Grid>
         </DataTemplate>
         <conv:ListViewSysDataTemplateSelector x:Key="SystemTemplateSelector"/>
@@ -129,7 +130,7 @@
             </Border.Background>
             <DockPanel LastChildFill="True" >
                 <StatusBar Style="{DynamicResource MahApps.Styles.StatusBar}" DockPanel.Dock="Bottom">
-                    
+
                 </StatusBar>
                 <Menu IsMainMenu="True" Style="{DynamicResource MaterialDesignMenu}" DockPanel.Dock="Top">
                     <MenuItem Header="Menu" Style="{DynamicResource MaterialDesignMenuItem}">
@@ -192,9 +193,6 @@
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="Thème" Style="{DynamicResource MaterialDesignMenuItem}">
-                        <!--<MenuItem Header="Récupérer Les Backgrounds Screenscraper" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>-->
-                        <!--<MenuItem Header="Scraper les logos des Sytemes" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>-->
-                        <!--<MenuItem Header="Installer les backgrounds par défaut pour les systèmes avec les gens" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding LoadDefaultBCKCommand}"></MenuItem>-->
                         <MenuItem Header="Créer un pack de fond d'écran" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding CreateBckPackCommand}"></MenuItem>
                         <MenuItem Header="Modifier un pack d'image" ItemsSource="{Binding Themes}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
                             <MenuItem.ItemContainerStyle>
@@ -213,6 +211,71 @@
                                     <Setter Property="CommandParameter" Value="{Binding}"></Setter>
                                 </Style>
                             </MenuItem.ItemContainerStyle>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Scraping Full Systeme" Style="{DynamicResource MaterialDesignMenuItem}">
+                        <MenuItem Header="SteamGridDB" Style="{DynamicResource MaterialDesignMenuItem}">
+                            <MenuItem Header="Boxart" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OnlySystemes}"
+                              DisplayMemberPath="Name">
+                                <!--<MenuItem.ItemContainerStyle>
+                                    <Style TargetType="MenuItem">
+                                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem},Path=DataContext.ScrapeSystemeCommand}"></Setter>
+                                    </Style>
+                                </MenuItem.ItemContainerStyle>-->
+                            </MenuItem>
+                            <MenuItem Header="Logo" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OnlySystemes}"
+                              DisplayMemberPath="Name">
+                                <!--<MenuItem.ItemContainerStyle>
+                                    <Style TargetType="MenuItem">
+                                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem},Path=DataContext.AddExplorerCommand}"></Setter>
+                                        <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                                    </Style>
+                                </MenuItem.ItemContainerStyle>-->
+                            </MenuItem>
+                            <MenuItem Header="Artwork/Screenshoot" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OnlySystemes}"
+                              DisplayMemberPath="Name">
+                                <!--<MenuItem.ItemContainerStyle>
+                                    <Style TargetType="MenuItem">
+                                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem},Path=DataContext.AddExplorerCommand}"></Setter>
+                                        <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                                    </Style>
+                                </MenuItem.ItemContainerStyle>-->
+                            </MenuItem>
+                            <MenuItem Header="Banner" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OnlySystemes}"
+                              DisplayMemberPath="Name">
+                                <!--<MenuItem.ItemContainerStyle>
+                                    <Style TargetType="MenuItem">
+                                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem},Path=DataContext.AddExplorerCommand}"></Setter>
+                                        <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                                    </Style>
+                                </MenuItem.ItemContainerStyle>-->
+                            </MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="IGDB" Style="{DynamicResource MaterialDesignMenuItem}">
+                            <MenuItem Header="Metadata (ENG)" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OnlySystemes}"
+                              DisplayMemberPath="Name"></MenuItem>
+                            <MenuItem Header="Boxart" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OnlySystemes}"
+                              DisplayMemberPath="Name"></MenuItem>
+                            <MenuItem Header="ArtWork/Screenshoot" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OnlySystemes}"
+                              DisplayMemberPath="Name"></MenuItem>
+                            <MenuItem Header="Video" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OnlySystemes}"
+                              DisplayMemberPath="Name"></MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="Screenscraper" Style="{DynamicResource MaterialDesignMenuItem}">
+                            <MenuItem Header="Full Data" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OldSystemes}"
+                              DisplayMemberPath="Name"></MenuItem>
+                            <MenuItem Header="Metadata (FR)" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OldSystemes}"
+                              DisplayMemberPath="Name"></MenuItem>
+                            <MenuItem Header="Logo" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OldSystemes}"
+                              DisplayMemberPath="Name"></MenuItem>
+                            <MenuItem Header="Boxart" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OldSystemes}"
+                              DisplayMemberPath="Name"></MenuItem>
+                            <MenuItem Header="ArtWork/Screenshoot" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OldSystemes}"
+                              DisplayMemberPath="Name"></MenuItem>
+                            <MenuItem Header="Banner" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OldSystemes}"
+                              DisplayMemberPath="Name"></MenuItem>
+                            <MenuItem Header="Video" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OldSystemes}"
+                              DisplayMemberPath="Name"></MenuItem>
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="Paramètres" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding ShowSettingsCommand}" />
@@ -252,43 +315,6 @@
                                                        CommandParameter="{Binding DataContext.SelectedSystemeViewModel, ElementName=myWindow}"></i:InvokeCommandAction>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                            <!--<ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                    <Grid.Background>
-                                        <VisualBrush>
-                                            <VisualBrush.Visual>
-                                                <Image Source="{Binding Bck}" Stretch="UniformToFill" Opacity="0.60" >
-                                                </Image>
-                                            </VisualBrush.Visual>
-                                        </VisualBrush>
-                                    </Grid.Background>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*"></ColumnDefinition>
-                                        <ColumnDefinition Width="10*"></ColumnDefinition>
-                                        <ColumnDefinition Width="2*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="4*"></RowDefinition>
-                                            <RowDefinition Height="1*"></RowDefinition>
-                                            <RowDefinition Height="1*"></RowDefinition>
-                                            <RowDefinition Height="1*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-                                        <Viewbox Grid.Row="0" Grid.Column="1" Stretch="Uniform">
-                                        <TextBlock Text="{Binding Name}" Style="{DynamicResource MaterialDesignHeadline1TextBlock}"></TextBlock>
-                                    </Viewbox>
-                                    <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
-                                        <Label Content="{Binding Theme}" Style="{DynamicResource MaterialDesignLabel}"></Label>
-                                        </Viewbox>
-                                    <Viewbox Grid.Row="2" Grid.Column="1" Stretch="Uniform">
-                                        <Label Content="{Binding NBEmu}" Style="{DynamicResource MaterialDesignLabel}"></Label>
-                                        </Viewbox>
-                                    <Viewbox Grid.Row="3" Grid.Column="1" Stretch="Uniform">
-                                        <Label Content="{Binding NBGame}" Style="{DynamicResource MaterialDesignLabel}"></Label>
-                                        </Viewbox>
-                                    </Grid>
-                            </DataTemplate>
-                            </ListView.ItemTemplate>-->
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel Orientation="Vertical" SizeChanged="WrapPanel_SizeChanged"></WrapPanel>
@@ -344,20 +370,7 @@
                                         <Viewbox Grid.Row="0" Grid.Column="1" Stretch="Uniform">
                                             <materialDesign:PackIcon Kind="Settings"></materialDesign:PackIcon>
                                         </Viewbox>
-                                        <!--<Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
-                                        <Label Content="{Binding NBGame}" Style="{DynamicResource MaterialDesignLabel}"></Label>
-                                    </Viewbox>-->
                                     </Grid>
-                                    <!--<DockPanel LastChildFill="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <mah:Tile Title="{Binding Name}" Margin="3" 
-                                          mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                                          Background="Teal"
-                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                          HorizontalTitleAlignment="Center">
-                                    <materialDesign:PackIcon Kind="Settings"></materialDesign:PackIcon>
-                                    
-                                </mah:Tile>
-                                </DockPanel>-->
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                             <ListView.ItemsPanel>
@@ -398,52 +411,6 @@
                                                        CommandParameter="{Binding DataContext.SelectedGames, ElementName=myWindow}"></i:InvokeCommandAction>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                            <!--<ListView.ItemTemplate>
-                            <DataTemplate>
-                        <Button Style="{DynamicResource MaterialDesignToolButton}" Command="{Binding DataContext.ShowDetailGameGameCommand, ElementName=myWindow}" CommandParameter="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width=".25*"></ColumnDefinition>
-                                            <ColumnDefinition Width="10*"></ColumnDefinition>
-                                            <ColumnDefinition Width="10*"></ColumnDefinition>
-                                            <ColumnDefinition Width=".25*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Image Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Source="{Binding Boxart}"></Image>
-                                    <Grid Grid.Column="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width=".25*"></ColumnDefinition>
-                                            <ColumnDefinition Width="10*"></ColumnDefinition>
-                                            <ColumnDefinition Width=".25*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="4*"></RowDefinition>
-                                            <RowDefinition Height="2*"></RowDefinition>
-                                            <RowDefinition Height="2*"></RowDefinition>
-                                            <RowDefinition Height="2*"></RowDefinition>
-                                            <RowDefinition Height="2*"></RowDefinition>
-                                            <RowDefinition Height="5*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-                                        <Viewbox Grid.Row="0" Grid.Column="1" Stretch="Uniform" HorizontalAlignment="Left" >
-                                            <TextBlock Style="{DynamicResource MaterialDesignHeadline1TextBlock}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" TextAlignment="Left" Text="{Binding Name}"></TextBlock>
-                                        </Viewbox>
-                                        <Viewbox Grid.Row="1" Grid.Column="1"  Stretch="Uniform" HorizontalAlignment="Left" >
-                                            <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" TextAlignment="Left" Text="{Binding Editeur}"></TextBlock>
-                                        </Viewbox>
-                                        <Viewbox Grid.Row="2" Grid.Column="1"  Stretch="Uniform" HorizontalAlignment="Left" >
-                                            <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" TextAlignment="Left" Text="{Binding Dev}"></TextBlock>
-                                        </Viewbox>
-                                        <Viewbox Grid.Row="3" Grid.Column="1"  Stretch="Uniform" HorizontalAlignment="Left" >
-                                            <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" TextAlignment="Left" Text="{Binding Year}"></TextBlock>
-                                        </Viewbox>
-                                        <Viewbox Grid.Row="4" Grid.Column="1"  Stretch="Uniform" HorizontalAlignment="Left" >
-                                            <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" TextAlignment="Left" Text="{Binding Genre}"></TextBlock>
-                                        </Viewbox>
-                                        <TextBlock Grid.Row="5" Grid.Column="1"  Style="{DynamicResource MaterialDesignTextBlock}" TextWrapping="WrapWithOverflow" Text="{Binding Desc}"></TextBlock>
-                                    </Grid>
-                                    </Grid>
-                               </Button>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>-->
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel Orientation="Vertical" SizeChanged="WrapPanel_SizeChanged"></WrapPanel>

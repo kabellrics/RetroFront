@@ -12,6 +12,6 @@ namespace RetroFront.Services.Interface
         IEnumerable<ImgResult> GetHeroesForId(int gameId);
         IEnumerable<ImgResult> GetLogoForId(int gameId);
         IEnumerable<ImgResult> GetGridBoxartForId(int gameId);
-        IEnumerable<ImgResult> GetGridFanartForId(int gameId);
+        IEnumerable<ImgResult> GetGridBannerForId(int gameId);
     }
 }

@@ -92,7 +92,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
                 }
                 else if (type == SGDBType.fanart)
                 {
-                    var result = steamGridDBService.GetGridFanartForId(steamgridgame.id); if (result != null)
+                    var result = steamGridDBService.GetGridBannerForId(steamgridgame.id); if (result != null)
                     {
                         foreach (var img in result)
                         {

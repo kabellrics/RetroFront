@@ -42,12 +42,19 @@ namespace TestService
         //    //SteamService.GetSteamGame(@"C:\Program Files (x86)\Steam\steam.exe");
         //    Assert.AreNotEqual(null, null);
         //}
-        //[TestMethod]
-        //public void TestMethod6()
-        //{
-        //    var IGDBService = new IGDBService();
-        //    var result = IGDBService.GetPlatformByName("Nintendo GameCube").Result;
-        //    Assert.AreNotEqual(null, result);
-        //}
+        [TestMethod]
+        public void TestMethod6()
+        {
+            var IGDBService = new IGDBService();
+            var result = IGDBService.GetPlatformByName("Nintendo");
+            Assert.AreNotEqual(null, result);
+        } 
+        [TestMethod]
+        public void TestMethod7()
+        {
+            var IGDBService = new IGDBService();
+            var result = IGDBService.GetGameByName("Lego");
+            Assert.AreNotEqual(null, result);
+        }
     }
 }

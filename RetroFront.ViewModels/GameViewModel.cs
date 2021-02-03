@@ -13,7 +13,7 @@ namespace RetroFront.ViewModels
         public GameRom Game
         {
             get { return _game; }
-            set { _game = value;RaisePropertyChanged(); }
+            set { _game = value; RaisePropertyChanged(); }
         }
         private string _name;
         public string Name
@@ -76,7 +76,7 @@ namespace RetroFront.ViewModels
             set { _banner = value; RaisePropertyChanged(); }
         }
         private string _fanart;
-        public string Fanart
+        public string Banner
         {
             get { return _fanart; }
             set { _fanart = value; RaisePropertyChanged(); }
@@ -103,13 +103,13 @@ namespace RetroFront.ViewModels
         public string Logo
         {
             get { return _logo; }
-            set { _logo = value;RaisePropertyChanged(); }
+            set { _logo = value; RaisePropertyChanged(); }
         }
         private bool _isSelected;
         public bool IsSelected
         {
             get { return _isSelected; }
-            set { _isSelected = value;RaisePropertyChanged(); }
+            set { _isSelected = value; RaisePropertyChanged(); }
         }
         public GameViewModel(GameRom game)
         {
@@ -126,16 +126,30 @@ namespace RetroFront.ViewModels
             Logo = game.Logo;
             RecalView = game.RecalView;
             TitleScreen = game.TitleScreen;
-            Fanart = game.Fanart;
+            Banner = game.Fanart;
             Video = game.Video;
-            if (File.Exists(game.Fanart) == false)
+            if (game.Fanart != null)
             {
-                Fanart = TitleScreen;
-                if (File.Exists(game.TitleScreen) == false)
+                if (File.Exists(game.Fanart) == false)
                 {
-                    Fanart = RecalView;
-                }
+                    if (File.Exists(game.Fanart.Replace(".jpg", ".png")))
+                    {
+                        Banner = game.Fanart.Replace(".jpg", ".png");
+                    }
+                } 
             }
+            //if (File.Exists(game.Fanart) == false)
+            //{
+            //    Banner = TitleScreen;
+            //    if (File.Exists(game.TitleScreen) == false)
+            //    {
+            //        Banner = RecalView;
+            //    }
+            //}
+            //else
+            //{
+            //    Sxreenshoot = game.Fanart;
+            //}
         }
     }
 }

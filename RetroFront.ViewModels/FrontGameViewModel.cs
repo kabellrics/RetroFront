@@ -63,6 +63,7 @@ namespace RetroFront.ViewModels
         private ICommand _goBackCommand;
         private ICommand _openDisplayCommand;
         private ICommand _CloseOrGoCommand;
+        private RelayCommand _loadedCommand;
         public ICommand GoDownCommand
         {
             get
@@ -98,6 +99,18 @@ namespace RetroFront.ViewModels
                 return _CloseOrGoCommand ?? (_CloseOrGoCommand = new RelayCommand(CloseOrGo));
             }
         }
+        public RelayCommand LoadedCommand
+        {
+            get
+            {
+                return _loadedCommand ?? (_loadedCommand = new RelayCommand(Loaded));
+                    //() =>
+                    //{
+                    //    //_navigationService.NavigateTo("Splash", "MainFrame");
+                    //    _navigationService.NavigateTo("Systeme", null, string.Empty);
+                    //}));
+            }
+        }
         public FrontGameViewModel(IDatabaseService databaseService, IFileJSONService fileJSONService, IThemeService themeService, IEnumService enumService, INavigationService navigationService)
         {
             IsDialogDisplayOpen = false;
@@ -119,6 +132,11 @@ namespace RetroFront.ViewModels
             {
                 Games.Add(new GameViewModel(game));
             }
+        }
+        private void Loaded()
+        {
+            CurrentSysteme = (Systeme)_navigationService.Parameter;
+            LoadData();
         }
         private void GoBack()
         {

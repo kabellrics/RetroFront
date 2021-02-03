@@ -20,6 +20,7 @@ namespace RetroFront
         public MainWindow()
         {
             InitializeComponent();
+            NavigationFrame.Focus();
         }
     }
 }

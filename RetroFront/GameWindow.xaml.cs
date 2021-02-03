@@ -20,6 +20,12 @@ namespace RetroFront
         public GameWindow()
         {
             InitializeComponent();
+            this.Focus();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            contentpres.Focus();
         }
     }
 }

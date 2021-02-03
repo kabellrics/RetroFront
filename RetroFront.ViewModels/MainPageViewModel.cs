@@ -26,6 +26,21 @@ namespace RetroFront.ViewModels
         private IThemeService _themeService;
         private ThemeViewModel _currentTheme;
 
+        #region Properties
+
+        private ScraperSource _currentsource;
+        private ScraperType _currenttype;
+        public ScraperSource CurrentScrapeSource
+        {
+            get { return _currentsource; }
+            set { _currentsource = value;RaisePropertyChanged(); }
+        }
+        public ScraperType CurrentScraperType
+        {
+            get { return _currenttype; }
+            set { _currenttype = value;RaisePropertyChanged(); }
+        }
+
         private int _selectedIndexSys;
         private int _selectedIndexEmu;
         private int _selectedIndexGame;
@@ -68,6 +83,18 @@ namespace RetroFront.ViewModels
             get { return _systemes; }
             set { _systemes = value; RaisePropertyChanged(); }
         }
+        private ObservableCollection<SystemeViewModel> _oldsystemes;
+        public ObservableCollection<SystemeViewModel> OldSystemes
+        {
+            get { return _oldsystemes; }
+            set { _oldsystemes = value; RaisePropertyChanged(); }
+        }
+        private ObservableCollection<SystemeViewModel> _Onlysystemes;
+        public ObservableCollection<SystemeViewModel> OnlySystemes
+        {
+            get { return _Onlysystemes; }
+            set { _Onlysystemes = value; RaisePropertyChanged(); }
+        }
         private ObservableCollection<SystemeViewModel> _customList;
         public ObservableCollection<SystemeViewModel> CustomList
         {
@@ -109,7 +136,9 @@ namespace RetroFront.ViewModels
         {
             get { return _selectedgames; }
             set { _selectedgames = value; RaisePropertyChanged(); }
-        }
+        } 
+        #endregion
+
         #region Command
         private ICommand _reloadCommand;
         private ICommand _OpenRetroarchCommand;
@@ -129,6 +158,23 @@ namespace RetroFront.ViewModels
         private ICommand _ShowDetailEmulatorCommand;
         private ICommand _ShowSettingsCommand;
         private ICommand _CHangeCurrentThemeCommand;
+        private ICommand _ScrapeSystemeCommand;
+        private ICommand _ChangeScrapeSourceCommand;
+        private ICommand _ChangeScrapeTypeCommand;
+        public ICommand ChangeScrapeSourceCommand
+        {
+            get
+            {
+                return _ChangeScrapeSourceCommand ?? (_ChangeScrapeSourceCommand = new RelayCommand<int>(ChangeScrapeSource));
+            }
+        }
+        public ICommand ChangeScrapeTypeCommand
+        {
+            get
+            {
+                return _ChangeScrapeTypeCommand ?? (_ChangeScrapeTypeCommand = new RelayCommand<int>(ChangeScrapeType));
+            }
+        }
         public ICommand ReloadCommand
         {
             get
@@ -257,6 +303,14 @@ namespace RetroFront.ViewModels
                 return _CHangeCurrentThemeCommand ?? (_CHangeCurrentThemeCommand = new RelayCommand<ThemeViewModel>(CHangeCurrentTheme));
             }
         }
+        public ICommand ScrapeSystemeCommand
+        {
+            get
+            {
+                return _ScrapeSystemeCommand ?? (_ScrapeSystemeCommand = new RelayCommand<object>(ScrapeSysteme));
+            }
+        }
+
         #endregion
         public MainPageViewModel(IDatabaseService databaseService, IFileJSONService fileJSONService, IRetroarchService retroarchService, IEmulateurService emulateurService, IDialogService dialogService, IGameService gameService, IThemeService themeService, ISteamService steamService)
         {
@@ -294,6 +348,14 @@ namespace RetroFront.ViewModels
         {
             _dialogService.ShowParameters();
             ReloadData();
+        }
+        private void ChangeScrapeSource(int obj)
+        {
+            CurrentScrapeSource = (ScraperSource)obj;
+        }
+        private void ChangeScrapeType(int obj)
+        {
+            CurrentScraperType = (ScraperType)obj;
         }
 
         private void CreateBckPack(string newtheme = null)
@@ -360,7 +422,9 @@ namespace RetroFront.ViewModels
                 Systemes.Add(sysvm);
             }
             Systemes = new ObservableCollection<SystemeViewModel>(Systemes.OrderBy(x => x.Systeme.Type).ThenBy(x => x.Name));
-            CustomList = new ObservableCollection<SystemeViewModel>(AllSystemes.Where(x => x.Systeme.Type == SysType.Collection));
+            CustomList = new ObservableCollection<SystemeViewModel>(AllSystemes.Where(x => x.Systeme.Type == SysType.Collection).OrderBy(x=>x.Name));
+            OldSystemes = new ObservableCollection<SystemeViewModel>(Systemes.Where(x=>x.Systeme.Type != SysType.Collection && x.Systeme.Type != SysType.GameStore && x.Systeme.Type != SysType.Standalone).OrderBy(x=>x.Name));
+            OnlySystemes = new ObservableCollection<SystemeViewModel>(Systemes.Where(x => x.Systeme.Type != SysType.Collection && x.Systeme.Type != SysType.Standalone).OrderBy(x => x.Name));
             ReloadFullEmulators();
         }
         private void AddCore()
@@ -525,6 +589,11 @@ namespace RetroFront.ViewModels
                 _databaseService.SaveUpdate();
                 ReloadData();
             }
+        }
+
+        private void ScrapeSysteme(object item)
+        {
+            object[] parameters = item as object[];
         }
         private void ShowDetailEmulator(EmulatorViewModel obj)
         {
