@@ -15,31 +15,32 @@ using System.Windows.Shapes;
 namespace RetroFront.GameView
 {
     /// <summary>
-    /// Logique d'interaction pour CarrouselBannerView.xaml
+    /// Logique d'interaction pour BannerDetailView.xaml
     /// </summary>
-    public partial class CarrouselBannerView : UserControl
+    public partial class BannerDetailView : UserControl
     {
-        private double CentralPix = -1; 
-        public CarrouselBannerView()
+        private double CentralPix = -1;
+        public BannerDetailView()
         {
             InitializeComponent();
         }
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+
+        private void listicon_Loaded(object sender, RoutedEventArgs e)
         {
             listicon.Focus();
         }
+
         private void listicon_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-
-                var splitbyheight = this.ActualWidth / 8;
-                CentralPix = 640;
-                int itemwidht = 320;
+                var splitbyheight = this.ActualHeight / 12;
+                CentralPix = splitbyheight * 6;
+                int itemheight = (int)splitbyheight;
                 var previousmargin = listicon.Margin;
                 var nextmargin = previousmargin;
-                //nextmargin.Left = -itemwidht * listicon.SelectedIndex;
-                nextmargin.Left = CentralPix - (listicon.SelectedIndex * itemwidht);
+                //nextmargin.Top = -itemheight * listicon.SelectedIndex;
+                nextmargin.Top = CentralPix - (listicon.SelectedIndex * itemheight);
                 var sb = new Storyboard();
                 var ta = new ThicknessAnimation();
                 ta.BeginTime = new TimeSpan(0);
@@ -57,11 +58,6 @@ namespace RetroFront.GameView
             {
                 //throw;
             }
-        }
-
-        private void listicon_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.Focus();
         }
     }
 }

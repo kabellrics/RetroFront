@@ -15,12 +15,12 @@ using System.Windows.Shapes;
 namespace RetroFront.GameView
 {
     /// <summary>
-    /// Logique d'interaction pour CarrouselBannerView.xaml
+    /// Logique d'interaction pour CarrouselBoxView.xaml
     /// </summary>
-    public partial class CarrouselBannerView : UserControl
+    public partial class CarrouselBoxView : UserControl
     {
         private double CentralPix = -1; 
-        public CarrouselBannerView()
+        public CarrouselBoxView()
         {
             InitializeComponent();
         }

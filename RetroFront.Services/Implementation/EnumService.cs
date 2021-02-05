@@ -25,10 +25,11 @@ namespace RetroFront.Services.Implementation
             {
                     RomDisplay.WallBox,
                     RomDisplay.WallBanner,
-                    RomDisplay.ListLogo,
+                    RomDisplay.ListBox,
                     RomDisplay.ListBanner,
                     RomDisplay.Screenshot,
-                    RomDisplay.Fanart
+                    RomDisplay.Fanart,
+                    RomDisplay.FanartBox
             };
         }
         public List<SysType> GetSysTypes()

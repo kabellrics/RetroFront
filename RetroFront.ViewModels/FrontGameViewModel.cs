@@ -157,7 +157,11 @@ namespace RetroFront.ViewModels
             if (IsDialogDisplayOpen == true)
             {
                 IsDialogDisplayOpen = false;
+                FrontDisplay = FronttmpDisplay;
+                FronttmpDisplay = FrontDisplay;
             }
+            else
+                _navigationService.NavigateTo("Systeme", null, string.Empty);
         }
         private void GoDown()
         {

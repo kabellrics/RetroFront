@@ -11,6 +11,14 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
+    <UserControl.InputBindings>
+        <KeyBinding Key="Left" Command="{Binding GoDownCommand}"></KeyBinding>
+        <KeyBinding Key="Right" Command="{Binding GoUpCommand}"></KeyBinding>
+        <KeyBinding Key="Down" Command="{Binding GoUpCommand}"></KeyBinding>
+        <KeyBinding Key="Up" Command="{Binding GoDownCommand}"></KeyBinding>
+        <KeyBinding Key="Space" Command="{Binding OpenDisplayCommand}"></KeyBinding>
+        <KeyBinding Key="Return" Command="{Binding CloseOrGoCommand}"></KeyBinding>
+    </UserControl.InputBindings>
     <Grid>
         <Border>
             <mah:FlipView x:Name="flip" Background="Black" Grid.Row="0" ItemsSource="{Binding Games}" IsBannerEnabled="False" IsNavigationEnabled="False"

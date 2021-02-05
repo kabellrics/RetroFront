@@ -23,13 +23,12 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Page.InputBindings>
-        <KeyBinding Key="Left" Command="{Binding GoDownCommand}"></KeyBinding>
-        <KeyBinding Key="Right" Command="{Binding GoUpCommand}"></KeyBinding>
-        <KeyBinding Key="Down" Command="{Binding GoUpCommand}"></KeyBinding>
-        <KeyBinding Key="Up" Command="{Binding GoDownCommand}"></KeyBinding>
-        <KeyBinding Key="Space" Command="{Binding OpenDisplayCommand}"></KeyBinding>
+        <!--<KeyBinding Key="Left" Command="{Binding GoDownCommand}"></KeyBinding>-->
+        <!--<KeyBinding Key="Right" Command="{Binding GoUpCommand}"></KeyBinding>-->
+        <!--<KeyBinding Key="Down" Command="{Binding GoUpCommand}"></KeyBinding>-->
+        <!--<KeyBinding Key="Up" Command="{Binding GoDownCommand}"></KeyBinding>-->
+        <!--<KeyBinding Key="Space" Command="{Binding OpenDisplayCommand}"></KeyBinding>-->
         <KeyBinding Key="Return" Command="{Binding CloseOrGoCommand}"></KeyBinding>
-        <KeyBinding Key="Esc" Command="{Binding GoBackCommand}"></KeyBinding>
     </Page.InputBindings>
     <Page.Resources>
         <DataTemplate x:Key="FanartView">
@@ -38,11 +37,29 @@
         <DataTemplate x:Key="CarrouselBanner">
             <views:CarrouselBannerView/>
         </DataTemplate>
+        <DataTemplate x:Key="CarrouselBox">
+            <views:CarrouselBoxView/>
+        </DataTemplate>
+        <DataTemplate x:Key="BannerList">
+            <views:BannerDetailView/>
+        </DataTemplate>
+        <DataTemplate x:Key="BoxList">
+            <views:BoxDetailView/>
+        </DataTemplate>
         <Style x:Key="MyContentStyle" TargetType="ContentPresenter">
             <Setter Property="ContentTemplate" Value="{StaticResource FanartView}"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.Fanart}">
                     <Setter Property="ContentTemplate" Value="{StaticResource CarrouselBanner}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.FanartBox}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource CarrouselBox}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.ListBanner}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource BannerList}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.ListBox}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource BoxList}"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -68,7 +85,7 @@
                     <SolidColorBrush Color="WhiteSmoke"></SolidColorBrush>
                 </Grid.Background>
                 <ListBox ItemsSource="{Binding FrontDisplayList}"
-                         SelectedItem="{Binding FrontDisplay,Mode=TwoWay}" Width="350" Height="Auto">
+                         SelectedItem="{Binding FronttmpDisplay,Mode=TwoWay}" Width="350" Height="Auto">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Height="80">

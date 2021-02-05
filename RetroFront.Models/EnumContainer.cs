@@ -61,8 +61,8 @@ namespace RetroFront.Models
         WallBox,
         [Description("Wall Banner")] 
         WallBanner,
-        [Description("Logo Detail")] 
-        ListLogo,
+        [Description("Box Detail")] 
+        ListBox,
         [Description("Banner Detail")] 
         ListBanner,
         [Description("Screenshot")] 
