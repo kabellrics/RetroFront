@@ -8,7 +8,7 @@
              xmlns:enum="clr-namespace:RetroFront.Models;assembly=RetroFront.Models"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="500"
-             MinHeight="700" MinWidth="500" Background="DarkGray">
+             Height="700" Width="500" Background="DarkGray">
     <UserControl.Resources>
         <converter:EnumDescriptionConverter x:Key="enumConverter"/>
     </UserControl.Resources>

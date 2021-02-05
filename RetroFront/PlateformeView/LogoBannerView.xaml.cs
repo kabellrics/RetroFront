@@ -21,6 +21,7 @@ namespace RetroFront.PlateformeView
         public LogoBannerView()
         {
             InitializeComponent();
+            listicon.Focus();
         }
 
     }

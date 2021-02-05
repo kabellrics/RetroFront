@@ -23,7 +23,7 @@ namespace RetroFront.Services.Implementation
             game.EmulatorID = emulator.EmulatorID;
             game.Boxart = Path.Combine(imgfolder, "box2dfront",$"{game.Name}.png");
             game.Fanart = Path.Combine(imgfolder,"steamgrid", $"{game.Name}.jpg");
-            game.Screenshoot = Path.Combine(imgfolder,"images", $"{game.Name}.png");
+            game.Screenshoot = Path.Combine(imgfolder,"fanart", $"{game.Name}.png");
             game.Logo = Path.Combine(imgfolder,"wheel", $"{game.Name}.png");
             game.TitleScreen = Path.Combine(imgfolder, "screentitle", $"{game.Name}.png");
             game.RecalView = Path.Combine(imgfolder, "recalview", $"{game.Name}.png");
@@ -74,7 +74,7 @@ namespace RetroFront.Services.Implementation
                         newgame.EmulatorID = emulator.EmulatorID;
                         newgame.Boxart = Path.Combine(imgfolder, "box2dfront", $"{newgame.Name}.png");
                         newgame.Fanart = Path.Combine(imgfolder, "steamgrid", $"{newgame.Name}.jpg");
-                        newgame.Screenshoot = Path.Combine(imgfolder, "images", $"{newgame.Name}.png");
+                        newgame.Screenshoot = Path.Combine(imgfolder, "fanart", $"{newgame.Name}.png");
                         newgame.Logo = Path.Combine(imgfolder, "wheel", $"{newgame.Name}.png");
                         newgame.TitleScreen = Path.Combine(imgfolder, "screentitle", $"{newgame.Name}.png");
                         newgame.RecalView = Path.Combine(imgfolder, "recalview", $"{newgame.Name}.png");
@@ -110,26 +110,42 @@ namespace RetroFront.Services.Implementation
             return game;
         }
 
-        public string GetImgPathForGame(GameRom game, SGDBType sGDBType)
+        public string GetImgPathForGame(GameRom game, ScraperType sGDBType)
         {
             var emulator = dbService.GetEmulator(game.EmulatorID);
             var plateforme = dbService.GetSysteme(emulator.SystemeID);
             string imgfolder = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme.Shortname);
-            if(sGDBType == SGDBType.background)
+            if(sGDBType == ScraperType.ArtWork)
             {
-                return Path.Combine(imgfolder, "images", $"{game.Name}");
+                //if(game.SteamID > 0)
+                //    return Path.Combine(imgfolder, "fanart", $"{game.SteamID}");
+                //else
+                //    return Path.Combine(imgfolder, "fanart", $"{game.Name}");
+                return Path.Combine(imgfolder, "fanart", $"{Guid.NewGuid().ToString()}");
             }
-            else if (sGDBType == SGDBType.boxart) 
+            else if (sGDBType == ScraperType.Boxart) 
             {
-                return Path.Combine(imgfolder, "box2dfront", $"{game.Name}");
+                //if (game.SteamID > 0)
+                //    return Path.Combine(imgfolder, "box2dfront", $"{game.SteamID}");
+                //else
+                //    return Path.Combine(imgfolder, "box2dfront", $"{game.Name}");
+                return Path.Combine(imgfolder, "box2dfront", $"{Guid.NewGuid().ToString()}");
             }
-            else if (sGDBType == SGDBType.fanart)
+            else if (sGDBType == ScraperType.Banner)
             {
-                return Path.Combine(imgfolder, "steamgrid", $"{game.Name}");
+                //if (game.SteamID > 0)
+                //    return Path.Combine(imgfolder, "steamgrid", $"{game.SteamID}");
+                //else
+                //    return Path.Combine(imgfolder, "steamgrid", $"{game.Name}");
+                return Path.Combine(imgfolder, "steamgrid", $"{Guid.NewGuid().ToString()}");
             }
-            else if (sGDBType == SGDBType.logo)
+            else if (sGDBType == ScraperType.Logo)
             {
-                return Path.Combine(imgfolder, "wheel", $"{game.Name}");
+                //if (game.SteamID > 0)
+                //    return Path.Combine(imgfolder, "wheel", $"{game.SteamID}");
+                //else
+                //    return Path.Combine(imgfolder, "wheel", $"{game.Name}");
+                return Path.Combine(imgfolder, "wheel", $"{Guid.NewGuid().ToString()}");
             }
             else
             {

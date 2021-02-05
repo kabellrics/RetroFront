@@ -23,6 +23,7 @@ namespace RetroFront.PlateformeView
         public RightWheelView()
         {
             InitializeComponent();
+            listicon.Focus();
         }
 
         private void listicon_SelectionChanged(object sender, SelectionChangedEventArgs e)

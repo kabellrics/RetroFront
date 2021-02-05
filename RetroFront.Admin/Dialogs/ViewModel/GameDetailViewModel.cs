@@ -189,11 +189,30 @@ namespace RetroFront.Admin.Dialogs.ViewModel
                 //        Fanart = RecalView;
                 //    }
             }
+            if (File.Exists(game.Screenshoot) == false)
+            {
+                if (File.Exists(game.Screenshoot.Replace(".png", ".jpg")))
+                {
+                    Screenshoot = game.Screenshoot.Replace(".png", ".jpg");
+                }
+                else
+                {
+                    Screenshoot = TitleScreen;
+                    if (File.Exists(game.TitleScreen) == false)
+                    {
+                        Screenshoot = RecalView;
+                    }
+                }
+            }
+            else
+            {
+                Screenshoot = game.Screenshoot;
+            }
         }
 
         private void SGDBBoxFinder()
         {
-            var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, SGDBType.boxart);
+            var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Boxart,ScraperSource.SGDB);
             if (resultimg != null)
             {
                 Boxart = resultimg;
@@ -201,7 +220,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         }
         private void SGDBLogoFinder()
         {
-            var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, SGDBType.logo);
+            var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Logo, ScraperSource.SGDB);
             if (resultimg != null)
             {
                 Logo = resultimg;
@@ -209,7 +228,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         }
         private void SGDBScreenFinder()
         {
-            var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, SGDBType.background);
+            var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.ArtWork, ScraperSource.SGDB);
             if (resultimg != null)
             {
                 Screenshoot = resultimg;
@@ -217,7 +236,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         }
         private void SGDBFanartFinder()
         {
-            var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, SGDBType.fanart);
+            var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Banner, ScraperSource.SGDB);
             if (resultimg != null)
             {
                 Fanart = resultimg;
@@ -225,7 +244,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         }
         private void ScrapeGame()
         {
-            LoadingGame(_gameService.ScrapeGame(GameCurrent));
+            //LoadingGame(_gameService.ScrapeGame(GameCurrent));
         }
 
         public void CloseDialogWithResult(Window dialog, bool result)

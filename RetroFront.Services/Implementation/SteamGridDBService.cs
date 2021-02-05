@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RetroFront.Models;
 
 namespace RetroFront.Services.Implementation
 {
@@ -21,7 +22,7 @@ namespace RetroFront.Services.Implementation
             client.Authenticator = new JwtAuthenticator(jSONService.appSettings.SGDBKey);
         }
 
-        public IEnumerable<DataSearch> SearchByName(string name)
+        public IEnumerable<Search> SearchByName(string name)
         {
             try
             {
@@ -37,7 +38,7 @@ namespace RetroFront.Services.Implementation
                 return null;
             }
         }
-        public DataSearch GetGameSteamId(string steamId)
+        public Search GetGameSteamId(string steamId)
         {
             try
             {

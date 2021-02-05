@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RetroFront.Admin.Dialogs.Views"
              mc:Ignorable="d" 
-             MinHeight="600" MinWidth="800" Background="DarkGray">
+             Height="600" Width="800" Background="DarkGray">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>

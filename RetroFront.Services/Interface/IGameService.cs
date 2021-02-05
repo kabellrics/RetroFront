@@ -10,6 +10,6 @@ namespace RetroFront.Services.Interface
         IEnumerable<GameRom> ImportGame(string gamelistpath, Emulator emulator);
         GameRom DuplicateGame(GameRom game);
         string DownloadImgData(string dllpath, string target);
-        string GetImgPathForGame(GameRom game, SGDBType sGDBType);
+        string GetImgPathForGame(GameRom game, ScraperType sGDBType);
     }
 }

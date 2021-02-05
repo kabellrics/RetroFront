@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Extensions.DependencyInjection;
 using RetroFront.Models.SteamGridDB;
+using RetroFront.Models;
 using RetroFront.Services.Interface;
 using System;
 using System.Collections.Generic;
@@ -17,16 +18,24 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         private ICommand _cancelCommand;
         private ICommand _yesCommand;
         private ICommand _searchCommand;
-        private List<DataSearch> _foundedgame;
-        private DataSearch _resultgame;
+        private List<Search> _foundedgame;
+        private Search _resultgame;
         private string _name;
         private ISteamGridDBService steamGridDBService;
-        public List<DataSearch> FoundedGame
+        private IIGDBService iGDBService;
+        private ScraperSource _source;
+        public ScraperSource Source
+        {
+            get { return _source; }
+            set { _source = value;RaisePropertyChanged(); }
+        }
+
+        public List<Search> FoundedGame
         {
             get { return _foundedgame; }
             set { _foundedgame = value; RaisePropertyChanged(); }
         }
-        public DataSearch Resultgame
+        public Search Resultgame
         {
             get { return _resultgame; }
             set { _resultgame = value; RaisePropertyChanged(); }
@@ -43,9 +52,11 @@ namespace RetroFront.Admin.Dialogs.ViewModel
                 return _searchCommand ?? (_searchCommand = new RelayCommand<object>(Search));
             }
         }
-        public SteamGridDBGameFinderViewModel(string name)
+        public SteamGridDBGameFinderViewModel(string name,ScraperSource scraperSource)
         {
             steamGridDBService = App.ServiceProvider.GetRequiredService<ISteamGridDBService>();
+            iGDBService = App.ServiceProvider.GetRequiredService<IIGDBService>();
+            Source = scraperSource;
             Name = name;
             SearchByNameResult();
         }
@@ -55,7 +66,14 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         }
         private void SearchByNameResult()
         {
-            FoundedGame = steamGridDBService.SearchByName(Name).ToList();
+            if (Source == ScraperSource.SGDB)
+            {
+                FoundedGame = steamGridDBService.SearchByName(Name).ToList();
+            }
+            else if(Source == ScraperSource.IGDB)
+            {
+                FoundedGame = iGDBService.GetGameByName(Name).ToList();
+            }
         }
         public void CloseDialogWithResult(Window dialog, bool result)
         {

@@ -138,18 +138,25 @@ namespace RetroFront.ViewModels
                     }
                 } 
             }
-            //if (File.Exists(game.Fanart) == false)
-            //{
-            //    Banner = TitleScreen;
-            //    if (File.Exists(game.TitleScreen) == false)
-            //    {
-            //        Banner = RecalView;
-            //    }
-            //}
-            //else
-            //{
-            //    Sxreenshoot = game.Fanart;
-            //}
+            if (File.Exists(game.Screenshoot) == false)
+            {
+                if (File.Exists(game.Screenshoot.Replace(".png", ".jpg")))
+                {
+                    Sxreenshoot = game.Screenshoot.Replace(".png", ".jpg");
+                }
+                else
+                {
+                    Sxreenshoot = TitleScreen;
+                    if (File.Exists(game.TitleScreen) == false)
+                    {
+                        Sxreenshoot = RecalView;
+                    }
+                }
+            }
+            else
+            {
+                Sxreenshoot = game.Screenshoot;
+            }
         }
     }
 }

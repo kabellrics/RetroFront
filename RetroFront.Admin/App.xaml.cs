@@ -46,6 +46,7 @@ namespace RetroFront.Admin
             services.AddSingleton<IThemeService, ThemeService>();
             services.AddSingleton<ISteamService, SteamService>();
             services.AddSingleton<ISteamGridDBService, SteamGridDBService>();
+            services.AddSingleton<IIGDBService, IGDBService>();
             services.AddSingleton<IEnumService, EnumService>();
 
             services.AddSingleton<MainPageViewModel>();

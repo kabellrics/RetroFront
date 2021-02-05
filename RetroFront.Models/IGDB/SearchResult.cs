@@ -4,9 +4,8 @@ using System.Text;
 
 namespace RetroFront.Models.IGDB
 {
-    public class SearchResult
+    public class SearchResult: Search
     {
-        public int id { get; set; }
-        public string name { get; set; }
+
     }
 }

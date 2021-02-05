@@ -195,10 +195,10 @@ namespace RetroFront.Admin.Dialogs
             }
             return null;
         }
-        public DataSearch SearchSteamGridDBByName(string name)
+        public Search SearchSteamGridDBByName(string name, ScraperSource source)
         {
             ModalWindow modalWindow = new ModalWindow();
-            var vm = new SteamGridDBGameFinderViewModel(name);
+            var vm = new SteamGridDBGameFinderViewModel(name,source);
             modalWindow.DataContext = vm;
             if (modalWindow.ShowDialog().Value)
             {
@@ -206,10 +206,10 @@ namespace RetroFront.Admin.Dialogs
             }
             return null;
         }
-        public string SearchImgInSteamGridDB(GameRom game, SGDBType type)
+        public string SearchImgInSteamGridDB(GameRom game, ScraperType type, ScraperSource source)
         {
             ModalWindow modalWindow = new ModalWindow();
-            var vm = new SteamGridSearchViewModel(game,type);
+            var vm = new ImgFinderSearchViewModel(game,source,type);
             modalWindow.DataContext = vm;
             if (modalWindow.ShowDialog().Value)
             {

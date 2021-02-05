@@ -165,14 +165,14 @@ namespace RetroFront.ViewModels
         {
             get
             {
-                return _ChangeScrapeSourceCommand ?? (_ChangeScrapeSourceCommand = new RelayCommand<int>(ChangeScrapeSource));
+                return _ChangeScrapeSourceCommand ?? (_ChangeScrapeSourceCommand = new RelayCommand<string>(ChangeScrapeSource));
             }
         }
         public ICommand ChangeScrapeTypeCommand
         {
             get
             {
-                return _ChangeScrapeTypeCommand ?? (_ChangeScrapeTypeCommand = new RelayCommand<int>(ChangeScrapeType));
+                return _ChangeScrapeTypeCommand ?? (_ChangeScrapeTypeCommand = new RelayCommand<string>(ChangeScrapeType));
             }
         }
         public ICommand ReloadCommand
@@ -307,7 +307,7 @@ namespace RetroFront.ViewModels
         {
             get
             {
-                return _ScrapeSystemeCommand ?? (_ScrapeSystemeCommand = new RelayCommand<object>(ScrapeSysteme));
+                return _ScrapeSystemeCommand ?? (_ScrapeSystemeCommand = new RelayCommand<SystemeViewModel>(ScrapeSysteme));
             }
         }
 
@@ -325,7 +325,6 @@ namespace RetroFront.ViewModels
             LoadThemeSettings();
             ReloadData();
         }
-
         private void LoadThemeSettings()
         {
             try
@@ -349,15 +348,14 @@ namespace RetroFront.ViewModels
             _dialogService.ShowParameters();
             ReloadData();
         }
-        private void ChangeScrapeSource(int obj)
+        private void ChangeScrapeSource(string obj)
         {
-            CurrentScrapeSource = (ScraperSource)obj;
+            CurrentScrapeSource = (ScraperSource)int.Parse(obj);
         }
-        private void ChangeScrapeType(int obj)
+        private void ChangeScrapeType(string obj)
         {
-            CurrentScraperType = (ScraperType)obj;
+            CurrentScraperType = (ScraperType)int.Parse(obj);
         }
-
         private void CreateBckPack(string newtheme = null)
         {
             if (newtheme == null)
@@ -552,28 +550,28 @@ namespace RetroFront.ViewModels
             {
                 if (game.Boxart.StartsWith("http"))
                 {
-                    var targetfolder = _gameService.GetImgPathForGame(game, SGDBType.boxart);
+                    var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.Boxart);
                     var targetfile = $"{targetfolder}{Path.GetExtension(game.Boxart)}";
                     _gameService.DownloadImgData(game.Boxart, targetfile);
                     game.Boxart = targetfile;
                 }
                 if (game.Fanart.StartsWith("http"))
                 {
-                    var targetfolder = _gameService.GetImgPathForGame(game, SGDBType.fanart);
+                    var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.Banner);
                     var targetfile = $"{targetfolder}{Path.GetExtension(game.Fanart)}";
                     _gameService.DownloadImgData(game.Fanart, targetfile);
                     game.Fanart = targetfile;
                 }
                 if (game.Screenshoot.StartsWith("http"))
                 {
-                    var targetfolder = _gameService.GetImgPathForGame(game, SGDBType.background);
+                    var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.ArtWork);
                     var targetfile = $"{targetfolder}{Path.GetExtension(game.Screenshoot)}";
                     _gameService.DownloadImgData(game.Screenshoot, targetfile);
                     game.Screenshoot = targetfile;
                 }
                 if (game.Logo.StartsWith("http"))
                 {
-                    var targetfolder = _gameService.GetImgPathForGame(game, SGDBType.logo);
+                    var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.Logo);
                     var targetfile = $"{targetfolder}{Path.GetExtension(game.Logo)}";
                     _gameService.DownloadImgData(game.Logo, targetfile);
                     game.Logo = targetfile;
@@ -585,15 +583,73 @@ namespace RetroFront.ViewModels
                     duplicate.Fanart = game.Fanart;
                     duplicate.Screenshoot = game.Screenshoot;
                     duplicate.Logo = game.Logo;
+                    duplicate.SGDBID = game.SGDBID;
+                    duplicate.SteamID = game.SteamID;
+                    duplicate.IGDBID = game.IGDBID;
+                    duplicate.RAWGID = game.RAWGID;
                 }
                 _databaseService.SaveUpdate();
                 ReloadData();
             }
         }
 
-        private void ScrapeSysteme(object item)
+        private void ScrapeSysteme(SystemeViewModel sys)
         {
-            object[] parameters = item as object[];
+            var gamestoscrape = _databaseService.GetGamesForPlateforme(sys.Systeme.SystemeID).OrderBy(x => x.Name);
+            foreach(var games in gamestoscrape)
+            {
+               if(CurrentScraperType == ScraperType.ArtWork)
+               {
+                    var result = _dialogService.SearchImgInSteamGridDB(games, CurrentScraperType, CurrentScrapeSource);
+                    if (result != null)
+                    {
+                        games.Screenshoot = result;
+                        var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.ArtWork);
+                        var targetfile = $"{targetfolder}{Path.GetExtension(games.Screenshoot)}";
+                        _gameService.DownloadImgData(games.Screenshoot, targetfile);
+                        games.Screenshoot = targetfile; 
+                    }
+                }
+               else if(CurrentScraperType == ScraperType.Banner)
+               {
+                    var result = _dialogService.SearchImgInSteamGridDB(games, CurrentScraperType, CurrentScrapeSource);
+                    if (result != null)
+                    {
+                        games.Fanart = result;
+                        var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Banner);
+                        var targetfile = $"{targetfolder}{Path.GetExtension(games.Fanart)}";
+                        _gameService.DownloadImgData(games.Fanart, targetfile);
+                        games.Fanart = targetfile; 
+                    }
+                }
+               else if(CurrentScraperType == ScraperType.Boxart)
+               {
+                    var result = _dialogService.SearchImgInSteamGridDB(games, CurrentScraperType, CurrentScrapeSource);
+                    if (result != null)
+                    {
+                        games.Boxart = result;
+                        var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Boxart);
+                        var targetfile = $"{targetfolder}{Path.GetExtension(games.Boxart)}";
+                        _gameService.DownloadImgData(games.Boxart, targetfile);
+                        games.Boxart = targetfile; 
+                    }
+                }
+               else if(CurrentScraperType == ScraperType.Logo)
+               {
+                    var result = _dialogService.SearchImgInSteamGridDB(games, CurrentScraperType, CurrentScrapeSource);
+                    if (result != null)
+                    {
+                        games.Logo = result;
+                        var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Logo);
+                        var targetfile = $"{targetfolder}{Path.GetExtension(games.Logo)}";
+                        _gameService.DownloadImgData(games.Logo, targetfile);
+                        games.Logo = targetfile; 
+                    }
+                }
+                _databaseService.SaveUpdate();
+                ReloadData();
+            }
+            
         }
         private void ShowDetailEmulator(EmulatorViewModel obj)
         {

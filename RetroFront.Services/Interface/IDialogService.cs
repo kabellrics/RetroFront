@@ -26,7 +26,7 @@ namespace RetroFront.Services.Interface
         bool ShowParameters();
         List<GameRom> ShowSteamGamesFounded(List<GameRom> foundedgame);
         List<GameRom> AddGamesToCollection(string collecName, IEnumerable<GameRom> foundedgame);
-        DataSearch SearchSteamGridDBByName(string name);
-        string SearchImgInSteamGridDB(GameRom game, SGDBType type);
+        Search SearchSteamGridDBByName(string name, ScraperSource source);
+        string SearchImgInSteamGridDB(GameRom game, ScraperType type, ScraperSource source);
     }
 }

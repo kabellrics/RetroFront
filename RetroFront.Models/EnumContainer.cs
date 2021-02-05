@@ -17,13 +17,13 @@ namespace RetroFront.Models
         Collection,
         Standalone
     }
-    public enum SGDBType
-    {
-        logo,
-        background,
-        fanart,
-        boxart
-    }
+    //public enum SGDBType
+    //{
+    //    logo,
+    //    background,
+    //    fanart,
+    //    boxart
+    //}
     public enum ScraperSource
     {
         IGDB,

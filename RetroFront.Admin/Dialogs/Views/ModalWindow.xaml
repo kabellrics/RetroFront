@@ -13,6 +13,7 @@
                  WindowTransitionsEnabled="True"
                  WindowState="Normal"
                  WindowStyle="ToolWindow"
+                 ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight"
              Background="DarkGray">
     <mah:MetroWindow.Resources>
@@ -46,7 +47,7 @@
         <DataTemplate DataType="{x:Type vms:GetPictureForSystemViewModel}">
             <vm:GetPictureForSystemView></vm:GetPictureForSystemView>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vms:SteamGridSearchViewModel}">
+        <DataTemplate DataType="{x:Type vms:ImgFinderSearchViewModel}">
             <vm:SteamGridSearchView></vm:SteamGridSearchView>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vms:SteamGridDBGameFinderViewModel}">

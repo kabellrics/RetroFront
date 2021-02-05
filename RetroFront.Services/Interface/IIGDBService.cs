@@ -1,4 +1,5 @@
-﻿using RetroFront.Models.IGDB;
+﻿using RetroFront.Models;
+using RetroFront.Models.IGDB;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,10 +9,15 @@ namespace RetroFront.Services.Interface
 {
     public interface IIGDBService
     {
-        Task<IEnumerable<SearchResult>> GetPlatformByName(string name);
-        Task<IEnumerable<SearchResult>> GetGameByName(string name);
-        Task<IGDBGame> GetDetailsGame(int id);
-        string GetCoverLink(string hash);
         string GetArtWorkLink(string hash);
+        string GetCoverLink(string hash);
+        IGDBGame GetDetailsGame(int id);
+        IEnumerable<Search> GetGameByName(string name);
+        IEnumerable<Search> GetPlatformByName(string name);
+        IEnumerable<Models.IGDB.Artwork> GetArtworksByGameId(int id);
+        IEnumerable<Models.IGDB.Genre> GetGenresByGameId(int id);
+        IEnumerable<Models.IGDB.Screenshot> GetScreenshotsByGameId(int id);
+        IEnumerable<Models.IGDB.Video> GetVideosByGameId(int id);
+        IEnumerable<Models.IGDB.Theme> GetThemesByGameId(int id);
     }
 }
