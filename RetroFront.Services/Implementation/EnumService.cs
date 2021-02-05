@@ -31,5 +31,17 @@ namespace RetroFront.Services.Implementation
                     RomDisplay.Fanart
             };
         }
+        public List<SysType> GetSysTypes()
+        {
+            return new List<SysType>
+            {
+                SysType.Arcade,
+                SysType.Console,
+                SysType.ConsolePortable,
+                SysType.GameStore,
+                SysType.Collection,
+                SysType.Standalone
+            };
+        }
     }
 }

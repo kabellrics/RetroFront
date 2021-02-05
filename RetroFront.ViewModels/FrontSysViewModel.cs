@@ -33,6 +33,12 @@ namespace RetroFront.ViewModels
             get { return _sysDisplay; }
             set { _sysDisplay = value; RaisePropertyChanged(); }
         }
+        private SysDisplay _systmpDisplay;
+        public SysDisplay SystmpDisplay
+        {
+            get { return _systmpDisplay; }
+            set { _systmpDisplay = value; RaisePropertyChanged(); }
+        }
 
         private List<SysDisplay> _sysDisplayList;
         public List<SysDisplay> SysDisplayList
@@ -127,11 +133,20 @@ namespace RetroFront.ViewModels
             if(IsDialogDisplayOpen == true)
             {
                 IsDialogDisplayOpen = false;
+                SysDisplay = SystmpDisplay;
+                SystmpDisplay = SysDisplay;
             }
             else if (IsDialogDisplayOpen == false)
             {
-                var currentSys = Systemes[SelectedIndex];
-                _navigationService.NavigateTo("Games", currentSys.Systeme, string.Empty);
+                try
+                {
+                    var currentSys = Systemes[SelectedIndex];
+                    _navigationService.NavigateTo("Games", currentSys.Systeme, string.Empty);
+                }
+                catch (Exception ex)
+                {
+                 //   throw;
+                }
             }
         }
         private void GoDown()

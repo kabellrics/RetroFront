@@ -32,6 +32,12 @@ namespace RetroFront.ViewModels
             get { return _isDialogDisplayOpen; }
             set { _isDialogDisplayOpen = value; RaisePropertyChanged(); }
         }
+        private RomDisplay _romtmpDisplay;
+        public RomDisplay FronttmpDisplay
+        {
+            get { return _romtmpDisplay; }
+            set { _romtmpDisplay = value; RaisePropertyChanged(); }
+        }
         private RomDisplay _romDisplay;
         public RomDisplay FrontDisplay
         {

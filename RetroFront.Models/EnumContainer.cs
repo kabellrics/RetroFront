@@ -67,7 +67,9 @@ namespace RetroFront.Models
         ListBanner,
         [Description("Screenshot")] 
         Screenshot,
-        [Description("Carousel")] 
-        Fanart
+        [Description("Carousel Banner")] 
+        Fanart,
+        [Description("Carousel Box")] 
+        FanartBox,
     }
 }

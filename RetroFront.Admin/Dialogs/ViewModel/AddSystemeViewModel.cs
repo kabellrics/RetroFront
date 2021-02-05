@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using Newtonsoft.Json;
 using RetroFront.Models;
+using RetroFront.Services.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -60,6 +61,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             Systeme sys = new Systeme();
             sys.Name = Name;
             sys.Shortname = Shortname.ToLower();
+            sys.Type = SysType.Console;
             return JsonConvert.SerializeObject(sys);
         }
     }

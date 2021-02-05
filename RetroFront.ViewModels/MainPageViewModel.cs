@@ -25,6 +25,7 @@ namespace RetroFront.ViewModels
         private IGameService _gameService;
         private IThemeService _themeService;
         private ThemeViewModel _currentTheme;
+        private IIGDBService _iGDBService;
 
         #region Properties
 
@@ -312,7 +313,7 @@ namespace RetroFront.ViewModels
         }
 
         #endregion
-        public MainPageViewModel(IDatabaseService databaseService, IFileJSONService fileJSONService, IRetroarchService retroarchService, IEmulateurService emulateurService, IDialogService dialogService, IGameService gameService, IThemeService themeService, ISteamService steamService)
+        public MainPageViewModel(IDatabaseService databaseService, IFileJSONService fileJSONService, IRetroarchService retroarchService, IEmulateurService emulateurService, IDialogService dialogService, IGameService gameService, IThemeService themeService, ISteamService steamService, IIGDBService iGDBService)
         {
             _databaseService = databaseService;
             _fileJSONService = fileJSONService;
@@ -322,6 +323,7 @@ namespace RetroFront.ViewModels
             _gameService = gameService;
             _steamService = steamService;
             _themeService = themeService;
+            _iGDBService = iGDBService;
             LoadThemeSettings();
             ReloadData();
         }
@@ -644,6 +646,37 @@ namespace RetroFront.ViewModels
                         var targetfile = $"{targetfolder}{Path.GetExtension(games.Logo)}";
                         _gameService.DownloadImgData(games.Logo, targetfile);
                         games.Logo = targetfile; 
+                    }
+                }
+               else if(CurrentScraperType == ScraperType.Metadata)
+                {
+                   if(CurrentScrapeSource == ScraperSource.IGDB)
+                    {
+                        if(games.IGDBID <1)
+                        {
+                            var resultsearch = _dialogService.SearchSteamGridDBByName(games.Name, CurrentScrapeSource);
+                            if(resultsearch != null)
+                            {
+                                games.IGDBID = resultsearch.id;
+                                games.Name = resultsearch.name;
+                            }                            
+                        }
+                        if(games.IGDBID >0)
+                        {
+                            var igdbData = _iGDBService.GetDetailsGame(games.IGDBID);
+                            games.Name = igdbData.name;
+                            if (!string.IsNullOrEmpty(igdbData.storyline))
+                                games.Desc = igdbData.storyline;
+                            else if (!string.IsNullOrEmpty(igdbData.summary))
+                                games.Desc = igdbData.summary;
+
+                            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+                            dtDateTime = dtDateTime.AddSeconds(igdbData.first_release_date).ToLocalTime();
+                            games.Year = dtDateTime.Year.ToString();
+
+                            var igdbgenres = _iGDBService.GetGenresByGameId(games.IGDBID);
+                            games.Genre = string.Join(", ", igdbgenres.Select(x => x.name));
+                        }
                     }
                 }
                 _databaseService.SaveUpdate();

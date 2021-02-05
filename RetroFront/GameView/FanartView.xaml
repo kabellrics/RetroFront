@@ -15,7 +15,7 @@
         <Border>
             <mah:FlipView x:Name="flip" Background="Black" Grid.Row="0" ItemsSource="{Binding Games}" IsBannerEnabled="False" IsNavigationEnabled="False"
             SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}" NavigationButtonsPosition="Inside" MouseHoverBorderEnabled="False">
-                <mah:FlipView.ItemTemplate>
+                <mah:FlipView.ItemTemplate>                    
                     <DataTemplate>
                         <Grid>
                             <Grid.Background>
@@ -34,14 +34,14 @@
                                 <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
                             <Border Grid.Column="0" Grid.Row="2" Grid.RowSpan="2"
-				xf:Animations.Primary="{xf:Animate BasedOn={StaticResource ScaleFromLeft}, Delay=250}">
+				xf:Animations.Primary="{xf:Animate BasedOn={StaticResource ScaleFromLeft}, Delay=250,Event=Loaded}">
                                 <Border.Background>
                                     <SolidColorBrush Color="WhiteSmoke" Opacity="0.4"></SolidColorBrush>
                                 </Border.Background>
                                 <Image Stretch="Uniform" Source="{Binding Boxart}"></Image>
                             </Border>
                             <Border Grid.Row="2" Grid.Column="1"
-				xf:Animations.Primary="{xf:Animate BasedOn={StaticResource ScaleFromRight}, Delay=250}">
+				xf:Animations.Primary="{xf:Animate BasedOn={StaticResource ScaleFromRight}, Delay=250,Event=Loaded}">
                                 <Border.Background>
                                     <SolidColorBrush Color="WhiteSmoke" Opacity="0.4"></SolidColorBrush>
                                 </Border.Background>
@@ -50,7 +50,7 @@
                                 </Viewbox>
                             </Border>
                             <Border Grid.Row="3" Grid.Column="1"
-				xf:Animations.Primary="{xf:Animate BasedOn={StaticResource ScaleFromRight}, Delay=250}">
+				xf:Animations.Primary="{xf:Animate BasedOn={StaticResource ScaleFromRight}, Delay=250,Event=Loaded}">
                                 <Border.Background>
                                     <SolidColorBrush Color="WhiteSmoke" Opacity="0.4"></SolidColorBrush>
                                 </Border.Background>

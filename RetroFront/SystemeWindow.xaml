@@ -11,15 +11,17 @@
         xmlns:enum="clr-namespace:RetroFront.Models;assembly=RetroFront.Models"
         DataContext="{Binding Source={StaticResource ViewModelFrontLocator}, Path=MainPageVM}"
         mc:Ignorable="d"
+      x:Name="windowsSys"
+      FocusManager.FocusedElement="{Binding ElementName=windowsSys}"
         Title="Retrofront"
         Background="Black"
       Loaded="Page_Loaded">
     <Page.InputBindings>
-        <KeyBinding Key="Left" Command="{Binding GoDownCommand}"></KeyBinding>
-        <KeyBinding Key="Right" Command="{Binding GoUpCommand}"></KeyBinding>
-        <KeyBinding Key="Down" Command="{Binding GoUpCommand}"></KeyBinding>
-        <KeyBinding Key="Up" Command="{Binding GoDownCommand}"></KeyBinding>
-        <KeyBinding Key="Space" Command="{Binding OpenDisplayCommand}"></KeyBinding>
+        <!--<KeyBinding Key="Left" Command="{Binding GoDownCommand}"></KeyBinding>-->
+        <!--<KeyBinding Key="Right" Command="{Binding GoUpCommand}"></KeyBinding>-->
+        <!--<KeyBinding Key="Down" Command="{Binding GoUpCommand}"></KeyBinding>-->
+        <!--<KeyBinding Key="Up" Command="{Binding GoDownCommand}"></KeyBinding>-->
+        <!--<KeyBinding Key="Space" Command="{Binding OpenDisplayCommand}"></KeyBinding>-->
         <KeyBinding Key="Return" Command="{Binding CloseOrGoCommand}"></KeyBinding>
     </Page.InputBindings>
     <Page.Resources>
@@ -40,18 +42,23 @@
         </DataTemplate>
         <Style x:Key="MyContentStyle" TargetType="ContentPresenter">
             <Setter Property="ContentTemplate" Value="{StaticResource BigLogo}"/>
+            <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=listicon}"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding SysDisplay}" Value="{x:Static enum:SysDisplay.LogoBanner}">
                     <Setter Property="ContentTemplate" Value="{StaticResource LogoBanner}"/>
+                    <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=listicon}"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding SysDisplay}" Value="{x:Static enum:SysDisplay.CarrouselLogo}">
                     <Setter Property="ContentTemplate" Value="{StaticResource Carrousel}"/>
+                    <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=listicon}"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding SysDisplay}" Value="{x:Static enum:SysDisplay.WheelRightLogo}">
                     <Setter Property="ContentTemplate" Value="{StaticResource RightWheel}"/>
+                    <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=listicon}"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding SysDisplay}" Value="{x:Static enum:SysDisplay.WheelLeftLogo}">
                     <Setter Property="ContentTemplate" Value="{StaticResource LeftWheel}"/>
+                    <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=listicon}"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -77,7 +84,7 @@
                     <SolidColorBrush Color="WhiteSmoke"></SolidColorBrush>    
                 </Grid.Background>
                 <ListBox ItemsSource="{Binding SysDisplayList}"
-                         SelectedItem="{Binding SysDisplay,Mode=TwoWay}" Width="220" Height="Auto">
+                         SelectedItem="{Binding SystmpDisplay,Mode=TwoWay}" Width="220" Height="Auto">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Height="80">

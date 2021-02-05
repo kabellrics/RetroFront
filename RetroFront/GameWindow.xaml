@@ -9,6 +9,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:enum="clr-namespace:RetroFront.Models;assembly=RetroFront.Models"
         xmlns:local="clr-namespace:RetroFront"
         mc:Ignorable="d"
         Title="GameWindow"
@@ -34,8 +35,16 @@
         <DataTemplate x:Key="FanartView">
             <views:FanartView/>
         </DataTemplate>
+        <DataTemplate x:Key="CarrouselBanner">
+            <views:CarrouselBannerView/>
+        </DataTemplate>
         <Style x:Key="MyContentStyle" TargetType="ContentPresenter">
             <Setter Property="ContentTemplate" Value="{StaticResource FanartView}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.Fanart}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource CarrouselBanner}"/>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
     </Page.Resources>
     <md:DialogHost IsOpen="{Binding IsDialogDisplayOpen}" CloseOnClickAway="True">
@@ -59,7 +68,7 @@
                     <SolidColorBrush Color="WhiteSmoke"></SolidColorBrush>
                 </Grid.Background>
                 <ListBox ItemsSource="{Binding FrontDisplayList}"
-                         SelectedItem="{Binding SysDisplay,Mode=TwoWay}" Width="220" Height="Auto">
+                         SelectedItem="{Binding FrontDisplay,Mode=TwoWay}" Width="350" Height="Auto">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Height="80">

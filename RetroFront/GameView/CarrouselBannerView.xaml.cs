@@ -12,18 +12,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RetroFront.PlateformeView
+namespace RetroFront.GameView
 {
     /// <summary>
-    /// Logique d'interaction pour LeftWheelView.xaml
+    /// Logique d'interaction pour CarrouselBannerView.xaml
     /// </summary>
-    public partial class LeftWheelView : UserControl
+    public partial class CarrouselBannerView : UserControl
     {
         private double CentralPix = -1; 
-        public LeftWheelView()
+        public CarrouselBannerView()
         {
             InitializeComponent();
-            listicon.Focus();
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -33,13 +32,14 @@ namespace RetroFront.PlateformeView
         {
             try
             {
-                var splitbyheight = this.ActualHeight / 8;
-                CentralPix = splitbyheight * 3;
-                int itemheight = 150;
+
+                var splitbyheight = this.ActualWidth / 8;
+                CentralPix = 640;
+                int itemwidht = 320;
                 var previousmargin = listicon.Margin;
                 var nextmargin = previousmargin;
-                //nextmargin.Top = -itemheight * listicon.SelectedIndex;
-                nextmargin.Top = CentralPix - (listicon.SelectedIndex * itemheight);
+                //nextmargin.Left = -itemwidht * listicon.SelectedIndex;
+                nextmargin.Left = CentralPix - (listicon.SelectedIndex * itemwidht);
                 var sb = new Storyboard();
                 var ta = new ThicknessAnimation();
                 ta.BeginTime = new TimeSpan(0);
@@ -57,11 +57,6 @@ namespace RetroFront.PlateformeView
             {
                 //throw;
             }
-        }
-
-        private void listicon_Loaded(object sender, RoutedEventArgs e)
-        {
-            listicon.Focus();
         }
     }
 }

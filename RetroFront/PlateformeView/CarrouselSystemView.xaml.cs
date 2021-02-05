@@ -24,11 +24,15 @@ namespace RetroFront.PlateformeView
         {
             InitializeComponent();
         }
-
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            listicon.Focus();
+        }
         private void listicon_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
+                
                 var splitbyheight = this.ActualWidth / 8;
                 CentralPix = splitbyheight * 3;
                 int itemwidht = 316;
@@ -53,6 +57,11 @@ namespace RetroFront.PlateformeView
             {
                 //throw;
             }
+        }
+
+        private void listicon_Loaded(object sender, RoutedEventArgs e)
+        {
+            listicon.Focus();
         }
     }
 }

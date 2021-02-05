@@ -21,12 +21,17 @@ namespace RetroFront.PlateformeView
         public BigLogoView()
         {
             InitializeComponent();
-            flip.Focus();
+            listicon.Focus();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            flip.Focus();
+            listicon.Focus();
+        }
+
+        private void listicon_Loaded(object sender, RoutedEventArgs e)
+        {
+            listicon.Focus();
         }
     }
 }

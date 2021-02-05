@@ -6,10 +6,20 @@
              xmlns:local="clr-namespace:RetroFront.PlateformeView"
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+              Loaded="UserControl_Loaded"
              mc:Ignorable="d" >
+    <UserControl.InputBindings>
+        <KeyBinding Key="Left" Command="{Binding GoDownCommand}"></KeyBinding>
+        <KeyBinding Key="Right" Command="{Binding GoUpCommand}"></KeyBinding>
+        <KeyBinding Key="Down" Command="{Binding GoUpCommand}"></KeyBinding>
+        <KeyBinding Key="Up" Command="{Binding GoDownCommand}"></KeyBinding>
+        <KeyBinding Key="Space" Command="{Binding OpenDisplayCommand}"></KeyBinding>
+        <KeyBinding Key="Return" Command="{Binding CloseOrGoCommand}"></KeyBinding>
+    </UserControl.InputBindings>
     <Grid>
         <mah:FlipView x:Name="listicon" ItemsSource="{Binding Systemes}" IsBannerEnabled="False" IsNavigationEnabled="False"
-            SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}" NavigationButtonsPosition="Inside">
+            SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}" NavigationButtonsPosition="Inside"
+                      Loaded="listicon_Loaded">
             <mah:FlipView.ItemTemplate>
                 <DataTemplate>
                     <Grid>

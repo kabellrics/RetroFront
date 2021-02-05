@@ -25,7 +25,10 @@ namespace RetroFront.PlateformeView
             InitializeComponent();
             listicon.Focus();
         }
-
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            listicon.Focus();
+        }
         private void listicon_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -54,6 +57,11 @@ namespace RetroFront.PlateformeView
             {
                 //throw;
             }
+        }
+
+        private void FlipView_Loaded(object sender, RoutedEventArgs e)
+        {
+            listicon.Focus();
         }
     }
 }
