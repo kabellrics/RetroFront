@@ -59,10 +59,10 @@ namespace RetroFront.Admin.Dialogs
             }
             return null;
         }
-        public string showImgPickerForPlateformeDialog(Systeme title, string themename)
+        public string showImgPickerForPlateformeDialog(Systeme title, string themename, ScraperType scraperType)
         {
             ModalWindow modalWindow = new ModalWindow();
-            var vm = new GetPictureForSystemViewModel(title, themename);
+            var vm = new GetPictureForSystemViewModel(title, themename,scraperType);
             modalWindow.DataContext = vm;
             if (modalWindow.ShowDialog().Value)
             {
@@ -102,6 +102,17 @@ namespace RetroFront.Admin.Dialogs
         //    else
         //        return null;
         //}
+        public string[] CreateStandalone()
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new AddStandaloneViewModel();
+            modalWindow.DataContext = vm;
+            if (modalWindow.ShowDialog().Value)
+            {
+                return vm.ResultJson;
+            }
+            return null;
+        }
         public string CreateJsonSys()
         {
             ModalWindow modalWindow = new ModalWindow();
@@ -146,12 +157,16 @@ namespace RetroFront.Admin.Dialogs
             }
             return null;
         }
-        public bool ShowSystemeDetail(Systeme sys)
+        public Systeme ShowSystemeDetail(Systeme sys)
         {
             ModalWindow modalWindow = new ModalWindow();
             var vm = new SystemeDetailViewModel(sys);
             modalWindow.DataContext = vm;
-            return modalWindow.ShowDialog().Value;
+            if (modalWindow.ShowDialog().Value)
+            {
+                return vm.Sys;
+            }
+            return null;
         }
 
         public GameRom ShowGameDetail(GameRom game)

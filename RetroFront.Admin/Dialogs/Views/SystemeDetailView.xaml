@@ -6,8 +6,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:RetroFront.Admin.Dialogs.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800"
-             Height="600" Width="800"
+             d:DesignHeight="800" d:DesignWidth="800"
+             Height="900" Width="800"
              Background="DarkGray">
     <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True">
         <Grid>
@@ -24,6 +24,9 @@
                 <RowDefinition Height="2*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="8*"></RowDefinition>
+                <RowDefinition Height="8*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
             </Grid.RowDefinitions>
             <Viewbox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Stretch="Uniform">
                 <Label Content="{Binding Name}" Style="{DynamicResource MaterialDesignLabel}"></Label>
@@ -41,9 +44,6 @@
                     <RowDefinition Height="2*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Image Stretch="Uniform" Source="{Binding Logo}" Grid.Row="0">
-                    <!--<Image.InputBindings>
-                        <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding LogoFinderCommand}"></MouseBinding>
-                    </Image.InputBindings>-->
                 </Image>
                 <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5" Command="{Binding LogoFinderCommand}">
                     <Viewbox Stretch="Uniform">
@@ -103,7 +103,46 @@
                     </DataTemplate>
                 </materialDesign:Transitioner.ItemTemplate>
             </materialDesign:Transitioner>
-           
+            <Grid Grid.Row="5" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Image Stretch="Uniform" Source="{Binding Screenshoot}" Grid.Row="0">
+                </Image>
+                <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5">
+                    <Viewbox Stretch="Uniform">
+                        <Label Content="Changer l'illustration" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                    </Viewbox>
+                </Button>
+            </Grid>
+            <Grid Grid.Row="5" Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <MediaElement Stretch="Uniform" Grid.Row="0" Source="{Binding Video}"></MediaElement>
+                <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5">
+                    <Viewbox Stretch="Uniform">
+                        <Label Content="Changer la Vidéo" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                    </Viewbox>
+                </Button>
+            </Grid>
+            <Grid Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Content="Annuler" Command="{Binding CancelCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                        Style="{DynamicResource MaterialDesignToolButton}"></Button>
+                <Button Grid.Column="3" Content="Valider" Command="{Binding YesCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                        Style="{DynamicResource MaterialDesignToolButton}"></Button>
+            </Grid>
         </Grid>
     </DockPanel>
 </UserControl>

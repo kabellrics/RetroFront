@@ -9,6 +9,7 @@ namespace RetroFront.Services.Interface
         void ChangeCurrentTheme(Theme th);
         string GetCurrentTheme();
         void UpdateSettings(AppSettings apps);
-        IEnumerable<Systeme> GetAllSysFromJSON();
+        void UpdateSettings();
+        IEnumerable<Models.ScreenScraper.System.Systeme> GetAllSysFromJSON();
     }
 }

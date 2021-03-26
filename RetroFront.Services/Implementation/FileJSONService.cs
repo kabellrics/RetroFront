@@ -30,6 +30,7 @@ namespace RetroFront.Services.Implementation
             {
                 appSettings = new AppSettings();
                 appSettings.CurrentTheme = "simple";
+                appSettings.DefaultBCK = string.Empty;
                 appSettings.CurrentGameDisplay = RomDisplay.WallBox;
                 appSettings.CurrentSysDisplay = SysDisplay.BigLogo;
                 appSettings.AppSettingsFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront";
@@ -51,6 +52,11 @@ namespace RetroFront.Services.Implementation
             var jsonApp = JsonConvert.SerializeObject(appSettings);
             File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
         }
+        public void UpdateSettings()
+        {
+            var jsonApp = JsonConvert.SerializeObject(appSettings);
+            File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
+        }
         public void ChangeCurrentTheme(Theme th)
         {
             appSettings.CurrentTheme = th.FolderName;
@@ -61,20 +67,21 @@ namespace RetroFront.Services.Implementation
         {
             return appSettings.CurrentTheme;
         }
-        public IEnumerable<Systeme> GetAllSysFromJSON()
+        public IEnumerable<Models.ScreenScraper.System.Systeme> GetAllSysFromJSON()
         {
-            var jsonString = File.ReadAllText($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\SystemList.json");
+            var jsonString = File.ReadAllText($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\SystemListSCSP.json");
             JObject rss = JObject.Parse(jsonString);
-            JArray categories = (JArray)rss["systemeList"]["systeme"];
-            var listsys = categories.ToObject<List<XMLSystem>>();
-            foreach (var jsonsys in listsys)
-            {
-                Systeme sys = new Systeme();
-                sys.Name = jsonsys.fullname;
-                sys.Shortname = jsonsys.name;
-                sys.Type = (SysType)jsonsys.Type;
-                yield return sys;
-            }
+            JArray categories = (JArray)rss["response"]["systemes"];
+            //var listsys = categories.ToObject<List<Models.ScreenScraper.System.Systeme>>();
+            return categories.ToObject<List<Models.ScreenScraper.System.Systeme>>();
+            //foreach (var jsonsys in listsys)
+            //{
+            //    Systeme sys = new Systeme();
+            //    sys.Name = jsonsys.fullname;
+            //    sys.Shortname = jsonsys.name;
+            //    sys.Type = (SysType)jsonsys.Type;
+            //    yield return sys;
+            //}
         }
     }
 }

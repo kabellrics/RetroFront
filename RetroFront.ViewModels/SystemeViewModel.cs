@@ -25,7 +25,17 @@ namespace RetroFront.ViewModels
                 Systeme = systeme;
                 Name = Systeme.Name;
                 Theme = Systeme.Shortname;
-                HasLogo = false;
+                Screenshoot = Systeme.Screenshoot;
+                Video = Systeme.Video;
+                if (System.IO.File.Exists(Video))
+                    HasVideo = true;
+                else
+                    HasVideo = false;
+                Logo = Systeme.Logo;
+                if (string.IsNullOrEmpty(Logo))
+                    HasLogo = false;
+                else
+                    HasLogo = true;
                 Emulators = new ObservableCollection<EmulatorViewModel>();
             }
         }
@@ -35,6 +45,19 @@ namespace RetroFront.ViewModels
             get { return _emulators; }
             set { _emulators = value;RaisePropertyChanged(); }
         }
+        private string _Screenshoot;
+        public string Screenshoot
+        {
+            get { return _Screenshoot; }
+            set { _Screenshoot = value; RaisePropertyChanged(); }
+        }
+        private string _Video;
+        public string Video
+        {
+            get { return _Video; }
+            set { _Video = value; RaisePropertyChanged(); }
+        }
+
         private string _name;
         public string Name
         {
@@ -65,6 +88,12 @@ namespace RetroFront.ViewModels
         {
             get { return _logo; }
             set { _logo = value; RaisePropertyChanged(); }
+        }
+        private bool _hasVideo;
+        public bool HasVideo
+        {
+            get { return _hasVideo; }
+            set { _hasVideo = value; RaisePropertyChanged(); }
         }
         private bool _hasLogo;
         public bool HasLogo

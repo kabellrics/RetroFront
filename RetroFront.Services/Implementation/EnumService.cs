@@ -16,7 +16,9 @@ namespace RetroFront.Services.Implementation
                     SysDisplay.LogoBanner,
                     SysDisplay.CarrouselLogo,
                     SysDisplay.WheelLeftLogo,
-                    SysDisplay.WheelRightLogo
+                    SysDisplay.WheelRightLogo,
+                    SysDisplay.WallLogo,
+                    SysDisplay.Bezel
             };
         }
         public List<RomDisplay> GetRomDisplays() 
@@ -25,6 +27,7 @@ namespace RetroFront.Services.Implementation
             {
                     RomDisplay.WallBox,
                     RomDisplay.WallBanner,
+                    RomDisplay.WallLogo,
                     RomDisplay.ListBox,
                     RomDisplay.ListBanner,
                     RomDisplay.Screenshot,
@@ -44,5 +47,6 @@ namespace RetroFront.Services.Implementation
                 SysType.Standalone
             };
         }
+
     }
 }

@@ -48,7 +48,14 @@
             <Viewbox Grid.Row="5" Stretch="Uniform" HorizontalAlignment="Left">
                 <Label Content="Chemin de l'EXE" HorizontalAlignment="Left" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </Viewbox>
-            <TextBox Grid.Row="6" Text="{Binding Chemin,Mode=TwoWay}" Style="{DynamicResource MaterialDesignTextBox}"></TextBox>
+            <Grid Grid.Row ="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Text="{Binding Chemin,Mode=TwoWay}" Style="{DynamicResource MaterialDesignTextBox}"></TextBox>
+                <Button Grid.Column="1" Content="Chercher" Style="{DynamicResource MaterialDesignFlatButton}" Command="{Binding LookForExeCommand}"/>
+            </Grid>
             <Viewbox Grid.Row="7" Stretch="Uniform" HorizontalAlignment="Left">
                 <Label Content="Extensions acceptées" HorizontalAlignment="Left" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </Viewbox>

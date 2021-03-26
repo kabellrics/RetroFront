@@ -8,9 +8,13 @@ namespace RetroFront.Models
     public class Systeme
     {
         public int SystemeID { get; set; }
+        public int SystemeSCSPID { get; set; }
         public string Name { get; set; }
         public string Shortname { get; set; }
         public SysType Type {get;set;}
+        public string Logo { get; set; }
+        public string Screenshoot { get; set; }
+        public string Video { get; set; }
     }
 
 

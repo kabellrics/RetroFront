@@ -64,8 +64,6 @@
                         <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
-                        <RowDefinition Height="2*"></RowDefinition>
-                        <RowDefinition Height="2*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Viewbox Stretch="Uniform" Grid.Row="0" HorizontalAlignment="Left">
                         <Label Content="Theme actuel" Style="{DynamicResource MaterialDesignLabel}"></Label>
@@ -76,13 +74,9 @@
                       Style="{DynamicResource MaterialDesignFloatingHintComboBox}">
                     </ComboBox>
                     <Viewbox Stretch="Uniform" Grid.Row="2" HorizontalAlignment="Left">
-                        <Label Content="SteamGridDB Key" Style="{DynamicResource MaterialDesignLabel}"></Label>
-                    </Viewbox>
-                    <TextBox Grid.Row="3" Text="{Binding SGDBKey, Mode=TwoWay}" Style="{DynamicResource MaterialDesignTextBox}"></TextBox>
-                    <Viewbox Stretch="Uniform" Grid.Row="4" HorizontalAlignment="Left">
                         <Label Content="Disposition Plateforme" Style="{DynamicResource MaterialDesignLabel}"></Label>
                     </Viewbox>
-                    <ComboBox Grid.Row="5" ItemsSource="{Binding SysDisplayList}"
+                    <ComboBox Grid.Row="3" ItemsSource="{Binding SysDisplayList}"
                       SelectedValuePath="{Binding}"
                       SelectedItem="{Binding SysDisplay,Mode=TwoWay}"
                       Style="{DynamicResource MaterialDesignFloatingHintComboBox}">
@@ -92,10 +86,10 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <Viewbox Stretch="Uniform" Grid.Row="6" HorizontalAlignment="Left">
+                    <Viewbox Stretch="Uniform" Grid.Row="4" HorizontalAlignment="Left">
                         <Label Content="Disposition Jeux" Style="{DynamicResource MaterialDesignLabel}"></Label>
                     </Viewbox>
-                    <ComboBox Grid.Row="7" ItemsSource="{Binding RomDisplayList}"
+                    <ComboBox Grid.Row="5" ItemsSource="{Binding RomDisplayList}"
                       SelectedValuePath="{Binding}"
                       SelectedItem="{Binding RomDisplay,Mode=TwoWay}"
                       Style="{DynamicResource MaterialDesignFloatingHintComboBox}">
@@ -114,6 +108,8 @@
                         <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Viewbox Stretch="Uniform" Grid.Row="0" HorizontalAlignment="Left">
                         <Label Content="ScreenScraper ID" Style="{DynamicResource MaterialDesignLabel}"></Label>
@@ -123,6 +119,10 @@
                         <Label Content="ScreenScraper Password" Style="{DynamicResource MaterialDesignLabel}"></Label>
                     </Viewbox>
                     <TextBox Grid.Row="3" Text="{Binding ScreenScraperPWD, Mode=TwoWay}" Style="{DynamicResource MaterialDesignTextBox}"></TextBox>
+                    <Viewbox Stretch="Uniform" Grid.Row="4" HorizontalAlignment="Left">
+                        <Label Content="SteamGridDB Key" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                    </Viewbox>
+                    <TextBox Grid.Row="5" Text="{Binding SGDBKey, Mode=TwoWay}" Style="{DynamicResource MaterialDesignTextBox}"></TextBox>
                 </Grid>
             </TabItem>
         </TabControl>

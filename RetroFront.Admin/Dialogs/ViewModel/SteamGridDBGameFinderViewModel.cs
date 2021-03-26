@@ -22,6 +22,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         private Search _resultgame;
         private string _name;
         private ISteamGridDBService steamGridDBService;
+        private IScreenScraperService screenScraperService;
         private IIGDBService iGDBService;
         private ScraperSource _source;
         public ScraperSource Source
@@ -56,6 +57,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         {
             steamGridDBService = App.ServiceProvider.GetRequiredService<ISteamGridDBService>();
             iGDBService = App.ServiceProvider.GetRequiredService<IIGDBService>();
+            screenScraperService = App.ServiceProvider.GetRequiredService<IScreenScraperService>();
             Source = scraperSource;
             Name = name;
             SearchByNameResult();
@@ -66,6 +68,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         }
         private void SearchByNameResult()
         {
+            FoundedGame = new List<Search>();
             if (Source == ScraperSource.SGDB)
             {
                 FoundedGame = steamGridDBService.SearchByName(Name).ToList();
@@ -73,6 +76,14 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             else if(Source == ScraperSource.IGDB)
             {
                 FoundedGame = iGDBService.GetGameByName(Name).ToList();
+            }
+            else if(Source == ScraperSource.Screenscraper)
+            {
+                var SCSPFoundedGame = screenScraperService.SearchGame(Name).ToList();
+                foreach(var SCSPgame in SCSPFoundedGame)
+                {
+                    FoundedGame.Add(new Models.Search() { id=SCSPgame.ScreenScraperID, name = SCSPgame.Name});
+                }
             }
         }
         public void CloseDialogWithResult(Window dialog, bool result)

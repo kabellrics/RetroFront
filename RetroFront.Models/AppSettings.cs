@@ -16,6 +16,7 @@ namespace RetroFront.Models
         public string RetroarchCMD { get; set; }
         public SysDisplay CurrentSysDisplay { get; set; }
         public RomDisplay CurrentGameDisplay { get; set; }
+        public string DefaultBCK { get; set; }
 
     }
 }

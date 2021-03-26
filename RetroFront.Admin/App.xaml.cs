@@ -48,6 +48,9 @@ namespace RetroFront.Admin
             services.AddSingleton<ISteamGridDBService, SteamGridDBService>();
             services.AddSingleton<IIGDBService, IGDBService>();
             services.AddSingleton<IEnumService, EnumService>();
+            services.AddSingleton<IOriginService, OriginService>();
+            services.AddSingleton<IEpicService, EpicService>();
+            services.AddSingleton<IScreenScraperService, ScreenScraperService>();
 
             services.AddSingleton<MainPageViewModel>();
 

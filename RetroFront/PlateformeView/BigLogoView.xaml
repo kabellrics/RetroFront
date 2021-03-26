@@ -25,7 +25,7 @@
                         <Grid.Background>
                             <VisualBrush>
                                 <VisualBrush.Visual>
-                                    <Image Source="{Binding Bck}" Stretch="UniformToFill" Opacity="0.80">
+                                    <Image Source="{Binding Bck}" Stretch="Fill" Opacity="0.80">
                                         <Image.Effect>
                                             <BlurEffect Radius="0.9"></BlurEffect>
                                         </Image.Effect>

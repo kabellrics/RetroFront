@@ -34,6 +34,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="SteamID" DisplayMemberBinding="{Binding Game.SteamID}"></GridViewColumn>
+                    <GridViewColumn Header="ScreenScraperID" DisplayMemberBinding="{Binding Game.ScreenScraperID}"></GridViewColumn>
+                    <GridViewColumn Header="SteamGridDB ID" DisplayMemberBinding="{Binding Game.SGDBID}"></GridViewColumn>
+                    <GridViewColumn Header="IGDB ID" DisplayMemberBinding="{Binding Game.IGDBID}"></GridViewColumn>
+                    <GridViewColumn Header="RAWGID ID" DisplayMemberBinding="{Binding Game.RAWGID}"></GridViewColumn>
                     <GridViewColumn Header="Nom" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
                 </GridView>
             </ListView.View>

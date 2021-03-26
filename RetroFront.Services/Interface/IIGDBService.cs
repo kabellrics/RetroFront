@@ -19,5 +19,8 @@ namespace RetroFront.Services.Interface
         IEnumerable<Models.IGDB.Screenshot> GetScreenshotsByGameId(int id);
         IEnumerable<Models.IGDB.Video> GetVideosByGameId(int id);
         IEnumerable<Models.IGDB.Theme> GetThemesByGameId(int id);
+        IEnumerable<Models.IGDB.InvolvedCompany> GetInvolvedCompanyByGameId(int id);
+        IEnumerable<Models.IGDB.Company> GetDevByGameId(IEnumerable<Models.IGDB.InvolvedCompany> involvedComps);
+        IEnumerable<Models.IGDB.Company> GetPublishersByGameId(IEnumerable<Models.IGDB.InvolvedCompany> involvedComps);
     }
 }

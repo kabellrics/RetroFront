@@ -53,6 +53,9 @@
         <DataTemplate DataType="{x:Type vms:SteamGridDBGameFinderViewModel}">
             <vm:SteamGridDBGameFinderView></vm:SteamGridDBGameFinderView>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:AddStandaloneViewModel}">
+            <vm:AddStandaloneView></vm:AddStandaloneView>
+        </DataTemplate>
     </mah:MetroWindow.Resources>
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IGDB;
 using IGDB.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using RetroFront.Models.IGDB;
@@ -256,6 +257,78 @@ namespace RetroFront.Services.Implementation
             }
             else
                 return null;
+        }
+        public IEnumerable<Models.IGDB.InvolvedCompany> GetInvolvedCompanyByGameId(int id)
+        {
+            //string urlrequest = "https://api.igdb.com/v4/games/" + id.ToString() + "?fields=id,name,artworks.*,cover.*,first_release_date,genres.*,screenshots.*,storyline,summary,version_title,videos.*,themes.*";
+            string urlrequest = "https://api.igdb.com/v4/games/" + id.ToString() + "?fields=id,involved_companies.*";
+            var client = new RestClient(urlrequest);
+            client.Timeout = -1;
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("Client-ID", "fah6fktmuph3zpfelt66hoqk4zn62i");
+            request.AddHeader("Authorization", $"Bearer {Bearer}");
+            request.AddHeader("Cookie", "__cfduid=d35aefabc266be82fd2fd3d888d853e571611495025");
+
+            var response = client.Execute<Models.IGDB.IGDBGame>(request);
+            var rawdata = response.Content.Substring(1, response.Content.Length - 2);
+
+            JObject jsondata = JObject.Parse(rawdata);
+            if (jsondata["involved_companies"] != null)
+            {
+                IList<JToken> results = jsondata["involved_companies"].Children().ToList();
+                IList<Models.IGDB.InvolvedCompany> searchResults = new List<Models.IGDB.InvolvedCompany>();
+                foreach (JToken result in results)
+                {
+                    // JToken.ToObject is a helper method that uses JsonSerializer internally
+                    Models.IGDB.InvolvedCompany searchResult = result.ToObject<Models.IGDB.InvolvedCompany>();
+                    searchResults.Add(searchResult);
+                }
+                return searchResults;
+            }
+            else
+                return null;
+        }
+        public IEnumerable<Models.IGDB.Company> GetDevByGameId(IEnumerable<Models.IGDB.InvolvedCompany> involvedComps)
+        {
+            var devlist = involvedComps.Where(x => x.developer == true || x.supporting == true);
+            IList<Models.IGDB.Company> searchResults = new List<Models.IGDB.Company>();
+            foreach (var dev in devlist)
+            {
+                string urlrequest = "https://api.igdb.com/v4/companies/" + dev.company.ToString() + "?fields=change_date,change_date_category,changed_company_id,checksum,country,created_at,description,developed,logo,name,parent,published,slug,start_date,start_date_category,updated_at,url,websites;";
+                //var client = new RestClient("https://api.igdb.com/v4/companies/1514?fields=change_date,change_date_category,changed_company_id,checksum,country,created_at,description,developed,logo,name,parent,published,slug,start_date,start_date_category,updated_at,url,websites;");
+                var client = new RestClient(urlrequest);
+                client.Timeout = -1;
+                var request = new RestRequest(Method.GET);
+                request.AddHeader("Client-ID", "fah6fktmuph3zpfelt66hoqk4zn62i");
+                request.AddHeader("Authorization", $"Bearer {Bearer}");
+                request.AddHeader("Cookie", "__cfduid=d35aefabc266be82fd2fd3d888d853e571611495025");
+                var response = client.Execute<Models.IGDB.Company>(request);
+                var rawdata = response.Content.Substring(1, response.Content.Length - 2);
+                Models.IGDB.Company comp = JsonConvert.DeserializeObject<Models.IGDB.Company>(rawdata);
+                searchResults.Add(comp);
+            }
+            return searchResults;
+        }
+        public IEnumerable<Models.IGDB.Company> GetPublishersByGameId(IEnumerable<Models.IGDB.InvolvedCompany> involvedComps)
+        {
+            var devlist = involvedComps.Where(x => x.publisher == true);
+            IList<Models.IGDB.Company> searchResults = new List<Models.IGDB.Company>();
+            foreach (var dev in devlist)
+            {
+                string urlrequest = "https://api.igdb.com/v4/companies/" + dev.company.ToString() + "?fields=change_date,change_date_category,changed_company_id,checksum,country,created_at,description,developed,logo,name,parent,published,slug,start_date,start_date_category,updated_at,url,websites;";
+                //var client = new RestClient("https://api.igdb.com/v4/companies/1514?fields=change_date,change_date_category,changed_company_id,checksum,country,created_at,description,developed,logo,name,parent,published,slug,start_date,start_date_category,updated_at,url,websites;");
+                var client = new RestClient(urlrequest);
+                client.Timeout = -1;
+                var request = new RestRequest(Method.GET);
+                request.AddHeader("Client-ID", "fah6fktmuph3zpfelt66hoqk4zn62i");
+                request.AddHeader("Authorization", $"Bearer {Bearer}");
+                request.AddHeader("Cookie", "__cfduid=d35aefabc266be82fd2fd3d888d853e571611495025");
+                var response = client.Execute<Models.IGDB.Company>(request);
+                var rawdata = response.Content.Substring(1, response.Content.Length - 2);
+                Models.IGDB.Company comp = JsonConvert.DeserializeObject<Models.IGDB.Company>(rawdata);
+                searchResults.Add(comp);
+            }
+            return searchResults;
         }
 
         public string GetCoverLink(string hash)

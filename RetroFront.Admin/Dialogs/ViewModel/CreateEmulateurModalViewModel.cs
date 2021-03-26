@@ -19,8 +19,17 @@ namespace RetroFront.Admin.Dialogs.ViewModel
     {
         private ICommand _cancelCommand;
         private ICommand _yesCommand;
+        private ICommand _lookForExeCommand;
+        public ICommand LookForExeCommand
+        {
+            get
+            {
+                return _lookForExeCommand ?? (_lookForExeCommand = new RelayCommand(LookForExe));
+            }
+        }
         public string ResultJson { get; set; }
         private IDatabaseService _databaseService;
+        private IDialogService _dialogService;
         private string _name;
         public string Name
         {
@@ -62,6 +71,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         public CreateEmulateurModalViewModel()
         {
             _databaseService = App.ServiceProvider.GetRequiredService<IDatabaseService>();
+            _dialogService = App.ServiceProvider.GetRequiredService<IDialogService>();
             var plateformes = _databaseService.GetSystemes();
             Systemes = new ObservableCollection<SystemeDetailViewModel>();
             foreach(var sys in plateformes.OrderBy(x => x.Name))
@@ -83,6 +93,13 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             Command = emu.Command;
             Extension = emu.Extension;
             Selectedsysteme = new SystemeDetailViewModel(_databaseService.GetSysteme(emu.SystemeID));
+        }
+
+        private void LookForExe()
+        {
+            var result = _dialogService.OpenUniqueFileDialog($"Fichier Executable (*.exe)|*.exe");
+            if (result != null)
+                Chemin = result;
         }
         public void CloseDialogWithResult(Window dialog, bool result)
         {

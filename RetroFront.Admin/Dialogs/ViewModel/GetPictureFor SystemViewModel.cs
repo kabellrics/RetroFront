@@ -19,6 +19,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         private IDialogService dialogService;
         private IThemeService themeService;
         public string ResultPath { get; set; }
+        public ScraperType ScraperType { get; set; }
         private string _imgPath;
         public string ImgPath
         {
@@ -31,9 +32,10 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             get { return _title; }
             set { _title = value; RaisePropertyChanged(); }
         }
-        public GetPictureForSystemViewModel(Systeme title,string themename)
+        public GetPictureForSystemViewModel(Systeme title,string themename,ScraperType scraperType)
         {
-            Title = $"Rechercher une image pour {title.Name}";
+            Title = $"Rechercher de {scraperType.ToString()} pour {title.Name}";
+            ScraperType = scraperType;
             dialogService = App.ServiceProvider.GetRequiredService<IDialogService>();
             themeService = App.ServiceProvider.GetRequiredService<IThemeService>();
             var img = themeService.GetBckForTheme(title.Shortname,themename);
@@ -50,7 +52,15 @@ namespace RetroFront.Admin.Dialogs.ViewModel
 
         private void Searchpicture(object obj)
         {
-            var path = dialogService.OpenUniqueFileDialog($"Fichier Image (*.jpg)|*.jpg");
+            string path;
+            if (ScraperType == ScraperType.Logo)
+            {
+                path = dialogService.OpenUniqueFileDialog($"Fichier Image (*.png)|*.png");
+            }
+            else
+            {
+                path = dialogService.OpenUniqueFileDialog($"Fichier Image (*.jpg)|*.jpg");
+            }
             if (path != null)
                 ImgPath = path;
         }

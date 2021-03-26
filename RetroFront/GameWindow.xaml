@@ -46,6 +46,15 @@
         <DataTemplate x:Key="BoxList">
             <views:BoxDetailView/>
         </DataTemplate>
+        <DataTemplate x:Key="WallBox">
+            <views:BoxWallView/>
+        </DataTemplate>
+        <DataTemplate x:Key="WallBanner">
+            <views:BannerWallView/>
+        </DataTemplate>
+        <DataTemplate x:Key="WallLogo">
+            <views:LogoWallView/>
+        </DataTemplate>
         <Style x:Key="MyContentStyle" TargetType="ContentPresenter">
             <Setter Property="ContentTemplate" Value="{StaticResource FanartView}"/>
             <Style.Triggers>
@@ -60,6 +69,15 @@
                 </DataTrigger>
                 <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.ListBox}">
                     <Setter Property="ContentTemplate" Value="{StaticResource BoxList}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.WallBox}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource WallBox}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.WallBanner}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource WallBanner}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.WallLogo}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource WallLogo}"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>

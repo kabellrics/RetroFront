@@ -28,7 +28,8 @@ namespace RetroFront.Models
     {
         IGDB,
         SGDB,
-        Screenscraper
+        Screenscraper,
+        Local
     }
     public enum ScraperType
     {
@@ -52,7 +53,11 @@ namespace RetroFront.Models
         [Description("Left Spin")]
         WheelLeftLogo,
         [Description("Right Spin")]
-        WheelRightLogo
+        WheelRightLogo,
+        [Description("Wall Logo")]
+        WallLogo,
+        [Description("Bezel")]
+        Bezel
     }
 
     public enum RomDisplay
@@ -61,6 +66,8 @@ namespace RetroFront.Models
         WallBox,
         [Description("Wall Banner")] 
         WallBanner,
+        [Description("Wall Logo")] 
+        WallLogo,
         [Description("Box Detail")] 
         ListBox,
         [Description("Banner Detail")] 

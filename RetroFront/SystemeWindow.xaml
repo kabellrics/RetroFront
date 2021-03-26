@@ -40,6 +40,9 @@
         <DataTemplate x:Key="LeftWheel">
             <views:LeftWheelView></views:LeftWheelView>
         </DataTemplate>
+        <DataTemplate x:Key="Bezel">
+            <views:BezelView></views:BezelView>
+        </DataTemplate>
         <Style x:Key="MyContentStyle" TargetType="ContentPresenter">
             <Setter Property="ContentTemplate" Value="{StaticResource BigLogo}"/>
             <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=listicon}"/>
@@ -58,6 +61,10 @@
                 </DataTrigger>
                 <DataTrigger Binding="{Binding SysDisplay}" Value="{x:Static enum:SysDisplay.WheelLeftLogo}">
                     <Setter Property="ContentTemplate" Value="{StaticResource LeftWheel}"/>
+                    <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=listicon}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding SysDisplay}" Value="{x:Static enum:SysDisplay.Bezel}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource Bezel}"/>
                     <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=listicon}"/>
                 </DataTrigger>
             </Style.Triggers>

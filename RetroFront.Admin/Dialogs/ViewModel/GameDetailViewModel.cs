@@ -20,12 +20,13 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         private ICommand _cancelCommand;
         private ICommand _yesCommand;
         public GameRom GameCurrent { get; set; }
-        private ICommand _ScrapeGameCommand;
-        public ICommand ScrapeGameCommand
+
+        private ICommand _resolveGameCommand;
+        public ICommand ResolveGameCommand
         {
             get
             {
-                return _ScrapeGameCommand ?? (_ScrapeGameCommand = new RelayCommand(ScrapeGame));
+                return _resolveGameCommand ?? (_resolveGameCommand = new RelayCommand<ScraperSource>(ResolveGame));
             }
         }
         private ICommand _SGDBBoxFinderCommand;
@@ -33,7 +34,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         {
             get
             {
-                return _SGDBBoxFinderCommand ?? (_SGDBBoxFinderCommand = new RelayCommand(SGDBBoxFinder));
+                return _SGDBBoxFinderCommand ?? (_SGDBBoxFinderCommand = new RelayCommand<ScraperSource>(SGDBBoxFinder));
             }
         }
         private ICommand _SGDBLogoFinderCommand;
@@ -41,7 +42,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         {
             get
             {
-                return _SGDBLogoFinderCommand ?? (_SGDBLogoFinderCommand = new RelayCommand(SGDBLogoFinder));
+                return _SGDBLogoFinderCommand ?? (_SGDBLogoFinderCommand = new RelayCommand<ScraperSource>(SGDBLogoFinder));
             }
         }
         private ICommand _SGDBScreenFinderCommand;
@@ -49,7 +50,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         {
             get
             {
-                return _SGDBScreenFinderCommand ?? (_SGDBScreenFinderCommand = new RelayCommand(SGDBScreenFinder));
+                return _SGDBScreenFinderCommand ?? (_SGDBScreenFinderCommand = new RelayCommand<ScraperSource>(SGDBScreenFinder));
             }
         }
         private ICommand _SGDBFanartFinderCommand;
@@ -57,11 +58,29 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         {
             get
             {
-                return _SGDBFanartFinderCommand ?? (_SGDBFanartFinderCommand = new RelayCommand(SGDBFanartFinder));
+                return _SGDBFanartFinderCommand ?? (_SGDBFanartFinderCommand = new RelayCommand<ScraperSource>(SGDBFanartFinder));
             }
         }
 
         #region Properties
+        private int _IsResolveSGDB;
+        public int IsResolveSGDB
+        {
+            get { return _IsResolveSGDB; }
+            set { _IsResolveSGDB = value; RaisePropertyChanged(); }
+        }
+        private int _IsResolveIGDB;
+        public int IsResolveIGDB
+        {
+            get { return _IsResolveIGDB; }
+            set { _IsResolveIGDB = value; RaisePropertyChanged(); }
+        }
+        private int _IsResolveSCSP;
+        public int IsResolveSCSP
+        {
+            get { return _IsResolveSCSP; }
+            set { _IsResolveSCSP = value; RaisePropertyChanged(); }
+        }
         private string _Name;
         public string Name
         {
@@ -160,91 +179,155 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             databaseService = App.ServiceProvider.GetRequiredService<IDatabaseService>();
             LoadingGame(game);
         }
-        private void LoadingGame(GameRom game)
+        private void LoadingGame(GameRom game = null)
         {
-            GameCurrent = game;
-            Name = game.Name;
-            Path = game.Path;
-            Desc = game.Desc;
-            Year = game.Year;
-            Editeur = game.Editeur;
-            Dev = game.Dev;
-            Genre = game.Genre;
-            Boxart = game.Boxart;
-            Screenshoot = game.Screenshoot;
-            Logo = game.Logo;
-            RecalView = game.RecalView;
-            TitleScreen = game.TitleScreen;
-            Fanart = game.Fanart;
-            Video = game.Video;
-            if (File.Exists(game.Fanart) == false)
+            if(game != null)
+                GameCurrent = game;
+
+            Name = GameCurrent.Name;
+            Path = GameCurrent.Path;
+            Desc = GameCurrent.Desc;
+            Year = GameCurrent.Year;
+            Editeur = GameCurrent.Editeur;
+            Dev = GameCurrent.Dev;
+            Genre = GameCurrent.Genre;
+            Boxart = GameCurrent.Boxart;
+            Screenshoot = GameCurrent.Screenshoot;
+            Logo = GameCurrent.Logo;
+            RecalView = GameCurrent.RecalView;
+            TitleScreen = GameCurrent.TitleScreen;
+            Fanart = GameCurrent.Fanart;
+            Video = GameCurrent.Video;
+            IsResolveIGDB = GameCurrent.IGDBID;
+            IsResolveSCSP = GameCurrent.ScreenScraperID;
+            IsResolveSGDB = GameCurrent.SGDBID;
+            if (GameCurrent.Fanart != null)
             {
-                if (File.Exists(game.Fanart.Replace(".jpg", ".png")))
+                if (File.Exists(GameCurrent.Fanart) == false)
                 {
-                    Fanart = game.Fanart.Replace(".jpg", ".png");
-                }
-                //    Fanart = TitleScreen;
-                //    if (File.Exists(game.TitleScreen) == false)
-                //    {
-                //        Fanart = RecalView;
-                //    }
+                    if (File.Exists(GameCurrent.Fanart.Replace(".jpg", ".png")))
+                    {
+                        Fanart = GameCurrent.Fanart.Replace(".jpg", ".png");
+                    }
+                    //    Fanart = TitleScreen;
+                    //    if (File.Exists(game.TitleScreen) == false)
+                    //    {
+                    //        Fanart = RecalView;
+                    //    }
+                } 
             }
-            if (File.Exists(game.Screenshoot) == false)
+            if (GameCurrent.Screenshoot != null)
             {
-                if (File.Exists(game.Screenshoot.Replace(".png", ".jpg")))
+                if (File.Exists(GameCurrent.Screenshoot) == false)
                 {
-                    Screenshoot = game.Screenshoot.Replace(".png", ".jpg");
+                    if (File.Exists(GameCurrent.Screenshoot.Replace(".png", ".jpg")))
+                    {
+                        Screenshoot = GameCurrent.Screenshoot.Replace(".png", ".jpg");
+                    }
+                    else
+                    {
+                        Screenshoot = TitleScreen;
+                        if (File.Exists(GameCurrent.TitleScreen) == false)
+                        {
+                            Screenshoot = RecalView;
+                        }
+                    }
                 }
                 else
                 {
-                    Screenshoot = TitleScreen;
-                    if (File.Exists(game.TitleScreen) == false)
-                    {
-                        Screenshoot = RecalView;
-                    }
-                }
-            }
-            else
-            {
-                Screenshoot = game.Screenshoot;
+                    Screenshoot = GameCurrent.Screenshoot;
+                } 
             }
         }
 
-        private void SGDBBoxFinder()
+        private void ResolveGame(ScraperSource CurrentScrapeSource)
         {
-            var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Boxart,ScraperSource.SGDB);
-            if (resultimg != null)
+            var searchedGame = dialogService.SearchSteamGridDBByName(GameCurrent.Name, CurrentScrapeSource);
+            if(searchedGame != null)
             {
-                Boxart = resultimg;
+                if(CurrentScrapeSource == ScraperSource.IGDB)
+                {
+                    GameCurrent.IGDBID = searchedGame.id;
+                }
+                else if(CurrentScrapeSource == ScraperSource.SGDB)
+                {
+                    GameCurrent.SGDBID = searchedGame.id;
+                }
+                else if(CurrentScrapeSource == ScraperSource.Screenscraper) 
+                {
+                    GameCurrent.ScreenScraperID = searchedGame.id;
+                }
+                LoadingGame();
+            }
+            //throw new NotImplementedException();
+        }
+        private void SGDBBoxFinder(ScraperSource CurrentScrapeSource)
+        {
+            if (CurrentScrapeSource == ScraperSource.Local)
+            {
+                var strimg = dialogService.OpenUniqueFileDialog($"Fichier Image (*.png;*.jpg)|*.png;*.jpg");
+                if (strimg != null)
+                    Boxart = strimg;
+            }
+            else
+            {
+                var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Boxart, CurrentScrapeSource);
+                if (resultimg != null)
+                {
+                    Boxart = resultimg;
+                }
             }
         }
-        private void SGDBLogoFinder()
+        private void SGDBLogoFinder(ScraperSource CurrentScrapeSource)
         {
-            var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Logo, ScraperSource.SGDB);
-            if (resultimg != null)
+            if (CurrentScrapeSource == ScraperSource.Local)
             {
-                Logo = resultimg;
+                var strimg = dialogService.OpenUniqueFileDialog($"Fichier Image (*.png)|*.png");
+                if (strimg != null)
+                    Logo = strimg;
+            }
+            else
+            {
+                var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Logo, CurrentScrapeSource);
+                if (resultimg != null)
+                {
+                    Logo = resultimg;
+                }
             }
         }
-        private void SGDBScreenFinder()
+        private void SGDBScreenFinder(ScraperSource CurrentScrapeSource)
         {
-            var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.ArtWork, ScraperSource.SGDB);
-            if (resultimg != null)
+            if (CurrentScrapeSource == ScraperSource.Local)
             {
-                Screenshoot = resultimg;
+                var strimg = dialogService.OpenUniqueFileDialog($"Fichier Image (*.png;*.jpg)|*.png;*.jpg");
+                if (strimg != null)
+                    Screenshoot = strimg;
+            }
+            else
+            {
+                var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.ArtWork, CurrentScrapeSource);
+                if (resultimg != null)
+                {
+                    Screenshoot = resultimg;
+                }
             }
         }
-        private void SGDBFanartFinder()
+        private void SGDBFanartFinder(ScraperSource CurrentScrapeSource)
         {
-            var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Banner, ScraperSource.SGDB);
-            if (resultimg != null)
+            if (CurrentScrapeSource == ScraperSource.Local)
             {
-                Fanart = resultimg;
+                var strimg = dialogService.OpenUniqueFileDialog($"Fichier Image (*.png;*.jpg)|*.png;*.jpg");
+                if (strimg != null)
+                    Fanart = strimg;
             }
-        }
-        private void ScrapeGame()
-        {
-            //LoadingGame(_gameService.ScrapeGame(GameCurrent));
+            else
+            {
+                var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Banner, CurrentScrapeSource);
+                if (resultimg != null)
+                {
+                    Fanart = resultimg;
+                }
+            }
         }
 
         public void CloseDialogWithResult(Window dialog, bool result)

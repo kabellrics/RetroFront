@@ -22,38 +22,54 @@ namespace RetroFront.Services.Implementation
         private DatabaseService dbService = new DatabaseService();
         private string LogoPath = @"https://cdn.cloudflare.steamstatic.com/steam/apps/%STEAMID%/logo.png";
         private string BoxPath = @"https://cdn.cloudflare.steamstatic.com/steam/apps/%STEAMID%/library_600x900.jpg";
-        public List<GameRom> GetSteamGame(string steamexepath, Emulator emu)
+        public List<GameRom> GetSteamGame(Emulator emu)
         {
-            var steamfolder = Path.GetDirectoryName(steamexepath);
-            List<string> foldersTosearch = new List<string>();
-            foldersTosearch.Add(Path.Combine(steamfolder, "steamapps"));
-            VProperty volvo = VdfConvert.Deserialize(File.ReadAllText(Path.Combine(steamfolder, "steamapps", "libraryfolders.vdf")));
-            var childs = volvo.Value.Children();
-            foreach(var child in childs)
+            string steamfolder;
+            var key64 = @"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Valve\Steam";
+            var key32 = @"HKEY_LOCAL_MACHINE\SOFTWARE\Valve\Steam";
+            if(Environment.Is64BitOperatingSystem)
             {
-                if(Directory.Exists(((VProperty)child).Value.ToString()))
-                {
-                    foldersTosearch.Add(Path.Combine(((VProperty)child).Value.ToString(), "steamapps"));
-                }
+                steamfolder = (string)Microsoft.Win32.Registry.GetValue(key64, "InstallPath",string.Empty);
             }
-            List<GameRom> gamesfind = new List<GameRom>();
-            List<String> appmanifestfiles = new List<string>();
-            foreach (string foldertoSeek in foldersTosearch)
+            else
             {
-                appmanifestfiles.AddRange(Directory.GetFiles(foldertoSeek, "appmanifest_*.acf").ToList());
+                steamfolder = (string)Microsoft.Win32.Registry.GetValue(key32, "InstallPath", string.Empty);
             }
 
-            foreach (var file in appmanifestfiles)
+            if (steamfolder != null)
             {
-                dynamic appfile = VdfConvert.Deserialize(File.ReadAllText(file));
-                GameRom game = new GameRom();
-                game.EmulatorID = emu.EmulatorID;
-                game.SteamID = int.Parse(appfile.Value.appid.Value);
-                game.Name = appfile.Value.name.Value;
-                
-                gamesfind.Add(game);
+                List<string> foldersTosearch = new List<string>();
+                foldersTosearch.Add(Path.Combine(steamfolder, "steamapps"));
+                VProperty volvo = VdfConvert.Deserialize(File.ReadAllText(Path.Combine(steamfolder, "steamapps", "libraryfolders.vdf")));
+                var childs = volvo.Value.Children();
+                foreach (var child in childs)
+                {
+                    if (Directory.Exists(((VProperty)child).Value.ToString()))
+                    {
+                        foldersTosearch.Add(Path.Combine(((VProperty)child).Value.ToString(), "steamapps"));
+                    }
+                }
+                List<GameRom> gamesfind = new List<GameRom>();
+                List<String> appmanifestfiles = new List<string>();
+                foreach (string foldertoSeek in foldersTosearch)
+                {
+                    appmanifestfiles.AddRange(Directory.GetFiles(foldertoSeek, "appmanifest_*.acf").ToList());
+                }
+
+                foreach (var file in appmanifestfiles)
+                {
+                    dynamic appfile = VdfConvert.Deserialize(File.ReadAllText(file));
+                    GameRom game = new GameRom();
+                    game.EmulatorID = emu.EmulatorID;
+                    game.SteamID = int.Parse(appfile.Value.appid.Value);
+                    game.Name = appfile.Value.name.Value;
+
+                    gamesfind.Add(game);
+                }
+                return gamesfind;
             }
-            return gamesfind;
+            else
+                return null;
         }
 
         public GameRom GetSteamInfos(GameRom game, Emulator emu)

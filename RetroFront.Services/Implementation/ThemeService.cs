@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
@@ -85,7 +86,6 @@ namespace RetroFront.Services.Implementation
                 //throw;
             }
         }
-
         public string GetLogoForTheme(string plateforme, string theme)
         {
             try
@@ -129,6 +129,86 @@ namespace RetroFront.Services.Implementation
             {
                 return string.Empty;
             }
+        }
+        public string GetLogoPathForTheme(string plateforme)
+        {
+            try
+            {
+                    return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, $"{Guid.NewGuid().ToString()}.png");
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+        } 
+        public string GetVidéoForTheme(string plateforme)
+        {
+            try
+            {
+                if (File.Exists(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, "video.mp4")))
+                    return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, "video.mp4");
+                else
+                    return string.Empty;
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+        }
+        public string GetVidéoPathForTheme(string plateforme)
+        {
+            try
+            {
+                    return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, $"{Guid.NewGuid().ToString()}.mp4");
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+        }
+        public string GetImagePathForTheme(string plateforme)
+        {
+            try
+            {
+                    return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, $"{Guid.NewGuid().ToString()}.png");
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+        }
+        public string GetImageForTheme(string plateforme)
+        {
+            try
+            {
+                if (File.Exists(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, "img.png")))
+                    return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, "img.png");
+                else
+                    return string.Empty;
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+        }
+        public void DownloadSteamData(string dllpath, string target)
+        {
+            using (var file = File.Create(target))
+            {
+                using (WebClient client = new WebClient())
+                {
+                    file.Write(client.DownloadData(dllpath));
+                }
+            }
+        }
+
+        public void ChangeBCK(string bcppath)
+        {
+            string fileext = Path.GetExtension(bcppath);
+            string target = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, string.Format($"bck{fileext}"));
+            File.Copy(bcppath,target,true);
+            FileJSONService.appSettings.DefaultBCK = target;
+            FileJSONService.UpdateSettings();
         }
 
     }

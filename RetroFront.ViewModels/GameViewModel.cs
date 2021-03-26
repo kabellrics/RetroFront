@@ -140,7 +140,7 @@ namespace RetroFront.ViewModels
             }
             if (File.Exists(game.Screenshoot) == false)
             {
-                if (File.Exists(game.Screenshoot.Replace(".png", ".jpg")))
+                if (game.Screenshoot != null && File.Exists(game.Screenshoot.Replace(".png", ".jpg")))
                 {
                     Sxreenshoot = game.Screenshoot.Replace(".png", ".jpg");
                 }

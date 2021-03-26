@@ -124,14 +124,26 @@ namespace RetroFront.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Logo")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Screenshoot")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Shortname")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("SystemeSCSPID")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Video")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("SystemeID");
 

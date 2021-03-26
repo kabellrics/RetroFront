@@ -129,6 +129,9 @@
                 </LinearGradientBrush>
             </Border.Background>
             <DockPanel LastChildFill="True" >
+                <DockPanel.Background>
+                    <ImageBrush ImageSource="{Binding BCKImg}" Stretch="Fill" TileMode="None"></ImageBrush>
+                </DockPanel.Background>
                 <StatusBar Style="{DynamicResource MahApps.Styles.StatusBar}" DockPanel.Dock="Bottom">
 
                 </StatusBar>
@@ -148,9 +151,12 @@
                                 </Style>
                             </MenuItem.ItemContainerStyle>
                         </MenuItem>
-                        <MenuItem Header="Ajouter une Plateforme" Command="{Binding AddPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
-                        <MenuItem Header="Intégrer Les Jeux Steam installés" Command="{Binding AddSteamPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
+                        <!--<MenuItem Header="Ajouter une Plateforme" Command="{Binding AddPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>-->
+                        <MenuItem Header="Intégrer Steam" Command="{Binding AddSteamPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
+                        <MenuItem Header="Intégrer EA Origin" Command="{Binding AddOriginPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
+                        <MenuItem Header="Intégrer Epic Game Store" Command="{Binding AddEpicPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                         <MenuItem Header="Créer une Liste Particulière" Command="{Binding AddCustomListCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
+                        <MenuItem Header="Créer un standalone" Command="{Binding AddStandaloneCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                     </MenuItem>
                     <MenuItem Header="Emulateur" Style="{DynamicResource MaterialDesignMenuItem}">
                         <MenuItem Header="Ajouter un Core RetroArch" Command="{Binding AddCoreCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
@@ -212,6 +218,8 @@
                                 </Style>
                             </MenuItem.ItemContainerStyle>
                         </MenuItem>
+                        <MenuItem Header="Récupérer les images pour système" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding GetSystemeIMGCommand}"></MenuItem>
+                        <MenuItem Header="Définir le fond d'écran par défaut" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding SetBckCommand}"></MenuItem>
                     </MenuItem>
                     <MenuItem Header="Scraping Full Systeme" Style="{DynamicResource MaterialDesignMenuItem}">
                         <MenuItem Header="SteamGridDB" Style="{DynamicResource MaterialDesignMenuItem}">

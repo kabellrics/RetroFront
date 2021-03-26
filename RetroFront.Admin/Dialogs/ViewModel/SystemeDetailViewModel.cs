@@ -50,6 +50,18 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         }
 
         public Systeme Sys { get; set; }
+        private string _Screenshoot;
+        public string Screenshoot
+        {
+            get { return _Screenshoot; }
+            set { _Screenshoot = value; RaisePropertyChanged(); }
+        }
+        private string _Video;
+        public string Video
+        {
+            get { return _Video; }
+            set { _Video = value; RaisePropertyChanged(); }
+        }
         private string _logo;
         public string Logo
         {
@@ -122,6 +134,9 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             Sys = sys;
             Name = sys.Name;
             ShortName = sys.Shortname;
+            Screenshoot = sys.Screenshoot;
+            Video = sys.Video;
+            Logo = sys.Logo;
             _themeService = App.ServiceProvider.GetRequiredService<IThemeService>();
             dialogService = App.ServiceProvider.GetRequiredService<IDialogService>();
             Themes = new ObservableCollection<ThemePlateformeViewModel>();
@@ -132,7 +147,6 @@ namespace RetroFront.Admin.Dialogs.ViewModel
                 Themes.Add(thvm);
             }
             SelectedThemeIndex = 0;
-            Logo = _themeService.GetLogoForTheme(ShortName);
             //CurrentTheme = Themes[SelectedThemeIndex];
             //ChangeImg();
         }
@@ -141,7 +155,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             var newlogo = dialogService.OpenUniqueFileDialog($"Fichier Image (*.png)|*.png");
             if(newlogo != null)
             {
-                File.Copy(newlogo, Logo, true);
+                //File.Copy(newlogo, Logo, true);
                 Logo = newlogo;
             }
         }
@@ -174,6 +188,11 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         }
         private void ValidateClick(object parameter)
         {
+            Sys.Logo = Logo;
+            Sys.Screenshoot = Screenshoot;
+            Sys.Name = Name;
+            Sys.Shortname = ShortName;
+            Sys.Video = Video;
             CloseDialogWithResult(parameter as Window, true);
         }
     }

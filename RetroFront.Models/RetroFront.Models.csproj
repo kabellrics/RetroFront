@@ -14,4 +14,8 @@
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="EpicGame\" />
+  </ItemGroup>
+
 </Project>

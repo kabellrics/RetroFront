@@ -42,16 +42,18 @@
                             <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="1*"></RowDefinition>
-                                    <RowDefinition Height="2*"></RowDefinition>
-                                    <RowDefinition Height="1*"></RowDefinition>
-                                    <RowDefinition Height="3*"></RowDefinition>
+                                    <RowDefinition Height="5*"></RowDefinition>
                                     <RowDefinition Height="1*"></RowDefinition>
                                     <RowDefinition Height="4*"></RowDefinition>
                                     <RowDefinition Height="1*"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <Image Grid.Row="1" Source="{Binding Logo}" Grid.Column="0" Grid.ColumnSpan="2" Stretch="Uniform"></Image>
-                                <MediaElement Stretch="Uniform" Source="{Binding Video}" Grid.Row="3"></MediaElement>
-                                <TextBlock Grid.Row="5" Text="{Binding Desc}" Style="{DynamicResource MaterialDesignBody1TextBlock}" TextAlignment="Justify" TextWrapping="WrapWithOverflow" FontSize="30"></TextBlock>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Row="1" Source="{Binding Logo}" Grid.Column="0" Stretch="Uniform" Margin="10"></Image>
+                                <MediaElement Stretch="Uniform" Source="{Binding Video}" Grid.Row="1" Grid.Column="1" Margin="10"></MediaElement>
+                                <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding Desc}" Style="{DynamicResource MaterialDesignBody1TextBlock}" TextAlignment="Justify" TextWrapping="WrapWithOverflow" FontSize="30"></TextBlock>
                             </Grid>
                         </Grid>
                     </DataTemplate>
