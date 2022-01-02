@@ -44,6 +44,8 @@ namespace RetroFront.Models
 
     public enum SysDisplay
     {
+        [Description("Modern")]
+        Modern, 
         [Description("Big Logo")] 
         BigLogo,
         [Description("Banner")]
@@ -62,10 +64,10 @@ namespace RetroFront.Models
 
     public enum RomDisplay
     {
+        [Description("Modern")]
+        Modern,
         [Description("Wall Box")] 
         WallBox,
-        [Description("Wall Banner")] 
-        WallBanner,
         [Description("Wall Logo")] 
         WallLogo,
         [Description("Box Detail")] 
@@ -78,5 +80,7 @@ namespace RetroFront.Models
         Fanart,
         [Description("Carousel Box")] 
         FanartBox,
+        [Description("Big Box")] 
+        BigBox,
     }
 }

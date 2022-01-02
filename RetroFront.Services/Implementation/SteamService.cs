@@ -44,9 +44,16 @@ namespace RetroFront.Services.Implementation
                 var childs = volvo.Value.Children();
                 foreach (var child in childs)
                 {
-                    if (Directory.Exists(((VProperty)child).Value.ToString()))
+                    var childKV = (VProperty)child;
+                    var childValueKV = childKV.Value;
+                    var pathchildKV = childValueKV.FirstOrDefault();
+                    if (pathchildKV != null)
                     {
-                        foldersTosearch.Add(Path.Combine(((VProperty)child).Value.ToString(), "steamapps"));
+                        //if (Directory.Exists(((VProperty)child).Value.ToString()))
+                        if (Directory.Exists(((VProperty)pathchildKV).Value.ToString()))
+                        {
+                            foldersTosearch.Add(Path.Combine(((VProperty)pathchildKV).Value.ToString(), "steamapps"));
+                        } 
                     }
                 }
                 List<GameRom> gamesfind = new List<GameRom>();

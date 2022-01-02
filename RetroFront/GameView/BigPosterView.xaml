@@ -1,15 +1,11 @@
-﻿<UserControl x:Class="RetroFront.GameView.CarrouselBoxView"
-            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<UserControl x:Class="RetroFront.GameView.BigPosterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RetroFront.GameView"
-             mc:Ignorable="d" 
-             xmlns:extender="clr-namespace:RetroFront.Converter"
-	  xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
-	  xmlns:xfc="clr-namespace:XamlFlair.Controls;assembly=XamlFlair.WPF"
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <UserControl.InputBindings>
         <KeyBinding Key="Left" Command="{Binding GoDownCommand}"></KeyBinding>
@@ -21,7 +17,7 @@
     </UserControl.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Grid.RowSpan="2">
@@ -30,34 +26,21 @@
                 <mah:FlipView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
-                            <Grid.Background>
-                                <ImageBrush ImageSource="{Binding Sxreenshoot}" Stretch="Uniform" TileMode="Tile"></ImageBrush>
-                            </Grid.Background>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="2*"></RowDefinition>
-                                <RowDefinition Height="2*"></RowDefinition>
-                                <RowDefinition Height="2*"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="1">
-                                <Grid.Background>
-                                    <SolidColorBrush Color="WhiteSmoke" Opacity="0.4"></SolidColorBrush>
-                                </Grid.Background>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Source="{Binding Boxart}" Stretch="Uniform" HorizontalAlignment="Left">
-                                </Image>
-                                <Image Grid.Column="1" Source="{Binding Logo}" Stretch="Uniform" HorizontalAlignment="Left">
-                                </Image>
-                            </Grid>
+                            <Image Source="{Binding Sxreenshoot}" Stretch="Uniform">
+                                <Image.Effect>
+                                    <BlurEffect Radius="0.5"></BlurEffect>
+                                </Image.Effect>
+                            </Image>
                         </Grid>
                     </DataTemplate>
                 </mah:FlipView.ItemTemplate>
             </mah:FlipView>
         </Border>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="0" Grid.RowSpan="2">
+            <Grid.Background>
+                <SolidColorBrush Color="Black" Opacity="0.7">
+                </SolidColorBrush>
+            </Grid.Background>
             <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" CanContentScroll="True">
                 <ListView x:Name="listicon" SelectionMode="Single" Style="{DynamicResource MaterialDesignListView}"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"
@@ -79,11 +62,11 @@
                     </ListView.ItemTemplate>
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
-                            <Setter Property="Width" Value="100"/>
-                            <Setter Property="Height" Value="240"/>
-                            <Setter Property="Margin" Value="5"/>
+                            <Setter Property="Width" Value="355"/>
+                            <Setter Property="Height" Value="600"/>
+                            <Setter Property="Padding" Value="15"/>
                             <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                            <Setter Property="VerticalAlignment" Value="Bottom"/>
+                            <Setter Property="VerticalAlignment" Value="Top"/>
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type ListViewItem}">
@@ -108,22 +91,22 @@
                                     <Setter Property="Background" Value="Transparent"/>
                                     <Setter Property="BorderBrush" Value="Transparent"/>
                                     <Setter Property="BorderThickness" Value="0"/>
-                                    <!--<Trigger.EnterActions>
+                                    <Trigger.EnterActions>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="Width" From="100" To="150"/>
-                                                <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="Height" From="240" To="320"/>
+                                                <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="Width" From="355" To="500"/>
+                                                <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="Height" From="600" To="1000"/>
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </Trigger.EnterActions>
                                     <Trigger.ExitActions>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="Width" From="150" To="100"/>
-                                                <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="Height" From="320" To="240"/>
+                                                <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="Width" From="500" To="355"/>
+                                                <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="Height" From="1000" To="600"/>
                                             </Storyboard>
                                         </BeginStoryboard>
-                                    </Trigger.ExitActions>-->
+                                    </Trigger.ExitActions>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>

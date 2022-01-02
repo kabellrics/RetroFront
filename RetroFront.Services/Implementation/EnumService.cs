@@ -12,7 +12,8 @@ namespace RetroFront.Services.Implementation
         {
             return new List<SysDisplay>
             {
-                    SysDisplay.BigLogo,
+                SysDisplay.Modern,
+                SysDisplay.BigLogo,
                     SysDisplay.LogoBanner,
                     SysDisplay.CarrouselLogo,
                     SysDisplay.WheelLeftLogo,
@@ -21,18 +22,19 @@ namespace RetroFront.Services.Implementation
                     SysDisplay.Bezel
             };
         }
-        public List<RomDisplay> GetRomDisplays() 
+        public List<RomDisplay> GetRomDisplays()
         {
             return new List<RomDisplay>
             {
-                    RomDisplay.WallBox,
-                    RomDisplay.WallBanner,
+                RomDisplay.Modern,
+                RomDisplay.WallBox,
                     RomDisplay.WallLogo,
                     RomDisplay.ListBox,
                     RomDisplay.ListBanner,
                     RomDisplay.Screenshot,
                     RomDisplay.Fanart,
-                    RomDisplay.FanartBox
+                    RomDisplay.FanartBox,
+                    RomDisplay.BigBox
             };
         }
         public List<SysType> GetSysTypes()

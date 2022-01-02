@@ -84,7 +84,7 @@ namespace RetroFront.Admin.Dialogs
         public IEnumerable<string> OpenMultiFileDialog(string filter)
         {
             var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = filter;
+            //openFileDialog.Filter = filter;
             openFileDialog.Multiselect = true;
             var dialogresult = openFileDialog.ShowDialog();
             if (dialogresult.Value)

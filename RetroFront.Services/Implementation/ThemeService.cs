@@ -205,8 +205,9 @@ namespace RetroFront.Services.Implementation
         public void ChangeBCK(string bcppath)
         {
             string fileext = Path.GetExtension(bcppath);
-            string target = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, string.Format($"bck{fileext}"));
-            File.Copy(bcppath,target,true);
+            string oldtarget = FileJSONService.appSettings.DefaultBCK;
+            string target = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, string.Format($"{Guid.NewGuid()}{fileext}"));
+            File.Copy(bcppath,target,true); 
             FileJSONService.appSettings.DefaultBCK = target;
             FileJSONService.UpdateSettings();
         }

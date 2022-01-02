@@ -5,6 +5,7 @@ using RetroFront.Services.Interface;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,14 +24,26 @@ namespace RetroFront.ViewModels
         private Systeme parameter;
         public Systeme CurrentSysteme
         {
-            get => parameter;
-            set => Set(ref parameter, value);
+            get { return parameter; }
+            set { parameter = value; RaisePropertyChanged(); }
         }
         private bool _isDialogDisplayOpen;
         public bool IsDialogDisplayOpen
         {
             get { return _isDialogDisplayOpen; }
             set { _isDialogDisplayOpen = value; RaisePropertyChanged(); }
+        }
+        private bool _AnimeDetail;
+        public bool AnimeDetail
+        {
+            get { return _AnimeDetail; }
+            set { _AnimeDetail = value; RaisePropertyChanged(); }
+        }
+        private bool _ShowDetail;
+        public bool ShowDetail
+        {
+            get { return _ShowDetail; }
+            set { _ShowDetail = value; RaisePropertyChanged(); }
         }
         private RomDisplay _romtmpDisplay;
         public RomDisplay FronttmpDisplay
@@ -55,13 +68,26 @@ namespace RetroFront.ViewModels
         public int SelectedIndex
         {
             get { return _selectedIndex; }
-            set { _selectedIndex = value; RaisePropertyChanged(); }
+            set { _selectedIndex = value; RaisePropertyChanged(); SetCurrentGameVM(); }
         }
+        private GameViewModel _currentgameVM;
+        public GameViewModel CurerntGameVM
+        {
+            get { return _currentgameVM; }
+            set { _currentgameVM = value; RaisePropertyChanged(); }
+        }
+
         private ObservableCollection<GameViewModel> _games;
         public ObservableCollection<GameViewModel> Games
         {
             get { return _games; }
             set { _games = value; RaisePropertyChanged(); }
+        }
+        private string _bCKImg;
+        public string BCKImg
+        {
+            get { return _bCKImg; }
+            set { _bCKImg = value; RaisePropertyChanged(); }
         }
 
         private ICommand _goDownCommand;
@@ -125,12 +151,19 @@ namespace RetroFront.ViewModels
             _themeService = themeService;
             _enumService = enumService;
             _navigationService = navigationService;
+            CurerntGameVM = null;
+            AnimeDetail = false;
             SelectedIndex = 0;
             FrontDisplay = _fileJSONService.appSettings.CurrentGameDisplay;
             this.FrontDisplayList = _enumService.GetRomDisplays();
             CurrentSysteme = (Systeme)_navigationService.Parameter;
             LoadData();
+            if (File.Exists(_fileJSONService.appSettings.DefaultBCK))
+            {
+                BCKImg = _fileJSONService.appSettings.DefaultBCK;
+            }
         }
+
         public void LoadData() 
         {
             Games = new ObservableCollection<GameViewModel>();
@@ -168,7 +201,10 @@ namespace RetroFront.ViewModels
             try
             {
                 if (SelectedIndex > 0)
+                {
+                    //ShowDetail = false;
                     SelectedIndex--;
+                }
             }
             catch (Exception ex) { }
         }
@@ -177,11 +213,27 @@ namespace RetroFront.ViewModels
             try
             {
                 if (SelectedIndex < Games.Count)
-                    SelectedIndex++;
+                {
+                    //ShowDetail = false;
+                    SelectedIndex++; 
+                }
             }
             catch (Exception ex) { }
         }
-
+        private void SetCurrentGameVM()
+        {
+            try
+            {
+                if (Games != null)
+                {
+                    AnimeDetail = true;
+                    ShowDetail = true;
+                    CurerntGameVM = Games[SelectedIndex];
+                    AnimeDetail = false;
+                }
+            }
+            catch(Exception ex) { }
+        }
         //public Task ActivateAsync(object parameter)
         //{
         //    CurrentSysteme = parameter as Systeme;

@@ -58,7 +58,12 @@ namespace RetroFront.ViewModels
             get { return _systemes; }
             set { _systemes = value; RaisePropertyChanged(); }
         }
-
+        private string _bCKImg;
+        public string BCKImg
+        {
+            get { return _bCKImg; }
+            set { _bCKImg = value; RaisePropertyChanged(); }
+        }
         private ICommand _goDownCommand;
         private ICommand _goUpCommand;
         private ICommand _openDisplayCommand;
@@ -104,7 +109,12 @@ namespace RetroFront.ViewModels
             SelectedIndex = 0;
             ReloadData();
             this.SysDisplayList = _enumService.GetSysDisplays();
+            if (File.Exists(_fileJSONService.appSettings.DefaultBCK))
+            {
+                BCKImg = _fileJSONService.appSettings.DefaultBCK;
+            }
         }
+
         private void ReloadData()
         {
             Systemes = new ObservableCollection<SystemeViewModel>();

@@ -650,7 +650,13 @@ namespace RetroFront.ViewModels
             var gamefiles = _dialogService.OpenMultiFileDialog(_emulateurService.FormatExtension(obj.Emulator));
             if (gamefiles != null)
             {
-                foreach (var gamefile in gamefiles)
+                var exts = obj.Emulator.Extension.Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList();
+                List<String> romWithExt = new List<String>();
+                foreach(var ext in exts)
+                {
+                    romWithExt.AddRange(gamefiles.Where(x => x.EndsWith(ext)));
+                }
+                foreach (var gamefile in romWithExt)
                 {
                     _databaseService.AddGame(_gameService.CreateGame(gamefile, obj.Emulator));
                 }
@@ -738,10 +744,15 @@ namespace RetroFront.ViewModels
             var oldgamebox = obj.Game.Boxart;
             var oldgamefanart = obj.Game.Fanart;
             var oldgamescreen = obj.Game.Screenshoot;
-            var oldgamelogo = obj.Game.Logo;            
+            var oldgamelogo = obj.Game.Logo;
+            var oldgamename = obj.Game.Name;
             var game = _dialogService.ShowGameDetail(obj.Game);
             if (game != null)
             {
+                if(oldgamename != game.Name)
+                {
+                    
+                }
                 try
                 {
                     if (game.Boxart != oldgamebox)
@@ -832,120 +843,239 @@ namespace RetroFront.ViewModels
             var gamestoscrape = _databaseService.GetGamesForPlateforme(sys.Systeme.SystemeID).OrderBy(x => x.Name);
             foreach(var games in gamestoscrape)
             {
-               if(CurrentScraperType == ScraperType.ArtWork)
-               {
-                        var result = _dialogService.SearchImgInSteamGridDB(games, CurrentScraperType, CurrentScrapeSource);
-                        if (result != null)
-                        {
-                            games.Screenshoot = result;
-                            var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.ArtWork);
-                            var targetfile = $"{targetfolder}{Path.GetExtension(games.Screenshoot)}";
-                            _gameService.DownloadImgData(games.Screenshoot, targetfile);
-                            games.Screenshoot = targetfile;
-                        } 
-                }
-               else if(CurrentScraperType == ScraperType.Banner)
-               {
-                    var result = _dialogService.SearchImgInSteamGridDB(games, CurrentScraperType, CurrentScrapeSource);
-                    if (result != null)
+                if(CurrentScraperType == ScraperType.Full)
+                {
+                    if(CurrentScrapeSource == ScraperSource.Screenscraper)
                     {
-                        games.Fanart = result;
-                        var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Banner);
-                        var targetfile = $"{targetfolder}{Path.GetExtension(games.Fanart)}";
-                        _gameService.DownloadImgData(games.Fanart, targetfile);
-                        games.Fanart = targetfile; 
+                        ScrapeArtwork(games, ScraperType.ArtWork, ScraperSource.Screenscraper);
+                        ScrapeBanner(games, ScraperType.Banner, ScraperSource.Screenscraper);
+                        ScrapeBoxart(games, ScraperType.Boxart, ScraperSource.Screenscraper);
+                        ScrapeLogo(games, ScraperType.Logo, ScraperSource.Screenscraper);
+                        ScrapeScreenScraperMetadata(games);
+                        ScrapeVideoScreenScraper(games);
                     }
-                }
-               else if(CurrentScraperType == ScraperType.Boxart)
-               {
-                    var result = _dialogService.SearchImgInSteamGridDB(games, CurrentScraperType, CurrentScrapeSource);
-                    if (result != null)
+                    else if(CurrentScrapeSource == ScraperSource.SGDB)
                     {
-                        games.Boxart = result;
-                        var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Boxart);
-                        var targetfile = $"{targetfolder}{Path.GetExtension(games.Boxart)}";
-                        _gameService.DownloadImgData(games.Boxart, targetfile);
-                        games.Boxart = targetfile; 
+                        ScrapeArtwork(games, ScraperType.ArtWork, ScraperSource.SGDB);
+                        ScrapeBanner(games, ScraperType.Banner, ScraperSource.SGDB);
+                        ScrapeBoxart(games, ScraperType.Boxart, ScraperSource.SGDB);
+                        ScrapeLogo(games, ScraperType.Logo, ScraperSource.SGDB);
                     }
-                }
-               else if(CurrentScraperType == ScraperType.Logo)
-               {
-                    var result = _dialogService.SearchImgInSteamGridDB(games, CurrentScraperType, CurrentScrapeSource);
-                    if (result != null)
+                    else if(CurrentScrapeSource == ScraperSource.IGDB)
                     {
-                        games.Logo = result;
-                        var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Logo);
-                        var targetfile = $"{targetfolder}{Path.GetExtension(games.Logo)}";
-                        _gameService.DownloadImgData(games.Logo, targetfile);
-                        games.Logo = targetfile; 
+                        ScrapeArtwork(games, ScraperType.ArtWork, ScraperSource.IGDB);
+                        ScrapeBoxart(games, ScraperType.Boxart, ScraperSource.IGDB);
+                        ScrapeIGDBMetadata(games);
                     }
+
                 }
-               else if(CurrentScraperType == ScraperType.Metadata)
+               else if(CurrentScraperType == ScraperType.ArtWork)
+                {
+                    ScrapeArtwork(games, CurrentScraperType, CurrentScrapeSource);
+                }
+                else if(CurrentScraperType == ScraperType.Banner)
+                {
+                    ScrapeBanner(games, CurrentScraperType, CurrentScrapeSource);
+                }
+                else if(CurrentScraperType == ScraperType.Boxart)
+                {
+                    ScrapeBoxart(games, CurrentScraperType, CurrentScrapeSource);
+                }
+                else if(CurrentScraperType == ScraperType.Logo)
+                {
+                    ScrapeLogo(games, CurrentScraperType, CurrentScrapeSource);
+                }
+                else if(CurrentScraperType == ScraperType.Metadata)
                 {
                    if(CurrentScrapeSource == ScraperSource.IGDB)
                     {
-                        if(games.IGDBID <1)
-                        {
-                            var resultsearch = _dialogService.SearchSteamGridDBByName(games.Name, CurrentScrapeSource);
-                            if(resultsearch != null)
-                            {
-                                games.IGDBID = resultsearch.id;
-                                games.Name = resultsearch.name;
-                            }                            
-                        }
-                        if(games.IGDBID >0)
-                        {
-                            var igdbData = _iGDBService.GetDetailsGame(games.IGDBID);
-                            games.Name = igdbData.name;
-                            if (!string.IsNullOrEmpty(igdbData.storyline))
-                                games.Desc = igdbData.storyline;
-                            else if (!string.IsNullOrEmpty(igdbData.summary))
-                                games.Desc = igdbData.summary;
-
-                            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-                            dtDateTime = dtDateTime.AddSeconds(igdbData.first_release_date).ToLocalTime();
-                            games.Year = dtDateTime.Year.ToString();
-
-                            var igdbgenres = _iGDBService.GetGenresByGameId(games.IGDBID);
-                            games.Genre = string.Join(", ", igdbgenres.Select(x => x.name));
-
-                            var involved = _iGDBService.GetInvolvedCompanyByGameId(games.IGDBID);
-                            var devs = _iGDBService.GetDevByGameId(involved);
-                            var publiser = _iGDBService.GetPublishersByGameId(involved);
-
-                            games.Dev = string.Join(", ", devs.Select(x=>x.name));
-                            games.Editeur = string.Join(", ", publiser.Select(x => x.name));
-
-                        }
+                        ScrapeIGDBMetadata(games);
                     }
-                   if(CurrentScrapeSource == ScraperSource.Screenscraper)
+                    if (CurrentScrapeSource == ScraperSource.Screenscraper)
                     {
-                        if (games.ScreenScraperID < 1)
-                        {
-                            var resultsearch = _dialogService.SearchSteamGridDBByName(games.Name, CurrentScrapeSource);
-                            if (resultsearch != null)
-                            {
-                                games.ScreenScraperID = resultsearch.id;
-                                games.Name = resultsearch.name;
-                            }
-                        }
-                        if (games.IGDBID > 0)
-                        {
-                            var SCSPdata = _screenScraperService.GetJeuxDetail(games.ScreenScraperID);
-                            games.Name = SCSPdata.noms.FirstOrDefault(x => x.region == "eu").text;
-                            games.Year = SCSPdata.dates.FirstOrDefault(x=>x.region == "eu").text;
-                            games.Editeur = SCSPdata.editeur.text;
-                            games.Dev = SCSPdata.developpeur.text;
-                            games.Desc = SCSPdata.synopsis.FirstOrDefault(x => x.langue == "fr").text;
-                            var genresoffgame = SCSPdata.genres.FirstOrDefault(); ;
-                            games.Genre = genresoffgame.noms.FirstOrDefault(x =>x.langue=="fr").text;
-                        }
+                        ScrapeScreenScraperMetadata(games);
+                    }
+                }
+                else if(CurrentScraperType == ScraperType.Video)
+                {
+                   if(CurrentScrapeSource == ScraperSource.IGDB)
+                    {
+                        //ScrapeIGDBMetadata(games);
+                    }
+                    if (CurrentScrapeSource == ScraperSource.Screenscraper)
+                    {
+                        ScrapeVideoScreenScraper(games);
                     }
                 }
                 _databaseService.SaveUpdate();
-                ReloadData();
-            }            
+            }
+            ReloadData();
         }
+
+        private void ScrapeScreenScraperMetadata(GameRom games)
+        {
+            if (games.ScreenScraperID < 1)
+            {
+                var resultsearch = _dialogService.SearchSteamGridDBByName(games.Name, ScraperSource.Screenscraper);
+                if (resultsearch != null)
+                {
+                    games.ScreenScraperID = resultsearch.id;
+                    games.Name = resultsearch.name;
+                }
+            }
+            if (games.ScreenScraperID > 0)
+            {
+                var SCSPdata = _screenScraperService.GetJeuxDetail(games.ScreenScraperID);
+                /*games.Name*/ var name = SCSPdata.noms.FirstOrDefault(x => x.region == "eu" || x.region == "fr");
+                if (name != null)
+                    games.Name = name.text;
+                else
+                    games.Name = SCSPdata.noms.FirstOrDefault(x => x.region == "wor").text;
+                /*games.Year*/
+                if (SCSPdata.dates != null)
+                {
+                    var year = SCSPdata.dates.FirstOrDefault(x => x.region == "eu" || x.region == "fr");
+                    if (year != null)
+                        games.Year = year.text;
+                    else
+                        games.Year = SCSPdata.dates.FirstOrDefault(x => x.region == "wor").text; 
+                }
+                if (SCSPdata.editeur != null)
+                {
+                    games.Editeur = SCSPdata.editeur.text; 
+                }
+                if (SCSPdata.developpeur != null)
+                {
+                    games.Dev = SCSPdata.developpeur.text; 
+                }
+                if (SCSPdata.synopsis != null)
+                {
+                    games.Desc = SCSPdata.synopsis.FirstOrDefault(x => x.langue == "fr").text; 
+                }
+                if (SCSPdata.genres != null)
+                {
+                    var genresoffgame = SCSPdata.genres.FirstOrDefault();
+                    if (genresoffgame.noms != null)
+                    {
+                        games.Genre = genresoffgame.noms.FirstOrDefault(x => x.langue == "fr").text;
+                    }
+                }
+            }
+        }
+        private void ScrapeVideoScreenScraper(GameRom games)
+        {
+            if (games.ScreenScraperID < 1)
+            {
+                var resultsearch = _dialogService.SearchSteamGridDBByName(games.Name, ScraperSource.Screenscraper);
+                if (resultsearch != null)
+                {
+                    games.ScreenScraperID = resultsearch.id;
+                    games.Name = resultsearch.name;
+                }
+            }
+            if (games.ScreenScraperID > 0)
+            {
+                var SCSPdata = _screenScraperService.GetJeuxDetail(games.ScreenScraperID);
+                var SCSPVideo = SCSPdata.medias.FirstOrDefault(x => x.type == "video");
+                if(SCSPVideo != null)
+                {
+                    var videoURL = SCSPVideo.url;
+                    games.Video = videoURL;
+                    var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Video);
+                    var targetfile = $"{targetfolder}{Path.GetExtension(".mp4")}";
+                    _gameService.DownloadImgData(games.Video, targetfile);
+                    games.Video = targetfile;
+                }
+            }
+        }
+        private void ScrapeIGDBMetadata(GameRom games)
+        {
+            if (games.IGDBID < 1)
+            {
+                var resultsearch = _dialogService.SearchSteamGridDBByName(games.Name, ScraperSource.IGDB);
+                if (resultsearch != null)
+                {
+                    games.IGDBID = resultsearch.id;
+                    games.Name = resultsearch.name;
+                }
+            }
+            if (games.IGDBID > 0)
+            {
+                var igdbData = _iGDBService.GetDetailsGame(games.IGDBID);
+                games.Name = igdbData.name;
+                if (!string.IsNullOrEmpty(igdbData.storyline))
+                    games.Desc = igdbData.storyline;
+                else if (!string.IsNullOrEmpty(igdbData.summary))
+                    games.Desc = igdbData.summary;
+
+                System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+                dtDateTime = dtDateTime.AddSeconds(igdbData.first_release_date).ToLocalTime();
+                games.Year = dtDateTime.Year.ToString();
+
+                var igdbgenres = _iGDBService.GetGenresByGameId(games.IGDBID);
+                games.Genre = string.Join(", ", igdbgenres.Select(x => x.name));
+
+                var involved = _iGDBService.GetInvolvedCompanyByGameId(games.IGDBID);
+                var devs = _iGDBService.GetDevByGameId(involved);
+                var publiser = _iGDBService.GetPublishersByGameId(involved);
+
+                games.Dev = string.Join(", ", devs.Select(x => x.name));
+                games.Editeur = string.Join(", ", publiser.Select(x => x.name));
+            }
+        }
+
+        private void ScrapeLogo(GameRom games, ScraperType _currentScraperType, ScraperSource _currentScrapeSource)
+        {
+            var result = _dialogService.SearchImgInSteamGridDB(games, _currentScraperType, _currentScrapeSource);
+            if (result != null)
+            {
+                games.Logo = result;
+                var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Logo);
+                var targetfile = $"{targetfolder}{Path.GetExtension(games.Logo)}";
+                _gameService.DownloadImgData(games.Logo, targetfile);
+                games.Logo = targetfile;
+            }
+        }
+
+        private void ScrapeBoxart(GameRom games, ScraperType _currentScraperType, ScraperSource _currentScrapeSource)
+        {
+            var result = _dialogService.SearchImgInSteamGridDB(games, _currentScraperType, _currentScrapeSource);
+            if (result != null)
+            {
+                games.Boxart = result;
+                var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Boxart);
+                var targetfile = $"{targetfolder}{Path.GetExtension(games.Boxart)}";
+                _gameService.DownloadImgData(games.Boxart, targetfile);
+                games.Boxart = targetfile;
+            }
+        }
+
+        private void ScrapeBanner(GameRom games, ScraperType _currentScraperType, ScraperSource _currentScrapeSource)
+        {
+            var result = _dialogService.SearchImgInSteamGridDB(games, _currentScraperType, _currentScrapeSource);
+            if (result != null)
+            {
+                games.Fanart = result;
+                var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Banner);
+                var targetfile = $"{targetfolder}{Path.GetExtension(games.Fanart)}";
+                _gameService.DownloadImgData(games.Fanart, targetfile);
+                games.Fanart = targetfile;
+            }
+        }
+
+        private void ScrapeArtwork(GameRom games, ScraperType _currentScraperType, ScraperSource _currentScrapeSource)
+        {
+            var result = _dialogService.SearchImgInSteamGridDB(games, _currentScraperType, _currentScrapeSource);
+            if (result != null)
+            {
+                games.Screenshoot = result;
+                var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.ArtWork);
+                var targetfile = $"{targetfolder}{Path.GetExtension(games.Screenshoot)}";
+                _gameService.DownloadImgData(games.Screenshoot, targetfile);
+                games.Screenshoot = targetfile;
+            }
+        }
+
         private void GetSystemeIMG()
         {
             //var sysSCSPList = await _screenScraperService.GetSSCPSystemes();

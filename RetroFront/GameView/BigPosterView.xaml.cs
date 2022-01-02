@@ -15,11 +15,12 @@ using System.Windows.Shapes;
 namespace RetroFront.GameView
 {
     /// <summary>
-    /// Logique d'interaction pour CarrouselBoxView.xaml
+    /// Logique d'interaction pour BigPosterView.xaml
     /// </summary>
-    public partial class CarrouselBoxView : UserControl
+    public partial class BigPosterView : UserControl
     {
-        public CarrouselBoxView()
+        private double CentralPix = -1; 
+        public BigPosterView()
         {
             InitializeComponent();
         }
@@ -31,10 +32,14 @@ namespace RetroFront.GameView
         {
             try
             {
-                int itemwidht = 110;
+
+                var splitbyheight = this.ActualWidth / 8;
+                CentralPix = 710;
+                int itemwidht = 355;
                 var previousmargin = listicon.Margin;
                 var nextmargin = previousmargin;
-                nextmargin.Left = -itemwidht * listicon.SelectedIndex;
+                //nextmargin.Left = -itemwidht * listicon.SelectedIndex;
+                nextmargin.Left = CentralPix - (listicon.SelectedIndex * itemwidht);
                 var sb = new Storyboard();
                 var ta = new ThicknessAnimation();
                 ta.BeginTime = new TimeSpan(0);

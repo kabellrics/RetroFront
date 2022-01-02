@@ -15,26 +15,29 @@ using System.Windows.Shapes;
 namespace RetroFront.GameView
 {
     /// <summary>
-    /// Logique d'interaction pour CarrouselBoxView.xaml
+    /// Logique d'interaction pour ModernView.xaml
     /// </summary>
-    public partial class CarrouselBoxView : UserControl
+    public partial class ModernView : UserControl
     {
-        public CarrouselBoxView()
+        public ModernView()
         {
             InitializeComponent();
         }
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            listicon.Focus();
-        }
+        private double itemwidht = 400;
+        private double CentralPix = -1;
         private void listicon_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                int itemwidht = 110;
+                CentralPix = 200;
                 var previousmargin = listicon.Margin;
                 var nextmargin = previousmargin;
-                nextmargin.Left = -itemwidht * listicon.SelectedIndex;
+                //nextmargin.Left = CentralPix - (listicon.SelectedIndex * itemwidht);
+
+                double divbyFive = listicon.SelectedIndex / 3;
+                int ligneindex = Convert.ToInt32(Math.Floor(divbyFive));
+                nextmargin.Left = CentralPix - (ligneindex * (itemwidht + 50));
+
                 var sb = new Storyboard();
                 var ta = new ThicknessAnimation();
                 ta.BeginTime = new TimeSpan(0);
@@ -56,7 +59,26 @@ namespace RetroFront.GameView
 
         private void listicon_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Focus();
+            listicon.Focus();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            listicon.Focus();
+        }
+
+        private void WrapPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            try
+            {
+                var wrap = sender as WrapPanel;
+                wrap.ItemHeight = wrap.ActualHeight / 3.3;
+                wrap.ItemWidth = wrap.ItemHeight * 2;
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
         }
     }
 }

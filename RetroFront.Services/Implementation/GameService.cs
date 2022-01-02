@@ -147,6 +147,14 @@ namespace RetroFront.Services.Implementation
                 //    return Path.Combine(imgfolder, "wheel", $"{game.Name}");
                 return Path.Combine(imgfolder, "wheel", $"{Guid.NewGuid().ToString()}");
             }
+            else if (sGDBType == ScraperType.Video)
+            {
+                //if (game.SteamID > 0)
+                //    return Path.Combine(imgfolder, "wheel", $"{game.SteamID}");
+                //else
+                //    return Path.Combine(imgfolder, "wheel", $"{game.Name}");
+                return Path.Combine(imgfolder, "videos", $"{Guid.NewGuid().ToString()}");
+            }
             else
             {
                 return string.Empty;

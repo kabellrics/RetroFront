@@ -21,11 +21,13 @@ namespace RetroFront.GameView
         public FanartView()
         {
             InitializeComponent();
+            this.Focus();
             flip.Focus();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            this.Focus();
             flip.Focus();
         }
     }

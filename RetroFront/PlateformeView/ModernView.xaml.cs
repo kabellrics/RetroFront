@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -12,29 +13,55 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RetroFront.GameView
+namespace RetroFront.PlateformeView
 {
     /// <summary>
-    /// Logique d'interaction pour CarrouselBoxView.xaml
+    /// Logique d'interaction pour ModernView.xaml
     /// </summary>
-    public partial class CarrouselBoxView : UserControl
+    public partial class ModernView : UserControl
     {
-        public CarrouselBoxView()
+        public ModernView()
         {
             InitializeComponent();
         }
+        private double itemwidht=400;
+        private double CentralPix = -1;
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             listicon.Focus();
         }
+        private void listicon_Loaded(object sender, RoutedEventArgs e)
+        {
+            listicon.Focus();
+        }
+
+        private void WrapPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            try
+            {
+                var wrap = sender as WrapPanel;
+                wrap.ItemHeight = wrap.ActualHeight / 3.3;
+                wrap.ItemWidth = wrap.ItemHeight * 2;
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
+        }
+
         private void listicon_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                int itemwidht = 110;
+                CentralPix = 200;
                 var previousmargin = listicon.Margin;
                 var nextmargin = previousmargin;
-                nextmargin.Left = -itemwidht * listicon.SelectedIndex;
+                //nextmargin.Left = CentralPix - (listicon.SelectedIndex * itemwidht);
+
+                double divbyFive = listicon.SelectedIndex / 3;
+                int ligneindex = Convert.ToInt32(Math.Floor(divbyFive));
+                nextmargin.Left = CentralPix - (ligneindex * (itemwidht + 50));
+
                 var sb = new Storyboard();
                 var ta = new ThicknessAnimation();
                 ta.BeginTime = new TimeSpan(0);
@@ -54,9 +81,5 @@ namespace RetroFront.GameView
             }
         }
 
-        private void listicon_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.Focus();
-        }
     }
 }

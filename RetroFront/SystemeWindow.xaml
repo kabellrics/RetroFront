@@ -43,6 +43,9 @@
         <DataTemplate x:Key="Bezel">
             <views:BezelView></views:BezelView>
         </DataTemplate>
+        <DataTemplate x:Key="Modern">
+            <views:ModernView></views:ModernView>
+        </DataTemplate>
         <Style x:Key="MyContentStyle" TargetType="ContentPresenter">
             <Setter Property="ContentTemplate" Value="{StaticResource BigLogo}"/>
             <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=listicon}"/>
@@ -65,6 +68,10 @@
                 </DataTrigger>
                 <DataTrigger Binding="{Binding SysDisplay}" Value="{x:Static enum:SysDisplay.Bezel}">
                     <Setter Property="ContentTemplate" Value="{StaticResource Bezel}"/>
+                    <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=listicon}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding SysDisplay}" Value="{x:Static enum:SysDisplay.Modern}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource Modern}"/>
                     <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=listicon}"/>
                 </DataTrigger>
             </Style.Triggers>

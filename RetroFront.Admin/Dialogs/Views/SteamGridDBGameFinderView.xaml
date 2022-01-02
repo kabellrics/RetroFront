@@ -35,6 +35,8 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Nom" DisplayMemberBinding="{Binding name}"></GridViewColumn>
+                    <!--<GridViewColumn Header="Année" DisplayMemberBinding="{Binding year}"></GridViewColumn>-->
+                    <!--<GridViewColumn Header="Plateforme" DisplayMemberBinding="{Binding plateforme}"></GridViewColumn>-->
                     <!--<GridViewColumn Header="Nom" DisplayMemberBinding="{Binding Name}"></GridViewColumn>-->
                 </GridView>
             </ListView.View>

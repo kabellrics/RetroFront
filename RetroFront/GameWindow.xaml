@@ -49,11 +49,14 @@
         <DataTemplate x:Key="WallBox">
             <views:BoxWallView/>
         </DataTemplate>
-        <DataTemplate x:Key="WallBanner">
-            <views:BannerWallView/>
-        </DataTemplate>
         <DataTemplate x:Key="WallLogo">
             <views:LogoWallView/>
+        </DataTemplate>
+        <DataTemplate x:Key="Modern">
+            <views:ModernView/>
+        </DataTemplate>
+        <DataTemplate x:Key="BigBox">
+            <views:BigPosterView/>
         </DataTemplate>
         <Style x:Key="MyContentStyle" TargetType="ContentPresenter">
             <Setter Property="ContentTemplate" Value="{StaticResource FanartView}"/>
@@ -73,11 +76,14 @@
                 <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.WallBox}">
                     <Setter Property="ContentTemplate" Value="{StaticResource WallBox}"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.WallBanner}">
-                    <Setter Property="ContentTemplate" Value="{StaticResource WallBanner}"/>
-                </DataTrigger>
                 <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.WallLogo}">
                     <Setter Property="ContentTemplate" Value="{StaticResource WallLogo}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.Modern}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource Modern}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.BigBox}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource BigBox}"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>

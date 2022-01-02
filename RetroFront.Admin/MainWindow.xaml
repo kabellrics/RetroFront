@@ -229,6 +229,21 @@
                                                        CommandParameter="1"></i:InvokeCommandAction>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
+                            <MenuItem Header="Full Data" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OldSystemes}"
+                              DisplayMemberPath="Name">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SubmenuOpened">
+                                        <i:InvokeCommandAction Command="{Binding  DataContext.ChangeScrapeTypeCommand, ElementName=myWindow}"
+                                                       CommandParameter="0"></i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <MenuItem.ItemContainerStyle>
+                                    <Style TargetType="MenuItem">
+                                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=MenuItem},Path=DataContext.ScrapeSystemeCommand}"></Setter>
+                                        <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                                    </Style>
+                                </MenuItem.ItemContainerStyle>
+                            </MenuItem>
                             <MenuItem Header="Boxart" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OnlySystemes}"
                               DisplayMemberPath="Name">
                                 <i:Interaction.Triggers>
@@ -297,6 +312,21 @@
                                                        CommandParameter="0"></i:InvokeCommandAction>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
+                            <MenuItem Header="Full Data" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OldSystemes}"
+                              DisplayMemberPath="Name">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SubmenuOpened">
+                                        <i:InvokeCommandAction Command="{Binding  DataContext.ChangeScrapeTypeCommand, ElementName=myWindow}"
+                                                       CommandParameter="0"></i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <MenuItem.ItemContainerStyle>
+                                    <Style TargetType="MenuItem">
+                                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=MenuItem},Path=DataContext.ScrapeSystemeCommand}"></Setter>
+                                        <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                                    </Style>
+                                </MenuItem.ItemContainerStyle>
+                            </MenuItem>
                             <MenuItem Header="Metadata (ENG)" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OnlySystemes}"
                               DisplayMemberPath="Name">
                                 <i:Interaction.Triggers>
@@ -373,6 +403,12 @@
                                                        CommandParameter="0"></i:InvokeCommandAction>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
+                                <MenuItem.ItemContainerStyle>
+                                    <Style TargetType="MenuItem">
+                                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=MenuItem},Path=DataContext.ScrapeSystemeCommand}"></Setter>
+                                        <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                                    </Style>
+                                </MenuItem.ItemContainerStyle>
                             </MenuItem>
                             <MenuItem Header="Metadata (FR)" Style="{DynamicResource MaterialDesignMenuItem}" ItemsSource="{Binding OldSystemes}"
                               DisplayMemberPath="Name">

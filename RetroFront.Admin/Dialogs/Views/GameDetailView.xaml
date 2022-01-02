@@ -303,11 +303,45 @@
                     <RowDefinition Height="2*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <MediaElement Stretch="Fill" Source="{Binding Video}" Grid.Row="0" ></MediaElement>
-                <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5" Command="{Binding}">
+                <ComboBox Grid.Row="1" Margin="5" Style="{DynamicResource MaterialDesignFloatingHintComboBox}">
+                    <ComboBoxItem IsSelected="True">
+                        <Viewbox Stretch="Uniform">
+                            <Label Content="Changer le Fanart" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                        </Viewbox>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5"
+                            Command="{Binding SGDBFanartFinderCommand}"
+                                CommandParameter="{x:Static enum:ScraperSource.IGDB}">
+                            <Viewbox Stretch="Uniform">
+                                <Label Content="IGDB" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                            </Viewbox>
+                        </Button>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5"
+                            Command="{Binding SGDBFanartFinderCommand}"
+                                CommandParameter="{x:Static enum:ScraperSource.Screenscraper}">
+                            <Viewbox Stretch="Uniform">
+                                <Label Content="Screenscraper" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                            </Viewbox>
+                        </Button>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5"
+                            Command="{Binding SGDBFanartFinderCommand}"
+                                CommandParameter="{x:Static enum:ScraperSource.Local}">
+                            <Viewbox Stretch="Uniform">
+                                <Label Content="Fichier Local" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                            </Viewbox>
+                        </Button>
+                    </ComboBoxItem>
+                </ComboBox>
+                <!--<Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5" Command="{Binding}">
                     <Viewbox Stretch="Uniform">
                         <Label Content="Changer la vidéo" Style="{DynamicResource MaterialDesignLabel}"></Label>
                     </Viewbox>
-                </Button>
+                </Button>-->
             </Grid>
         </Grid>
     </Grid>

@@ -86,11 +86,14 @@ namespace RetroFront.Services.Implementation
             var result = response.Data.response.jeux;
             foreach(var game in result)
             {
-                string gamename = game.noms.FirstOrDefault(x => x.region == "eu")?.text;
-                if (gamename == null)
-                    gamename = game.noms.FirstOrDefault(x => x.region == "wor")?.text;
-                string gameSCSPID = game.id;
-                yield return new GameRom() { ScreenScraperID = int.Parse(gameSCSPID), Name = gamename };
+                if (game.noms != null)
+                {
+                    string gamename = game.noms.FirstOrDefault(x => x.region == "eu")?.text;
+                    if (gamename == null)
+                        gamename = game.noms.FirstOrDefault(x => x.region == "wor")?.text;
+                    string gameSCSPID = game.id;
+                    yield return new GameRom() { ScreenScraperID = int.Parse(gameSCSPID), Name = gamename}; 
+                }
             }
         }
 

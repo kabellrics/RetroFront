@@ -61,6 +61,14 @@ namespace RetroFront.Admin.Dialogs.ViewModel
                 return _SGDBFanartFinderCommand ?? (_SGDBFanartFinderCommand = new RelayCommand<ScraperSource>(SGDBFanartFinder));
             }
         }
+        private ICommand _SGDBVideoFinderCommand;
+        public ICommand SGDBVideoFinderCommand
+        {
+            get
+            {
+                return _SGDBVideoFinderCommand ?? (_SGDBVideoFinderCommand = new RelayCommand<ScraperSource>(SGDBVideoFinder));
+            }
+        }
 
         #region Properties
         private int _IsResolveSGDB;
@@ -329,6 +337,23 @@ namespace RetroFront.Admin.Dialogs.ViewModel
                 }
             }
         }
+        private void SGDBVideoFinder(ScraperSource CurrentScrapeSource)
+        {
+            if (CurrentScrapeSource == ScraperSource.Local)
+            {
+                var strimg = dialogService.OpenUniqueFileDialog($"Fichier Vidéo (*.mp4;*.avi)|*.mp4;*.avi");
+                if (strimg != null)
+                    Video = strimg;
+            }
+            else if (CurrentScrapeSource == ScraperSource.Screenscraper) { }
+            {
+                var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Video, CurrentScrapeSource);
+                if (resultimg != null)
+                {
+                    Video = resultimg;
+                }
+            }
+        }
 
         public void CloseDialogWithResult(Window dialog, bool result)
         {
@@ -359,6 +384,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             GameCurrent.Fanart = Fanart;
             GameCurrent.Logo = Logo;
             GameCurrent.Screenshoot = Screenshoot;
+            GameCurrent.Name = Name;
             CloseDialogWithResult(parameter as Window, true);
         }
     }

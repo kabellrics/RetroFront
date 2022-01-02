@@ -11,6 +11,12 @@
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    <UserControl.Background>
+        <ImageBrush ImageSource="{Binding BCKImg}" Stretch="Fill" TileMode="None"></ImageBrush>
+    </UserControl.Background>
     <UserControl.InputBindings>
         <KeyBinding Key="Left" Command="{Binding GoDownCommand}"></KeyBinding>
         <KeyBinding Key="Right" Command="{Binding GoUpCommand}"></KeyBinding>
@@ -21,122 +27,94 @@
     </UserControl.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="4*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Border Grid.Column="0" Grid.ColumnSpan="2">
-            <mah:FlipView ItemsSource="{Binding Games}" IsBannerEnabled="False" IsNavigationEnabled="False"
-            SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}" NavigationButtonsPosition="Inside" MouseHoverBorderEnabled="False">
-                <mah:FlipView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"></ColumnDefinition>
-                                <ColumnDefinition Width="4*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Image Source="{Binding Sxreenshoot}" Grid.Column="0" Grid.ColumnSpan="2" Stretch="Uniform" Opacity="0.6">
-                                <Image.Effect>
-                                    <BlurEffect Radius="0.6"></BlurEffect>
-                                </Image.Effect>
-                            </Image>
-                            <Grid Grid.Column="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="1*"></RowDefinition>
-                                    <RowDefinition Height="5*"></RowDefinition>
-                                    <RowDefinition Height="1*"></RowDefinition>
-                                    <RowDefinition Height="4*"></RowDefinition>
-                                    <RowDefinition Height="1*"></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Image Grid.Row="1" Source="{Binding Boxart}" Grid.Column="0" Stretch="Uniform" Margin="10"></Image>
-                                <MediaElement Stretch="Uniform" Source="{Binding Video}" Grid.Row="1" Grid.Column="1" Margin="10"></MediaElement>
-                                <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding Desc}" Style="{DynamicResource MaterialDesignBody1TextBlock}" TextAlignment="Justify" TextWrapping="WrapWithOverflow" FontSize="30"></TextBlock>
-                            </Grid>
-                        </Grid>
-                    </DataTemplate>
-                </mah:FlipView.ItemTemplate>
-            </mah:FlipView>
-        </Border>
-        <Grid Grid.Column="0" Background="Transparent">
-            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden" CanContentScroll="True" HorizontalAlignment="Left">
-                <ListView x:Name="listicon" SelectionMode="Single" Style="{DynamicResource MaterialDesignListView}" HorizontalAlignment="Left"
-                         HorizontalContentAlignment="Left" Loaded="listicon_Loaded"
-                          IsSynchronizedWithCurrentItem="True" Background="Transparent" Padding="0" SelectionChanged="listicon_SelectionChanged"
-                         ItemsSource="{Binding Games}" SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}">
-                    <ListView.InputBindings>
-                        <KeyBinding Key="Space" Command="{Binding OpenDisplayCommand}"></KeyBinding>
-                        <KeyBinding Key="Return" Command="{Binding CloseOrGoCommand}"></KeyBinding>
-                    </ListView.InputBindings>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Width" Value="320"/>
-                            <Setter Property="Height" Value="240"/>
-                            <Setter Property="HorizontalAlignment" Value="Left"/>
-                            <Setter Property="Template">
+        <ListView x:Name="listicon" Grid.Column="0" SelectionMode="Single" Style="{DynamicResource MaterialDesignListView}"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                         IsSynchronizedWithCurrentItem="True" Background="Transparent" Loaded="listicon_Loaded"
+                    ItemsSource="{Binding Games}" SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}" SelectionChanged="listicon_SelectionChanged"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" IsItemsHost="True" SizeChanged="WrapPanel_SizeChanged"></WrapPanel>
+                    <!--<UniformGrid Columns="5"/>-->
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.InputBindings>
+                <KeyBinding Key="Space" Command="{Binding OpenDisplayCommand}"></KeyBinding>
+                <KeyBinding Key="Return" Command="{Binding CloseOrGoCommand}"></KeyBinding>
+            </ListView.InputBindings>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Border>
+                            <Image Source="{Binding Boxart}" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Image>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Margin" Value="25"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Border x:Name="RootBorder">
+                                    <ContentPresenter/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="RootBorder" Property="Background" Value="Transparent"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Effect">
                                 <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                        <Border x:Name="RootBorder">
-                                            <ContentPresenter/>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsSelected" Value="True">
-                                                <Setter TargetName="RootBorder" Property="Background" Value="Transparent"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
+                                    <DropShadowEffect ShadowDepth="0" Color="White" Opacity="0.8" BlurRadius="100"/>
                                 </Setter.Value>
                             </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="BorderBrush" Value="Transparent"/>
-                                    <Setter Property="BorderThickness" Value="0"/>
-                                </Trigger>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="BorderBrush" Value="Transparent"/>
-                                    <Setter Property="BorderThickness" Value="0"/>
-                                    <Trigger.EnterActions>
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="Width" From="320" To="640"/>
-                                                <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="Height" From="240" To="320"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </Trigger.EnterActions>
-                                    <Trigger.ExitActions>
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="Width" From="640" To="320"/>
-                                                <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="Height" From="320" To="240"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </Trigger.ExitActions>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Grid Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <Border>
-                                        <Image Source="{Binding Logo}" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Image>
-                                    </Border>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Vertical"></WrapPanel>
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                </ListView>
-            </ScrollViewer>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+        <Grid Grid.Column="1" Margin="50">
+            <Grid.Background>
+                <SolidColorBrush Color="Black" Opacity="0.7"></SolidColorBrush>
+            </Grid.Background>
+            <Grid.RowDefinitions>
+            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="1" Visibility="{Binding ShowDetail, 
+                             Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Image Source="{Binding CurerntGameVM.Logo}" Stretch="Uniform" Margin="10"
+                    xf:Animations.Primary="{xf:Animate BasedOn={StaticResource ScaleFromRight}, Delay=250,Event=None}"
+                    xf:Animations.PrimaryBinding="{Binding AnimeDetail}"></Image>
+            </Border>
+            <Border Grid.Row="0" Visibility="{Binding ShowDetail, 
+                             Converter={StaticResource BooleanToVisibilityConverter}}">
+                <MediaElement Stretch="Uniform" Source="{Binding Path=CurerntGameVM.Video}" Margin="10"
+                    xf:Animations.Primary="{xf:Animate BasedOn={StaticResource ScaleFromTop}, Delay=250,Event=None}"
+                    xf:Animations.PrimaryBinding="{Binding AnimeDetail}"></MediaElement>
+            </Border>
+            <Border Grid.Row="2" Visibility="{Binding ShowDetail, 
+                             Converter={StaticResource BooleanToVisibilityConverter}}">
+                <TextBlock Text="{Binding Path=CurerntGameVM.Desc}" Style="{DynamicResource MaterialDesignTextBlock}"
+                       Foreground="WhiteSmoke" TextAlignment="Justify" TextWrapping="WrapWithOverflow" FontSize="30"
+                    xf:Animations.Primary="{xf:Animate BasedOn={StaticResource ScaleFromBottom}, Delay=250,Event=None}"
+                    xf:Animations.PrimaryBinding="{Binding AnimeDetail}"></TextBlock>
+            </Border>
         </Grid>
+        <!--xf:Animations.Primary="{xf:Animate BasedOn={StaticResource ScaleFromRight}, Delay=250,Event=DataContextChanged}"-->
     </Grid>
 </UserControl>

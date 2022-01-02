@@ -20,6 +20,7 @@ namespace RetroFront.GameView
     public partial class BoxDetailView : UserControl
     {
         private double CentralPix = -1;
+        private double itemheight;
         public BoxDetailView()
         {
             InitializeComponent();
@@ -33,13 +34,12 @@ namespace RetroFront.GameView
         {
             try
             {
-                var splitbyheight = this.ActualHeight / 12;
-                CentralPix = splitbyheight * 6;
-                int itemheight = (int)splitbyheight;
+                CentralPix = 0;
                 var previousmargin = listicon.Margin;
                 var nextmargin = previousmargin;
-                //nextmargin.Top = -itemheight * listicon.SelectedIndex;
-                nextmargin.Top = CentralPix - (listicon.SelectedIndex * itemheight);
+                double divbyFive = listicon.SelectedIndex / 5;
+                int ligneindex = Convert.ToInt32(Math.Floor(divbyFive));
+                nextmargin.Top = CentralPix - (ligneindex * itemheight);
                 var sb = new Storyboard();
                 var ta = new ThicknessAnimation();
                 ta.BeginTime = new TimeSpan(0);
@@ -52,6 +52,20 @@ namespace RetroFront.GameView
 
                 sb.Children.Add(ta);
                 sb.Begin(this);
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
+        }
+
+        private void WrapPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            try
+            {
+                var wrap = sender as WrapPanel;
+                wrap.ItemWidth = wrap.ActualWidth / 5.1;
+                itemheight = wrap.ItemHeight = wrap.ItemWidth * 1.8;
             }
             catch (Exception ex)
             {

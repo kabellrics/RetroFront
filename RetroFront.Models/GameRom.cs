@@ -28,5 +28,6 @@ namespace RetroFront.Models
         public string TitleScreen { get; set; }
         public bool IsDuplicate { get; set; }
         public int EmulatorID { get; set; }
+        public string Plateforme { get; set; }
     }
 }
