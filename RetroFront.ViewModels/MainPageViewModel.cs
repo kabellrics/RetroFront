@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using VideoLibrary;
 
 namespace RetroFront.ViewModels
 {
@@ -739,20 +740,16 @@ namespace RetroFront.ViewModels
                 ReloadData();
             }
         }
-        private void ShowDetailGameGame(GameViewModel obj)
+        private async void ShowDetailGameGame(GameViewModel obj)
         {
             var oldgamebox = obj.Game.Boxart;
             var oldgamefanart = obj.Game.Fanart;
             var oldgamescreen = obj.Game.Screenshoot;
             var oldgamelogo = obj.Game.Logo;
-            var oldgamename = obj.Game.Name;
+            var oldgamevideo = obj.Game.Video;
             var game = _dialogService.ShowGameDetail(obj.Game);
             if (game != null)
             {
-                if(oldgamename != game.Name)
-                {
-                    
-                }
                 try
                 {
                     if (game.Boxart != oldgamebox)
@@ -822,9 +819,48 @@ namespace RetroFront.ViewModels
                 {
                     //   throw;
                 }
+                try 
+                {
+                    if(game.Video != oldgamevideo)
+                    {
+                        if (game.Video.Contains("youtube"))
+                        {
+                            var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.Video);
+                            var targetfile = $"{targetfolder}{Path.GetExtension(".mp4")}";
+                            var youTube = YouTube.Default;
+                            var video = youTube.GetVideo(game.Video.Replace("embed/", "watch?v="));
+                            File.WriteAllBytes(targetfile, video.GetBytes());
+                            //await youtube.Videos.DownloadAsync(, targetfile);
+                            game.Video = targetfile;
+                        }
+                        else if (File.Exists(game.Video))
+                        {
+                            var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.Video);
+                            var targetfile = $"{targetfolder}{Path.GetExtension(game.Video)}";
+                            Directory.CreateDirectory(Path.GetDirectoryName(targetfile));
+                            var fstream = File.Create(targetfile);
+                            fstream.Close();
+                            fstream.Dispose();
+                            _gameService.DownloadImgData(game.Video, targetfile);
+                            game.Video = targetfile;
+                        }
+                        else
+                        {
+                            var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.Video);
+                            var targetfile = $"{targetfolder}{Path.GetExtension(".mp4")}";
+                            _gameService.DownloadImgData(game.Video, targetfile);
+                            game.Video = targetfile; 
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //   throw;
+                }
                 var duplicates = _databaseService.GetGames().Where(x => x.Path == game.Path);
                 foreach(var duplicate in duplicates)
                 {
+                    duplicate.Video = game.Video;
                     duplicate.Boxart = game.Boxart;
                     duplicate.Fanart = game.Fanart;
                     duplicate.Screenshoot = game.Screenshoot;
@@ -847,11 +883,11 @@ namespace RetroFront.ViewModels
                 {
                     if(CurrentScrapeSource == ScraperSource.Screenscraper)
                     {
+                        ScrapeScreenScraperMetadata(games);
                         ScrapeArtwork(games, ScraperType.ArtWork, ScraperSource.Screenscraper);
                         ScrapeBanner(games, ScraperType.Banner, ScraperSource.Screenscraper);
                         ScrapeBoxart(games, ScraperType.Boxart, ScraperSource.Screenscraper);
                         ScrapeLogo(games, ScraperType.Logo, ScraperSource.Screenscraper);
-                        ScrapeScreenScraperMetadata(games);
                         ScrapeVideoScreenScraper(games);
                     }
                     else if(CurrentScrapeSource == ScraperSource.SGDB)
@@ -987,6 +1023,10 @@ namespace RetroFront.ViewModels
                     games.Video = targetfile;
                 }
             }
+        }
+        private void ScrapeIGDBVideo(GameRom games)
+        {
+
         }
         private void ScrapeIGDBMetadata(GameRom games)
         {

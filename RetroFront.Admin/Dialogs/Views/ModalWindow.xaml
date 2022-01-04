@@ -56,6 +56,9 @@
         <DataTemplate DataType="{x:Type vms:AddStandaloneViewModel}">
             <vm:AddStandaloneView></vm:AddStandaloneView>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:VideoFinderSearchViewModel}">
+            <vm:SearchVideoView></vm:SearchVideoView>
+        </DataTemplate>
     </mah:MetroWindow.Resources>
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>

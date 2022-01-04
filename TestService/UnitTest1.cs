@@ -63,5 +63,12 @@ namespace TestService
             var result = IGDBService.GetArtworksByGameId(19560);// .GetGameByName("Lego");
             Assert.AreNotEqual(null, result);
         }
+        [TestMethod]
+        public void TestMethod9()
+        {
+            var IGDBService = new IGDBService();
+            var result = IGDBService.GetVideosByGameId(19560);// .GetGameByName("Lego");
+            Assert.AreNotEqual(null, result);
+        }
     }
 }

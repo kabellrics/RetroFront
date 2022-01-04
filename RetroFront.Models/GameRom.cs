@@ -8,6 +8,8 @@ namespace RetroFront.Models
     {
         public int ID { get; set; }
         public int SteamID { get; set; }
+        public string OriginID { get; set; }
+        public string EpicID { get; set; }
         public int ScreenScraperID { get; set; }
         public int SGDBID { get; set; }
         public int IGDBID { get; set; }

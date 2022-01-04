@@ -11,7 +11,8 @@
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:viewmodel="clr-namespace:RetroFront.Admin.Dialogs.ViewModel"
-             d:DataContext="{d:DesignInstance Type=viewmodel:GameDetailViewModel}"
+             LostFocus="UserControl_LostFocus"
+             GotFocus="UserControl_GotFocus"
              Height="900" Width="900"
              HorizontalAlignment="Stretch"
              HorizontalContentAlignment="Stretch"
@@ -41,26 +42,28 @@
                 <RowDefinition Height="2*"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="113*"></ColumnDefinition>
+                <ColumnDefinition Width="37*"/>
+                <ColumnDefinition Width="150*"></ColumnDefinition>
+                <ColumnDefinition Width="29*"></ColumnDefinition>
+                <ColumnDefinition Width="121*"/>
             </Grid.ColumnDefinitions>
-            <Viewbox Grid.Row="0" Grid.Column="0" Stretch="Uniform">
+            <Viewbox Grid.Row="0" Grid.Column="0" Stretch="Uniform" Grid.ColumnSpan="2">
                 <Label Content="IGDB" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </Viewbox>
-            <Viewbox Grid.Row="0" Grid.Column="1" Stretch="Uniform">
+            <Viewbox Grid.Row="0" Grid.Column="2" Stretch="Uniform">
                 <Label Content="SteamGridDB" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </Viewbox>
-            <Viewbox Grid.Row="0" Grid.Column="2" Stretch="Uniform">
+            <Viewbox Grid.Row="0" Grid.Column="3" Stretch="Uniform" Grid.ColumnSpan="2">
                 <Label Content="Screenscraper" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </Viewbox>
-            <Viewbox Grid.Row="1" Grid.Column="0" Stretch="Uniform">
+            <Viewbox Grid.Column="0" Stretch="Uniform" Margin="0,33,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2">
                 <Button Command="{Binding ResolveGameCommand}" CommandParameter="{x:Static enum:ScraperSource.IGDB}" Content="{Binding IsResolveIGDB}" Style="{DynamicResource MaterialDesignToolButton}"></Button>
             </Viewbox>
-            <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Uniform">
+            <Viewbox Grid.Column="2" Stretch="Uniform" Margin="0,33,0,0" Grid.RowSpan="2">
                 <Button Command="{Binding ResolveGameCommand}" CommandParameter="{x:Static enum:ScraperSource.SGDB}" Content="{Binding IsResolveSGDB}" Style="{DynamicResource MaterialDesignToolButton}"></Button>
             </Viewbox>
-            <Viewbox Grid.Row="1" Grid.Column="2" Stretch="Uniform">
+            <Viewbox Grid.Column="3" Stretch="Uniform" Grid.ColumnSpan="2" Margin="0,33,0,0" Grid.RowSpan="2">
                 <Button Command="{Binding ResolveGameCommand}" CommandParameter="{x:Static enum:ScraperSource.Screenscraper}" Content="{Binding IsResolveSCSP}" Style="{DynamicResource MaterialDesignToolButton}"></Button>
             </Viewbox>
         </Grid>
@@ -175,32 +178,32 @@
                             <Label Content="Changer le Logo" Style="{DynamicResource MaterialDesignLabel}"></Label>
                         </Viewbox>
                     </ComboBoxItem>
-                <ComboBoxItem>
-                    <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5"
+                    <ComboBoxItem>
+                        <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5"
                             Command="{Binding SGDBLogoFinderCommand}"
                                 CommandParameter="{x:Static enum:ScraperSource.SGDB}">
-                        <Viewbox Stretch="Uniform">
-                            <Label Content="SteamGridDB" Style="{DynamicResource MaterialDesignLabel}"></Label>
-                        </Viewbox>
-                    </Button>
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5"
+                            <Viewbox Stretch="Uniform">
+                                <Label Content="SteamGridDB" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                            </Viewbox>
+                        </Button>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5"
                             Command="{Binding SGDBLogoFinderCommand}"
                                 CommandParameter="{x:Static enum:ScraperSource.Screenscraper}">
-                        <Viewbox Stretch="Uniform">
-                            <Label Content="Screenscraper" Style="{DynamicResource MaterialDesignLabel}"></Label>
-                        </Viewbox>
-                    </Button>
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5"
+                            <Viewbox Stretch="Uniform">
+                                <Label Content="Screenscraper" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                            </Viewbox>
+                        </Button>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5"
                             Command="{Binding SGDBLogoFinderCommand}"
                                 CommandParameter="{x:Static enum:ScraperSource.Local}">
-                        <Viewbox Stretch="Uniform">
-                            <Label Content="Fichier Local" Style="{DynamicResource MaterialDesignLabel}"></Label>
-                        </Viewbox>
-                    </Button>
+                            <Viewbox Stretch="Uniform">
+                                <Label Content="Fichier Local" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                            </Viewbox>
+                        </Button>
                     </ComboBoxItem>
                 </ComboBox>
             </Grid>
@@ -300,18 +303,18 @@
             <Grid Grid.Column="0" Grid.Row="6">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="8*"></RowDefinition>
-                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="3*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <MediaElement Stretch="Fill" Source="{Binding Video}" Grid.Row="0" ></MediaElement>
+                <MediaElement x:Name="videoplayer" Stretch="Fill" Source="{Binding Video}" Grid.Row="0" ></MediaElement>
                 <ComboBox Grid.Row="1" Margin="5" Style="{DynamicResource MaterialDesignFloatingHintComboBox}">
                     <ComboBoxItem IsSelected="True">
                         <Viewbox Stretch="Uniform">
-                            <Label Content="Changer le Fanart" Style="{DynamicResource MaterialDesignLabel}"></Label>
+                            <Label Content="Changer la Vidéo" Style="{DynamicResource MaterialDesignLabel}"></Label>
                         </Viewbox>
                     </ComboBoxItem>
                     <ComboBoxItem>
                         <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5"
-                            Command="{Binding SGDBFanartFinderCommand}"
+                            Command="{Binding SGDBVideoFinderCommand}"
                                 CommandParameter="{x:Static enum:ScraperSource.IGDB}">
                             <Viewbox Stretch="Uniform">
                                 <Label Content="IGDB" Style="{DynamicResource MaterialDesignLabel}"></Label>
@@ -320,7 +323,7 @@
                     </ComboBoxItem>
                     <ComboBoxItem>
                         <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5"
-                            Command="{Binding SGDBFanartFinderCommand}"
+                            Command="{Binding SGDBVideoFinderCommand}"
                                 CommandParameter="{x:Static enum:ScraperSource.Screenscraper}">
                             <Viewbox Stretch="Uniform">
                                 <Label Content="Screenscraper" Style="{DynamicResource MaterialDesignLabel}"></Label>
@@ -329,7 +332,7 @@
                     </ComboBoxItem>
                     <ComboBoxItem>
                         <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Row="1" Margin="5"
-                            Command="{Binding SGDBFanartFinderCommand}"
+                            Command="{Binding SGDBVideoFinderCommand}"
                                 CommandParameter="{x:Static enum:ScraperSource.Local}">
                             <Viewbox Stretch="Uniform">
                                 <Label Content="Fichier Local" Style="{DynamicResource MaterialDesignLabel}"></Label>

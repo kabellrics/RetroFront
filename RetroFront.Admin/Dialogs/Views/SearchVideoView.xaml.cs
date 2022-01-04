@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Web.WebView2.Core;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -14,37 +15,17 @@ using System.Windows.Shapes;
 namespace RetroFront.Admin.Dialogs.Views
 {
     /// <summary>
-    /// Logique d'interaction pour GameDetailView.xaml
+    /// Logique d'interaction pour SearchVideoView.xaml
     /// </summary>
-    public partial class GameDetailView : UserControl
+    public partial class SearchVideoView : UserControl
     {
-        public GameDetailView()
+        public SearchVideoView()
         {
             InitializeComponent();
         }
 
         private void UserControl_LostFocus(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                videoplayer.Pause();
-            }
-            catch (Exception ex)
-            {
-                //throw;
-            }
-        }
-
-        private void UserControl_GotFocus(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                videoplayer.Play();
-            }
-            catch (Exception ex)
-            {
-                //throw;
-            }
         }
     }
 }

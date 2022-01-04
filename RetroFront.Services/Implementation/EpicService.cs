@@ -22,6 +22,7 @@ namespace RetroFront.Services.Implementation
                 var appId = (string)manifestObject["AppName"];
                 GameRom game = new GameRom();
                 game.Name = name;
+                game.EpicID = appId;
                 game.EmulatorID = emu.EmulatorID;
                 game.Path = $"com.epicgames.launcher://apps/{appId}?action=launch&silent=true";
                 gamesfind.Add(game);

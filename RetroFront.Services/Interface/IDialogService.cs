@@ -29,5 +29,6 @@ namespace RetroFront.Services.Interface
         List<GameRom> AddGamesToCollection(string collecName, IEnumerable<GameRom> foundedgame);
         Search SearchSteamGridDBByName(string name, ScraperSource source);
         string SearchImgInSteamGridDB(GameRom game, ScraperType type, ScraperSource source);
+        string SearchVideo(GameRom game, ScraperType type, ScraperSource source);
     }
 }

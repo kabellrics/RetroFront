@@ -48,6 +48,7 @@ namespace RetroFront.Services.Implementation
                             game.EmulatorID = emu.EmulatorID;
                             game.Name = origindata.localizableAttributes.displayName;
                             game.Desc = origindata.localizableAttributes.longDescription;
+                            game.OriginID = gameId;
                             game.Path = $"origin://launchgame/{gameId}";
                             gamesfind.Add(game); 
                         }

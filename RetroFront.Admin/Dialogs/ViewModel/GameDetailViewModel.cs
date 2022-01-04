@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Input;
 using System.IO;
 using System.Windows;
+using System.Linq;
 
 namespace RetroFront.Admin.Dialogs.ViewModel
 {
@@ -19,6 +20,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         private IDatabaseService databaseService;
         private ICommand _cancelCommand;
         private ICommand _yesCommand;
+        private IScreenScraperService _screenScraperService;
         public GameRom GameCurrent { get; set; }
 
         private ICommand _resolveGameCommand;
@@ -185,6 +187,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             _gameService = App.ServiceProvider.GetRequiredService<IGameService>();
             dialogService = App.ServiceProvider.GetRequiredService<IDialogService>();
             databaseService = App.ServiceProvider.GetRequiredService<IDatabaseService>();
+            _screenScraperService = App.ServiceProvider.GetRequiredService<IScreenScraperService>();
             LoadingGame(game);
         }
         private void LoadingGame(GameRom game = null)
@@ -345,9 +348,18 @@ namespace RetroFront.Admin.Dialogs.ViewModel
                 if (strimg != null)
                     Video = strimg;
             }
-            else if (CurrentScrapeSource == ScraperSource.Screenscraper) { }
+            else if (CurrentScrapeSource == ScraperSource.Screenscraper)
             {
-                var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Video, CurrentScrapeSource);
+                var SCSPdata = _screenScraperService.GetJeuxDetail(GameCurrent.ScreenScraperID);
+                var SCSPVideo = SCSPdata.medias.FirstOrDefault(x => x.type == "video");
+                if (SCSPVideo != null)
+                {
+                    Video = SCSPVideo.url;
+                }
+            }
+            else 
+            {
+                var resultimg = dialogService.SearchVideo(GameCurrent, ScraperType.Video, CurrentScrapeSource);
                 if (resultimg != null)
                 {
                     Video = resultimg;
@@ -384,6 +396,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             GameCurrent.Fanart = Fanart;
             GameCurrent.Logo = Logo;
             GameCurrent.Screenshoot = Screenshoot;
+            GameCurrent.Video = Video;
             GameCurrent.Name = Name;
             CloseDialogWithResult(parameter as Window, true);
         }

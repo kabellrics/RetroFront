@@ -121,6 +121,7 @@ namespace RetroFront.Services.Implementation
                 //    return Path.Combine(imgfolder, "fanart", $"{game.SteamID}");
                 //else
                 //    return Path.Combine(imgfolder, "fanart", $"{game.Name}");
+                Directory.CreateDirectory(Path.Combine(imgfolder, "fanart"));
                 return Path.Combine(imgfolder, "fanart", $"{Guid.NewGuid().ToString()}");
             }
             else if (sGDBType == ScraperType.Boxart) 
@@ -129,6 +130,7 @@ namespace RetroFront.Services.Implementation
                 //    return Path.Combine(imgfolder, "box2dfront", $"{game.SteamID}");
                 //else
                 //    return Path.Combine(imgfolder, "box2dfront", $"{game.Name}");
+                Directory.CreateDirectory(Path.Combine(imgfolder, "box2dfront"));
                 return Path.Combine(imgfolder, "box2dfront", $"{Guid.NewGuid().ToString()}");
             }
             else if (sGDBType == ScraperType.Banner)
@@ -137,6 +139,7 @@ namespace RetroFront.Services.Implementation
                 //    return Path.Combine(imgfolder, "steamgrid", $"{game.SteamID}");
                 //else
                 //    return Path.Combine(imgfolder, "steamgrid", $"{game.Name}");
+                Directory.CreateDirectory(Path.Combine(imgfolder, "steamgrid"));
                 return Path.Combine(imgfolder, "steamgrid", $"{Guid.NewGuid().ToString()}");
             }
             else if (sGDBType == ScraperType.Logo)
@@ -145,6 +148,7 @@ namespace RetroFront.Services.Implementation
                 //    return Path.Combine(imgfolder, "wheel", $"{game.SteamID}");
                 //else
                 //    return Path.Combine(imgfolder, "wheel", $"{game.Name}");
+                Directory.CreateDirectory(Path.Combine(imgfolder, "wheel"));
                 return Path.Combine(imgfolder, "wheel", $"{Guid.NewGuid().ToString()}");
             }
             else if (sGDBType == ScraperType.Video)
@@ -153,6 +157,7 @@ namespace RetroFront.Services.Implementation
                 //    return Path.Combine(imgfolder, "wheel", $"{game.SteamID}");
                 //else
                 //    return Path.Combine(imgfolder, "wheel", $"{game.Name}");
+                Directory.CreateDirectory(Path.Combine(imgfolder, "videos"));
                 return Path.Combine(imgfolder, "videos", $"{Guid.NewGuid().ToString()}");
             }
             else

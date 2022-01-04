@@ -232,5 +232,16 @@ namespace RetroFront.Admin.Dialogs
             }
             return null;
         }
+        public string SearchVideo(GameRom game, ScraperType type, ScraperSource source)
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new VideoFinderSearchViewModel(game,source,type);
+            modalWindow.DataContext = vm;
+            if (modalWindow.ShowDialog().Value)
+            {
+                return vm.ResultPath;
+            }
+            return null;
+        }
     }
 }
