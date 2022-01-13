@@ -34,7 +34,8 @@ namespace RetroFront.Services.Implementation
                     RomDisplay.Screenshot,
                     RomDisplay.Fanart,
                     RomDisplay.FanartBox,
-                    RomDisplay.BigBox
+                    RomDisplay.BigBox,
+                    RomDisplay.FlixView
             };
         }
         public List<SysType> GetSysTypes()

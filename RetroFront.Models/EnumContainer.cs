@@ -82,5 +82,7 @@ namespace RetroFront.Models
         FanartBox,
         [Description("Big Box")] 
         BigBox,
+        [Description("Flix")] 
+        FlixView,
     }
 }

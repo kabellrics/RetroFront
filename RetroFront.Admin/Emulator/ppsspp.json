@@ -1,0 +1,34 @@
+{
+  "Id": "ppsspp",
+  "Name": "PPSSPP",
+  "Profiles": [
+    {
+      "Name": "PPSSPP 64bit",
+      "Shortname": "psp",
+      "StartupArguments": "\"{ImagePath}\" --pause-menu-exit --fullscreen",
+      "Platforms": [
+        "sony_psp"
+      ],
+      "ImageExtensions": [
+        "iso",
+        "cso",
+        "pbp"
+      ],
+      "StartupExecutable": "^PPSSPPWindows64\\.exe$"
+    },
+    {
+      "Name": "PPSSPP 32bit",
+      "Shortname": "psp",
+      "StartupArguments": "\"{ImagePath}\" --pause-menu-exit --fullscreen",
+      "Platforms": [
+        "sony_psp"
+      ],
+      "ImageExtensions": [
+        "iso",
+        "cso",
+        "pbp"
+      ],
+      "StartupExecutable": "^PPSSPPWindows\\.exe$"
+    }
+  ]
+}
