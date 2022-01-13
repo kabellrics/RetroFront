@@ -10,6 +10,8 @@ namespace RetroFront.Services.Interface
         string GetCurrentTheme();
         void UpdateSettings(AppSettings apps);
         void UpdateSettings();
+        Models.ScreenScraper.System.Systeme GetSysByCode(string shortname);
         IEnumerable<Models.ScreenScraper.System.Systeme> GetAllSysFromJSON();
+        IEnumerable<Models.StandaloneEmulator.StandaloneEmulator> GetStandaloneEmulators();
     }
 }

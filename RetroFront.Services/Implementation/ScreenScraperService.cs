@@ -88,9 +88,7 @@ namespace RetroFront.Services.Implementation
             {
                 if (game.noms != null)
                 {
-                    string gamename = game.noms.FirstOrDefault(x => x.region == "eu")?.text;
-                    if (gamename == null)
-                        gamename = game.noms.FirstOrDefault(x => x.region == "wor")?.text;
+                    string gamename = game.noms.FirstOrDefault(x => x.region == "eu" || x.region == "fr" || x.region == "wor" || x.region == "us")?.text;
                     string gameSCSPID = game.id;
                     yield return new GameRom() { ScreenScraperID = int.Parse(gameSCSPID), Name = gamename}; 
                 }

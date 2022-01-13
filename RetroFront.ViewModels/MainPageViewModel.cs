@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using Newtonsoft.Json;
 using RetroFront.Models;
+using RetroFront.Models.StandaloneEmulator;
 using RetroFront.Services.Interface;
 using System;
 using System.Collections.Generic;
@@ -76,8 +77,8 @@ namespace RetroFront.ViewModels
             get { return _themes; }
             set { _themes = value; RaisePropertyChanged(); }
         }
-        private ObservableCollection<SCSPSystemeViewModel> _allsystemes;
-        public ObservableCollection<SCSPSystemeViewModel> AllSystemes
+        private ObservableCollection<StandaloneEmulator> _allsystemes;
+        public ObservableCollection<StandaloneEmulator> AllSystemes
         {
             get { return _allsystemes; }
             set { _allsystemes = value; RaisePropertyChanged(); }
@@ -253,7 +254,7 @@ namespace RetroFront.ViewModels
         {
             get
             {
-                return _AddPlateformeCommand ?? (_AddPlateformeCommand = new RelayCommand<SCSPSystemeViewModel>(AddPlateforme));
+                return _AddPlateformeCommand ?? (_AddPlateformeCommand = new RelayCommand<StandalonePlateforme>(AddPlateforme));
             }
         }
         public ICommand AddSteamPlateformeCommand
@@ -460,14 +461,14 @@ namespace RetroFront.ViewModels
         }
         private void ReloadData()
         {
-            AllSystemes = new ObservableCollection<SCSPSystemeViewModel>();
-            foreach (var sys in _fileJSONService.GetAllSysFromJSON().OrderBy(x => x.noms.noms_commun))
-            {
-                var sysSCSPvm = new SCSPSystemeViewModel(sys);
-                if (!string.IsNullOrEmpty(sysSCSPvm.ShortName))
-                    AllSystemes.Add(sysSCSPvm);
-            }
-            AllSystemes = new ObservableCollection<SCSPSystemeViewModel>(AllSystemes.OrderBy(x=>x.Name));
+            //AllSystemes = new ObservableCollection<StandaloneEmulator>();
+            //foreach (var sys in _fileJSONService.GetAllSysFromJSON().OrderBy(x => x.noms.noms_commun))
+            //{
+            //    var sysSCSPvm = new SCSPSystemeViewModel(sys);
+            //    if (!string.IsNullOrEmpty(sysSCSPvm.ShortName))
+            //        AllSystemes.Add(sysSCSPvm);
+            //}
+            AllSystemes = new ObservableCollection<StandaloneEmulator>(_fileJSONService.GetStandaloneEmulators().OrderBy(x =>x.Name));
             Systemes = new ObservableCollection<SystemeViewModel>();
             CustomList = new ObservableCollection<SystemeViewModel>();
             foreach (var sys in _databaseService.GetSystemes().OrderBy(x => x.Name))
@@ -591,16 +592,31 @@ namespace RetroFront.ViewModels
             }
             ReloadData();
         }
-        private void AddPlateforme(SCSPSystemeViewModel sysSCSP)
+        private void AddPlateforme(StandalonePlateforme sysSCSP)
         {
-            var sys = new Systeme();
-            sys.Name = sysSCSP.Name;
-            sys.Shortname = sysSCSP.ShortName;
-            sys.SystemeSCSPID = sysSCSP.SCSPSysteme.id;
-            sys = _databaseService.AddSystem(sys);
-            GetSysMedia(sys, sysSCSP.SCSPSysteme);
-            _themeService.LoadDefaultBckForSysteme(sys);
-            ReloadData();
+            var emupath = _dialogService.OpenUniqueFileDialog($"Fichier Executable (*.exe)|*.exe");
+            if (!string.IsNullOrEmpty(emupath))
+            {
+                var sys = new Systeme();
+                sys.Name = sysSCSP.Name;
+                sys.Shortname = sysSCSP.Shortname;
+                var SCSPsys = _fileJSONService.GetSysByCode(sys.Shortname);
+                sys.SystemeSCSPID = SCSPsys.id;
+                sys = _databaseService.AddSystem(sys);
+                GetSysMedia(sys, SCSPsys);
+                _themeService.LoadDefaultBckForSysteme(sys);
+
+                var emulator = new Emulator();
+                emulator.Name = sysSCSP.StartupExecutable;
+                emulator.IsDuplicate = false;
+                emulator.SystemeID = sys.SystemeID;
+                emulator.Extension = string.Join(' ', sysSCSP.ImageExtensions.Select(x=> $".{x}"));
+                emulator.Chemin = emupath;
+                emulator.Command = sysSCSP.StartupArguments;
+                _databaseService.AddEmulator(emulator);
+                ReloadFullEmulators();
+                ReloadData();
+            }
         }
         private void AddEmu()
         {
@@ -851,6 +867,7 @@ namespace RetroFront.ViewModels
                             _gameService.DownloadImgData(game.Video, targetfile);
                             game.Video = targetfile; 
                         }
+                        File.Delete(oldgamevideo);
                     }
                 }
                 catch (Exception ex)
@@ -936,7 +953,7 @@ namespace RetroFront.ViewModels
                 {
                    if(CurrentScrapeSource == ScraperSource.IGDB)
                     {
-                        //ScrapeIGDBMetadata(games);
+                        ScrapeIGDBVideo(games);
                     }
                     if (CurrentScrapeSource == ScraperSource.Screenscraper)
                     {
@@ -947,7 +964,6 @@ namespace RetroFront.ViewModels
             }
             ReloadData();
         }
-
         private void ScrapeScreenScraperMetadata(GameRom games)
         {
             if (games.ScreenScraperID < 1)
@@ -966,7 +982,7 @@ namespace RetroFront.ViewModels
                 if (name != null)
                     games.Name = name.text;
                 else
-                    games.Name = SCSPdata.noms.FirstOrDefault(x => x.region == "wor").text;
+                    games.Name = SCSPdata.noms.FirstOrDefault(x => x.region == "wor" || x.region == "us").text;
                 /*games.Year*/
                 if (SCSPdata.dates != null)
                 {
@@ -974,7 +990,7 @@ namespace RetroFront.ViewModels
                     if (year != null)
                         games.Year = year.text;
                     else
-                        games.Year = SCSPdata.dates.FirstOrDefault(x => x.region == "wor").text; 
+                        games.Year = SCSPdata.dates.FirstOrDefault(x => x.region == "wor" || x.region == "us").text; 
                 }
                 if (SCSPdata.editeur != null)
                 {
@@ -1002,15 +1018,18 @@ namespace RetroFront.ViewModels
         {
             if (games.ScreenScraperID < 1)
             {
+                var oldvideo = games.Video;
                 var resultsearch = _dialogService.SearchSteamGridDBByName(games.Name, ScraperSource.Screenscraper);
                 if (resultsearch != null)
                 {
                     games.ScreenScraperID = resultsearch.id;
                     games.Name = resultsearch.name;
+                    File.Delete(oldvideo);
                 }
             }
             if (games.ScreenScraperID > 0)
             {
+                var oldvideo = games.Video;
                 var SCSPdata = _screenScraperService.GetJeuxDetail(games.ScreenScraperID);
                 var SCSPVideo = SCSPdata.medias.FirstOrDefault(x => x.type == "video");
                 if(SCSPVideo != null)
@@ -1021,12 +1040,32 @@ namespace RetroFront.ViewModels
                     var targetfile = $"{targetfolder}{Path.GetExtension(".mp4")}";
                     _gameService.DownloadImgData(games.Video, targetfile);
                     games.Video = targetfile;
+                    File.Delete(oldvideo);
                 }
             }
         }
         private void ScrapeIGDBVideo(GameRom games)
         {
-
+            if (games.IGDBID < 1)
+            {
+                var resultsearch = _dialogService.SearchSteamGridDBByName(games.Name, ScraperSource.IGDB);
+                if (resultsearch != null)
+                {
+                    games.IGDBID = resultsearch.id;
+                    games.Name = resultsearch.name;
+                }
+            }
+            if (games.IGDBID > 0)
+            {
+                var result = _dialogService.SearchVideo(games, ScraperType.Video, ScraperSource.IGDB);
+                var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Video);
+                var targetfile = $"{targetfolder}{Path.GetExtension(".mp4")}";
+                var youTube = YouTube.Default;
+                var video = youTube.GetVideo(result.Replace("embed/", "watch?v="));
+                File.WriteAllBytes(targetfile, video.GetBytes());
+                //await youtube.Videos.DownloadAsync(, targetfile);
+                games.Video = targetfile;
+            }
         }
         private void ScrapeIGDBMetadata(GameRom games)
         {
@@ -1063,7 +1102,6 @@ namespace RetroFront.ViewModels
                 games.Editeur = string.Join(", ", publiser.Select(x => x.name));
             }
         }
-
         private void ScrapeLogo(GameRom games, ScraperType _currentScraperType, ScraperSource _currentScrapeSource)
         {
             var result = _dialogService.SearchImgInSteamGridDB(games, _currentScraperType, _currentScrapeSource);
@@ -1076,7 +1114,6 @@ namespace RetroFront.ViewModels
                 games.Logo = targetfile;
             }
         }
-
         private void ScrapeBoxart(GameRom games, ScraperType _currentScraperType, ScraperSource _currentScrapeSource)
         {
             var result = _dialogService.SearchImgInSteamGridDB(games, _currentScraperType, _currentScrapeSource);
@@ -1089,7 +1126,6 @@ namespace RetroFront.ViewModels
                 games.Boxart = targetfile;
             }
         }
-
         private void ScrapeBanner(GameRom games, ScraperType _currentScraperType, ScraperSource _currentScrapeSource)
         {
             var result = _dialogService.SearchImgInSteamGridDB(games, _currentScraperType, _currentScrapeSource);
@@ -1102,7 +1138,6 @@ namespace RetroFront.ViewModels
                 games.Fanart = targetfile;
             }
         }
-
         private void ScrapeArtwork(GameRom games, ScraperType _currentScraperType, ScraperSource _currentScrapeSource)
         {
             var result = _dialogService.SearchImgInSteamGridDB(games, _currentScraperType, _currentScrapeSource);
@@ -1115,19 +1150,18 @@ namespace RetroFront.ViewModels
                 games.Screenshoot = targetfile;
             }
         }
-
         private void GetSystemeIMG()
         {
             //var sysSCSPList = await _screenScraperService.GetSSCPSystemes();
             var EmulSys = Systemes.Where(x => x.Systeme.Type != SysType.GameStore && x.Systeme.Type != SysType.Standalone && x.Systeme.Type != SysType.Collection);
-            foreach ( var sys in EmulSys)
-            {
-                var sysSCSP = AllSystemes.FirstOrDefault(x => x.SCSPSysteme.id == sys.Systeme.SystemeSCSPID);
-                if(sysSCSP != null)
-                {
-                    GetSysMedia(sys.Systeme, sysSCSP.SCSPSysteme);
-                }
-            }
+            //foreach ( var sys in EmulSys)
+            //{
+            //    var sysSCSP = AllSystemes.FirstOrDefault(x => x.SCSPSysteme.id == sys.Systeme.SystemeSCSPID);
+            //    if(sysSCSP != null)
+            //    {
+            //        GetSysMedia(sys.Systeme, sysSCSP.SCSPSysteme);
+            //    }
+            //}
             _dialogService.ShowMessageOk("Fin", "Fin de la récupération des Médias systèmes");
         }
         private void GetSysMedia(Systeme sys, Models.ScreenScraper.System.Systeme sysSCSP)

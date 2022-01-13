@@ -71,6 +71,15 @@ namespace RetroFront.Admin.Dialogs.ViewModel
                 return _SGDBVideoFinderCommand ?? (_SGDBVideoFinderCommand = new RelayCommand<ScraperSource>(SGDBVideoFinder));
             }
         }
+        private ICommand _FullScrapeCommand;
+        public ICommand FullScrapeCommand
+        {
+            get
+            {
+                return _FullScrapeCommand ?? (_FullScrapeCommand = new RelayCommand<ScraperSource>(FullScrape));
+            }
+        }
+
 
         #region Properties
         private int _IsResolveSGDB;
@@ -367,6 +376,82 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             }
         }
 
+        private void FullScrape(ScraperSource CurrentScrapeSource)
+        {
+            if (CurrentScrapeSource == ScraperSource.IGDB)
+            {
+                ResolveGame(CurrentScrapeSource);
+                var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Boxart, CurrentScrapeSource);
+                if (resultimg != null)
+                {
+                    Boxart = resultimg;
+                }
+                resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.ArtWork, CurrentScrapeSource);
+                if (resultimg != null)
+                {
+                    Screenshoot = resultimg;
+                }
+                resultimg = dialogService.SearchVideo(GameCurrent, ScraperType.Video, CurrentScrapeSource);
+                if (resultimg != null)
+                {
+                    Video = resultimg;
+                }
+            }
+            else if (CurrentScrapeSource == ScraperSource.SGDB)
+            {
+                ResolveGame(CurrentScrapeSource);
+                var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Boxart, CurrentScrapeSource);
+                if (resultimg != null)
+                {
+                    Boxart = resultimg;
+                }
+                resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Logo, CurrentScrapeSource);
+                if (resultimg != null)
+                {
+                    Logo = resultimg;
+                }
+                resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.ArtWork, CurrentScrapeSource);
+                if (resultimg != null)
+                {
+                    Screenshoot = resultimg;
+                }
+                resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Banner, CurrentScrapeSource);
+                if (resultimg != null)
+                {
+                    Fanart = resultimg;
+                }
+            }
+            else if (CurrentScrapeSource == ScraperSource.Screenscraper)
+            {
+                ResolveGame(CurrentScrapeSource);
+                var resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Boxart, CurrentScrapeSource);
+                if (resultimg != null)
+                {
+                    Boxart = resultimg;
+                }
+                resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Logo, CurrentScrapeSource);
+                if (resultimg != null)
+                {
+                    Logo = resultimg;
+                }
+                resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.ArtWork, CurrentScrapeSource);
+                if (resultimg != null)
+                {
+                    Screenshoot = resultimg;
+                }
+                var SCSPdata = _screenScraperService.GetJeuxDetail(GameCurrent.ScreenScraperID);
+                var SCSPVideo = SCSPdata.medias.FirstOrDefault(x => x.type == "video");
+                if (SCSPVideo != null)
+                {
+                    Video = SCSPVideo.url;
+                }
+                resultimg = dialogService.SearchImgInSteamGridDB(GameCurrent, ScraperType.Banner, CurrentScrapeSource);
+                if (resultimg != null)
+                {
+                    Fanart = resultimg;
+                }
+            }
+        }
         public void CloseDialogWithResult(Window dialog, bool result)
         {
             if (dialog != null)

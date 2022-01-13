@@ -39,6 +39,7 @@
         <Grid Grid.Row="2" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="2*"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -57,14 +58,29 @@
             <Viewbox Grid.Row="0" Grid.Column="3" Stretch="Uniform" Grid.ColumnSpan="2">
                 <Label Content="Screenscraper" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </Viewbox>
-            <Viewbox Grid.Column="0" Stretch="Uniform" Margin="0,33,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <Viewbox Grid.Column="0" Grid.Row="2" Stretch="Uniform" Margin="0,33,0,0" Grid.ColumnSpan="2">
                 <Button Command="{Binding ResolveGameCommand}" CommandParameter="{x:Static enum:ScraperSource.IGDB}" Content="{Binding IsResolveIGDB}" Style="{DynamicResource MaterialDesignToolButton}"></Button>
             </Viewbox>
-            <Viewbox Grid.Column="2" Stretch="Uniform" Margin="0,33,0,0" Grid.RowSpan="2">
+            <Viewbox Grid.Column="2" Grid.Row="2" Stretch="Uniform" Margin="0,33,0,0">
                 <Button Command="{Binding ResolveGameCommand}" CommandParameter="{x:Static enum:ScraperSource.SGDB}" Content="{Binding IsResolveSGDB}" Style="{DynamicResource MaterialDesignToolButton}"></Button>
             </Viewbox>
-            <Viewbox Grid.Column="3" Stretch="Uniform" Grid.ColumnSpan="2" Margin="0,33,0,0" Grid.RowSpan="2">
+            <Viewbox Grid.Column="3" Grid.Row="2" Stretch="Uniform" Grid.ColumnSpan="2" Margin="0,33,0,0">
                 <Button Command="{Binding ResolveGameCommand}" CommandParameter="{x:Static enum:ScraperSource.Screenscraper}" Content="{Binding IsResolveSCSP}" Style="{DynamicResource MaterialDesignToolButton}"></Button>
+            </Viewbox>
+            <Viewbox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Stretch="Uniform">
+                <Button Style="{DynamicResource MaterialDesignToolButton}" Content="Full Scrape"
+                            Command="{Binding FullScrapeCommand}"
+                                CommandParameter="{x:Static enum:ScraperSource.IGDB}"></Button>
+            </Viewbox>
+            <Viewbox Grid.Row="1" Grid.Column="2" Stretch="Uniform">
+                <Button Style="{DynamicResource MaterialDesignToolButton}" Content="Full Scrape"
+                            Command="{Binding FullScrapeCommand}"
+                                CommandParameter="{x:Static enum:ScraperSource.SGDB}"></Button>
+            </Viewbox>
+            <Viewbox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Stretch="Uniform">
+                <Button Style="{DynamicResource MaterialDesignToolButton}" Content="Full Scrape"
+                            Command="{Binding FullScrapeCommand}"
+                                CommandParameter="{x:Static enum:ScraperSource.Screenscraper}"></Button>
             </Viewbox>
         </Grid>
         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">

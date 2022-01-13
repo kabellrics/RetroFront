@@ -8,6 +8,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:RetroFront.Admin"
         xmlns:enum="clr-namespace:RetroFront.Models;assembly=RetroFront.Models"
+        xmlns:models="clr-namespace:RetroFront.Models;assembly=RetroFront.Models"
+        xmlns:modelmenuitem="clr-namespace:RetroFront.Models.StandaloneEmulator;assembly=RetroFront.Models"
         xmlns:conv="clr-namespace:RetroFront.Admin.Converter"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
@@ -137,19 +139,51 @@
                 </StatusBar>
                 <Menu IsMainMenu="True" Style="{DynamicResource MaterialDesignMenu}" DockPanel.Dock="Top">
                     <MenuItem Header="Menu" Style="{DynamicResource MaterialDesignMenuItem}">
-                        <MenuItem Header="Ouvrir RetroArch" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding OpenRetroarchCommand}"></MenuItem>
+                        <!--<MenuItem Header="Ouvrir RetroArch" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding OpenRetroarchCommand}"></MenuItem>-->
                         <MenuItem Header="Ouvrir RetroFront" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                         <MenuItem Header="Quitter" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                     </MenuItem>
                     <MenuItem Header="Plateforme" Style="{DynamicResource MaterialDesignMenuItem}">
-                        <MenuItem Header="Ajouter une Plateforme prédéfinie" ItemsSource="{Binding AllSystemes}"
-                              DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
+                        <!--<MenuItem Header="Ajouter une Plateforme" ItemsSource="{Binding AllSystemes}"
+                             Style="{DynamicResource MaterialDesignMenuItem}">
                             <MenuItem.ItemContainerStyle>
                                 <Style TargetType="MenuItem">
                                     <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem},Path=DataContext.AddPlateformeCommand}"></Setter>
                                     <Setter Property="CommandParameter" Value="{Binding}"></Setter>
                                 </Style>
                             </MenuItem.ItemContainerStyle>
+                            --><!--<MenuItem Header="Ajouter une Plateforme" ItemsSource="{Binding Plateformes}"
+                              DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
+                            </MenuItem>--><!--
+                        </MenuItem>-->
+                        <MenuItem Header="Ajouter un Emulateur" ItemsSource="{Binding AllSystemes}" Style="{DynamicResource MaterialDesignMenuItem}">
+                            <!--<MenuItem.ItemContainerStyle>
+                                <Style TargetType="MenuItem">
+                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem},Path=DataContext.AddPlateformeCommand}"></Setter>
+                                    <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                                </Style>
+                            </MenuItem.ItemContainerStyle>-->
+                            <MenuItem.Resources>
+                                <HierarchicalDataTemplate DataType="{x:Type modelmenuitem:StandaloneEmulator}"
+                                                          ItemsSource="{Binding Plateformes}">
+                                    <!--<TextBlock Text="{Binding Name}"/>-->
+                                    <MenuItem Header="{Binding Name}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
+                                </HierarchicalDataTemplate>
+                                <DataTemplate DataType="{x:Type modelmenuitem:StandalonePlateforme}">
+                                    <!--<TextBlock Text="{Binding Name}"/>-->
+                                    <Button Content="{Binding Name}" Style="{DynamicResource MaterialDesignOutlinedButton}"
+                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window},Path=DataContext.AddPlateformeCommand}"
+                                            CommandParameter="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
+                                    <!--<MenuItem Header="{Binding Name}" Style="{DynamicResource MaterialDesignMenuItem}">
+                                        <MenuItem.ItemContainerStyle>
+                                            <Style TargetType="MenuItem">
+                                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem},Path=DataContext.AddPlateformeCommand}"></Setter>
+                                                <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                                            </Style>
+                                        </MenuItem.ItemContainerStyle>
+                                    </MenuItem>-->
+                                </DataTemplate>
+                            </MenuItem.Resources>
                         </MenuItem>
                         <!--<MenuItem Header="Ajouter une Plateforme" Command="{Binding AddPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>-->
                         <MenuItem Header="Intégrer Steam" Command="{Binding AddSteamPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
@@ -158,7 +192,7 @@
                         <MenuItem Header="Créer une Liste Particulière" Command="{Binding AddCustomListCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                         <MenuItem Header="Créer un standalone" Command="{Binding AddStandaloneCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                     </MenuItem>
-                    <MenuItem Header="Emulateur" Style="{DynamicResource MaterialDesignMenuItem}">
+                    <!--<MenuItem Header="Emulateur" Style="{DynamicResource MaterialDesignMenuItem}">
                         <MenuItem Header="Ajouter un Core RetroArch" Command="{Binding AddCoreCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                         <MenuItem Header="Créer un émulateur" Command="{Binding AddEmuCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                         <MenuItem Header="Ajouter explorer.exe pour ce système"
@@ -171,7 +205,7 @@
                                 </Style>
                             </MenuItem.ItemContainerStyle>
                         </MenuItem>
-                    </MenuItem>
+                    </MenuItem>-->
                     <MenuItem Header="Jeux" Style="{DynamicResource MaterialDesignMenuItem}">
                         <MenuItem Header="Ajouter un jeux pour cet emulateur" ItemsSource="{Binding FullEmulators}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
                             <MenuItem.ItemContainerStyle>

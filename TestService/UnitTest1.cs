@@ -70,5 +70,12 @@ namespace TestService
             var result = IGDBService.GetVideosByGameId(19560);// .GetGameByName("Lego");
             Assert.AreNotEqual(null, result);
         }
+        [TestMethod]
+        public void TestMethod10()
+        {
+            var JsonReader = new FileJSONService();
+            var syslist = JsonReader.GetStandaloneEmulators();
+            Assert.AreNotEqual(string.Empty, syslist);
+        }
     }
 }

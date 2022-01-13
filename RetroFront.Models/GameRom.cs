@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -29,7 +29,11 @@ namespace RetroFront.Models
         public string Video { get; set; }
         public string TitleScreen { get; set; }
         public bool IsDuplicate { get; set; }
+        public bool IsFavorite { get; set; }
         public int EmulatorID { get; set; }
+        public int NbTimeStarted { get; set; }
+        public DateTime? LastStart { get; set; }
         public string Plateforme { get; set; }
+        //85492
     }
 }
