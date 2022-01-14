@@ -1,7 +1,7 @@
 {
   "Id": "duckstation",
   "Name": "DuckStation",
-  "Profiles": [
+  "Plateformes": [
     {
       "Name": "Playstation",
       "Shortname": "psx",

@@ -166,22 +166,12 @@
                             <MenuItem.Resources>
                                 <HierarchicalDataTemplate DataType="{x:Type modelmenuitem:StandaloneEmulator}"
                                                           ItemsSource="{Binding Plateformes}">
-                                    <!--<TextBlock Text="{Binding Name}"/>-->
                                     <MenuItem Header="{Binding Name}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                                 </HierarchicalDataTemplate>
                                 <DataTemplate DataType="{x:Type modelmenuitem:StandalonePlateforme}">
-                                    <!--<TextBlock Text="{Binding Name}"/>-->
                                     <Button Content="{Binding Name}" Style="{DynamicResource MaterialDesignOutlinedButton}"
                                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window},Path=DataContext.AddPlateformeCommand}"
                                             CommandParameter="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
-                                    <!--<MenuItem Header="{Binding Name}" Style="{DynamicResource MaterialDesignMenuItem}">
-                                        <MenuItem.ItemContainerStyle>
-                                            <Style TargetType="MenuItem">
-                                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem},Path=DataContext.AddPlateformeCommand}"></Setter>
-                                                <Setter Property="CommandParameter" Value="{Binding}"></Setter>
-                                            </Style>
-                                        </MenuItem.ItemContainerStyle>
-                                    </MenuItem>-->
                                 </DataTemplate>
                             </MenuItem.Resources>
                         </MenuItem>

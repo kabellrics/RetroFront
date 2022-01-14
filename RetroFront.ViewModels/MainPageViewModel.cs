@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using Newtonsoft.Json;
 using RetroFront.Models;
 using RetroFront.Models.StandaloneEmulator;
+using RetroFront.Services.Implementation;
 using RetroFront.Services.Interface;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,6 @@ namespace RetroFront.ViewModels
     {
         private IDatabaseService _databaseService;
         private IFileJSONService _fileJSONService;
-        private IRetroarchService _retroarchService;
         private ISteamService _steamService;
         private IEmulateurService _emulateurService;
         private IDialogService _dialogService;
@@ -154,7 +154,6 @@ namespace RetroFront.ViewModels
 
         #region Command
         private ICommand _reloadCommand;
-        private ICommand _OpenRetroarchCommand;
         private ICommand _LoadDefaultBCKCommand;
         private ICommand _AddEmuCommand;
         private ICommand _AddStandaloneCommand;
@@ -205,13 +204,6 @@ namespace RetroFront.ViewModels
             get
             {
                 return _reloadCommand ?? (_reloadCommand = new RelayCommand(ReloadData));
-            }
-        }
-        public ICommand OpenRetroarchCommand
-        {
-            get
-            {
-                return _OpenRetroarchCommand ?? (_OpenRetroarchCommand = new RelayCommand(OpenRetroarch));
             }
         }
         public ICommand LoadDefaultBCKCommand
@@ -364,11 +356,10 @@ namespace RetroFront.ViewModels
             }
         }
         #endregion
-        public MainPageViewModel(IDatabaseService databaseService, IFileJSONService fileJSONService, IRetroarchService retroarchService, IEmulateurService emulateurService, IDialogService dialogService, IGameService gameService, IThemeService themeService, ISteamService steamService, IIGDBService iGDBService, IOriginService originService, IEpicService epicService, IScreenScraperService screenScraperService)
+        public MainPageViewModel(IDatabaseService databaseService, IFileJSONService fileJSONService, IEmulateurService emulateurService, IDialogService dialogService, IGameService gameService, IThemeService themeService, ISteamService steamService, IIGDBService iGDBService, IOriginService originService, IEpicService epicService, IScreenScraperService screenScraperService)
         {
             _databaseService = databaseService;
             _fileJSONService = fileJSONService;
-            _retroarchService = retroarchService;
             _emulateurService = emulateurService;
             _dialogService = dialogService;
             _gameService = gameService;
@@ -495,6 +486,7 @@ namespace RetroFront.ViewModels
             CustomList = new ObservableCollection<SystemeViewModel>(Systemes.Where(x => x.Systeme.Type == SysType.Collection).OrderBy(x=>x.Name));
             OldSystemes = new ObservableCollection<SystemeViewModel>(Systemes.Where(x=>x.Systeme.Type != SysType.Collection && x.Systeme.Type != SysType.GameStore && x.Systeme.Type != SysType.Standalone).OrderBy(x=>x.Name));
             OnlySystemes = new ObservableCollection<SystemeViewModel>(Systemes.Where(x => x.Systeme.Type != SysType.Collection && x.Systeme.Type != SysType.Standalone).OrderBy(x => x.Name));
+            AddAllGames();
             ReloadFullEmulators();
         }
         private void AddCore()
@@ -701,11 +693,6 @@ namespace RetroFront.ViewModels
                 _themeService.LoadDefaultBckForSysteme(plateform.Systeme);
             }
             ReloadData();
-        }
-        private void OpenRetroarch()
-        {
-            var retroarchpath = $"{_fileJSONService.appSettings.RetroarchPath}\\retroarch.exe";
-            Process.Start(retroarchpath);
         }
         private void SetBck()
         {
@@ -919,6 +906,7 @@ namespace RetroFront.ViewModels
                         ScrapeArtwork(games, ScraperType.ArtWork, ScraperSource.IGDB);
                         ScrapeBoxart(games, ScraperType.Boxart, ScraperSource.IGDB);
                         ScrapeIGDBMetadata(games);
+                        ScrapeIGDBVideo(games);
                     }
 
                 }
@@ -1058,13 +1046,16 @@ namespace RetroFront.ViewModels
             if (games.IGDBID > 0)
             {
                 var result = _dialogService.SearchVideo(games, ScraperType.Video, ScraperSource.IGDB);
-                var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Video);
-                var targetfile = $"{targetfolder}{Path.GetExtension(".mp4")}";
-                var youTube = YouTube.Default;
-                var video = youTube.GetVideo(result.Replace("embed/", "watch?v="));
-                File.WriteAllBytes(targetfile, video.GetBytes());
-                //await youtube.Videos.DownloadAsync(, targetfile);
-                games.Video = targetfile;
+                if (result != null)
+                {
+                    var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Video);
+                    var targetfile = $"{targetfolder}{Path.GetExtension(".mp4")}";
+                    var youTube = YouTube.Default;
+                    var video = youTube.GetVideo(result.Replace("embed/", "watch?v="));
+                    File.WriteAllBytes(targetfile, video.GetBytes());
+                    //await youtube.Videos.DownloadAsync(, targetfile);
+                    games.Video = targetfile; 
+                }
             }
         }
         private void ScrapeIGDBMetadata(GameRom games)
@@ -1253,6 +1244,35 @@ namespace RetroFront.ViewModels
 
                 ReloadData();
             }
+        }
+        private void AddAllGames()
+        {
+            var newsys = new Systeme();
+            newsys.Name = "Tous les Jeux";
+            newsys.Shortname = "all";
+            newsys.Type = SysType.Collection;
+            SystemeViewModel sysvm = new SystemeViewModel(newsys);
+            sysvm.Emulators = new ObservableCollection<EmulatorViewModel>();
+            var allgames = _databaseService.GetGames();
+            var groupedGames = from game in allgames
+                               group game by game.EmulatorID into groupedgame
+                               orderby groupedgame.Key
+                               select groupedgame;
+            foreach (var grp in groupedGames)
+            {
+                var newemu = _emulateurService.DuplicateEmulator(_databaseService.GetEmulator(grp.Key));
+                newemu.SystemeID = newsys.SystemeID;
+                EmulatorViewModel emuVM = new EmulatorViewModel(newemu);
+                emuVM.Games = new ObservableCollection<GameViewModel>();
+                foreach (var game in grp)
+                {
+                    var dupligame = _gameService.DuplicateGame(game);
+                    dupligame.EmulatorID = newemu.EmulatorID;
+                    emuVM.Games.Add(new GameViewModel(dupligame));
+                }
+                sysvm.Emulators.Add(emuVM);
+            }
+            Systemes.Insert(0, sysvm);
         }
     }
 }

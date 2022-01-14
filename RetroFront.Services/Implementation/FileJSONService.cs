@@ -33,12 +33,10 @@ namespace RetroFront.Services.Implementation
                 appSettings = new AppSettings();
                 appSettings.CurrentTheme = "simple";
                 appSettings.DefaultBCK = string.Empty;
-                appSettings.CurrentGameDisplay = RomDisplay.WallBox;
+                appSettings.CurrentGameDisplay = RomDisplay.FlixView;
                 appSettings.CurrentSysDisplay = SysDisplay.BigLogo;
                 appSettings.AppSettingsFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront";
                 appSettings.AppSettingsLocation = $"{appSettings.AppSettingsFolder}\\AppSettings.json";
-                appSettings.RetroarchPath = @"%AppData%\Roaming\RetroArch";
-                appSettings.RetroarchCMD = "%RetroarchPath% -L %RetroArchCore% %ROM_RAW%";
                 var jsonApp =  JsonConvert.SerializeObject(appSettings);
                 File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
             }
@@ -91,7 +89,38 @@ namespace RetroFront.Services.Implementation
             JObject rss = JObject.Parse(jsonString);
             JArray categories = (JArray)rss["response"]["systemes"];
             var listSysSS =  categories.ToObject<List<Models.ScreenScraper.System.Systeme>>();
-            return (Models.ScreenScraper.System.Systeme)listSysSS.FirstOrDefault(x => x.noms.nom_recalbox.ToUpper() == shortname.ToUpper() || x.noms.nom_retropie.ToUpper() == shortname.ToUpper() || x.noms.nom_launchbox.ToUpper() == shortname.ToUpper() || x.noms.noms_commun.ToUpper() == shortname.ToUpper());
+            var filterrecalbox = listSysSS.Where(x => x.noms.nom_recalbox != null).FirstOrDefault(x => x.noms.nom_recalbox.ToUpper() == shortname.ToUpper());
+            if (filterrecalbox != null)
+            {
+                return (Models.ScreenScraper.System.Systeme)filterrecalbox;
+            }
+            else
+            {
+                var filterretropie = listSysSS.Where(x => x.noms.nom_retropie != null).FirstOrDefault(x => x.noms.nom_retropie.ToUpper() == shortname.ToUpper());
+                if(filterretropie != null)
+                {
+                    return (Models.ScreenScraper.System.Systeme)filterretropie;
+                }
+                else
+                {
+                    var filterlaunchbox = listSysSS.Where(x => x.noms.nom_launchbox != null).FirstOrDefault(x => x.noms.nom_launchbox.ToUpper() == shortname.ToUpper());
+                    if (filterlaunchbox != null)
+                    {
+                        return (Models.ScreenScraper.System.Systeme)filterlaunchbox;
+                    }
+                    else
+                    {
+                        var filtercommun = listSysSS.Where(x => x.noms.noms_commun != null).FirstOrDefault(x => x.noms.noms_commun.ToUpper() == shortname.ToUpper());
+                        if (filtercommun != null)
+                        {
+                            return (Models.ScreenScraper.System.Systeme)filtercommun;
+                        }
+                    }
+                }
+                return null;
+            }
+
+            //return (Models.ScreenScraper.System.Systeme)listSysSS.FirstOrDefault(x => x.noms.nom_recalbox.ToUpper() == shortname.ToUpper() || x.noms.nom_retropie.ToUpper() == shortname.ToUpper() || x.noms.nom_launchbox.ToUpper() == shortname.ToUpper() || x.noms.noms_commun.ToUpper() == shortname.ToUpper());
         }
         public IEnumerable<Models.ScreenScraper.System.Systeme> GetAllSysFromJSON()
         {

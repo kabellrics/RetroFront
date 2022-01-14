@@ -32,10 +32,6 @@
                         <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
-                        <RowDefinition Height="2*"></RowDefinition>
-                        <RowDefinition Height="2*"></RowDefinition>
-                        <RowDefinition Height="2*"></RowDefinition>
-                        <RowDefinition Height="2*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Viewbox Stretch="Uniform" Grid.Row="0" HorizontalAlignment="Left">
                         <Label Content="Emplacement Paramètres" Style="{DynamicResource MaterialDesignLabel}"></Label>
@@ -45,14 +41,14 @@
                         <Label Content="Dossier Paramètres" Style="{DynamicResource MaterialDesignLabel}"></Label>
                     </Viewbox>
                     <TextBlock Grid.Row="3" Style="{DynamicResource MaterialDesignTextBlock}" Text="{Binding AppSettingsFolder}"></TextBlock>
-                    <Viewbox Stretch="Uniform" Grid.Row="4" HorizontalAlignment="Left">
+                    <!--<Viewbox Stretch="Uniform" Grid.Row="4" HorizontalAlignment="Left">
                         <Label Content="Ligne de Commandes Retroarch" Style="{DynamicResource MaterialDesignLabel}"></Label>
                     </Viewbox>
                     <TextBlock Grid.Row="5" Style="{DynamicResource MaterialDesignTextBlock}" Text="{Binding RetroarchCMD}"></TextBlock>
                     <Viewbox Stretch="Uniform" Grid.Row="6" HorizontalAlignment="Left">
                         <Label Content="Dossier Retroarch" Style="{DynamicResource MaterialDesignLabel}"></Label>
                     </Viewbox>
-                    <TextBox Grid.Row="7" Text="{Binding RetroarchPath, Mode=TwoWay}" Style="{DynamicResource MaterialDesignTextBox}"></TextBox>
+                    <TextBox Grid.Row="7" Text="{Binding RetroarchPath, Mode=TwoWay}" Style="{DynamicResource MaterialDesignTextBox}"></TextBox>-->
                 </Grid>
             </TabItem>
             <TabItem Header="Theme">

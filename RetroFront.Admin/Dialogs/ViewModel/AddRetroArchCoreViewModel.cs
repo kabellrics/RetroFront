@@ -51,21 +51,21 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             set { _systemes = value; RaisePropertyChanged(); }
         }
 
-        private ObservableCollection<RetroarchCore> _retroarchCores;
-        public ObservableCollection<RetroarchCore> RetroarchCores
-        {
-            get { return _retroarchCores; }
-            set { _retroarchCores = value; RaisePropertyChanged(); }
-        }
-        public AddRetroArchCoreViewModel()
-        {
-            _retroarchService = App.ServiceProvider.GetRequiredService<IRetroarchService>();
-            _databaseService = App.ServiceProvider.GetRequiredService<IDatabaseService>();
-            var plateformes = _databaseService.GetSystemes();
-            Systemes = new ObservableCollection<Systeme>(plateformes);
-            var cores = _retroarchService.GetInstalledCore();
-            RetroarchCores = new ObservableCollection<RetroarchCore>(cores);
-        }
+        //private ObservableCollection<RetroarchCore> _retroarchCores;
+        //public ObservableCollection<RetroarchCore> RetroarchCores
+        //{
+        //    get { return _retroarchCores; }
+        //    set { _retroarchCores = value; RaisePropertyChanged(); }
+        //}
+        //public AddRetroArchCoreViewModel()
+        //{
+        //    _retroarchService = App.ServiceProvider.GetRequiredService<IRetroarchService>();
+        //    _databaseService = App.ServiceProvider.GetRequiredService<IDatabaseService>();
+        //    var plateformes = _databaseService.GetSystemes();
+        //    Systemes = new ObservableCollection<Systeme>(plateformes);
+        //    var cores = _retroarchService.GetInstalledCore();
+        //    RetroarchCores = new ObservableCollection<RetroarchCore>(cores);
+        //}
         public void CloseDialogWithResult(Window dialog, bool result)
         {
             if (dialog != null)
@@ -100,7 +100,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             emu.Name = $"{Selectedsysteme.Name} - Retroarch {SelectedRetroarchCore.Name}";
             emu.Extension = Extension;
             emu.SystemeID = Selectedsysteme.SystemeID;
-            emu.Chemin = _retroarchService.RetroarchEXEPath();
+            //emu.Chemin = _retroarchService.RetroarchEXEPath();
             emu.Command = $"-L {SelectedRetroarchCore.path} %ROM_RAW%";
             return JsonConvert.SerializeObject(emu);
         }

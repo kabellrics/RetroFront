@@ -114,8 +114,8 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             ScreenScraperPWD = settings?.ScreenScraperPWD;
             AppSettingsLocation = settings.AppSettingsLocation;
             AppSettingsFolder = settings.AppSettingsFolder;
-            RetroarchCMD = settings.RetroarchCMD;
-            RetroarchPath = settings?.RetroarchPath;
+            //RetroarchCMD = settings.RetroarchCMD;
+            //RetroarchPath = settings?.RetroarchPath;
             SGDBKey = settings?.SGDBKey;
             SysDisplay = settings.CurrentSysDisplay;
             RomDisplay = settings.CurrentGameDisplay;
@@ -183,8 +183,8 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             settings.ScreenScraperPWD = ScreenScraperPWD;
             settings.AppSettingsLocation = AppSettingsLocation;
             settings.AppSettingsFolder = AppSettingsFolder;
-            settings.RetroarchCMD = RetroarchCMD;
-            settings.RetroarchPath = RetroarchPath;
+            //settings.RetroarchCMD = RetroarchCMD;
+            //settings.RetroarchPath = RetroarchPath;
             settings.SGDBKey = SGDBKey;
             settings.CurrentSysDisplay= SysDisplay;
             settings.CurrentGameDisplay= RomDisplay;

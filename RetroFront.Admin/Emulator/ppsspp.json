@@ -1,7 +1,7 @@
 {
   "Id": "ppsspp",
   "Name": "PPSSPP",
-  "Profiles": [
+  "Plateformes": [
     {
       "Name": "PPSSPP 64bit",
       "Shortname": "psp",

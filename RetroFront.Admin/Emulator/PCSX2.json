@@ -2,7 +2,7 @@
   "Id": "pcsx2",
   "Name": "PCSX2",
   "Website": "https://pcsx2.net/",
-  "Profiles": [
+  "Plateformes": [
     {
       "Name": "Playstation 2",
       "Shortname": "ps2",

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
 using System.Net;
+using System.Linq;
 
 namespace RetroFront.Services.Implementation
 {
@@ -193,7 +194,6 @@ namespace RetroFront.Services.Implementation
                 return string.Empty;
             }
         }
-
         public GameRom ScrapeGame(GameRom game)
         {
             return game;
