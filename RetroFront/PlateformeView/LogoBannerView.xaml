@@ -33,14 +33,21 @@
                         </Grid.Background>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="5*"></RowDefinition>
-                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="3*"></RowDefinition>
                             <RowDefinition Height="5*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="1" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
                             <Grid.Background>
                                 <SolidColorBrush Color="White" Opacity="0.55"></SolidColorBrush>
                             </Grid.Background>
-                            <Image Source="{Binding Logo}" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Image>
+                            <Image Grid.Row="0" Source="{Binding Logo}" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Image>
+                            <Viewbox Grid.Row="1">
+                                            <Label Content="{Binding Name}" FontFamily="Goudy Stout" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+                            </Viewbox>
                         </Grid>
                     </Grid>
                 </DataTemplate>

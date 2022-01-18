@@ -58,6 +58,7 @@ namespace RetroFront
             services.AddSingleton<FrontSysViewModel>();
             services.AddSingleton<FrontGameViewModel>();
             services.AddSingleton<LaunchFrontViewModel>();
+            services.AddSingleton<StartGameViewModel>();
 
             services.AddTransient(typeof(SystemeWindow));
             services.AddTransient(typeof(GameWindow));

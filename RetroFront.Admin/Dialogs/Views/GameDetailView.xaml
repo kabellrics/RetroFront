@@ -58,13 +58,13 @@
             <Viewbox Grid.Row="0" Grid.Column="3" Stretch="Uniform" Grid.ColumnSpan="2">
                 <Label Content="Screenscraper" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </Viewbox>
-            <Viewbox Grid.Column="0" Grid.Row="2" Stretch="Uniform" Margin="0,33,0,0" Grid.ColumnSpan="2">
+            <Viewbox Grid.Column="0" Grid.Row="2" Stretch="Uniform" Grid.ColumnSpan="2">
                 <Button Command="{Binding ResolveGameCommand}" CommandParameter="{x:Static enum:ScraperSource.IGDB}" Content="{Binding IsResolveIGDB}" Style="{DynamicResource MaterialDesignToolButton}"></Button>
             </Viewbox>
-            <Viewbox Grid.Column="2" Grid.Row="2" Stretch="Uniform" Margin="0,33,0,0">
+            <Viewbox Grid.Column="2" Grid.Row="2" Stretch="Uniform">
                 <Button Command="{Binding ResolveGameCommand}" CommandParameter="{x:Static enum:ScraperSource.SGDB}" Content="{Binding IsResolveSGDB}" Style="{DynamicResource MaterialDesignToolButton}"></Button>
             </Viewbox>
-            <Viewbox Grid.Column="3" Grid.Row="2" Stretch="Uniform" Grid.ColumnSpan="2" Margin="0,33,0,0">
+            <Viewbox Grid.Column="3" Grid.Row="2" Stretch="Uniform" Grid.ColumnSpan="2">
                 <Button Command="{Binding ResolveGameCommand}" CommandParameter="{x:Static enum:ScraperSource.Screenscraper}" Content="{Binding IsResolveSCSP}" Style="{DynamicResource MaterialDesignToolButton}"></Button>
             </Viewbox>
             <Viewbox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Stretch="Uniform">
@@ -108,29 +108,37 @@
                 <RowDefinition Height="6*"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                 <Label Content="{Binding Path}" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </Grid>
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Grid.Column="0">
                 <Label Content="{Binding Editeur}" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </Grid>
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Label Content="Favoris" Style="{DynamicResource MaterialDesignLabel}"></Label>
+            </Grid>            
+            <Grid Grid.Row="2" Grid.Column="0">
                 <TextBlock Text="{Binding Dev}" Style="{DynamicResource MaterialDesignBody1TextBlock}" TextWrapping="WrapWithOverflow"></TextBlock>
             </Grid>
-            <Grid Grid.Row="3">
+            <Grid Grid.Row="2" Grid.Column="1">
+                <controls:ToggleSwitch IsOn="{Binding IsFavorite}"></controls:ToggleSwitch>
+                <!--<TextBlock Text="{Binding Dev}" Style="{DynamicResource MaterialDesignBody1TextBlock}" TextWrapping="WrapWithOverflow"></TextBlock>-->
+            </Grid>
+            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
                 <Label Content="{Binding Year}" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </Grid>
-            <Grid Grid.Row="4">
+            <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
                 <Label Content="{Binding Genre}" Style="{DynamicResource MaterialDesignLabel}"></Label>
             </Grid>
-            <Grid Grid.Row="5">
+            <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
                 <TextBlock Text="{Binding Desc}" TextWrapping="WrapWithOverflow" VerticalAlignment="Stretch" Style="{DynamicResource MaterialDesignTextBlock}"></TextBlock>
             </Grid>
-            <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="4">
+            <Grid Grid.Column="2" Grid.Row="0" Grid.RowSpan="4">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="8*"></RowDefinition>
                     <RowDefinition Height="3*"></RowDefinition>
@@ -181,7 +189,7 @@
                     </ComboBoxItem>
                 </ComboBox>
             </Grid>
-            <Grid Grid.Column="2" Grid.Row="0" Grid.RowSpan="4">
+            <Grid Grid.Column="3" Grid.Row="0" Grid.RowSpan="4">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="8*"></RowDefinition>
                     <RowDefinition Height="3*"></RowDefinition>
@@ -223,7 +231,7 @@
                     </ComboBoxItem>
                 </ComboBox>
             </Grid>
-            <Grid Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <Grid Grid.Column="2" Grid.Row="4" Grid.RowSpan="2" Grid.ColumnSpan="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="8*"></RowDefinition>
                     <RowDefinition Height="3*"></RowDefinition>
@@ -274,7 +282,7 @@
                     </ComboBoxItem>
                 </ComboBox>
             </Grid>
-            <Grid Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" >
+            <Grid Grid.Column="2" Grid.Row="6" Grid.ColumnSpan="2" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="8*"></RowDefinition>
                     <RowDefinition Height="3*"></RowDefinition>
@@ -316,7 +324,7 @@
                     </ComboBoxItem>
                 </ComboBox>
             </Grid>
-            <Grid Grid.Column="0" Grid.Row="6">
+            <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="8*"></RowDefinition>
                     <RowDefinition Height="3*"></RowDefinition>

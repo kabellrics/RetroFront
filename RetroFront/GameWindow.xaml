@@ -61,6 +61,9 @@
         <DataTemplate x:Key="FlixView">
             <views:FlixView/>
         </DataTemplate>
+        <DataTemplate x:Key="DetailView">
+            <views:GameDetailView/>
+        </DataTemplate>
         <Style x:Key="MyContentStyle" TargetType="ContentPresenter">
             <Setter Property="ContentTemplate" Value="{StaticResource FanartView}"/>
             <Style.Triggers>
@@ -90,6 +93,9 @@
                 </DataTrigger>
                 <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.FlixView}">
                     <Setter Property="ContentTemplate" Value="{StaticResource FlixView}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.Detail}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource DetailView}"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>

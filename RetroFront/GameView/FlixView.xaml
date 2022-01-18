@@ -17,7 +17,7 @@
     </UserControl.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="5*"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
         </Grid.RowDefinitions>
         <Border Grid.Row="0">
@@ -41,10 +41,20 @@
                             </Viewbox>
                             <Border Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
                                 <Border.Background>
-                                    <ImageBrush ImageSource="{Binding Sxreenshoot}" Stretch="Fill"/>
+                                    <ImageBrush ImageSource="{Binding Sxreenshoot}" Stretch="Fill">
+                                    </ImageBrush>
                                 </Border.Background>
                                 <Grid>
-                                    <MediaElement Stretch="Fill" Source="{Binding Video}"></MediaElement>
+                                    <MediaElement Stretch="Fill" Source="{Binding Video}" MediaEnded="MediaElement_MediaEnded">
+                                        <!--<MediaElement.OpacityMask>
+                                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                <GradientStop Color="Transparent" Offset="0.0" />
+                                                <GradientStop Color="Transparent" Offset="0.25" />
+                                                <GradientStop Color="Black" Offset="0.75" />
+                                                <GradientStop Color="Black" Offset="1.0" />
+                                            </LinearGradientBrush>
+                                        </MediaElement.OpacityMask>-->
+                                    </MediaElement>
                                 </Grid>
                             </Border>
                             <Border Grid.Row="2" Grid.Column="0" Visibility="{Binding ShowDetail, 

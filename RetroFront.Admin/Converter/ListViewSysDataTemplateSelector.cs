@@ -34,7 +34,14 @@ namespace RetroFront.Admin.Converter
             {
                 if (File.Exists(game.Game.Fanart) || File.Exists(game.Game.Fanart.Replace(".jpg", ".png")))
                 {
-                    return elemnt.FindResource("GameFanartTemplate") as DataTemplate;
+                    if (game.Game.IsFavorite)
+                    {
+                        return elemnt.FindResource("GameFanartFavoriteTemplate") as DataTemplate;
+                    }
+                    else
+                    {
+                        return elemnt.FindResource("GameFanartUnFavoriteTemplate") as DataTemplate; 
+                    }
                 }
             }
             return elemnt.FindResource("GameBasicTemplate") as DataTemplate;

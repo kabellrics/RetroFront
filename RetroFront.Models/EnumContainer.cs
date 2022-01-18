@@ -84,5 +84,7 @@ namespace RetroFront.Models
         BigBox,
         [Description("Flix")] 
         FlixView,
+        [Description("Detail")]
+        Detail,
     }
 }

@@ -167,9 +167,26 @@ namespace RetroFront.ViewModels
         public void LoadData() 
         {
             Games = new ObservableCollection<GameViewModel>();
-            foreach(var game in _databaseService.GetGamesForPlateforme(CurrentSysteme.SystemeID).OrderBy(x=>x.Name))
+            if (CurrentSysteme.Shortname == "all")
             {
-                Games.Add(new GameViewModel(game));
+                foreach (var game in _databaseService.GetGames().OrderBy(x => x.Name))
+                {
+                    Games.Add(new GameViewModel(game));
+                }
+            }
+            else if (CurrentSysteme.Shortname == "fav")
+            {
+                foreach (var game in _databaseService.GetGames().Where(x=>x.IsFavorite == true).OrderBy(x => x.Name))
+                {
+                    Games.Add(new GameViewModel(game));
+                }
+            }
+            else
+            {
+                foreach (var game in _databaseService.GetGamesForPlateforme(CurrentSysteme.SystemeID).OrderBy(x => x.Name))
+                {
+                    Games.Add(new GameViewModel(game));
+                }
             }
         }
         private void Loaded()

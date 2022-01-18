@@ -60,6 +60,30 @@ namespace RetroFront.Services.Implementation
                 //throw;
             }
         }
+        public void LoadThemesForDefaultCollection()
+        {
+            try
+            {
+                var allthemes = Directory.EnumerateDirectories(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes"));
+                foreach(string theme in allthemes)
+                {
+                    Directory.CreateDirectory(Path.Combine(theme, "all"));
+                    Directory.CreateDirectory(Path.Combine(theme, "fav"));
+                    File.Copy(@"retro-game.jpg", Path.Combine(Path.Combine(theme, "all"), "bck.jpg"), true);
+                    File.Copy(@"retro-game.jpg", Path.Combine(Path.Combine(theme, "fav"), "bck.jpg"), true);
+                }
+                Directory.CreateDirectory(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "all"));
+                Directory.CreateDirectory(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "fav"));
+                //File.Create(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "all", $"logo.png"));
+                //File.Create(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "fav", $"logo.png"));
+                File.Copy(@"AllGames.png", Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "all", $"logo.png"), true);
+                File.Copy(@"star.png", Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "fav", $"logo.png"), true);
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
+        }
         public void LoadLogoForSysteme(Systeme systeme, string themename, string imgpath)
         {
             try

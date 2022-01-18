@@ -51,6 +51,13 @@ namespace RetroFront.Services.Implementation
             duplicate.Genre = game.Genre;
             duplicate.Name = game.Name;
             duplicate.IsDuplicate = true;
+            duplicate.IsFavorite = game.IsFavorite;
+            duplicate.LastStart = game.LastStart;
+            duplicate.NbTimeStarted = game.NbTimeStarted;
+            duplicate.SGDBID = game.SGDBID;
+            duplicate.SteamID = game.SteamID;
+            duplicate.IGDBID = game.IGDBID;
+            duplicate.RAWGID = game.RAWGID;
             return duplicate;
         }
         public IEnumerable<GameRom> ImportGame(string gamelistpath, Emulator emulator)

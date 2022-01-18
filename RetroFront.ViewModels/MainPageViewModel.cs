@@ -486,7 +486,9 @@ namespace RetroFront.ViewModels
             CustomList = new ObservableCollection<SystemeViewModel>(Systemes.Where(x => x.Systeme.Type == SysType.Collection).OrderBy(x=>x.Name));
             OldSystemes = new ObservableCollection<SystemeViewModel>(Systemes.Where(x=>x.Systeme.Type != SysType.Collection && x.Systeme.Type != SysType.GameStore && x.Systeme.Type != SysType.Standalone).OrderBy(x=>x.Name));
             OnlySystemes = new ObservableCollection<SystemeViewModel>(Systemes.Where(x => x.Systeme.Type != SysType.Collection && x.Systeme.Type != SysType.Standalone).OrderBy(x => x.Name));
+            AddFavoriteGame();
             AddAllGames();
+            _themeService.LoadThemesForDefaultCollection();
             ReloadFullEmulators();
         }
         private void AddCore()
@@ -743,7 +745,7 @@ namespace RetroFront.ViewModels
                 ReloadData();
             }
         }
-        private async void ShowDetailGameGame(GameViewModel obj)
+        private void ShowDetailGameGame(GameViewModel obj)
         {
             var oldgamebox = obj.Game.Boxart;
             var oldgamefanart = obj.Game.Fanart;
@@ -873,6 +875,9 @@ namespace RetroFront.ViewModels
                     duplicate.SteamID = game.SteamID;
                     duplicate.IGDBID = game.IGDBID;
                     duplicate.RAWGID = game.RAWGID;
+                    duplicate.IsFavorite = game.IsFavorite;
+                    duplicate.LastStart = game.LastStart;
+                    duplicate.NbTimeStarted = game.NbTimeStarted;
                 }
                 _databaseService.SaveUpdate();
                 ReloadData();
@@ -1245,6 +1250,37 @@ namespace RetroFront.ViewModels
                 ReloadData();
             }
         }
+        private void AddFavoriteGame()
+        {
+            var newsys = new Systeme();
+            newsys.Name = "Jeux Favoris";
+            newsys.Shortname = "fav";
+            newsys.Type = SysType.Collection;
+            SystemeViewModel sysvm = new SystemeViewModel(newsys);
+            sysvm.Emulators = new ObservableCollection<EmulatorViewModel>();
+            var allgames = _databaseService.GetGames().Where(x => x.IsFavorite == true);
+            var groupedGames = from game in allgames
+                               group game by game.EmulatorID into groupedgame
+                               orderby groupedgame.Key
+                               select groupedgame;
+            foreach (var grp in groupedGames)
+            {
+                var newemu = _emulateurService.DuplicateEmulator(_databaseService.GetEmulator(grp.Key));
+                newemu.SystemeID = newsys.SystemeID;
+                EmulatorViewModel emuVM = new EmulatorViewModel(newemu);
+                emuVM.Games = new ObservableCollection<GameViewModel>();
+                foreach (var game in grp)
+                {
+                    var dupligame = _gameService.DuplicateGame(game);
+                    dupligame.EmulatorID = newemu.EmulatorID;
+                    emuVM.Games.Add(new GameViewModel(dupligame));
+                }
+                sysvm.Emulators.Add(emuVM);
+            }
+            sysvm.Bck = _themeService.GetBckForTheme(newsys.Shortname, _fileJSONService.GetCurrentTheme());
+            sysvm.Logo = Path.Combine(_fileJSONService.appSettings.AppSettingsFolder, "media", "fav", $"logo.png");
+            Systemes.Insert(0, sysvm);
+        }
         private void AddAllGames()
         {
             var newsys = new Systeme();
@@ -1272,6 +1308,8 @@ namespace RetroFront.ViewModels
                 }
                 sysvm.Emulators.Add(emuVM);
             }
+            sysvm.Bck = _themeService.GetBckForTheme(newsys.Shortname, _fileJSONService.GetCurrentTheme());
+            sysvm.Logo = Path.Combine(_fileJSONService.appSettings.AppSettingsFolder, "media", "all", $"logo.png");
             Systemes.Insert(0, sysvm);
         }
     }

@@ -132,7 +132,42 @@ namespace RetroFront.ViewModels
                 sysvm.NBGame = $"{_databaseService.GetNbGamesForPlateforme(sys.SystemeID)} Jeux";
                 Systemes.Add(sysvm);
             }
-            Systemes = new ObservableCollection<SystemeViewModel>(Systemes.OrderBy(x => x.Systeme.Type).ThenBy(x => x.Name));
+            Systemes = new ObservableCollection<SystemeViewModel>(Systemes.OrderBy(x => x.Name));
+            AddFavoriteGame();
+            AddAllGames();
+            //Systemes = new ObservableCollection<SystemeViewModel>(Systemes.OrderBy(x => x.Systeme.Type).ThenBy(x => x.Name));
+        }
+        private void AddFavoriteGame()
+        {
+            var newsys = new Systeme();
+            newsys.Name = "Jeux Favoris";
+            newsys.Shortname = "fav";
+            newsys.Type = SysType.Collection;
+            SystemeViewModel sysvm = new SystemeViewModel(newsys);
+            sysvm.Bck = _themeService.GetBckForTheme(newsys.Shortname, _fileJSONService.GetCurrentTheme());
+            var logopath = _themeService.GetLogoForTheme(newsys.Shortname);
+            if (File.Exists(logopath))
+            {
+                sysvm.Logo = logopath;
+                sysvm.HasLogo = true;
+            }
+            Systemes.Insert(0, sysvm);
+        }
+        private void AddAllGames()
+        {
+            var newsys = new Systeme();
+            newsys.Name = "Tous les Jeux";
+            newsys.Shortname = "all";
+            newsys.Type = SysType.Collection;
+            SystemeViewModel sysvm = new SystemeViewModel(newsys);
+            sysvm.Bck = _themeService.GetBckForTheme(newsys.Shortname, _fileJSONService.GetCurrentTheme());
+            var logopath = _themeService.GetLogoForTheme(newsys.Shortname);
+            if (File.Exists(logopath))
+            {
+                sysvm.Logo = logopath;
+                sysvm.HasLogo = true;
+            }
+            Systemes.Insert(0, sysvm);
         }
         private void OpenDisplay()
         {

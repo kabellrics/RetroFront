@@ -8,6 +8,7 @@ namespace RetroFront.Services.Interface
     public interface INavigationService
     {
         object Parameter { get; }
+        void GoBack();
         void NavigateTo(string pageKey, object parameter, string frameName);
     }
 }

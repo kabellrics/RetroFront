@@ -82,6 +82,12 @@ namespace RetroFront.Admin.Dialogs.ViewModel
 
 
         #region Properties
+        private bool _IsFavorite;
+        public bool IsFavorite
+        {
+            get { return _IsFavorite; }
+            set { _IsFavorite = value; RaisePropertyChanged(); }
+        }
         private int _IsResolveSGDB;
         public int IsResolveSGDB
         {
@@ -483,6 +489,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             GameCurrent.Screenshoot = Screenshoot;
             GameCurrent.Video = Video;
             GameCurrent.Name = Name;
+            GameCurrent.IsFavorite = IsFavorite;
             CloseDialogWithResult(parameter as Window, true);
         }
     }

@@ -65,5 +65,11 @@ namespace RetroFront.GameView
         {
             this.Focus();
         }
+
+        private void MediaElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            var mediaele = sender as MediaElement;
+            mediaele.Visibility = Visibility.Hidden;
+        }
     }
 }

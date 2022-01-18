@@ -21,13 +21,13 @@ namespace TestService
         //    var dbservice = new DatabaseService();
         //    Assert.AreEqual(43,dbservice.GetSystemes());
         //}
-        [TestMethod]
-        public void TestMethod3()
-        {
-            var RetroarchService = new RetroarchService();
-            var listcore = RetroarchService.GetInstalledCore();
-            Assert.AreNotEqual(null, listcore);
-        }
+        //[TestMethod]
+        //public void TestMethod3()
+        //{
+        //    var RetroarchService = new RetroarchService();
+        //    var listcore = RetroarchService.GetInstalledCore();
+        //    Assert.AreNotEqual(null, listcore);
+        //}
         [TestMethod]
         public void TestMethod4()
         {
@@ -76,6 +76,13 @@ namespace TestService
             var JsonReader = new FileJSONService();
             var syslist = JsonReader.GetStandaloneEmulators();
             Assert.AreNotEqual(string.Empty, syslist);
+        }
+        [TestMethod]
+        public void TestMethod11()
+        {
+            var themeService = new ThemeService();
+            themeService.LoadThemesForDefaultCollection();
+            Assert.Fail();
         }
     }
 }

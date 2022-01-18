@@ -9,6 +9,7 @@ namespace RetroFront.Services.Interface
         string GetLogoForTheme(string plateforme, string theme);
         string GetBckForTheme(string plateforme, string theme);
         void LoadDefaultBckForSysteme(Systeme systeme);
+        void LoadThemesForDefaultCollection();
         void LoadBckForSysteme(Systeme systeme, string themename, string imgpath);
         void LoadLogoForSysteme(Systeme systeme, string themename, string imgpath);
         string GetLogoForTheme(string plateforme);

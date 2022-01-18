@@ -15,5 +15,7 @@ namespace RetroFront
             => App.ServiceProvider.GetRequiredService<FrontGameViewModel>();
         public LaunchFrontViewModel StartVM
             => App.ServiceProvider.GetRequiredService<LaunchFrontViewModel>();
+        public StartGameViewModel GameStarterVM
+            => App.ServiceProvider.GetRequiredService<StartGameViewModel>();
     }
 }
