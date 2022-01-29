@@ -39,6 +39,9 @@ namespace RetroFront.ViewModels
                 var emulator = _databaseService.GetEmulator(Game.EmulatorID);
                 execcommand = emulator.Command.Replace("{ImagePath}", Game.Path);
             }
+            Game.NbTimeStarted++;
+            Game.LastStart = DateTime.Now;
+            _databaseService.SaveUpdate();
             if(!string.IsNullOrEmpty(execcommand))
             {
                 Process.Start(execcommand);

@@ -101,7 +101,31 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         {
             get { return _romDisplayList; }
             set { _romDisplayList = value; RaisePropertyChanged(); }
-        } 
+        }
+        private bool _ShowAll;
+        public bool ShowAll
+        {
+            get { return _ShowAll; }
+            set { _ShowAll = value; RaisePropertyChanged(); }
+        }
+        private bool _ShowFav;
+        public bool ShowFav
+        {
+            get { return _ShowFav; }
+            set { _ShowFav = value; RaisePropertyChanged(); }
+        }
+        private bool _ShowMostPlay;
+        public bool ShowMostPlay
+        {
+            get { return _ShowMostPlay; }
+            set { _ShowMostPlay = value; RaisePropertyChanged(); }
+        }
+        private bool _ShowLastPlay;
+        public bool ShowLastPlay
+        {
+            get { return _ShowLastPlay; }
+            set { _ShowLastPlay = value; RaisePropertyChanged(); }
+        }
         #endregion
         public SettingsViewModel()
         {
@@ -119,25 +143,12 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             SGDBKey = settings?.SGDBKey;
             SysDisplay = settings.CurrentSysDisplay;
             RomDisplay = settings.CurrentGameDisplay;
+            ShowAll = settings.ShowAll;
+            ShowFav = settings.ShowFav;
+            ShowLastPlay = settings.ShowLastPlayed;
+            ShowMostPlay = settings.ShowMostPlayed;
             this.SysDisplayList = _enumService.GetSysDisplays();
-            //this.SysDisplayList = new List<SysDisplay>
-            //{
-            //        SysDisplay.BigLogo,
-            //        SysDisplay.LogoBanner,
-            //        SysDisplay.CarrouselLogo,
-            //        SysDisplay.WheelLeftLogo,
-            //        SysDisplay.WheelRightLogo
-            //};
             this.RomDisplayList = _enumService.GetRomDisplays();
-            //this.RomDisplayList = new List<RomDisplay>
-            //{
-            //        RomDisplay.WallBox,
-            //        RomDisplay.WallBanner,
-            //        RomDisplay.ListLogo,
-            //        RomDisplay.ListBanner,
-            //        RomDisplay.Screenshot,
-            //        RomDisplay.Fanart
-            //};
         }
 
         private void Getthemes()
@@ -188,6 +199,10 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             settings.SGDBKey = SGDBKey;
             settings.CurrentSysDisplay= SysDisplay;
             settings.CurrentGameDisplay= RomDisplay;
+            settings.ShowAll = ShowAll;
+            settings.ShowFav = ShowFav;
+            settings.ShowLastPlayed = ShowLastPlay;
+            settings.ShowMostPlayed = ShowMostPlay;
             _FileJson.UpdateSettings(settings);
             CloseDialogWithResult(parameter as Window, true);
         }

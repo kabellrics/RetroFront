@@ -37,6 +37,10 @@ namespace RetroFront.Services.Implementation
                 appSettings.CurrentSysDisplay = SysDisplay.BigLogo;
                 appSettings.AppSettingsFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront";
                 appSettings.AppSettingsLocation = $"{appSettings.AppSettingsFolder}\\AppSettings.json";
+                appSettings.ShowAll = true;
+                appSettings.ShowFav = true;
+                appSettings.ShowLastPlayed = true;
+                appSettings.ShowMostPlayed = true;
                 var jsonApp =  JsonConvert.SerializeObject(appSettings);
                 File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
             }

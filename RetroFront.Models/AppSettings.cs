@@ -17,6 +17,10 @@ namespace RetroFront.Models
         public SysDisplay CurrentSysDisplay { get; set; }
         public RomDisplay CurrentGameDisplay { get; set; }
         public string DefaultBCK { get; set; }
+        public bool ShowAll { get; set; }
+        public bool ShowFav { get; set; }
+        public bool ShowLastPlayed { get; set; }
+        public bool ShowMostPlayed { get; set; }
 
     }
 }

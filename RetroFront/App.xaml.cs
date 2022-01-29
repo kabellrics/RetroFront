@@ -40,6 +40,7 @@ namespace RetroFront
                 var navigationservice = new NavigationService();
                 navigationservice.Configure("Systeme",new Uri("../SystemeWindow.xaml",UriKind.Relative));
                 navigationservice.Configure("Games", new Uri("../GameWindow.xaml", UriKind.Relative));
+                navigationservice.Configure("GameStart", new Uri("../GameStartWindows.xaml", UriKind.Relative));
                 return navigationservice;
             });
 

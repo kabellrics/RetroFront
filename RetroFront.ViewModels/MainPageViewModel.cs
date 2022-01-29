@@ -39,12 +39,12 @@ namespace RetroFront.ViewModels
         public ScraperSource CurrentScrapeSource
         {
             get { return _currentsource; }
-            set { _currentsource = value;RaisePropertyChanged(); }
+            set { _currentsource = value; RaisePropertyChanged(); }
         }
         public ScraperType CurrentScraperType
         {
             get { return _currenttype; }
-            set { _currenttype = value;RaisePropertyChanged(); }
+            set { _currenttype = value; RaisePropertyChanged(); }
         }
 
         private int _selectedIndexSys;
@@ -374,11 +374,11 @@ namespace RetroFront.ViewModels
         }
         private void LoadThemeSettings()
         {
-            try 
+            try
             {
                 if (File.Exists(_fileJSONService.appSettings.DefaultBCK))
                 {
-                    BCKImg = _fileJSONService.appSettings.DefaultBCK; 
+                    BCKImg = _fileJSONService.appSettings.DefaultBCK;
                 }
             }
             catch (Exception ex)
@@ -429,9 +429,9 @@ namespace RetroFront.ViewModels
                         if (logopath != null)
                         {
                             _themeService.LoadLogoForSysteme(sys.Systeme, newtheme, logopath);
-                        } 
+                        }
                     }
-                    var imgpath = _dialogService.showImgPickerForPlateformeDialog(sys.Systeme, newtheme,ScraperType.ArtWork);
+                    var imgpath = _dialogService.showImgPickerForPlateformeDialog(sys.Systeme, newtheme, ScraperType.ArtWork);
                     if (imgpath != null)
                     {
                         _themeService.LoadBckForSysteme(sys.Systeme, newtheme, imgpath);
@@ -459,7 +459,7 @@ namespace RetroFront.ViewModels
             //    if (!string.IsNullOrEmpty(sysSCSPvm.ShortName))
             //        AllSystemes.Add(sysSCSPvm);
             //}
-            AllSystemes = new ObservableCollection<StandaloneEmulator>(_fileJSONService.GetStandaloneEmulators().OrderBy(x =>x.Name));
+            AllSystemes = new ObservableCollection<StandaloneEmulator>(_fileJSONService.GetStandaloneEmulators().OrderBy(x => x.Name));
             Systemes = new ObservableCollection<SystemeViewModel>();
             CustomList = new ObservableCollection<SystemeViewModel>();
             foreach (var sys in _databaseService.GetSystemes().OrderBy(x => x.Name))
@@ -483,9 +483,11 @@ namespace RetroFront.ViewModels
                 Systemes.Add(sysvm);
             }
             Systemes = new ObservableCollection<SystemeViewModel>(Systemes.OrderBy(x => x.Systeme.Type).ThenBy(x => x.Name));
-            CustomList = new ObservableCollection<SystemeViewModel>(Systemes.Where(x => x.Systeme.Type == SysType.Collection).OrderBy(x=>x.Name));
-            OldSystemes = new ObservableCollection<SystemeViewModel>(Systemes.Where(x=>x.Systeme.Type != SysType.Collection && x.Systeme.Type != SysType.GameStore && x.Systeme.Type != SysType.Standalone).OrderBy(x=>x.Name));
+            CustomList = new ObservableCollection<SystemeViewModel>(Systemes.Where(x => x.Systeme.Type == SysType.Collection).OrderBy(x => x.Name));
+            OldSystemes = new ObservableCollection<SystemeViewModel>(Systemes.Where(x => x.Systeme.Type != SysType.Collection && x.Systeme.Type != SysType.GameStore && x.Systeme.Type != SysType.Standalone).OrderBy(x => x.Name));
             OnlySystemes = new ObservableCollection<SystemeViewModel>(Systemes.Where(x => x.Systeme.Type != SysType.Collection && x.Systeme.Type != SysType.Standalone).OrderBy(x => x.Name));
+            AddLastPlayed();
+            AddMostPlayed();
             AddFavoriteGame();
             AddAllGames();
             _themeService.LoadThemesForDefaultCollection();
@@ -504,31 +506,31 @@ namespace RetroFront.ViewModels
         }
         private void AddSteamPlateforme()
         {
-                Systeme sys = _databaseService.GetSystemeByName("steam");
-                if (sys == null)
+            Systeme sys = _databaseService.GetSystemeByName("steam");
+            if (sys == null)
+            {
+                sys = new Systeme();
+                sys.Name = "Steam";
+                sys.Shortname = "steam";
+                sys = _databaseService.AddSystem(sys);
+            }
+            var emu = _databaseService.GetEmulatorsForSysteme(sys.SystemeID).FirstOrDefault(x => x.Chemin.Contains("Windows\\explorer.exe"));
+            if (emu == null)
+            {
+                emu = _databaseService.AddEmulator(_emulateurService.AddExplorer(sys));
+            }
+            var findedsteamgames = _steamService.GetSteamGame(emu);
+            var games = _databaseService.GetGames();
+            findedsteamgames = findedsteamgames.Where(x => !games.Any(g => g.SteamID == x.SteamID)).ToList();
+            var validategames = _dialogService.ShowSteamGamesFounded(findedsteamgames);
+            if (validategames != null)
+            {
+                foreach (var game in validategames)
                 {
-                    sys = new Systeme();
-                    sys.Name = "Steam";
-                    sys.Shortname = "steam";
-                    sys = _databaseService.AddSystem(sys);
+                    _databaseService.AddGame(_steamService.GetSteamInfos(game, emu));
                 }
-                var emu = _databaseService.GetEmulatorsForSysteme(sys.SystemeID).FirstOrDefault(x => x.Chemin.Contains("Windows\\explorer.exe"));
-                if(emu == null)
-                {
-                    emu = _databaseService.AddEmulator(_emulateurService.AddExplorer(sys));
-                }
-                var findedsteamgames = _steamService.GetSteamGame(emu);
-                var games = _databaseService.GetGames();
-                findedsteamgames = findedsteamgames.Where(x => !games.Any(g => g.SteamID == x.SteamID)).ToList();
-                var validategames = _dialogService.ShowSteamGamesFounded(findedsteamgames);
-                if (validategames != null)
-                {
-                    foreach (var game in validategames)
-                    {
-                        _databaseService.AddGame(_steamService.GetSteamInfos(game, emu));
-                    }
-                }
-                ReloadData();
+            }
+            ReloadData();
         }
         private void AddEpicPlateforme()
         {
@@ -604,7 +606,7 @@ namespace RetroFront.ViewModels
                 emulator.Name = sysSCSP.StartupExecutable;
                 emulator.IsDuplicate = false;
                 emulator.SystemeID = sys.SystemeID;
-                emulator.Extension = string.Join(' ', sysSCSP.ImageExtensions.Select(x=> $".{x}"));
+                emulator.Extension = string.Join(' ', sysSCSP.ImageExtensions.Select(x => $".{x}"));
                 emulator.Chemin = emupath;
                 emulator.Command = sysSCSP.StartupArguments;
                 _databaseService.AddEmulator(emulator);
@@ -663,7 +665,7 @@ namespace RetroFront.ViewModels
             {
                 var exts = obj.Emulator.Extension.Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList();
                 List<String> romWithExt = new List<String>();
-                foreach(var ext in exts)
+                foreach (var ext in exts)
                 {
                     romWithExt.AddRange(gamefiles.Where(x => x.EndsWith(ext)));
                 }
@@ -711,7 +713,7 @@ namespace RetroFront.ViewModels
             var oldsysScreen = sys.Systeme.Screenshoot;
             var oldsysVideo = sys.Systeme.Video;
             var sysmodified = _dialogService.ShowSystemeDetail(sys.Systeme);
-            if(sysmodified != null)
+            if (sysmodified != null)
             {
                 var targetfolder = _themeService.GetImagePathForTheme(sysmodified.Shortname);
                 if (sysmodified.Logo != oldsyslogo)
@@ -723,7 +725,7 @@ namespace RetroFront.ViewModels
                     fstream.Dispose();
                     _themeService.DownloadSteamData(sysmodified.Logo, targetfile);
                 }
-                if(sysmodified.Screenshoot != oldsysScreen)
+                if (sysmodified.Screenshoot != oldsysScreen)
                 {
                     var targetfile = $"{targetfolder}{Path.GetExtension(sysmodified.Screenshoot)}";
                     Directory.CreateDirectory(Path.GetDirectoryName(targetfile));
@@ -732,7 +734,7 @@ namespace RetroFront.ViewModels
                     fstream.Dispose();
                     _themeService.DownloadSteamData(sysmodified.Logo, targetfile);
                 }
-                if(sysmodified.Video != oldsysVideo)
+                if (sysmodified.Video != oldsysVideo)
                 {
                     var targetfile = $"{targetfolder}{Path.GetExtension(sysmodified.Video)}";
                     Directory.CreateDirectory(Path.GetDirectoryName(targetfile));
@@ -771,62 +773,65 @@ namespace RetroFront.ViewModels
                 }
                 catch (Exception ex)
                 {
-                 //   throw;
+                    //   throw;
                 }
-                try { 
-                if (game.Fanart!= oldgamefanart)
+                try
                 {
-                    var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.Banner);
-                    var targetfile = $"{targetfolder}{Path.GetExtension(game.Fanart)}";
-                    Directory.CreateDirectory(Path.GetDirectoryName(targetfile));
-                    var fstream = File.Create(targetfile);
-                    fstream.Close();
-                    fstream.Dispose();
-                    _gameService.DownloadImgData(game.Fanart, targetfile);
-                    game.Fanart = targetfile;
+                    if (game.Fanart != oldgamefanart)
+                    {
+                        var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.Banner);
+                        var targetfile = $"{targetfolder}{Path.GetExtension(game.Fanart)}";
+                        Directory.CreateDirectory(Path.GetDirectoryName(targetfile));
+                        var fstream = File.Create(targetfile);
+                        fstream.Close();
+                        fstream.Dispose();
+                        _gameService.DownloadImgData(game.Fanart, targetfile);
+                        game.Fanart = targetfile;
                     }
                 }
                 catch (Exception ex)
                 {
                     //   throw;
                 }
-                try { 
-                if (game.Screenshoot != oldgamescreen)
+                try
                 {
-                    var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.ArtWork);
-                    var targetfile = $"{targetfolder}{Path.GetExtension(game.Screenshoot)}";
-                    Directory.CreateDirectory(Path.GetDirectoryName(targetfile));
-                    var fstream = File.Create(targetfile);
-                    fstream.Close();
-                    fstream.Dispose();
-                    _gameService.DownloadImgData(game.Screenshoot, targetfile);
-                    game.Screenshoot = targetfile;
+                    if (game.Screenshoot != oldgamescreen)
+                    {
+                        var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.ArtWork);
+                        var targetfile = $"{targetfolder}{Path.GetExtension(game.Screenshoot)}";
+                        Directory.CreateDirectory(Path.GetDirectoryName(targetfile));
+                        var fstream = File.Create(targetfile);
+                        fstream.Close();
+                        fstream.Dispose();
+                        _gameService.DownloadImgData(game.Screenshoot, targetfile);
+                        game.Screenshoot = targetfile;
                     }
                 }
                 catch (Exception ex)
                 {
                     //   throw;
                 }
-                try { 
-                if (game.Logo != oldgamelogo)
+                try
                 {
-                    var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.Logo);
-                    var targetfile = $"{targetfolder}{Path.GetExtension(game.Logo)}";
-                    Directory.CreateDirectory(Path.GetDirectoryName(targetfile));
-                    var fstream = File.Create(targetfile);
-                    fstream.Close();
-                    fstream.Dispose();
-                    _gameService.DownloadImgData(game.Logo, targetfile);
-                    game.Logo = targetfile;
+                    if (game.Logo != oldgamelogo)
+                    {
+                        var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.Logo);
+                        var targetfile = $"{targetfolder}{Path.GetExtension(game.Logo)}";
+                        Directory.CreateDirectory(Path.GetDirectoryName(targetfile));
+                        var fstream = File.Create(targetfile);
+                        fstream.Close();
+                        fstream.Dispose();
+                        _gameService.DownloadImgData(game.Logo, targetfile);
+                        game.Logo = targetfile;
                     }
                 }
                 catch (Exception ex)
                 {
                     //   throw;
                 }
-                try 
+                try
                 {
-                    if(game.Video != oldgamevideo)
+                    if (game.Video != oldgamevideo)
                     {
                         if (game.Video.Contains("youtube"))
                         {
@@ -854,7 +859,7 @@ namespace RetroFront.ViewModels
                             var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.Video);
                             var targetfile = $"{targetfolder}{Path.GetExtension(".mp4")}";
                             _gameService.DownloadImgData(game.Video, targetfile);
-                            game.Video = targetfile; 
+                            game.Video = targetfile;
                         }
                         File.Delete(oldgamevideo);
                     }
@@ -864,7 +869,7 @@ namespace RetroFront.ViewModels
                     //   throw;
                 }
                 var duplicates = _databaseService.GetGames().Where(x => x.Path == game.Path);
-                foreach(var duplicate in duplicates)
+                foreach (var duplicate in duplicates)
                 {
                     duplicate.Video = game.Video;
                     duplicate.Boxart = game.Boxart;
@@ -886,11 +891,11 @@ namespace RetroFront.ViewModels
         private void ScrapeSysteme(SystemeViewModel sys)
         {
             var gamestoscrape = _databaseService.GetGamesForPlateforme(sys.Systeme.SystemeID).OrderBy(x => x.Name);
-            foreach(var games in gamestoscrape)
+            foreach (var games in gamestoscrape)
             {
-                if(CurrentScraperType == ScraperType.Full)
+                if (CurrentScraperType == ScraperType.Full)
                 {
-                    if(CurrentScrapeSource == ScraperSource.Screenscraper)
+                    if (CurrentScrapeSource == ScraperSource.Screenscraper)
                     {
                         ScrapeScreenScraperMetadata(games);
                         ScrapeArtwork(games, ScraperType.ArtWork, ScraperSource.Screenscraper);
@@ -899,14 +904,14 @@ namespace RetroFront.ViewModels
                         ScrapeLogo(games, ScraperType.Logo, ScraperSource.Screenscraper);
                         ScrapeVideoScreenScraper(games);
                     }
-                    else if(CurrentScrapeSource == ScraperSource.SGDB)
+                    else if (CurrentScrapeSource == ScraperSource.SGDB)
                     {
                         ScrapeArtwork(games, ScraperType.ArtWork, ScraperSource.SGDB);
                         ScrapeBanner(games, ScraperType.Banner, ScraperSource.SGDB);
                         ScrapeBoxart(games, ScraperType.Boxart, ScraperSource.SGDB);
                         ScrapeLogo(games, ScraperType.Logo, ScraperSource.SGDB);
                     }
-                    else if(CurrentScrapeSource == ScraperSource.IGDB)
+                    else if (CurrentScrapeSource == ScraperSource.IGDB)
                     {
                         ScrapeArtwork(games, ScraperType.ArtWork, ScraperSource.IGDB);
                         ScrapeBoxart(games, ScraperType.Boxart, ScraperSource.IGDB);
@@ -915,25 +920,25 @@ namespace RetroFront.ViewModels
                     }
 
                 }
-               else if(CurrentScraperType == ScraperType.ArtWork)
+                else if (CurrentScraperType == ScraperType.ArtWork)
                 {
                     ScrapeArtwork(games, CurrentScraperType, CurrentScrapeSource);
                 }
-                else if(CurrentScraperType == ScraperType.Banner)
+                else if (CurrentScraperType == ScraperType.Banner)
                 {
                     ScrapeBanner(games, CurrentScraperType, CurrentScrapeSource);
                 }
-                else if(CurrentScraperType == ScraperType.Boxart)
+                else if (CurrentScraperType == ScraperType.Boxart)
                 {
                     ScrapeBoxart(games, CurrentScraperType, CurrentScrapeSource);
                 }
-                else if(CurrentScraperType == ScraperType.Logo)
+                else if (CurrentScraperType == ScraperType.Logo)
                 {
                     ScrapeLogo(games, CurrentScraperType, CurrentScrapeSource);
                 }
-                else if(CurrentScraperType == ScraperType.Metadata)
+                else if (CurrentScraperType == ScraperType.Metadata)
                 {
-                   if(CurrentScrapeSource == ScraperSource.IGDB)
+                    if (CurrentScrapeSource == ScraperSource.IGDB)
                     {
                         ScrapeIGDBMetadata(games);
                     }
@@ -942,9 +947,9 @@ namespace RetroFront.ViewModels
                         ScrapeScreenScraperMetadata(games);
                     }
                 }
-                else if(CurrentScraperType == ScraperType.Video)
+                else if (CurrentScraperType == ScraperType.Video)
                 {
-                   if(CurrentScrapeSource == ScraperSource.IGDB)
+                    if (CurrentScrapeSource == ScraperSource.IGDB)
                     {
                         ScrapeIGDBVideo(games);
                     }
@@ -971,7 +976,8 @@ namespace RetroFront.ViewModels
             if (games.ScreenScraperID > 0)
             {
                 var SCSPdata = _screenScraperService.GetJeuxDetail(games.ScreenScraperID);
-                /*games.Name*/ var name = SCSPdata.noms.FirstOrDefault(x => x.region == "eu" || x.region == "fr");
+                /*games.Name*/
+                var name = SCSPdata.noms.FirstOrDefault(x => x.region == "eu" || x.region == "fr");
                 if (name != null)
                     games.Name = name.text;
                 else
@@ -983,19 +989,19 @@ namespace RetroFront.ViewModels
                     if (year != null)
                         games.Year = year.text;
                     else
-                        games.Year = SCSPdata.dates.FirstOrDefault(x => x.region == "wor" || x.region == "us").text; 
+                        games.Year = SCSPdata.dates.FirstOrDefault(x => x.region == "wor" || x.region == "us").text;
                 }
                 if (SCSPdata.editeur != null)
                 {
-                    games.Editeur = SCSPdata.editeur.text; 
+                    games.Editeur = SCSPdata.editeur.text;
                 }
                 if (SCSPdata.developpeur != null)
                 {
-                    games.Dev = SCSPdata.developpeur.text; 
+                    games.Dev = SCSPdata.developpeur.text;
                 }
                 if (SCSPdata.synopsis != null)
                 {
-                    games.Desc = SCSPdata.synopsis.FirstOrDefault(x => x.langue == "fr").text; 
+                    games.Desc = SCSPdata.synopsis.FirstOrDefault(x => x.langue == "fr").text;
                 }
                 if (SCSPdata.genres != null)
                 {
@@ -1025,7 +1031,7 @@ namespace RetroFront.ViewModels
                 var oldvideo = games.Video;
                 var SCSPdata = _screenScraperService.GetJeuxDetail(games.ScreenScraperID);
                 var SCSPVideo = SCSPdata.medias.FirstOrDefault(x => x.type == "video");
-                if(SCSPVideo != null)
+                if (SCSPVideo != null)
                 {
                     var videoURL = SCSPVideo.url;
                     games.Video = videoURL;
@@ -1059,7 +1065,7 @@ namespace RetroFront.ViewModels
                     var video = youTube.GetVideo(result.Replace("embed/", "watch?v="));
                     File.WriteAllBytes(targetfile, video.GetBytes());
                     //await youtube.Videos.DownloadAsync(, targetfile);
-                    games.Video = targetfile; 
+                    games.Video = targetfile;
                 }
             }
         }
@@ -1252,65 +1258,141 @@ namespace RetroFront.ViewModels
         }
         private void AddFavoriteGame()
         {
-            var newsys = new Systeme();
-            newsys.Name = "Jeux Favoris";
-            newsys.Shortname = "fav";
-            newsys.Type = SysType.Collection;
-            SystemeViewModel sysvm = new SystemeViewModel(newsys);
-            sysvm.Emulators = new ObservableCollection<EmulatorViewModel>();
-            var allgames = _databaseService.GetGames().Where(x => x.IsFavorite == true);
-            var groupedGames = from game in allgames
-                               group game by game.EmulatorID into groupedgame
-                               orderby groupedgame.Key
-                               select groupedgame;
-            foreach (var grp in groupedGames)
+            if (_fileJSONService.appSettings.ShowFav == true)
             {
-                var newemu = _emulateurService.DuplicateEmulator(_databaseService.GetEmulator(grp.Key));
-                newemu.SystemeID = newsys.SystemeID;
-                EmulatorViewModel emuVM = new EmulatorViewModel(newemu);
-                emuVM.Games = new ObservableCollection<GameViewModel>();
-                foreach (var game in grp)
+                var newsys = new Systeme();
+                newsys.Name = "Jeux Favoris";
+                newsys.Shortname = "fav";
+                newsys.Type = SysType.Collection;
+                SystemeViewModel sysvm = new SystemeViewModel(newsys);
+                sysvm.Emulators = new ObservableCollection<EmulatorViewModel>();
+                var allgames = _databaseService.GetGames().Where(x => x.IsFavorite == true);
+                var groupedGames = from game in allgames
+                                   group game by game.EmulatorID into groupedgame
+                                   orderby groupedgame.Key
+                                   select groupedgame;
+                foreach (var grp in groupedGames)
                 {
-                    var dupligame = _gameService.DuplicateGame(game);
-                    dupligame.EmulatorID = newemu.EmulatorID;
-                    emuVM.Games.Add(new GameViewModel(dupligame));
+                    var newemu = _emulateurService.DuplicateEmulator(_databaseService.GetEmulator(grp.Key));
+                    newemu.SystemeID = newsys.SystemeID;
+                    EmulatorViewModel emuVM = new EmulatorViewModel(newemu);
+                    emuVM.Games = new ObservableCollection<GameViewModel>();
+                    foreach (var game in grp)
+                    {
+                        var dupligame = _gameService.DuplicateGame(game);
+                        dupligame.EmulatorID = newemu.EmulatorID;
+                        emuVM.Games.Add(new GameViewModel(dupligame));
+                    }
+                    sysvm.Emulators.Add(emuVM);
                 }
-                sysvm.Emulators.Add(emuVM);
+                sysvm.Bck = _themeService.GetBckForTheme(newsys.Shortname, _fileJSONService.GetCurrentTheme());
+                sysvm.Logo = Path.Combine(_fileJSONService.appSettings.AppSettingsFolder, "media", newsys.Shortname, $"logo.png");
+                Systemes.Insert(0, sysvm);
             }
-            sysvm.Bck = _themeService.GetBckForTheme(newsys.Shortname, _fileJSONService.GetCurrentTheme());
-            sysvm.Logo = Path.Combine(_fileJSONService.appSettings.AppSettingsFolder, "media", "fav", $"logo.png");
-            Systemes.Insert(0, sysvm);
+        }
+        private void AddMostPlayed()
+        {
+            if (_fileJSONService.appSettings.ShowMostPlayed == true)
+            {
+                var newsys = new Systeme();
+                newsys.Name = "Jeux les plus joués";
+                newsys.Shortname = "most";
+                newsys.Type = SysType.Collection;
+                SystemeViewModel sysvm = new SystemeViewModel(newsys);
+                sysvm.Emulators = new ObservableCollection<EmulatorViewModel>();
+                var allgames = _databaseService.GetGames().OrderByDescending(x => x.NbTimeStarted).Take(10);
+                var groupedGames = from game in allgames
+                                   group game by game.EmulatorID into groupedgame
+                                   orderby groupedgame.Key
+                                   select groupedgame;
+                foreach (var grp in groupedGames)
+                {
+                    var newemu = _emulateurService.DuplicateEmulator(_databaseService.GetEmulator(grp.Key));
+                    newemu.SystemeID = newsys.SystemeID;
+                    EmulatorViewModel emuVM = new EmulatorViewModel(newemu);
+                    emuVM.Games = new ObservableCollection<GameViewModel>();
+                    foreach (var game in grp)
+                    {
+                        var dupligame = _gameService.DuplicateGame(game);
+                        dupligame.EmulatorID = newemu.EmulatorID;
+                        emuVM.Games.Add(new GameViewModel(dupligame));
+                    }
+                    sysvm.Emulators.Add(emuVM);
+                }
+                sysvm.Bck = _themeService.GetBckForTheme(newsys.Shortname, _fileJSONService.GetCurrentTheme());
+                sysvm.Logo = Path.Combine(_fileJSONService.appSettings.AppSettingsFolder, "media", newsys.Shortname, $"logo.png");
+                Systemes.Insert(0, sysvm);
+
+            }
+        }
+        private void AddLastPlayed()
+        {
+            if (_fileJSONService.appSettings.ShowMostPlayed == true)
+            {
+                var newsys = new Systeme();
+                newsys.Name = "Derniers jeux joués";
+                newsys.Shortname = "last";
+                newsys.Type = SysType.Collection;
+                SystemeViewModel sysvm = new SystemeViewModel(newsys);
+                sysvm.Emulators = new ObservableCollection<EmulatorViewModel>();
+                var allgames = _databaseService.GetGames().OrderByDescending(x => x.LastStart).Take(10);
+                var groupedGames = from game in allgames
+                                   group game by game.EmulatorID into groupedgame
+                                   orderby groupedgame.Key
+                                   select groupedgame;
+                foreach (var grp in groupedGames)
+                {
+                    var newemu = _emulateurService.DuplicateEmulator(_databaseService.GetEmulator(grp.Key));
+                    newemu.SystemeID = newsys.SystemeID;
+                    EmulatorViewModel emuVM = new EmulatorViewModel(newemu);
+                    emuVM.Games = new ObservableCollection<GameViewModel>();
+                    foreach (var game in grp)
+                    {
+                        var dupligame = _gameService.DuplicateGame(game);
+                        dupligame.EmulatorID = newemu.EmulatorID;
+                        emuVM.Games.Add(new GameViewModel(dupligame));
+                    }
+                    sysvm.Emulators.Add(emuVM);
+                }
+                sysvm.Bck = _themeService.GetBckForTheme(newsys.Shortname, _fileJSONService.GetCurrentTheme());
+                sysvm.Logo = Path.Combine(_fileJSONService.appSettings.AppSettingsFolder, "media", newsys.Shortname, $"logo.png");
+                Systemes.Insert(0, sysvm);
+
+            }
         }
         private void AddAllGames()
         {
-            var newsys = new Systeme();
-            newsys.Name = "Tous les Jeux";
-            newsys.Shortname = "all";
-            newsys.Type = SysType.Collection;
-            SystemeViewModel sysvm = new SystemeViewModel(newsys);
-            sysvm.Emulators = new ObservableCollection<EmulatorViewModel>();
-            var allgames = _databaseService.GetGames();
-            var groupedGames = from game in allgames
-                               group game by game.EmulatorID into groupedgame
-                               orderby groupedgame.Key
-                               select groupedgame;
-            foreach (var grp in groupedGames)
+            if (_fileJSONService.appSettings.ShowAll == true)
             {
-                var newemu = _emulateurService.DuplicateEmulator(_databaseService.GetEmulator(grp.Key));
-                newemu.SystemeID = newsys.SystemeID;
-                EmulatorViewModel emuVM = new EmulatorViewModel(newemu);
-                emuVM.Games = new ObservableCollection<GameViewModel>();
-                foreach (var game in grp)
+                var newsys = new Systeme();
+                newsys.Name = "Tous les Jeux";
+                newsys.Shortname = "all";
+                newsys.Type = SysType.Collection;
+                SystemeViewModel sysvm = new SystemeViewModel(newsys);
+                sysvm.Emulators = new ObservableCollection<EmulatorViewModel>();
+                var allgames = _databaseService.GetGames();
+                var groupedGames = from game in allgames
+                                   group game by game.EmulatorID into groupedgame
+                                   orderby groupedgame.Key
+                                   select groupedgame;
+                foreach (var grp in groupedGames)
                 {
-                    var dupligame = _gameService.DuplicateGame(game);
-                    dupligame.EmulatorID = newemu.EmulatorID;
-                    emuVM.Games.Add(new GameViewModel(dupligame));
+                    var newemu = _emulateurService.DuplicateEmulator(_databaseService.GetEmulator(grp.Key));
+                    newemu.SystemeID = newsys.SystemeID;
+                    EmulatorViewModel emuVM = new EmulatorViewModel(newemu);
+                    emuVM.Games = new ObservableCollection<GameViewModel>();
+                    foreach (var game in grp)
+                    {
+                        var dupligame = _gameService.DuplicateGame(game);
+                        dupligame.EmulatorID = newemu.EmulatorID;
+                        emuVM.Games.Add(new GameViewModel(dupligame));
+                    }
+                    sysvm.Emulators.Add(emuVM);
                 }
-                sysvm.Emulators.Add(emuVM);
+                sysvm.Bck = _themeService.GetBckForTheme(newsys.Shortname, _fileJSONService.GetCurrentTheme());
+                sysvm.Logo = Path.Combine(_fileJSONService.appSettings.AppSettingsFolder, "media", "all", $"logo.png");
+                Systemes.Insert(0, sysvm);
             }
-            sysvm.Bck = _themeService.GetBckForTheme(newsys.Shortname, _fileJSONService.GetCurrentTheme());
-            sysvm.Logo = Path.Combine(_fileJSONService.appSettings.AppSettingsFolder, "media", "all", $"logo.png");
-            Systemes.Insert(0, sysvm);
         }
     }
 }

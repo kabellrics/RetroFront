@@ -181,6 +181,20 @@ namespace RetroFront.ViewModels
                     Games.Add(new GameViewModel(game));
                 }
             }
+            else if (CurrentSysteme.Shortname == "most")
+            {
+                foreach (var game in _databaseService.GetGames().OrderByDescending(x=>x.NbTimeStarted).Take(10))
+                {
+                    Games.Add(new GameViewModel(game));
+                }
+            }
+            else if (CurrentSysteme.Shortname == "last")
+            {
+                foreach (var game in _databaseService.GetGames().OrderByDescending(x=>x.LastStart).Take(10))
+                {
+                    Games.Add(new GameViewModel(game));
+                }
+            }
             else
             {
                 foreach (var game in _databaseService.GetGamesForPlateforme(CurrentSysteme.SystemeID).OrderBy(x => x.Name))
