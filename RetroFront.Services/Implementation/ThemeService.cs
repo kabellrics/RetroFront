@@ -65,22 +65,83 @@ namespace RetroFront.Services.Implementation
             try
             {
                 var allthemes = Directory.EnumerateDirectories(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "themes"));
-                foreach(string theme in allthemes)
+                foreach (string theme in allthemes)
                 {
                     Directory.CreateDirectory(Path.Combine(theme, "all"));
                     Directory.CreateDirectory(Path.Combine(theme, "fav"));
-                    File.Copy(@"retro-game.jpg", Path.Combine(Path.Combine(theme, "all"), "bck.jpg"), true);
-                    File.Copy(@"retro-game.jpg", Path.Combine(Path.Combine(theme, "fav"), "bck.jpg"), true);
-                    File.Copy(@"retro-game.jpg", Path.Combine(Path.Combine(theme, "last"), "bck.jpg"), true);
+                    Directory.CreateDirectory(Path.Combine(theme, "last"));
+                    Directory.CreateDirectory(Path.Combine(theme, "most"));
+                    try
+                    {
+                        File.Copy(@"retro-game.jpg", Path.Combine(Path.Combine(theme, "all"), "bck.jpg"), true);
+                    }
+                    catch (Exception ex)
+                    {
+                        //throw;
+                    }
+                    try
+                    {
+                        File.Copy(@"retro-game.jpg", Path.Combine(Path.Combine(theme, "fav"), "bck.jpg"), true);
+                    }
+                    catch (Exception ex)
+                    {
+                        //throw;
+                    }
+                    try
+                    {
+                        File.Copy(@"retro-game.jpg", Path.Combine(Path.Combine(theme, "last"), "bck.jpg"), true);
+                    }
+                    catch (Exception ex)
+                    {
+                        //throw;
+                    }
+                    try
+                    {
+                        File.Copy(@"retro-game.jpg", Path.Combine(Path.Combine(theme, "most"), "bck.jpg"), true);
+                    }
+                    catch (Exception ex)
+                    {
+                        //throw;
+                    }
                 }
                 Directory.CreateDirectory(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "all"));
                 Directory.CreateDirectory(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "fav"));
+                Directory.CreateDirectory(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "last"));
+                Directory.CreateDirectory(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "most"));
                 //File.Create(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "all", $"logo.png"));
                 //File.Create(Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "fav", $"logo.png"));
-                File.Copy(@"AllGames.png", Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "all", $"logo.png"), true);
-                File.Copy(@"AllGames.png", Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "most", $"logo.png"), true);
-                File.Copy(@"star.png", Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "fav", $"logo.png"), true);
-                File.Copy(@"time.png", Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "last", $"logo.png"), true);
+                try
+                {
+                    File.Copy(@"AllGames.png", Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "all", $"logo.png"), true);
+                }
+                catch (Exception ex)
+                {
+                    //throw;
+                }
+                try
+                {
+                    File.Copy(@"AllGames.png", Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "most", $"logo.png"), true);
+                }
+                catch (Exception ex)
+                {
+                    //throw;
+                }
+                try
+                {
+                    File.Copy(@"star.png", Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "fav", $"logo.png"), true);
+                }
+                catch (Exception ex)
+                {
+                    //throw;
+                }
+                try
+                {
+                    File.Copy(@"time.png", Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "last", $"logo.png"), true);
+                }
+                catch (Exception ex)
+                {
+                    //throw;
+                }
             }
             catch (Exception ex)
             {
@@ -161,13 +222,13 @@ namespace RetroFront.Services.Implementation
         {
             try
             {
-                    return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, $"{Guid.NewGuid().ToString()}.png");
+                return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, $"{Guid.NewGuid().ToString()}.png");
             }
             catch (Exception ex)
             {
                 return string.Empty;
             }
-        } 
+        }
         public string GetVidéoForTheme(string plateforme)
         {
             try
@@ -186,7 +247,7 @@ namespace RetroFront.Services.Implementation
         {
             try
             {
-                    return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, $"{Guid.NewGuid().ToString()}.mp4");
+                return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, $"{Guid.NewGuid().ToString()}.mp4");
             }
             catch (Exception ex)
             {
@@ -197,7 +258,7 @@ namespace RetroFront.Services.Implementation
         {
             try
             {
-                    return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, $"{Guid.NewGuid().ToString()}.png");
+                return Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme, $"{Guid.NewGuid().ToString()}.png");
             }
             catch (Exception ex)
             {
@@ -234,7 +295,7 @@ namespace RetroFront.Services.Implementation
             string fileext = Path.GetExtension(bcppath);
             string oldtarget = FileJSONService.appSettings.DefaultBCK;
             string target = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, string.Format($"{Guid.NewGuid()}{fileext}"));
-            File.Copy(bcppath,target,true); 
+            File.Copy(bcppath, target, true);
             FileJSONService.appSettings.DefaultBCK = target;
             FileJSONService.UpdateSettings();
         }

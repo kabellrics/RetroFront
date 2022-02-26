@@ -12,6 +12,13 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using SharpDX.XInput;
+using System.Windows.Threading;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using WindowsInput;
+using RetroFront.Models.Messenger;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace RetroFront
 {
@@ -22,6 +29,8 @@ namespace RetroFront
     {
         private readonly IHost host;
         public static IServiceProvider ServiceProvider { get; private set; }
+        DispatcherTimer _timer = new DispatcherTimer();
+        private Controller _controller;
         public App()
         {
             host = Host.CreateDefaultBuilder()
@@ -31,7 +40,16 @@ namespace RetroFront
                    })
                    .Build();
             ServiceProvider = host.Services;
+            //_timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(250) };
+            _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(5) };
+            _timer.Tick += _timer_Tick;
         }
+
+        private void _timer_Tick(object sender, EventArgs e)
+        {
+            DisplayControllerInformation();
+        }
+
         private void ConfigureServices(IConfiguration configuration,
         IServiceCollection services)
         {
@@ -76,7 +94,9 @@ namespace RetroFront
             dbcontext.SQLIteContext.Database.EnsureCreated();
             base.OnStartup(e);
             #endregion
-
+            _controller = new Controller(UserIndex.One);
+            //if (_controller.IsConnected) return;
+            _timer.Start();
             //await host.StartAsync();
             //var dbcontext = host.Services.GetRequiredService<IDatabaseService>();
             //dbcontext.SQLIteContext.Database.EnsureCreated();
@@ -91,8 +111,96 @@ namespace RetroFront
             {
                 await host.StopAsync(TimeSpan.FromSeconds(5));
             }
-
+            _controller = null;
             base.OnExit(e);
         }
+        void DisplayControllerInformation()
+        {
+            try
+            {
+                if (ApplicationIsActivated())
+                {
+                    var state = _controller.GetState();
+                    if (state.Gamepad.Buttons != GamepadButtonFlags.None)
+                    {
+                        //MessageBox.Show(string.Format("{0}", state.Gamepad.Buttons));
+                        var inputSimulator = new InputSimulator();
+                        switch (state.Gamepad.Buttons)
+                        {
+                            case GamepadButtonFlags.None:
+                                break;
+                            case GamepadButtonFlags.DPadUp:
+                                inputSimulator.Keyboard.KeyPress(WindowsInput.Native.VirtualKeyCode.UP);
+                                break;
+                            case GamepadButtonFlags.DPadDown:
+                                inputSimulator.Keyboard.KeyPress(WindowsInput.Native.VirtualKeyCode.DOWN);
+                                break;
+                            case GamepadButtonFlags.DPadLeft:
+                                inputSimulator.Keyboard.KeyPress(WindowsInput.Native.VirtualKeyCode.LEFT);
+                                break;
+                            case GamepadButtonFlags.DPadRight:
+                                inputSimulator.Keyboard.KeyPress(WindowsInput.Native.VirtualKeyCode.RIGHT);
+                                break;
+                            case GamepadButtonFlags.Start:
+                                break;
+                            case GamepadButtonFlags.Back:
+                                break;
+                            case GamepadButtonFlags.LeftThumb:
+                                break;
+                            case GamepadButtonFlags.RightThumb:
+                                break;
+                            case GamepadButtonFlags.LeftShoulder:
+                                break;
+                            case GamepadButtonFlags.RightShoulder:
+                                break;
+                            case GamepadButtonFlags.A:
+                                inputSimulator.Keyboard.KeyPress(WindowsInput.Native.VirtualKeyCode.RETURN);
+                                break;
+                            case GamepadButtonFlags.B:
+                                inputSimulator.Keyboard.KeyPress(WindowsInput.Native.VirtualKeyCode.ESCAPE);
+                                break;
+                            case GamepadButtonFlags.X:
+                                inputSimulator.Keyboard.KeyPress(WindowsInput.Native.VirtualKeyCode.SPACE);
+                                break;
+                            case GamepadButtonFlags.Y:
+                                inputSimulator.Keyboard.KeyPress(WindowsInput.Native.VirtualKeyCode.SPACE);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else if (state.Gamepad.Buttons == (GamepadButtonFlags.Back | GamepadButtonFlags.Start))
+                    {
+                        Messenger.Default.Send(new KillGameMessage());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
+
+        }
+        public static bool ApplicationIsActivated()
+        {
+            var activatedHandle = GetForegroundWindow();
+            if (activatedHandle == IntPtr.Zero)
+            {
+                return false;       // No window is currently activated
+            }
+
+            var procId = Process.GetCurrentProcess().Id;
+            int activeProcId;
+            GetWindowThreadProcessId(activatedHandle, out activeProcId);
+
+            return activeProcId == procId;
+        }
+
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern int GetWindowThreadProcessId(IntPtr handle, out int processId);
     }
 }

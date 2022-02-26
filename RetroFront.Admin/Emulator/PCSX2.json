@@ -6,7 +6,7 @@
     {
       "Name": "Playstation 2",
       "Shortname": "ps2",
-      "StartupArguments": "\"{ImagePath}\" --nogui --fullboot --fullscreen",
+      "StartupArguments": "\"{ImagePath}\" --nogui --fullscreen",
       "Platforms": [
         "sony_playstation2"
       ],

@@ -39,9 +39,9 @@
                                 <RowDefinition Height="2*"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="1">
-                                <Grid.Background>
+                                <!--<Grid.Background>
                                     <SolidColorBrush Color="WhiteSmoke" Opacity="0.4"></SolidColorBrush>
-                                </Grid.Background>
+                                </Grid.Background>-->
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"></ColumnDefinition>
                                     <ColumnDefinition Width="2*"></ColumnDefinition>
@@ -49,7 +49,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Image Grid.Column="0" Source="{Binding Boxart}" Stretch="Uniform" HorizontalAlignment="Left">
                                 </Image>
-                                <Image Grid.Column="1" Source="{Binding Logo}" Stretch="Uniform" HorizontalAlignment="Left">
+                                <Image Grid.Column="1" Grid.ColumnSpan="2" Source="{Binding Logo}" Stretch="Uniform" HorizontalAlignment="Center">
                                 </Image>
                             </Grid>
                         </Grid>

@@ -71,7 +71,7 @@ namespace RetroFront.ViewModels
             set { _selectedIndex = value; RaisePropertyChanged(); SetCurrentGameVM(); }
         }
         private GameViewModel _currentgameVM;
-        public GameViewModel CurerntGameVM
+        public GameViewModel CurrentGameVM
         {
             get { return _currentgameVM; }
             set { _currentgameVM = value; RaisePropertyChanged(); }
@@ -151,7 +151,7 @@ namespace RetroFront.ViewModels
             _themeService = themeService;
             _enumService = enumService;
             _navigationService = navigationService;
-            CurerntGameVM = null;
+            CurrentGameVM = null;
             AnimeDetail = false;
             SelectedIndex = 0;
             FrontDisplay = _fileJSONService.appSettings.CurrentGameDisplay;
@@ -225,7 +225,7 @@ namespace RetroFront.ViewModels
                 FronttmpDisplay = FrontDisplay;
             }
             else
-                _navigationService.NavigateTo("Systeme", null, string.Empty);
+                _navigationService.NavigateTo("GameStart", new ParameterLaunchGame {CurrentGameVM = CurrentGameVM,CurrentSysteme=CurrentSysteme }, string.Empty);
         }
         private void GoDown()
         {
@@ -259,7 +259,7 @@ namespace RetroFront.ViewModels
                 {
                     AnimeDetail = true;
                     ShowDetail = true;
-                    CurerntGameVM = Games[SelectedIndex];
+                    CurrentGameVM = Games[SelectedIndex];
                     AnimeDetail = false;
                 }
             }

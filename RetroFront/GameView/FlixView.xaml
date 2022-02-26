@@ -14,6 +14,7 @@
         <KeyBinding Key="Up" Command="{Binding GoDownCommand}"></KeyBinding>
         <KeyBinding Key="Space" Command="{Binding OpenDisplayCommand}"></KeyBinding>
         <KeyBinding Key="Return" Command="{Binding CloseOrGoCommand}"></KeyBinding>
+        <KeyBinding Key="Esc" Command="{Binding GoBackCommand}"></KeyBinding>
     </UserControl.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -45,7 +46,7 @@
                                     </ImageBrush>
                                 </Border.Background>
                                 <Grid>
-                                    <MediaElement Stretch="Fill" Source="{Binding Video}" MediaEnded="MediaElement_MediaEnded">
+                                    <MediaElement Stretch="Fill" Source="{Binding Video}" MediaEnded="MediaElement_MediaEnded" SourceUpdated="MediaElement_SourceUpdated">
                                         <!--<MediaElement.OpacityMask>
                                             <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                                                 <GradientStop Color="Transparent" Offset="0.0" />
