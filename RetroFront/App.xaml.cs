@@ -40,8 +40,8 @@ namespace RetroFront
                    })
                    .Build();
             ServiceProvider = host.Services;
-            //_timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(250) };
-            _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(5) };
+            _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(250) };
+            //_timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(5) };
             _timer.Tick += _timer_Tick;
         }
 
@@ -53,14 +53,14 @@ namespace RetroFront
         private void ConfigureServices(IConfiguration configuration,
         IServiceCollection services)
         {
-            services.AddScoped<INavigationService,NavigationService>(ServiceProvider =>
-            {
-                var navigationservice = new NavigationService();
-                navigationservice.Configure("Systeme",new Uri("../SystemeWindow.xaml",UriKind.Relative));
-                navigationservice.Configure("Games", new Uri("../GameWindow.xaml", UriKind.Relative));
-                navigationservice.Configure("GameStart", new Uri("../GameStartWindows.xaml", UriKind.Relative));
-                return navigationservice;
-            });
+            services.AddScoped<INavigationService, NavigationService>(ServiceProvider =>
+             {
+                 var navigationservice = new NavigationService();
+                 navigationservice.Configure("Systeme", new Uri("../SystemeWindow.xaml", UriKind.Relative));
+                 navigationservice.Configure("Games", new Uri("../GameWindow.xaml", UriKind.Relative));
+                 navigationservice.Configure("GameStart", new Uri("../GameStartWindows.xaml", UriKind.Relative));
+                 return navigationservice;
+             });
 
             services.AddSingleton<IDatabaseService, DatabaseService>();
             services.AddSingleton<IFileJSONService, FileJSONService>();
@@ -169,7 +169,15 @@ namespace RetroFront
                                 break;
                         }
                     }
-                    else if (state.Gamepad.Buttons == (GamepadButtonFlags.Back | GamepadButtonFlags.Start))
+                    //else if (state.Gamepad.Buttons == (GamepadButtonFlags.Back | GamepadButtonFlags.Start))
+                    //{
+                    //    Messenger.Default.Send(new KillGameMessage());
+                    //}
+                }
+                else
+                {
+                    var state = _controller.GetState();
+                    if (state.Gamepad.Buttons == (GamepadButtonFlags.Back | GamepadButtonFlags.Start))
                     {
                         Messenger.Default.Send(new KillGameMessage());
                     }

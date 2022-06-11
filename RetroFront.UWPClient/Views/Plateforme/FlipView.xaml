@@ -1,0 +1,46 @@
+﻿<UserControl
+    x:Class="RetroFront.UWPClient.Views.Plateforme.FlipView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RetroFront.UWPClient.Views.Plateforme"
+    xmlns:model="using:RetroFront.UWPClient.Core.Models"
+    xmlns:viewHelper="using:RetroFront.UWPClient.ViewHelper"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <viewHelper:SysLogoConverter x:Key="SysLogoConverter"></viewHelper:SysLogoConverter>
+        <viewHelper:SysScreenshootConverter x:Key="SysScreenshootConverter"></viewHelper:SysScreenshootConverter>
+    </UserControl.Resources>
+    <Grid>
+        <FlipView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel.Systems, Mode=OneWay}">
+            <FlipView.ItemTemplate>
+                <DataTemplate x:DataType="model:Systeme">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5*"></RowDefinition>
+                            <RowDefinition Height="3*"></RowDefinition>
+                            <RowDefinition Height="5*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" Grid.RowSpan="3">
+                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind SystemeID, Mode=TwoWay, Converter={StaticResource SysScreenshootConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png"
+                                                      Stretch="Fill"/>
+                        </Border>
+                        <Grid Grid.Row="1">
+                            <Grid.Background>
+                                <SolidColorBrush Color="WhiteSmoke" Opacity="0.7"></SolidColorBrush>
+                            </Grid.Background>
+                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                      Source="{x:Bind SystemeID, Mode=TwoWay, Converter={StaticResource SysLogoConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png"
+                                                      Stretch="Uniform"/>
+                        </Grid>
+                     </Grid>
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>
+    </Grid>
+</UserControl>

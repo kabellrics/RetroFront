@@ -17,6 +17,7 @@ namespace RetroFront.Services.Implementation
         public DatabaseService()
         {
             _SQLIteContext = new AppSQLIteContext();
+            SQLIteContext.Database.EnsureCreated();
         }
 
         public IEnumerable<Systeme> GetSystemes()

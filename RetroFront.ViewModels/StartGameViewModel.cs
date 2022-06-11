@@ -50,7 +50,9 @@ namespace RetroFront.ViewModels
 
         private void KillGameNotificationMessage(KillGameMessage obj)
         {
-            gameprocess.Kill(true);
+            gameprocess.Kill(true); 
+            Task.Delay(3000);
+            _navigationService.NavigateTo("Games", CurrentSysteme, string.Empty);
         }
 
         private void Loaded()
@@ -89,14 +91,16 @@ namespace RetroFront.ViewModels
                 {
                     CreateNoWindow = true,
                     UseShellExecute = true,
-                    WindowStyle = ProcessWindowStyle.Normal
+                    WindowStyle = ProcessWindowStyle.Normal                   
                 };
-
-                gameprocess = Process.Start(startInfo);
+                gameprocess = new Process();
+                gameprocess.StartInfo = startInfo;
+                gameprocess.Start();
+                //gameprocess = Process.Start(startInfo);
                 //await Task.Delay(30000);
-                gameprocess.WaitForExit();
-                await Task.Delay(3000);
-                _navigationService.NavigateTo("Games", CurrentSysteme, string.Empty);
+                //gameprocess.WaitForExit();
+                //await Task.Delay(3000);
+                //_navigationService.NavigateTo("Games", CurrentSysteme, string.Empty);
             }
         }
     }

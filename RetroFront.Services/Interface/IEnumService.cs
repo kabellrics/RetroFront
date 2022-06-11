@@ -10,5 +10,6 @@ namespace RetroFront.Services.Interface
         List<SysDisplay> GetSysDisplays();
         List<RomDisplay> GetRomDisplays();
         List<SysType> GetSysTypes();
+        List<HomeDisplay> GetHomeDisplays();
     }
 }

@@ -22,6 +22,15 @@ namespace RetroFront.Services.Implementation
                     SysDisplay.Bezel
             };
         }
+        public List<HomeDisplay> GetHomeDisplays()
+        {
+            return new List<HomeDisplay>
+            {
+                HomeDisplay.FlixView,
+                HomeDisplay.GameOS,
+                HomeDisplay.Hub
+            };
+        }
         public List<RomDisplay> GetRomDisplays()
         {
             return new List<RomDisplay>
@@ -36,7 +45,8 @@ namespace RetroFront.Services.Implementation
                     RomDisplay.FanartBox,
                     RomDisplay.BigBox,
                     RomDisplay.FlixView,
-                    RomDisplay.Detail
+                    RomDisplay.Detail,
+                    RomDisplay.BigModern
             };
         }
         public List<SysType> GetSysTypes()

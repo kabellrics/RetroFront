@@ -42,8 +42,26 @@ namespace RetroFront.Models
         Video
     }
 
+    public enum HomeDisplay
+    {
+        [Description("GameOS")]
+        GameOS, 
+        [Description("FlixView")]
+        FlixView,
+        [Description("Hub")]
+        Hub
+    }
+    public enum GameDetailDisplay
+    {
+        [Description("Artwork")]
+        Artwork, 
+        [Description("Full")]
+        Full
+    }
     public enum SysDisplay
     {
+        [Description("FlipView")]
+        FlipView,
         [Description("Modern")]
         Modern, 
         [Description("Big Logo")] 
@@ -64,10 +82,10 @@ namespace RetroFront.Models
 
     public enum RomDisplay
     {
+        [Description("Wall Box")]
+        WallBox,
         [Description("Modern")]
         Modern,
-        [Description("Wall Box")] 
-        WallBox,
         [Description("Wall Logo")] 
         WallLogo,
         [Description("Box Detail")] 
@@ -86,5 +104,7 @@ namespace RetroFront.Models
         FlixView,
         [Description("Detail")]
         Detail,
+        [Description("BigModern")]
+        BigModern,
     }
 }

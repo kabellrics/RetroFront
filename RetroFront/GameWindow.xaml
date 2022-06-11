@@ -64,6 +64,9 @@
         <DataTemplate x:Key="DetailView">
             <views:GameDetailView/>
         </DataTemplate>
+        <DataTemplate x:Key="BigModern">
+            <views:BigModernView/>
+        </DataTemplate>
         <Style x:Key="MyContentStyle" TargetType="ContentPresenter">
             <Setter Property="ContentTemplate" Value="{StaticResource FanartView}"/>
             <Style.Triggers>
@@ -96,6 +99,9 @@
                 </DataTrigger>
                 <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.Detail}">
                     <Setter Property="ContentTemplate" Value="{StaticResource DetailView}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding FrontDisplay}" Value="{x:Static enum:RomDisplay.BigModern}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource BigModern}"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>

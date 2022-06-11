@@ -32,7 +32,7 @@ namespace TestService
         public void TestMethod4()
         {
             var ThemeService = new ThemeService();
-            var listcore = ThemeService.GetLogoForTheme("gba","simple");
+            var listcore = ThemeService.GetLogoForTheme("gba");
             Assert.AreNotEqual(null, listcore);
         }
         //[TestMethod]

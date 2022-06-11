@@ -18,77 +18,84 @@ namespace RetroFront.Services.Implementation
     {
 
         private DatabaseService dbService = new DatabaseService();
+        private SettingsServicesAPI settingsServicesAPI = new SettingsServicesAPI();
         public AppSettings appSettings { get; set; }
         public FileJSONService()
         {
+            appSettings = settingsServicesAPI.SettingsGet();
             //System.IO.Directory.CreateDirectory($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront");
             //System.IO.Directory.CreateDirectory($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\themes");
-            if (File.Exists($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\AppSettings.json"))
-            {
-                var jsonString = File.ReadAllText($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\AppSettings.json");
-                appSettings = JsonConvert.DeserializeObject<AppSettings>(jsonString);
-            }
-            else
-            {
-                appSettings = new AppSettings();
-                appSettings.CurrentTheme = "simple";
-                appSettings.DefaultBCK = string.Empty;
-                appSettings.CurrentGameDisplay = RomDisplay.FlixView;
-                appSettings.CurrentSysDisplay = SysDisplay.BigLogo;
-                appSettings.AppSettingsFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront";
-                appSettings.AppSettingsLocation = $"{appSettings.AppSettingsFolder}\\AppSettings.json";
-                appSettings.ShowAll = true;
-                appSettings.ShowFav = true;
-                appSettings.ShowLastPlayed = true;
-                appSettings.ShowMostPlayed = true;
-                var jsonApp =  JsonConvert.SerializeObject(appSettings);
-                File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
-            }
-            System.IO.Directory.CreateDirectory(appSettings.AppSettingsFolder);
-            System.IO.Directory.CreateDirectory($"{appSettings.AppSettingsFolder}\\themes");
-            System.IO.Directory.CreateDirectory($"{appSettings.AppSettingsFolder}\\media");
+            //if (File.Exists($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\AppSettings.json"))
+            //{
+            //    var jsonString = File.ReadAllText($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\AppSettings.json");
+            //    appSettings = JsonConvert.DeserializeObject<AppSettings>(jsonString);
+            //}
+            //else
+            //{
+            //    appSettings = new AppSettings();
+            //    appSettings.CurrentTheme = "simple";
+            //    appSettings.DefaultBCK = string.Empty;
+            //    appSettings.CurrentGameDisplay = RomDisplay.FlixView;
+            //    appSettings.CurrentSysDisplay = SysDisplay.BigLogo;
+            //    appSettings.CurrentHomeDisplay = HomeDisplay.GameOS;
+            //    appSettings.AppSettingsFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront";
+            //    appSettings.AppSettingsLocation = $"{appSettings.AppSettingsFolder}\\AppSettings.json";
+            //    appSettings.ShowAll = true;
+            //    appSettings.ShowFav = true;
+            //    appSettings.ShowLastPlayed = true;
+            //    appSettings.ShowMostPlayed = true;
+            //    var jsonApp =  JsonConvert.SerializeObject(appSettings);
+            //    File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
+            //}
+            //System.IO.Directory.CreateDirectory(appSettings.AppSettingsFolder);
+            //System.IO.Directory.CreateDirectory($"{appSettings.AppSettingsFolder}\\themes");
+            //System.IO.Directory.CreateDirectory($"{appSettings.AppSettingsFolder}\\media");
 
         }
 
         public void UpdateSettings(AppSettings apps)
         {
             appSettings = apps;
-            var jsonApp = JsonConvert.SerializeObject(appSettings);
-            File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
+            //var jsonApp = JsonConvert.SerializeObject(appSettings);
+            //File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
+            settingsServicesAPI.SettingsPost(apps);
         }
         public void UpdateSettings()
         {
-            var jsonApp = JsonConvert.SerializeObject(appSettings);
-            File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
+            //var jsonApp = JsonConvert.SerializeObject(appSettings);
+            //File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
+            settingsServicesAPI.SettingsPost(appSettings);
         }
         public void ChangeCurrentTheme(Theme th)
         {
             appSettings.CurrentTheme = th.FolderName;
-            var jsonApp = JsonConvert.SerializeObject(appSettings);
-            File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
+            //var jsonApp = JsonConvert.SerializeObject(appSettings);
+            //File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
+            settingsServicesAPI.SettingsPost(appSettings);
         }
         public string GetCurrentTheme()
         {
-            return appSettings.CurrentTheme;
+            //return appSettings.CurrentTheme;
+            return settingsServicesAPI.GetCurrentTheme().Path;
         }
         public IEnumerable<StandaloneEmulator> GetStandaloneEmulators()
         {
-
-            string workingDirectory = Environment.CurrentDirectory;
-            var shortWDirectory = workingDirectory.Substring(0,workingDirectory.IndexOf("RetroFront")+10);
-            var truefolder = Path.Combine(shortWDirectory, "RetroFront.Admin", "Emulator");
-            var files = Directory.GetFiles(truefolder).ToList();
-            foreach(var file in files.Where(x=>x.EndsWith("json")))
-            {
-                var jsonString = File.ReadAllText(file);
-                var StandEmu = JsonConvert.DeserializeObject<StandaloneEmulator>(jsonString);
-                yield return StandEmu;
-            }
+            return settingsServicesAPI.GetStandaloneEmulators();
+            //string workingDirectory = Environment.CurrentDirectory;
+            //var shortWDirectory = workingDirectory.Substring(0,workingDirectory.IndexOf("RetroFront")+10);
+            //var truefolder = Path.Combine(shortWDirectory, "RetroFront.Admin", "Emulator");
+            //var files = Directory.GetFiles(truefolder).ToList();
+            //foreach(var file in files.Where(x=>x.EndsWith("json")))
+            //{
+            //    var jsonString = File.ReadAllText(file);
+            //    var StandEmu = JsonConvert.DeserializeObject<StandaloneEmulator>(jsonString);
+            //    yield return StandEmu;
+            //}
             //return null;
         }
 
         public Models.ScreenScraper.System.Systeme GetSysByCode(string shortname)
-        {
+        {            
             var jsonString = File.ReadAllText($"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront\\SystemListSCSP.json");
             JObject rss = JObject.Parse(jsonString);
             JArray categories = (JArray)rss["response"]["systemes"];
@@ -123,7 +130,6 @@ namespace RetroFront.Services.Implementation
                 }
                 return null;
             }
-
             //return (Models.ScreenScraper.System.Systeme)listSysSS.FirstOrDefault(x => x.noms.nom_recalbox.ToUpper() == shortname.ToUpper() || x.noms.nom_retropie.ToUpper() == shortname.ToUpper() || x.noms.nom_launchbox.ToUpper() == shortname.ToUpper() || x.noms.noms_commun.ToUpper() == shortname.ToUpper());
         }
         public IEnumerable<Models.ScreenScraper.System.Systeme> GetAllSysFromJSON()

@@ -5,6 +5,10 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.1">
