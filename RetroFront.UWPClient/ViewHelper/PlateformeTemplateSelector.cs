@@ -12,6 +12,7 @@ namespace RetroFront.UWPClient.ViewHelper
     public class PlateformeTemplateSelector : DataTemplateSelector
     {
         public DataTemplate FlipView { get; set; }
+        public DataTemplate CarrousselLogoView { get; set; }
         protected override DataTemplate SelectTemplateCore(object item)
         {
             if (item is SysDisplay)
@@ -19,8 +20,8 @@ namespace RetroFront.UWPClient.ViewHelper
                 var displayType = (SysDisplay)item;
                 if (displayType == SysDisplay._0)
                     return FlipView;
-                //if (displayType == HomeDisplay._1)
-                //    return FlixView;
+                if (displayType == SysDisplay._1)
+                    return CarrousselLogoView;
                 //if (displayType == HomeDisplay._2)
                 //    return HubView;
 

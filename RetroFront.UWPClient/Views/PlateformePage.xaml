@@ -4,22 +4,40 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:enum="using:RetroFront.UWPClient.Core.Models"
     xmlns:ViewHelper="using:RetroFront.UWPClient.ViewHelper"
     xmlns:views="using:RetroFront.UWPClient.Views.Plateforme"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="FlipView">
             <views:FlipView></views:FlipView>
         </DataTemplate>
-        <ViewHelper:PlateformeTemplateSelector x:Key="PlateformeTemplateSelector"
-                       FlipView="{StaticResource FlipView}">
-        </ViewHelper:PlateformeTemplateSelector>
+        <DataTemplate x:Key="LogoCarrouselView">
+            <views:LogoCarrouselView></views:LogoCarrouselView>
+        </DataTemplate>
+        <Style x:Key="PlateformeStyle" TargetType="ContentPresenter">
+            <i:Interaction.Behaviors>
+                <ic:DataTriggerBehavior Binding="{x:Bind ViewModel.DisplayType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                        ComparisonCondition="Equal" Value="0">
+                    <ic:ChangePropertyAction TargetObject="{Binding ElementName=contentpres}" PropertyName="ContentTemplate"
+                                             Value="{StaticResource FlipView}">                        
+                    </ic:ChangePropertyAction>
+                </ic:DataTriggerBehavior>
+                <ic:DataTriggerBehavior Binding="{x:Bind ViewModel.DisplayType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                        ComparisonCondition="Equal" Value="1">
+                    <ic:ChangePropertyAction TargetObject="{Binding ElementName=contentpres}" PropertyName="ContentTemplate"
+                                             Value="{StaticResource LogoCarrouselView}">                        
+                    </ic:ChangePropertyAction>
+                </ic:DataTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </Style>
     </Page.Resources>
-    <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
-        <Grid
-            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-            <ContentPresenter x:Name="contentpres" Content="{Binding DisplayType,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" ContentTemplateSelector="{StaticResource PlateformeTemplateSelector}"/>
+    <Grid x:Name="ContentArea">
+        <Grid>
+            <ContentPresenter x:Name="contentpres" Style="{StaticResource PlateformeStyle}"/>
             <!--
                 The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
                 Place your content here.

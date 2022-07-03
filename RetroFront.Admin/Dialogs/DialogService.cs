@@ -2,6 +2,7 @@
 using RetroFront.Admin.Dialogs.ViewModel;
 using RetroFront.Admin.Dialogs.Views;
 using RetroFront.Models;
+using RetroFront.Models.StandaloneEmulator;
 using RetroFront.Models.SteamGridDB;
 using RetroFront.Services.Interface;
 using RetroFront.ViewModels;
@@ -15,6 +16,18 @@ namespace RetroFront.Admin.Dialogs
 {
     public class DialogService : IDialogService
     {
+        public string ShowSaveFileDialog(string defaultfilename)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (!string.IsNullOrEmpty(defaultfilename))
+                saveFileDialog.FileName = defaultfilename;
+            if (saveFileDialog.ShowDialog() == true)
+                return saveFileDialog.FileName;
+            else
+                return string.Empty;
+
+        }
         public bool ShowMessageOk(string title, string message)
         {
             MessageBoxResult dialogResult = MessageBox.Show(message, title, MessageBoxButton.OK);
@@ -135,21 +148,21 @@ namespace RetroFront.Admin.Dialogs
             }
             return null;
         }
-        public string OpenDetailEmu(Emulator emu)
+        public Emulator OpenDetailEmu(Emulator emu)
         {
             ModalWindow modalWindow = new ModalWindow();
             var vm = new CreateEmulateurModalViewModel(emu);
             modalWindow.DataContext = vm;
             if (modalWindow.ShowDialog().Value)
             {
-                return vm.ResultJson;
+                return vm.Result;
             }
             return null;
         }
-        public string CreateRetroarchCore()
+        public StandalonePlateforme CreateRetroarchCore(string retroarchpath)
         {
             ModalWindow modalWindow = new ModalWindow();
-            var vm = new AddRetroArchCoreViewModel();
+            var vm = new AddRetroArchCoreViewModel(retroarchpath);
             modalWindow.DataContext = vm;
             if (modalWindow.ShowDialog().Value)
             {
@@ -188,6 +201,21 @@ namespace RetroFront.Admin.Dialogs
             return modalWindow.ShowDialog().Value;
         }
 
+        public bool DllContent(string uritodll, string destifile, string targetname, string typetodll)
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new DllModalViewModel(uritodll,destifile,targetname,typetodll);
+            modalWindow.DataContext = vm;
+            return modalWindow.ShowDialog().Value;
+        }
+        public bool DllContent(byte[] bytetoWrite, string destifile, string targetname, string typetodll)
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new DllModalViewModel(bytetoWrite, destifile,targetname,typetodll);
+            modalWindow.DataContext = vm;
+            return modalWindow.ShowDialog().Value;
+        }
+
         public List<GameRom> ShowSteamGamesFounded(List<GameRom> foundedgame)
         {
             ModalWindow modalWindow = new ModalWindow();
@@ -218,6 +246,17 @@ namespace RetroFront.Admin.Dialogs
             if (modalWindow.ShowDialog().Value)
             {
                 return vm.Resultgame;
+            }
+            return null;
+        }
+        public RetroFront.Models.ScreenScraper.System.Systeme SearchSSysInSSCPByName(string name)
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new FindScreenScraperSystemeViewModel(name);
+            modalWindow.DataContext = vm;
+            if (modalWindow.ShowDialog().Value)
+            {
+                return vm.ResultSystem;
             }
             return null;
         }

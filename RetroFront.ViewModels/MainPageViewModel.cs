@@ -31,6 +31,7 @@ namespace RetroFront.ViewModels
         private IOriginService _originService;
         private IEpicService _epicService;
         private IScreenScraperService _screenScraperService;
+        private IPegasusService _pegasusService;
 
         #region Properties
 
@@ -178,6 +179,7 @@ namespace RetroFront.ViewModels
         private ICommand _ChangeScrapeTypeCommand;
         private ICommand _GetSystemeIMGCommand;
         private ICommand _SetBckCommand;
+        private ICommand _ExportToPegasusCommand;
         public ICommand SetBckCommand
         {
             get
@@ -284,6 +286,13 @@ namespace RetroFront.ViewModels
                 return _AddGameCustomCommand ?? (_AddGameCustomCommand = new RelayCommand<SystemeViewModel>(AddGameCustom));
             }
         }
+        public ICommand ExportToPegasusCommand
+        {
+            get
+            {
+                return _ExportToPegasusCommand ?? (_ExportToPegasusCommand = new RelayCommand<EmulatorViewModel>(ExportToPegasus));
+            }
+        }
         public ICommand AddSingleGameCommand
         {
             get
@@ -356,7 +365,7 @@ namespace RetroFront.ViewModels
             }
         }
         #endregion
-        public MainPageViewModel(IDatabaseService databaseService, IFileJSONService fileJSONService, IEmulateurService emulateurService, IDialogService dialogService, IGameService gameService, IThemeService themeService, ISteamService steamService, IIGDBService iGDBService, IOriginService originService, IEpicService epicService, IScreenScraperService screenScraperService)
+        public MainPageViewModel(IDatabaseService databaseService, IFileJSONService fileJSONService, IEmulateurService emulateurService, IDialogService dialogService, IGameService gameService, IThemeService themeService, ISteamService steamService, IIGDBService iGDBService, IOriginService originService, IEpicService epicService, IScreenScraperService screenScraperService, IPegasusService pegasusService)
         {
             _databaseService = databaseService;
             _fileJSONService = fileJSONService;
@@ -369,6 +378,7 @@ namespace RetroFront.ViewModels
             _originService = originService;
             _epicService = epicService;
             _screenScraperService = screenScraperService;
+            _pegasusService = pegasusService;
             LoadThemeSettings();
             ReloadData();
         }
@@ -495,13 +505,14 @@ namespace RetroFront.ViewModels
         }
         private void AddCore()
         {
-            var emujson = _dialogService.CreateRetroarchCore();
-            if (emujson != null)
+            var emupath = _dialogService.OpenUniqueFileDialog($"Executable Retroarch (*.exe)|*.exe");
+            if (!string.IsNullOrEmpty(emupath) && emupath.Contains("retroarch"))
             {
-                var newemu = JsonConvert.DeserializeObject<Emulator>(emujson);
-                _databaseService.AddEmulator(newemu);
-                ReloadFullEmulators();
-                ReloadData();
+                var emujson = _dialogService.CreateRetroarchCore(emupath);
+                if (emujson != null)
+                {
+                    this.AddPlateforme(emujson);
+                } 
             }
         }
         private void AddSteamPlateforme()
@@ -597,21 +608,26 @@ namespace RetroFront.ViewModels
                 sys.Name = sysSCSP.Name;
                 sys.Shortname = sysSCSP.Shortname;
                 var SCSPsys = _fileJSONService.GetSysByCode(sys.Shortname);
-                sys.SystemeSCSPID = SCSPsys.id;
-                sys = _databaseService.AddSystem(sys);
-                GetSysMedia(sys, SCSPsys);
-                _themeService.LoadDefaultBckForSysteme(sys);
+                if (SCSPsys == null)
+                {
+                    SCSPsys = _dialogService.SearchSSysInSSCPByName(sysSCSP.Name);
 
-                var emulator = new Emulator();
-                emulator.Name = sysSCSP.StartupExecutable;
-                emulator.IsDuplicate = false;
-                emulator.SystemeID = sys.SystemeID;
-                emulator.Extension = string.Join(' ', sysSCSP.ImageExtensions.Select(x => $".{x}"));
-                emulator.Chemin = emupath;
-                emulator.Command = sysSCSP.StartupArguments;
-                _databaseService.AddEmulator(emulator);
-                ReloadFullEmulators();
-                ReloadData();
+                    sys.SystemeSCSPID = SCSPsys.id;
+                    sys = _databaseService.AddSystem(sys);
+                    GetSysMedia(sys, SCSPsys);
+                    _themeService.LoadDefaultBckForSysteme(sys);
+
+                    var emulator = new Emulator();
+                    emulator.Name = sysSCSP.Name;
+                    emulator.IsDuplicate = false;
+                    emulator.SystemeID = sys.SystemeID;
+                    emulator.Extension = string.Join(' ', sysSCSP.ImageExtensions.Select(x => $".{x}"));
+                    emulator.Chemin = emupath;
+                    emulator.Command = sysSCSP.StartupArguments;
+                    _databaseService.AddEmulator(emulator);
+                    ReloadFullEmulators();
+                    ReloadData();
+                }
             }
         }
         private void AddEmu()
@@ -674,6 +690,23 @@ namespace RetroFront.ViewModels
                     _databaseService.AddGame(_gameService.CreateGame(gamefile, obj.Emulator));
                 }
                 ReloadData();
+            }
+        }
+        private void ExportToPegasus(EmulatorViewModel obj)
+        {
+            var sys = _databaseService.GetSysteme(obj.Emulator.SystemeID);
+            var emu = obj.Emulator;
+            var stringpath = _dialogService.ShowSaveFileDialog($"{sys.Name}.metadata.pegasus.txt");
+            if(!string.IsNullOrEmpty(stringpath))
+            {
+                var builder = new StringBuilder();
+                builder.Append(_pegasusService.StringFromPegasusCollection(_pegasusService.PegasusCollectionFromEmulator(emu,sys)));
+                builder.AppendLine();
+                foreach(var game in _databaseService.GetGamesForemulator(emu.EmulatorID))
+                {
+                    builder.AppendLine(_pegasusService.StringFromPegasusGame(_pegasusService.PegasusGameFromGameRom(game)));
+                }
+                File.WriteAllText(stringpath, builder.ToString()); ;
             }
         }
         private void AddGamelist(EmulatorViewModel obj)
@@ -767,7 +800,8 @@ namespace RetroFront.ViewModels
                         var fstream = File.Create(targetfile);
                         fstream.Close();
                         fstream.Dispose();
-                        _gameService.DownloadImgData(game.Boxart, targetfile);
+                        _dialogService.DllContent(game.Boxart, targetfile, game.Name, ScraperType.Boxart.ToString());
+                        //_gameService.DownloadImgData(game.Boxart, targetfile);
                         game.Boxart = targetfile;
                     }
                 }
@@ -785,7 +819,8 @@ namespace RetroFront.ViewModels
                         var fstream = File.Create(targetfile);
                         fstream.Close();
                         fstream.Dispose();
-                        _gameService.DownloadImgData(game.Fanart, targetfile);
+                        _dialogService.DllContent(game.Fanart, targetfile, game.Name, ScraperType.Banner.ToString());
+                        //_gameService.DownloadImgData(game.Fanart, targetfile);
                         game.Fanart = targetfile;
                     }
                 }
@@ -803,7 +838,8 @@ namespace RetroFront.ViewModels
                         var fstream = File.Create(targetfile);
                         fstream.Close();
                         fstream.Dispose();
-                        _gameService.DownloadImgData(game.Screenshoot, targetfile);
+                        _dialogService.DllContent(game.Screenshoot, targetfile, game.Name, ScraperType.ArtWork.ToString());
+                        //_gameService.DownloadImgData(game.Screenshoot, targetfile);
                         game.Screenshoot = targetfile;
                     }
                 }
@@ -821,7 +857,8 @@ namespace RetroFront.ViewModels
                         var fstream = File.Create(targetfile);
                         fstream.Close();
                         fstream.Dispose();
-                        _gameService.DownloadImgData(game.Logo, targetfile);
+                        _dialogService.DllContent(game.Logo, targetfile, game.Name, ScraperType.Logo.ToString());
+                        //_gameService.DownloadImgData(game.Logo, targetfile);
                         game.Logo = targetfile;
                     }
                 }
@@ -839,7 +876,8 @@ namespace RetroFront.ViewModels
                             var targetfile = $"{targetfolder}{Path.GetExtension(".mp4")}";
                             var youTube = YouTube.Default;
                             var video = youTube.GetVideo(game.Video.Replace("embed/", "watch?v="));
-                            File.WriteAllBytes(targetfile, video.GetBytes());
+                            _dialogService.DllContent(video.GetBytes(), targetfile, game.Name, ScraperType.Video.ToString());
+                            //File.WriteAllBytes(targetfile, video.GetBytes());
                             //await youtube.Videos.DownloadAsync(, targetfile);
                             game.Video = targetfile;
                         }
@@ -851,14 +889,16 @@ namespace RetroFront.ViewModels
                             var fstream = File.Create(targetfile);
                             fstream.Close();
                             fstream.Dispose();
-                            _gameService.DownloadImgData(game.Video, targetfile);
+                            _dialogService.DllContent(game.Video, targetfile, game.Name, ScraperType.Video.ToString());
+                            //_gameService.DownloadImgData(game.Video, targetfile);
                             game.Video = targetfile;
                         }
                         else
                         {
                             var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.Video);
                             var targetfile = $"{targetfolder}{Path.GetExtension(".mp4")}";
-                            _gameService.DownloadImgData(game.Video, targetfile);
+                            _dialogService.DllContent(game.Video, targetfile, game.Name, ScraperType.Video.ToString());
+                            //_gameService.DownloadImgData(game.Video, targetfile);
                             game.Video = targetfile;
                         }
                         File.Delete(oldgamevideo);
@@ -1037,7 +1077,8 @@ namespace RetroFront.ViewModels
                     games.Video = videoURL;
                     var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Video);
                     var targetfile = $"{targetfolder}{Path.GetExtension(".mp4")}";
-                    _gameService.DownloadImgData(games.Video, targetfile);
+                    //_gameService.DownloadImgData(games.Video, targetfile);
+                    _dialogService.DllContent(games.Video, targetfile, games.Name, ScraperType.Video.ToString());
                     games.Video = targetfile;
                     File.Delete(oldvideo);
                 }
@@ -1063,7 +1104,8 @@ namespace RetroFront.ViewModels
                     var targetfile = $"{targetfolder}{Path.GetExtension(".mp4")}";
                     var youTube = YouTube.Default;
                     var video = youTube.GetVideo(result.Replace("embed/", "watch?v="));
-                    File.WriteAllBytes(targetfile, video.GetBytes());
+                    _dialogService.DllContent(video.GetBytes(), targetfile, games.Name, ScraperType.Video.ToString());
+                    //File.WriteAllBytes(targetfile, video.GetBytes());
                     //await youtube.Videos.DownloadAsync(, targetfile);
                     games.Video = targetfile;
                 }
@@ -1112,7 +1154,8 @@ namespace RetroFront.ViewModels
                 games.Logo = result;
                 var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Logo);
                 var targetfile = $"{targetfolder}{Path.GetExtension(games.Logo)}";
-                _gameService.DownloadImgData(games.Logo, targetfile);
+                //_gameService.DownloadImgData(games.Logo, targetfile);
+                _dialogService.DllContent(games.Logo, targetfile, games.Name, ScraperType.Logo.ToString());
                 games.Logo = targetfile;
             }
         }
@@ -1124,7 +1167,8 @@ namespace RetroFront.ViewModels
                 games.Boxart = result;
                 var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Boxart);
                 var targetfile = $"{targetfolder}{Path.GetExtension(games.Boxart)}";
-                _gameService.DownloadImgData(games.Boxart, targetfile);
+                //_gameService.DownloadImgData(games.Boxart, targetfile);
+                _dialogService.DllContent(games.Boxart, targetfile, games.Name, ScraperType.Boxart.ToString());
                 games.Boxart = targetfile;
             }
         }
@@ -1136,7 +1180,8 @@ namespace RetroFront.ViewModels
                 games.Fanart = result;
                 var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Banner);
                 var targetfile = $"{targetfolder}{Path.GetExtension(games.Fanart)}";
-                _gameService.DownloadImgData(games.Fanart, targetfile);
+                //_gameService.DownloadImgData(games.Fanart, targetfile);
+                _dialogService.DllContent(games.Fanart, targetfile, games.Name, ScraperType.Banner.ToString());
                 games.Fanart = targetfile;
             }
         }
@@ -1170,21 +1215,43 @@ namespace RetroFront.ViewModels
         {
             var logopath = _themeService.GetLogoPathForTheme(sys.Shortname);
             Directory.CreateDirectory(Path.GetDirectoryName(logopath));
-            _themeService.DownloadSteamData(_screenScraperService.GetSystemeImgDLL("wheel", sysSCSP.id.ToString()), logopath);
+            _dialogService.DllContent(_screenScraperService.GetSystemeImgDLL("wheel", sysSCSP.id.ToString()), logopath, sysSCSP.NomCourant, "Logo");
+            //_themeService.DownloadSteamData(_screenScraperService.GetSystemeImgDLL("wheel", sysSCSP.id.ToString()), logopath);
             sys.Logo = logopath;
             var videopath = _themeService.GetVidéoPathForTheme(sys.Shortname);
             Directory.CreateDirectory(Path.GetDirectoryName(videopath));
-            _themeService.DownloadSteamData(_screenScraperService.GetSystemeVideoDLL(sysSCSP.id.ToString()), videopath);
+            _dialogService.DllContent(_screenScraperService.GetSystemeVideoDLL(sysSCSP.id.ToString()), videopath, sysSCSP.NomCourant, "Vidéo");
+            //_themeService.DownloadSteamData(_screenScraperService.GetSystemeVideoDLL(sysSCSP.id.ToString()), videopath);
             sys.Video = videopath;
             var imgpath = _themeService.GetImagePathForTheme(sys.Shortname);
             Directory.CreateDirectory(Path.GetDirectoryName(imgpath));
-            _themeService.DownloadSteamData(_screenScraperService.GetSystemeImgDLL("photo", sysSCSP.id.ToString()), imgpath);
+            _dialogService.DllContent(_screenScraperService.GetSystemeImgDLL("photo", sysSCSP.id.ToString()), imgpath, sysSCSP.NomCourant, "Photo");
+            //_themeService.DownloadSteamData(_screenScraperService.GetSystemeImgDLL("photo", sysSCSP.id.ToString()), imgpath);
             sys.Screenshoot = imgpath;
             _databaseService.SaveUpdate();
         }
         private void ShowDetailEmulator(EmulatorViewModel obj)
         {
-            _dialogService.OpenDetailEmu(obj.Emulator);
+            var oldName = obj.Emulator.Name;
+            var oldChemin = obj.Emulator.Chemin;
+            var oldCommand = obj.Emulator.Command;
+            var oldExtension = obj.Emulator.Extension;
+            var emu = _dialogService.OpenDetailEmu(obj.Emulator);
+            if(emu != null)
+            {
+                if(
+                    oldName != emu.Name
+                    ||
+                    oldChemin != emu.Chemin
+                    ||
+                    oldCommand != emu.Command
+                    ||
+                    oldExtension != emu.Extension)
+                {
+                    _databaseService.SaveUpdate();
+                    ReloadData();
+                }
+            }
         }
         private void CHangeCurrentTheme(ThemeViewModel obj)
         {

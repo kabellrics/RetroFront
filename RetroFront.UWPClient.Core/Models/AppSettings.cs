@@ -30,6 +30,9 @@
         [Newtonsoft.Json.JsonProperty("currentHomeDisplay", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public HomeDisplay CurrentHomeDisplay { get; set; }
 
+        [Newtonsoft.Json.JsonProperty("currentGameDetailDisplay", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public GameDetailDisplay CurrentGameDetailDisplay { get; set; }
+
         [Newtonsoft.Json.JsonProperty("defaultBCK", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string DefaultBCK { get; set; }
 

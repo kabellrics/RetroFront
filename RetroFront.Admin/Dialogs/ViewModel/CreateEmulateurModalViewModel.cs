@@ -28,6 +28,12 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             }
         }
         public string ResultJson { get; set; }
+        private Emulator _result;
+        public Emulator Result
+        {
+            get { return _result; }
+            set { _result = value; RaisePropertyChanged(); }
+        }
         private IDatabaseService _databaseService;
         private IDialogService _dialogService;
         private string _name;
@@ -88,6 +94,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             {
                 Systemes.Add(new SystemeDetailViewModel(sys));
             }
+            Result = emu;
             Name = emu.Name;
             Chemin = emu.Chemin;
             Command = emu.Command;
@@ -126,19 +133,17 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         }
         private void ValidateClick(object parameter)
         {
-            ResultJson = GetJsonEmu();
+            GetJsonEmu();
             CloseDialogWithResult(parameter as Window, true);
         }
 
-        private string GetJsonEmu()
+        private void GetJsonEmu()
         {
-            Emulator emu = new Emulator();
-            emu.Chemin = Chemin;
-            emu.Command = Command;
-            emu.Extension = Extension;
-            emu.Name = $"{Selectedsysteme.Name} - {Name}";
-            emu.SystemeID = Selectedsysteme.Sys.SystemeID;
-            return JsonConvert.SerializeObject(emu);
+            Result.Chemin = Chemin;
+            Result.Command = Command;
+            Result.Extension = Extension;
+            Result.Name = $"{Selectedsysteme.Name} - {Name}";
+            Result.SystemeID = Selectedsysteme.Sys.SystemeID;
         }
     }
 }

@@ -51,6 +51,7 @@ namespace RetroFront.Admin
             services.AddSingleton<IOriginService, OriginService>();
             services.AddSingleton<IEpicService, EpicService>();
             services.AddSingleton<IScreenScraperService, ScreenScraperService>();
+            services.AddSingleton<IPegasusService, PegasusService>();
 
             services.AddSingleton<MainPageViewModel>();
 

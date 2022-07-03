@@ -18,10 +18,10 @@ namespace RetroFront.UWPClient.Views
             DataContext = Ioc.Default.GetRequiredService<HomeViewModel>();
             ViewModel.LoadDataAsync();
         }
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-
-        }
+        //protected override async void OnNavigatedTo(NavigationEventArgs e)
+        //{
+        //    base.OnNavigatedTo(e);
+        //    ViewModel.LoadDataAsync();
+        //}
     }
 }

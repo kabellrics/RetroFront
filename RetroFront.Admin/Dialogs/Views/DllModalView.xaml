@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="RetroFront.Admin.Dialogs.Views.DllModalView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RetroFront.Admin.Dialogs.Views"
+             mc:Ignorable="d" Height="400" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Téléchargement :" Style="{DynamicResource MaterialDesignCaptionTextBlock}"></TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding TargetName}" Style="{DynamicResource MaterialDesignCaptionTextBlock}"></TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding TypeToDLL}" Style="{DynamicResource MaterialDesignCaptionTextBlock}"></TextBlock>
+        </Grid>
+        <ProgressBar Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" Padding="5"
+                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                     HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                     IsIndeterminate="{Binding IsIndeterminate}" Value="{Binding PercentageCompletion}"
+                     Visibility="Visible"></ProgressBar>
+        <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
+                   Text="{Binding ResultText}" Style="{DynamicResource MaterialDesignCaptionTextBlock}"></TextBlock>
+        <Button Grid.Row="4" Grid.Column="3" Content="OK" Command="{Binding YesCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                        Style="{DynamicResource MaterialDesignToolButton}"></Button>
+    </Grid>
+</UserControl>

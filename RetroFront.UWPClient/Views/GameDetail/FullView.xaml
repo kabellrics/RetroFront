@@ -1,0 +1,69 @@
+﻿<UserControl
+    x:Class="RetroFront.UWPClient.Views.GameDetail.FullView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RetroFront.UWPClient.Views.GameDetail"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewHelper="using:RetroFront.UWPClient.ViewHelper"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d" Unloaded="UserControl_LostFocus">
+    <UserControl.Resources>
+        <viewHelper:SysLogoConverter x:Key="SysLogoConverter"></viewHelper:SysLogoConverter>
+        <viewHelper:SysScreenshootConverter x:Key="SysScreenshootConverter"></viewHelper:SysScreenshootConverter>
+        <viewHelper:GameScreenshootConverter x:Key="GameScreenshootConverter"></viewHelper:GameScreenshootConverter>
+        <viewHelper:GameBoxartConverter x:Key="GameBoxartConverter"></viewHelper:GameBoxartConverter>
+        <viewHelper:GameLogoConverter x:Key="GameLogoConverter"></viewHelper:GameLogoConverter>
+        <viewHelper:GameVideoConverter x:Key="GameVideoConverter"></viewHelper:GameVideoConverter>
+        <viewHelper:NullToVisibilityConverter x:Key="NullToVisibilityConverter"></viewHelper:NullToVisibilityConverter>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height=".5*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".25*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width=".25*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Grid.Row="0"
+                            Grid.ColumnSpan="5" Grid.RowSpan="5">
+            <controls:ImageEx Grid.Row="1" Grid.Column="1"
+                          IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                          Source="{x:Bind ViewModel.CurrenGame.Id, Mode=TwoWay, Converter={StaticResource GameScreenshootConverter}, UpdateSourceTrigger=PropertyChanged}"
+                          CornerRadius="30"
+                          PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
+                          Stretch="Fill"/>
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="0"
+                            Grid.ColumnSpan="5" Grid.RowSpan="5">
+            <MediaPlayerElement x:Name="player"
+            AreTransportControlsEnabled="False"
+            AutoPlay="True"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Source="{x:Bind ViewModel.CurrenGame.Id, Mode=OneWay, Converter={StaticResource GameVideoConverter}}"                >
+            </MediaPlayerElement>
+        </Grid>
+        <controls:ImageEx Grid.Row="1" Grid.Column="1"
+                          IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                          Source="{x:Bind ViewModel.CurrenGame.Id, Mode=TwoWay, Converter={StaticResource GameLogoConverter}, UpdateSourceTrigger=PropertyChanged}"
+                          CornerRadius="30"
+                          PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
+                          Stretch="Uniform"/>
+        <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Lancer le jeux" Margin="5" Style="{StaticResource AccentButtonStyle}"></Button>
+                <Button Content="Favoris" Margin="5"></Button>
+                <Button Content="Un/Mute" Margin="5" Click="Button_Click"></Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -3,6 +3,7 @@ using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using RetroFront.UWPClient.ViewModels;
 
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace RetroFront.UWPClient.Views
 {
@@ -14,7 +15,15 @@ namespace RetroFront.UWPClient.Views
         {
             InitializeComponent();
             DataContext = Ioc.Default.GetRequiredService<PlateformeViewModel>();
-            ViewModel.LoadDataAsync();
+        }
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (e.Parameter is bool parameter)
+            {
+                ViewModel.LoadDataAsync(parameter);
+            }
+            //ViewModel.LoadDataAsync();
         }
     }
 }

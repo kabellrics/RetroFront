@@ -60,6 +60,12 @@
     <None Update="Emulator\Dolphin.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Emulator\ppsspp.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Emulator\redream.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="retro-game.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -28,9 +28,10 @@ namespace RetroFrontAPIService.Service.Implémentation
                 appSettings = new AppSettings();
                 appSettings.CurrentTheme = "simple";
                 appSettings.DefaultBCK = string.Empty;
-                appSettings.CurrentGameDisplay = RomDisplay.FlixView;
-                appSettings.CurrentSysDisplay = SysDisplay.BigLogo;
+                appSettings.CurrentGameDisplay = RomDisplay.WallBox;
+                appSettings.CurrentSysDisplay = SysDisplay.FlipView;
                 appSettings.CurrentHomeDisplay = HomeDisplay.GameOS;
+                appSettings.CurrentGameDetailDisplay = GameDetailDisplay.Artwork;
                 appSettings.AppSettingsFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront";
                 appSettings.AppSettingsLocation = $"{appSettings.AppSettingsFolder}\\AppSettings.json";
                 appSettings.ShowAll = true;

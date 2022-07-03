@@ -42,69 +42,71 @@ namespace RetroFront.Models
         Video
     }
 
-    public enum HomeDisplay
-    {
-        [Description("GameOS")]
-        GameOS, 
-        [Description("FlixView")]
-        FlixView,
-        [Description("Hub")]
-        Hub
-    }
     public enum GameDetailDisplay
     {
         [Description("Artwork")]
-        Artwork, 
+        Artwork,
         [Description("Full")]
         Full
+    }
+    public enum HomeDisplay
+    {
+        [Description("GameOS")]
+        GameOS,
+        [Description("Hub")]
+        Hub, 
+        [Description("SteamView")]
+        SteamView
     }
     public enum SysDisplay
     {
         [Description("FlipView")]
         FlipView,
-        [Description("Modern")]
-        Modern, 
-        [Description("Big Logo")] 
-        BigLogo,
-        [Description("Banner")]
-        LogoBanner,
         [Description("Carousel")]
-        CarrouselLogo,
-        [Description("Left Spin")]
-        WheelLeftLogo,
-        [Description("Right Spin")]
-        WheelRightLogo,
-        [Description("Wall Logo")]
-        WallLogo,
-        [Description("Bezel")]
-        Bezel
+        CarrouselLogo//,
+        //[Description("Modern")]
+        //Modern, 
+        //[Description("Big Logo")] 
+        //BigLogo,
+        //[Description("Banner")]
+        //LogoBanner,
+        //[Description("Carousel")]
+        //CarrouselLogo,
+        //[Description("Left Spin")]
+        //WheelLeftLogo,
+        //[Description("Right Spin")]
+        //WheelRightLogo,
+        //[Description("Wall Logo")]
+        //WallLogo,
+        //[Description("Bezel")]
+        //Bezel
     }
 
     public enum RomDisplay
     {
         [Description("Wall Box")]
         WallBox,
-        [Description("Modern")]
-        Modern,
-        [Description("Wall Logo")] 
-        WallLogo,
-        [Description("Box Detail")] 
-        ListBox,
-        [Description("Banner Detail")] 
-        ListBanner,
-        [Description("Screenshot")] 
-        Screenshot,
-        [Description("Carousel Banner")] 
-        Fanart,
-        [Description("Carousel Box")] 
-        FanartBox,
-        [Description("Big Box")] 
-        BigBox,
-        [Description("Flix")] 
-        FlixView,
-        [Description("Detail")]
-        Detail,
-        [Description("BigModern")]
-        BigModern,
+        [Description("Wall Banner")]
+        WallBanner,
+        //[Description("Wall Logo")] 
+        //WallLogo,
+        //[Description("Box Detail")] 
+        //ListBox,
+        //[Description("Banner Detail")] 
+        //ListBanner,
+        //[Description("Screenshot")] 
+        //Screenshot,
+        //[Description("Carousel Banner")] 
+        //Fanart,
+        //[Description("Carousel Box")] 
+        //FanartBox,
+        //[Description("Big Box")] 
+        //BigBox,
+        //[Description("Flix")] 
+        //FlixView,
+        //[Description("Detail")]
+        //Detail,
+        //[Description("BigModern")]
+        //BigModern,
     }
 }

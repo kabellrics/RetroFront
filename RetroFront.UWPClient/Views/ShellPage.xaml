@@ -10,57 +10,92 @@
     xmlns:views="using:RetroFront.UWPClient.Views"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
-    mc:Ignorable="d">
-
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
+    xmlns:viewHelper="using:RetroFront.UWPClient.ViewHelper"
+    >
+    <Page.Resources>
+        <viewHelper:SysScreenshootConverter x:Key="SysScreenshootConverter"></viewHelper:SysScreenshootConverter></Page.Resources>
     <i:Interaction.Behaviors>
         <ic:EventTriggerBehavior EventName="Loaded">
             <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
         </ic:EventTriggerBehavior>
     </i:Interaction.Behaviors>
-
-    <winui:NavigationView
+    <Grid>
+        <Grid.Resources>
+            <AcrylicBrush x:Key="NavigationViewDefaultPaneBackground"
+                  BackgroundSource="Backdrop"
+                  TintColor="Transparent"
+                  TintOpacity="0.6"
+                  FallbackColor="Transparent"/>
+        </Grid.Resources>
+        <ParallaxView Source="{Binding ElementName=navigationView}" VerticalShift="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <controls:ImageEx Grid.Row="0" Grid.RowSpan="2" IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind ViewModel.BCK, Mode=OneWay, Converter={StaticResource SysScreenshootConverter}}" 
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"                                                      
+                                                      Stretch="Fill">
+                    </controls:ImageEx>
+                <Grid Grid.Row="0" Grid.RowSpan="2">
+                    <Border>
+                        <Border.Background>
+                            <media:BackdropBlurBrush Amount="3.15" />
+                        </Border.Background>
+                    </Border>
+                </Grid>
+            </Grid>
+        </ParallaxView>
+        <winui:NavigationView
+            Background="{StaticResource CustomAcrylicDark}"
+        Margin="0" Padding="0"
         x:Name="navigationView"
         IsBackButtonVisible="Visible"
+            AlwaysShowHeader="False"
         IsPaneOpen="False"
         IsPaneToggleButtonVisible="True"
-        PaneDisplayMode="LeftMinimal"
+        PaneDisplayMode="LeftMinimal"            
         IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
         SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
-        IsSettingsVisible="False"
-        Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
-        <winui:NavigationView.MenuItems>
-            <!--
+        IsSettingsVisible="False">
+            <winui:NavigationView.MenuItems>
+                <!--
+        Background="{ThemeResource SystemControlBackgroundAltHighBrush}"
             TODO WTS: Change the symbols for each item as appropriate for your app
             More on Segoe UI Symbol icons: https://docs.microsoft.com/windows/uwp/style/segoe-ui-symbol-font
             Or to use an IconElement instead of a Symbol see https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/UWP/projectTypes/navigationpane.md
             Edit String/en-US/Resources.resw: Add a menu item title for each page
             -->
-            <winui:NavigationViewItem x:Uid="Shell_Home" Icon="Document" helpers:NavHelper.NavigateTo="views:HomePage" />
-            <winui:NavigationViewItem x:Uid="Shell_Plateforme" Icon="Document" helpers:NavHelper.NavigateTo="views:PlateformePage" />
-            <winui:NavigationViewItem x:Uid="Shell_Jeux" Icon="Document" helpers:NavHelper.NavigateTo="views:JeuxPage" />
-            <winui:NavigationViewItem x:Uid="Shell_Parametre" Icon="Document" helpers:NavHelper.NavigateTo="views:ParametrePage" />
-            <winui:NavigationViewItem x:Uid="Shell_Quitter" Icon="Document" helpers:NavHelper.NavigateTo="views:QuitterPage" />
-        </winui:NavigationView.MenuItems>
-        <i:Interaction.Behaviors>
-            <behaviors:NavigationViewHeaderBehavior
+                <winui:NavigationViewItem x:Uid="Shell_Home" Icon="Document" helpers:NavHelper.NavigateTo="views:HomePage" />
+                <!--<winui:NavigationViewItem x:Uid="Shell_Plateforme" Icon="Document" helpers:NavHelper.NavigateTo="views:PlateformePage" />
+                <winui:NavigationViewItem x:Uid="Shell_Jeux" Icon="Document" helpers:NavHelper.NavigateTo="views:JeuxPage" />-->
+                <winui:NavigationViewItem x:Uid="Shell_Parametre" Icon="Document" helpers:NavHelper.NavigateTo="views:ParametrePage" />
+                <winui:NavigationViewItem x:Uid="Shell_Quitter" Icon="Document" helpers:NavHelper.NavigateTo="views:QuitterPage" />
+            </winui:NavigationView.MenuItems>
+            <i:Interaction.Behaviors>
+                <behaviors:NavigationViewHeaderBehavior
                 DefaultHeader="{x:Bind ViewModel.Selected.Content, Mode=OneWay}">
-                <behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <TextBlock
+                    <behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock
                                 Text="{Binding}"
                                 Style="{ThemeResource TitleTextBlockStyle}"
                                 Margin="{StaticResource SmallLeftRightMargin}" />
-                        </Grid>
-                    </DataTemplate>
-                </behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
-            </behaviors:NavigationViewHeaderBehavior>
-            <ic:EventTriggerBehavior EventName="ItemInvoked">
-                <ic:InvokeCommandAction Command="{x:Bind ViewModel.ItemInvokedCommand}" />
-            </ic:EventTriggerBehavior>
-        </i:Interaction.Behaviors>
-        <Grid>
-            <Frame x:Name="shellFrame" />
-        </Grid>
-    </winui:NavigationView>
+                            </Grid>
+                        </DataTemplate>
+                    </behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
+                </behaviors:NavigationViewHeaderBehavior>
+                <ic:EventTriggerBehavior EventName="ItemInvoked">
+                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.ItemInvokedCommand}" />
+                </ic:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Frame x:Name="shellFrame" VerticalContentAlignment="Stretch"/>
+            </Grid>
+        </winui:NavigationView>
+    </Grid>
 </Page>

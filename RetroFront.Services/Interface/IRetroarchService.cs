@@ -5,7 +5,7 @@ namespace RetroFront.Services.Interface
 {
     public interface IRetroarchService
     {
-        //IEnumerable<RetroarchCore> GetInstalledCore();
+        IEnumerable<RetroarchCore> GetInstalledCore(string retroarchpath);
         //string RetroarchEXEPath();
     }
 }

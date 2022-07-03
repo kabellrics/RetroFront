@@ -179,17 +179,11 @@
                                     <Setter Property="CommandParameter" Value="{Binding}"></Setter>
                                 </Style>
                             </MenuItem.ItemContainerStyle>
-                            --><!--<MenuItem Header="Ajouter une Plateforme" ItemsSource="{Binding Plateformes}"
+                            <MenuItem Header="Ajouter une Plateforme" ItemsSource="{Binding Plateformes}"
                               DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
-                            </MenuItem>--><!--
+                            </MenuItem>
                         </MenuItem>-->
                         <MenuItem Header="Ajouter un Emulateur" ItemsSource="{Binding AllSystemes}" Style="{DynamicResource MaterialDesignMenuItem}">
-                            <!--<MenuItem.ItemContainerStyle>
-                                <Style TargetType="MenuItem">
-                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem},Path=DataContext.AddPlateformeCommand}"></Setter>
-                                    <Setter Property="CommandParameter" Value="{Binding}"></Setter>
-                                </Style>
-                            </MenuItem.ItemContainerStyle>-->
                             <MenuItem.Resources>
                                 <HierarchicalDataTemplate DataType="{x:Type modelmenuitem:StandaloneEmulator}"
                                                           ItemsSource="{Binding Plateformes}">
@@ -202,12 +196,21 @@
                                 </DataTemplate>
                             </MenuItem.Resources>
                         </MenuItem>
+                        <MenuItem Header="Ajouter un Core RetroArch" Command="{Binding AddCoreCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                         <!--<MenuItem Header="Ajouter une Plateforme" Command="{Binding AddPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>-->
                         <MenuItem Header="Intégrer Steam" Command="{Binding AddSteamPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                         <MenuItem Header="Intégrer EA Origin" Command="{Binding AddOriginPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                         <MenuItem Header="Intégrer Epic Game Store" Command="{Binding AddEpicPlateformeCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                         <MenuItem Header="Créer une Liste Particulière" Command="{Binding AddCustomListCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
                         <MenuItem Header="Créer un standalone" Command="{Binding AddStandaloneCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>
+                        <MenuItem Header="Exporter un émulateur vers Pegasus" ItemsSource="{Binding FullEmulators}" DisplayMemberPath="Name" Style="{DynamicResource MaterialDesignMenuItem}">
+                            <MenuItem.ItemContainerStyle>
+                                <Style TargetType="MenuItem">
+                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=MenuItem},Path=DataContext.ExportToPegasusCommand}"></Setter>
+                                    <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                                </Style>
+                            </MenuItem.ItemContainerStyle>
+                        </MenuItem>
                     </MenuItem>
                     <!--<MenuItem Header="Emulateur" Style="{DynamicResource MaterialDesignMenuItem}">
                         <MenuItem Header="Ajouter un Core RetroArch" Command="{Binding AddCoreCommand}" Style="{DynamicResource MaterialDesignMenuItem}"></MenuItem>

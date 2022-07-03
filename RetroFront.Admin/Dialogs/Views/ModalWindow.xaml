@@ -59,6 +59,12 @@
         <DataTemplate DataType="{x:Type vms:VideoFinderSearchViewModel}">
             <vm:SearchVideoView></vm:SearchVideoView>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:DllModalViewModel}">
+            <vm:DllModalView></vm:DllModalView>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:FindScreenScraperSystemeViewModel}">
+            <vm:FindScreenScraperSystemeView></vm:FindScreenScraperSystemeView>
+        </DataTemplate>
     </mah:MetroWindow.Resources>
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>

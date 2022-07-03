@@ -34,6 +34,19 @@ namespace RetroFrontAPIService.Controllers
             }
             return NotFound();
         }
+        [HttpGet("GetAppBackground")]
+        public ActionResult GetAppBackground()
+        {
+            try
+            {
+                var defaultbck = _fileJSONService.appSettings.DefaultBCK;
+                return GetFile(defaultbck);
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+        }
         [HttpGet("GetScreenshootForSystem/{idsys}")]
         public ActionResult GetScreenshootForSystem(int idsys)
         {

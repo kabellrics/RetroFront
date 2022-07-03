@@ -42,6 +42,9 @@ namespace RetroFront.UWPClient
                 .AddSingleton<ThemeServiceAPI>()
                 .AddSingleton<HomeViewModel>()
                 .AddSingleton<PlateformeViewModel>()
+                .AddSingleton<JeuxViewModel>()
+                .AddSingleton<ParametreViewModel>()
+                .AddSingleton<GameDetailViewModel>()
                 .BuildServiceProvider());
             if (!args.PrelaunchActivated)
             {

@@ -8,23 +8,30 @@ using System.Threading.Tasks;
 
 namespace RetroFront.UWPClient.Core
 {
-    public class PlateformeService
+    public class PlateformeService: BaseService
     {
-        ThemeServiceAPI ThemeServiceAPI = new ThemeServiceAPI();
-        SystemeServiceAPI SystemeServiceAPI = new SystemeServiceAPI();
-        ImgServiceAPI ImgServiceAPI = new ImgServiceAPI();
-        GameServiceAPI GameServiceAPI = new GameServiceAPI();
-        ApiServiceAPI ApiServiceAPI = new ApiServiceAPI();
-        EmulatorServiceAPI EmulatorServiceAPI = new EmulatorServiceAPI();
-        SettingsServiceAPI SettingsServiceAPI = new SettingsServiceAPI();
+
         public PlateformeService()
         {
 
         }
-        public async Task<IEnumerable<Systeme>> GetPlateformes()
+        public async Task<IEnumerable<Systeme>> GetPlateformes(bool onlyCustomCollec = false)
         {
-            var systemes = await ApiServiceAPI.SystemeGetAsync();
-            return systemes.OrderBy(x=>x.Name);
+            if (!onlyCustomCollec)
+            {
+                var systemes = await ApiServiceAPI.SystemeGetAsync();
+                return systemes.OrderBy(x => x.Type).ThenBy(x=>x.Name);
+            }
+            else
+            {
+                var systemes = await ApiServiceAPI.SystemeGetAsync();
+                return systemes.Where(x=>x.Type == SysType._4).OrderBy(x => x.Name);
+            }
+        }
+        public async Task<SysDisplay> GetCurrentPlateformeDisplay()
+        {
+            var appsetting = await SettingsServiceAPI.SettingsGetAsync();
+            return appsetting.CurrentSysDisplay;
         }
     }
 }

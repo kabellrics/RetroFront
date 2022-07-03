@@ -12,452 +12,472 @@
     <UserControl.Resources>
         <viewHelper:SysLogoConverter x:Key="SysLogoConverter"></viewHelper:SysLogoConverter>
         <viewHelper:GameFanartConverter x:Key="GameFanartConverter"></viewHelper:GameFanartConverter>
+        <viewHelper:NullToVisibilityConverter x:Key="NullToVisibilityConverter"></viewHelper:NullToVisibilityConverter>
     </UserControl.Resources>
-    <Grid x:Name="MainGrid" Padding="10">
-        <ScrollViewer VerticalScrollBarVisibility="Hidden">
-            <StackPanel Orientation="Vertical">
-                <Grid Height="720">
-                    <Grid x:Name="MenuButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="25">
-                        <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" CornerRadius="30" Padding="0">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+    <Grid>
+        <ParallaxView Source="{Binding ElementName=MainGrid}" VerticalShift="250">
+            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind ViewModel.BCK, Mode=OneWay}"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"                                                      
+                                                      Stretch="Fill"/>
+        </ParallaxView>
+        <Grid x:Name="MainGrid" Padding="10">
+            <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                <StackPanel Orientation="Vertical">
+                    <Grid Height="720">
+                        <Grid x:Name="MenuButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="25">
+                            <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.PlateformelistCommand}" CommandParameter="{x:Bind ViewModel.False}">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="/Assets/XXL.png"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Button>
+                            </Button>
+                        </Grid>
                     </Grid>
-                </Grid>
-                <Grid Height="720">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"></RowDefinition>
-                        <RowDefinition Height="6*"></RowDefinition>
-                        <RowDefinition Height="2*"></RowDefinition>
-                        <RowDefinition Height="6*"></RowDefinition>
-                        <RowDefinition Height="2*"></RowDefinition>
-                        <RowDefinition Height="6*"></RowDefinition>
-                        <RowDefinition Height="2*"></RowDefinition>
-                        <RowDefinition Height="6*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Systèmes" Grid.Row="0" Grid.Column="0" Foreground="WhiteSmoke"></TextBlock>
-                    <HyperlinkButton Grid.Row="0" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"></HyperlinkButton>
-                    <Button Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <Grid Height="1620">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="6*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="6*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="6*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="6*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="6*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="6*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Systèmes" Grid.Row="0" Grid.Column="0" Foreground="WhiteSmoke"></TextBlock>
+                        <HyperlinkButton Grid.Row="0" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                Command="{x:Bind ViewModel.PlateformelistCommand}" CommandParameter="{x:Bind ViewModel.False}"></HyperlinkButton>
+                        <Button Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.System1, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue"
+                                Command="{x:Bind ViewModel.GamelistCommand}" CommandParameter="{x:Bind ViewModel.System1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                 <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.System1.SystemeID, Mode=TwoWay, Converter={StaticResource SysLogoConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"                                                      
                                                       Stretch="Uniform"/>
-                                </Grid>
-                     </Button>
-                    <Button Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.System2, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue"
+                                Command="{x:Bind ViewModel.GamelistCommand}" CommandParameter="{x:Bind ViewModel.System2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.System2.SystemeID, Mode=TwoWay, Converter={StaticResource SysLogoConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Uniform"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="1" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="1" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.System3, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue"
+                                Command="{x:Bind ViewModel.GamelistCommand}" CommandParameter="{x:Bind ViewModel.System3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.System3.SystemeID, Mode=TwoWay, Converter={StaticResource SysLogoConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Uniform"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="1" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="1" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.System4, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue"
+                                Command="{x:Bind ViewModel.GamelistCommand}" CommandParameter="{x:Bind ViewModel.System4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.System4.SystemeID, Mode=TwoWay, Converter={StaticResource SysLogoConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Uniform"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="1" Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="1" Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.System5, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue"
+                                Command="{x:Bind ViewModel.GamelistCommand}" CommandParameter="{x:Bind ViewModel.System5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.System5.SystemeID, Mode=TwoWay, Converter={StaticResource SysLogoConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Uniform"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="1" Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="1" Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.System6, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue"
+                                Command="{x:Bind ViewModel.GamelistCommand}" CommandParameter="{x:Bind ViewModel.System6, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.System6.SystemeID, Mode=TwoWay, Converter={StaticResource SysLogoConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Uniform"/>
-                        </Grid>
-                    </Button>
-                    <TextBlock Text="Derniers Jeux lancés" Grid.Row="2" Grid.Column="0" Foreground="WhiteSmoke"></TextBlock>
-                    <HyperlinkButton Grid.Row="2" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"></HyperlinkButton>
-                    <Button Grid.Row="3" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <TextBlock Text="Derniers Jeux lancés" Grid.Row="2" Grid.Column="0" Foreground="WhiteSmoke"></TextBlock>
+                        <HyperlinkButton Grid.Row="2" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                Command="{x:Bind ViewModel.GamelistSpecificCommand}" CommandParameter="last"></HyperlinkButton>
+                        <Button Grid.Row="3" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.LPGame1, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.LPGame1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.LPGame1.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="3" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="3" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.LPGame2, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.LPGame2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.LPGame2.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="3" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="3" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.LPGame3, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.LPGame3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.LPGame3.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="3" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="3" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.LPGame4, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.LPGame4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.LPGame4.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="3" Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="3" Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.LPGame5, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.LPGame5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.LPGame5.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="3" Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="3" Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.LPGame6, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.LPGame6, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.LPGame6.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <TextBlock Text="Jeux les plus joués" Grid.Row="4" Grid.Column="0" Foreground="WhiteSmoke"></TextBlock>
-                    <HyperlinkButton Grid.Row="4" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"></HyperlinkButton>
-                    <Button Grid.Row="5" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <TextBlock Text="Jeux les plus joués" Grid.Row="4" Grid.Column="0" Foreground="WhiteSmoke"></TextBlock>
+                        <HyperlinkButton Grid.Row="4" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                Command="{x:Bind ViewModel.GamelistSpecificCommand}" CommandParameter="most"></HyperlinkButton>
+                        <Button Grid.Row="5" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.MPGame1, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.MPGame1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.MPGame1.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="5" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="5" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.MPGame2, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.MPGame2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.MPGame2.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="5" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="5" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.MPGame3, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.MPGame3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.MPGame3.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="5" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="5" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.MPGame4, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.MPGame4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.MPGame4.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="5" Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="5" Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.MPGame5, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.MPGame5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.MPGame5.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="5" Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="5" Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.MPGame6, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.MPGame6, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.MPGame6.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <TextBlock Text="Jeux Favoris" Grid.Row="6" Grid.Column="0" Foreground="WhiteSmoke"></TextBlock>
-                    <HyperlinkButton Grid.Row="6" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"></HyperlinkButton>
-                    <Button Grid.Row="7" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <TextBlock Text="Jeux Favoris" Grid.Row="6" Grid.Column="0" Foreground="WhiteSmoke"></TextBlock>
+                        <HyperlinkButton Grid.Row="6" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                Command="{x:Bind ViewModel.GamelistSpecificCommand}" CommandParameter="fav"></HyperlinkButton>
+                        <Button Grid.Row="7" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.FavGame1, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.FavGame1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.FavGame1.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="7" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="7" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.FavGame2, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.FavGame2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.FavGame2.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="7" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="7" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.FavGame3, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.FavGame3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.FavGame3.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="7" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="7" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.FavGame4, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.FavGame4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.FavGame4.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="7" Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="7" Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.FavGame5, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.FavGame5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.FavGame5.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <Button Grid.Row="7" Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0">
-                        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="7" Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.FavGame6, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.FavGame6, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind ViewModel.FavGame6.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                </Grid>
-            </StackPanel>
-        </ScrollViewer>
-
-
-        <!--<Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="2*"></RowDefinition>
-                    <RowDefinition Height="6*"></RowDefinition>
-                    <RowDefinition Height="2*"></RowDefinition>
-                    <RowDefinition Height="6*"></RowDefinition>
-                    <RowDefinition Height="2*"></RowDefinition>
-                    <RowDefinition Height="6*"></RowDefinition>
-                    <RowDefinition Height="2*"></RowDefinition>
-                    <RowDefinition Height="6*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                --><!--<Grid x:Name="MenuButton" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="25">
-                    <Button Background="DarkBlue" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"></Button>
-                </Grid>-->
-                <!--<TextBlock Grid.Row="1" Grid.Column="0" Text="Systèmes" Foreground="WhiteSmoke" VerticalAlignment="Center"/>
-                <HyperlinkButton Grid.Row="1" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"></HyperlinkButton>
-                <GridView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" ItemsSource="{Binding RandomSystems}" SizeChanged="SystemGrid_SizeChanged">
-                    <GridView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Button VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                                    <Button.Background>
-                                    <ImageBrush ImageSource="{Binding Screenshoot}" Stretch="Fill"></ImageBrush>
-                                    </Button.Background>
-                                <Grid>
-                                    <Grid.Background>
-                                        <SolidColorBrush Color="Blue" Opacity="0.6"/>
-                                    </Grid.Background>
-                                    <Image Source="{Binding Logo}" Stretch="Fill"/>                                    
-                                </Grid>
-                                </Button>
                             </Grid>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                    <GridView.ItemContainerStyle>
-                        <Style TargetType="GridViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                            <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
-                            <Setter Property="Margin" Value="0"></Setter>
-                            <Setter Property="Padding" Value="5"></Setter>
-                        </Style>                        
-                    </GridView.ItemContainerStyle>
-                    <GridView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <ItemsWrapGrid Orientation="Horizontal"></ItemsWrapGrid>
-                        </ItemsPanelTemplate>
-                    </GridView.ItemsPanel>
-                </GridView>                          
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="Derniers Jeux lancés" Foreground="WhiteSmoke" VerticalAlignment="Center"/>
-                <HyperlinkButton Grid.Row="3" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"></HyperlinkButton>
-            <GridView Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" ItemsSource="{Binding RandomSystems}" SizeChanged="SystemGrid_SizeChanged">
-                <GridView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Button VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="{Binding Screenshoot}" Stretch="Fill"></ImageBrush>
-                                </Button.Background>
-                                <Grid>
-                                    <Grid.Background>
-                                        <SolidColorBrush Color="Blue" Opacity="0.6"/>
-                                    </Grid.Background>
-                                    <Image Source="{Binding Logo}" Stretch="Fill"/>
-                                </Grid>
-                            </Button>
-                        </Grid>
-                    </DataTemplate>
-                </GridView.ItemTemplate>
-                <GridView.ItemContainerStyle>
-                    <Style TargetType="GridViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                        <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
-                        <Setter Property="Margin" Value="0"></Setter>
-                        <Setter Property="Padding" Value="5"></Setter>
-                    </Style>
-                </GridView.ItemContainerStyle>
-                <GridView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsWrapGrid Orientation="Horizontal"></ItemsWrapGrid>
-                    </ItemsPanelTemplate>
-                </GridView.ItemsPanel>
-            </GridView>
-            <TextBlock Grid.Row="5" Grid.Column="0" Text="Jeux les plus joués" Foreground="WhiteSmoke" VerticalAlignment="Center"/>
-                <HyperlinkButton Grid.Row="5" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"></HyperlinkButton>
-            <GridView Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" ItemsSource="{Binding RandomSystems}" SizeChanged="SystemGrid_SizeChanged">
-                <GridView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Button VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="{Binding Screenshoot}" Stretch="Fill"></ImageBrush>
-                                </Button.Background>
-                                <Grid>
-                                    <Grid.Background>
-                                        <SolidColorBrush Color="Blue" Opacity="0.6"/>
-                                    </Grid.Background>
-                                    <Image Source="{Binding Logo}" Stretch="Fill"/>
-                                </Grid>
-                            </Button>
-                        </Grid>
-                    </DataTemplate>
-                </GridView.ItemTemplate>
-                <GridView.ItemContainerStyle>
-                    <Style TargetType="GridViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                        <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
-                        <Setter Property="Margin" Value="0"></Setter>
-                        <Setter Property="Padding" Value="5"></Setter>
-                    </Style>
-                </GridView.ItemContainerStyle>
-                <GridView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsWrapGrid Orientation="Horizontal"></ItemsWrapGrid>
-                    </ItemsPanelTemplate>
-                </GridView.ItemsPanel>
-            </GridView>
-            <TextBlock Grid.Row="7" Grid.Column="0" Text="Jeux Favoris" Foreground="WhiteSmoke" VerticalAlignment="Center"/>
-                <HyperlinkButton Grid.Row="7" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"></HyperlinkButton>
-            <GridView Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6" ItemsSource="{Binding RandomSystems}" SizeChanged="SystemGrid_SizeChanged">
-                <GridView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Button VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="{Binding Screenshoot}" Stretch="Fill"></ImageBrush>
-                                </Button.Background>
-                                <Grid>
-                                    <Grid.Background>
-                                        <SolidColorBrush Color="Blue" Opacity="0.6"/>
-                                    </Grid.Background>
-                                    <Image Source="{Binding Logo}" Stretch="Fill"/>
-                                </Grid>
-                            </Button>
-                        </Grid>
-                    </DataTemplate>
-                </GridView.ItemTemplate>
-                <GridView.ItemContainerStyle>
-                    <Style TargetType="GridViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                        <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
-                        <Setter Property="Margin" Value="0"></Setter>
-                        <Setter Property="Padding" Value="5"></Setter>
-                    </Style>
-                </GridView.ItemContainerStyle>
-                <GridView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsWrapGrid Orientation="Horizontal"></ItemsWrapGrid>
-                    </ItemsPanelTemplate>
-                </GridView.ItemsPanel>
-            </GridView>--><!--
-        </Grid>-->
+                        </Button>
+                        <TextBlock Text="Jeux PC" Grid.Row="8" Grid.Column="0" Foreground="WhiteSmoke"></TextBlock>
+                        <HyperlinkButton Grid.Row="8" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                Command="{x:Bind ViewModel.GamelistSpecificCommand}" CommandParameter="pc"></HyperlinkButton>
+                        <Button Grid.Row="9" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.PCGame1, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.PCGame1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind ViewModel.PCGame1.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      CornerRadius="30"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
+                                                      Stretch="Fill"/>
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="9" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.PCGame2, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.PCGame2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind ViewModel.PCGame2.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      CornerRadius="30"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
+                                                      Stretch="Fill"/>
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="9" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.PCGame3, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.PCGame3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind ViewModel.PCGame3.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      CornerRadius="30"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
+                                                      Stretch="Fill"/>
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="9" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.PCGame4, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.PCGame4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind ViewModel.PCGame4.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      CornerRadius="30"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
+                                                      Stretch="Fill"/>
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="9" Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.PCGame5, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.PCGame5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind ViewModel.PCGame5.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      CornerRadius="30"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
+                                                      Stretch="Fill"/>
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="9" Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.PCGame6, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
+                                Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.PCGame6, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind ViewModel.PCGame6.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      CornerRadius="30"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
+                                                      Stretch="Fill"/>
+                            </Grid>
+                        </Button>
+                        <TextBlock Text="Collection Personalisée" Grid.Row="10" Grid.Column="0" Foreground="WhiteSmoke"></TextBlock>
+                        <HyperlinkButton Grid.Row="10" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                Command="{x:Bind ViewModel.CustomcolleclistCommand}" CommandParameter="{x:Bind ViewModel.True}"></HyperlinkButton>
+                        <Button Grid.Row="11" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.CollecSystem1, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue"
+                                Command="{x:Bind ViewModel.GamelistCommand}" CommandParameter="{x:Bind ViewModel.CollecSystem1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind ViewModel.CollecSystem1.SystemeID, Mode=TwoWay, Converter={StaticResource SysLogoConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      CornerRadius="30"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"                                                      
+                                                      Stretch="Uniform"/>
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="11" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.CollecSystem2, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue"
+                                Command="{x:Bind ViewModel.GamelistCommand}" CommandParameter="{x:Bind ViewModel.CollecSystem2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind ViewModel.CollecSystem2.SystemeID, Mode=TwoWay, Converter={StaticResource SysLogoConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      CornerRadius="30"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
+                                                      Stretch="Uniform"/>
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="11" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.CollecSystem3, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue"
+                                Command="{x:Bind ViewModel.GamelistCommand}" CommandParameter="{x:Bind ViewModel.CollecSystem3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind ViewModel.CollecSystem3.SystemeID, Mode=TwoWay, Converter={StaticResource SysLogoConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      CornerRadius="30"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
+                                                      Stretch="Uniform"/>
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="11" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.CollecSystem4, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue"
+                                Command="{x:Bind ViewModel.GamelistCommand}" CommandParameter="{x:Bind ViewModel.CollecSystem4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind ViewModel.CollecSystem4.SystemeID, Mode=TwoWay, Converter={StaticResource SysLogoConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      CornerRadius="30"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
+                                                      Stretch="Uniform"/>
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="11" Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.CollecSystem5, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue"
+                                Command="{x:Bind ViewModel.GamelistCommand}" CommandParameter="{x:Bind ViewModel.CollecSystem5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind ViewModel.CollecSystem5.SystemeID, Mode=TwoWay, Converter={StaticResource SysLogoConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      CornerRadius="30"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
+                                                      Stretch="Uniform"/>
+                            </Grid>
+                        </Button>
+                        <Button Grid.Row="11" Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.CollecSystem6, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Background="SkyBlue"
+                                Command="{x:Bind ViewModel.GamelistCommand}" CommandParameter="{x:Bind ViewModel.CollecSystem6, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind ViewModel.CollecSystem6.SystemeID, Mode=TwoWay, Converter={StaticResource SysLogoConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      CornerRadius="30"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
+                                                      Stretch="Uniform"/>
+                            </Grid>
+                        </Button>
+
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </UserControl>

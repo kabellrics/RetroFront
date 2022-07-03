@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using RetroFront.UWPClient.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,9 +21,11 @@ namespace RetroFront.UWPClient.Views.Home
 {
     public sealed partial class HubView : UserControl
     {
+        public HomeViewModel ViewModel => (HomeViewModel)DataContext;
         public HubView()
         {
             this.InitializeComponent();
+            DataContext = Ioc.Default.GetRequiredService<HomeViewModel>();
         }
     }
 }

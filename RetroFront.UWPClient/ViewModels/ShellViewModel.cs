@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
-
+using Microsoft.Toolkit.Mvvm.Messaging;
 using RetroFront.UWPClient.Helpers;
 using RetroFront.UWPClient.Services;
 
@@ -30,7 +30,12 @@ namespace RetroFront.UWPClient.ViewModels
         private WinUI.NavigationViewItem _selected;
         private ICommand _loadedCommand;
         private ICommand _itemInvokedCommand;
-
+        private string _BCK;
+        public string BCK
+        {
+            get { return _BCK; }
+            set { SetProperty(ref _BCK, value); }
+        }
         public bool IsBackEnabled
         {
             get { return _isBackEnabled; }
@@ -59,8 +64,28 @@ namespace RetroFront.UWPClient.ViewModels
             NavigationService.NavigationFailed += Frame_NavigationFailed;
             NavigationService.Navigated += Frame_Navigated;
             _navigationView.BackRequested += OnBackRequested;
+            //BCK = @"http://localhost:34322/api/Img/GetAppBackground";
+            BCK = string.Empty;
+            WeakReferenceMessenger.Default.Register<BckChangeMessage>(this, (r, m) =>
+            {
+                //if(m.Value)
+                //    BCK = @"http://localhost:34322/api/Img/GetAppBackground";
+                //else
+                //this.BCK = m.Value;
+                try
+                {
+                    if(m.Value == -1)
+                        this.BCK = string.Empty;
+                    else
+                        this.BCK = m.Value.ToString();
+                }
+                catch(Exception ex)
+                {
+                    this.BCK = string.Empty;
+                }
+            });
         }
-
+        
         private async void OnLoaded()
         {
             // Keyboard accelerators are added here to avoid showing 'Alt + left' tooltip on the page.

@@ -34,9 +34,10 @@
         <ListView Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Resultgame, Mode=TwoWay}" ItemsSource="{Binding FoundedGame}" Style="{DynamicResource MaterialDesignListView}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <ListView.View>
                 <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding id}"></GridViewColumn>
                     <GridViewColumn Header="Nom" DisplayMemberBinding="{Binding name}"></GridViewColumn>
-                    <!--<GridViewColumn Header="Année" DisplayMemberBinding="{Binding year}"></GridViewColumn>-->
-                    <!--<GridViewColumn Header="Plateforme" DisplayMemberBinding="{Binding plateforme}"></GridViewColumn>-->
+                    <!--<GridViewColumn Header="Année" DisplayMemberBinding="{Binding year}"></GridViewColumn>
+                    <GridViewColumn Header="Plateforme" DisplayMemberBinding="{Binding plateforme}"></GridViewColumn>-->
                     <!--<GridViewColumn Header="Nom" DisplayMemberBinding="{Binding Name}"></GridViewColumn>-->
                 </GridView>
             </ListView.View>

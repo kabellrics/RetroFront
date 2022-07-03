@@ -1,0 +1,57 @@
+﻿<UserControl
+    x:Class="RetroFront.UWPClient.Views.Game.FanartWallView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RetroFront.UWPClient.Views.Game"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:model="using:RetroFront.UWPClient.Core.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewHelper="using:RetroFront.UWPClient.ViewHelper"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <viewHelper:GameFanartConverter x:Key="GameFanartConverter"></viewHelper:GameFanartConverter>
+    </UserControl.Resources>
+    <Grid>
+        <ParallaxView Source="{Binding ElementName=datagrid}" HorizontalShift="250">
+            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind ViewModel.BCK, Mode=OneWay}"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"                                                      
+                                                      Stretch="Fill"/>
+        </ParallaxView>
+        <GridView x:Name="datagrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel.Games, Mode=OneWay}" IsItemClickEnabled="True" SelectionMode="Single"
+                  SelectedIndex="{x:Bind ViewModel.SelectedIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" KeyUp="datagrid_KeyUp" SizeChanged="GridView_SizeChanged">
+            <!--<i:Interaction.Behaviors>
+                <ic:EventTriggerBehavior EventName="ItemClick">
+                    <ic:InvokeCommandAction Command="{Binding ViewModel.GameDetailCommand}" />
+                </ic:EventTriggerBehavior>
+            </i:Interaction.Behaviors>-->
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="model:GameRom">
+                    <Grid>
+                        <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png"
+                                          CornerRadius="33"
+                                                      Stretch="Uniform"/>
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+            <GridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                    <Setter Property="Margin" Value="10"></Setter>
+                    <Setter Property="Padding" Value="10"></Setter>
+                </Style>
+            </GridView.ItemContainerStyle>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Orientation="Vertical"></ItemsWrapGrid>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>
+    </Grid>
+</UserControl>

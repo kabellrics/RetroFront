@@ -2,20 +2,43 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Uwp.UI;
 using RetroFront.UWPClient.Core;
 using RetroFront.UWPClient.Core.Models;
+using RetroFront.UWPClient.Services;
+using RetroFront.UWPClient.Views;
 
 namespace RetroFront.UWPClient.ViewModels
 {
     public class HomeViewModel : ObservableObject
     {
-        private HomeDisplay _displayType;
-        public HomeDisplay DisplayType
+        private ICommand _plateformelistCommand;
+        private ICommand _customcolleclistCommand;
+        public ICommand PlateformelistCommand => _plateformelistCommand ?? (_plateformelistCommand = new RelayCommand<bool>(GotoPlateformePage));
+        public ICommand CustomcolleclistCommand => _customcolleclistCommand ?? (_customcolleclistCommand = new RelayCommand<bool>(GotoPlateformePage));
+        private ICommand _gamelistCommand;
+        private ICommand _gamedetailCommand;
+        private ICommand _gamelistspecificCommand;
+        public ICommand GamelistCommand => _gamelistCommand ?? (_gamelistCommand = new RelayCommand<Systeme>(GotoGamePage));
+        public ICommand GameDetailCommand => _gamedetailCommand ?? (_gamedetailCommand = new RelayCommand<GameRom>(GotoGameDetailPage));
+        public ICommand GamelistSpecificCommand => _gamelistspecificCommand ?? (_gamelistspecificCommand = new RelayCommand<string>(GotoGamespecificPage));
+
+        private int _displayType;
+        public int DisplayType
         {
             get { return _displayType; }
             set { SetProperty(ref _displayType, value); }
+        }
+        public bool True;
+        public bool False;
+        public string _BCK;
+            public string BCK
+        {
+            get { return _BCK; }
+            set { SetProperty(ref _BCK, value); }
         }
         private HomeService homeService;
         #region LastPlayedGame
@@ -153,6 +176,45 @@ namespace RetroFront.UWPClient.ViewModels
             set { SetProperty(ref _FavGame6, value); }
         } 
         #endregion
+        #region PC Games
+        public ObservableCollection<GameRom> PCGames { get; set; }
+        private GameRom _PCGame1;
+        public GameRom PCGame1
+        {
+            get { return _PCGame1; }
+            set { SetProperty(ref _PCGame1, value); }
+        }
+        private GameRom _PCGame2;
+        public GameRom PCGame2
+        {
+            get { return _PCGame2; }
+            set { SetProperty(ref _PCGame2, value); }
+        }
+        private GameRom _PCGame3;
+        public GameRom PCGame3
+        {
+            get { return _PCGame3; }
+            set { SetProperty(ref _PCGame3, value); }
+        }
+        private GameRom _PCGame4;
+        public GameRom PCGame4
+        {
+            get { return _PCGame4; }
+            set { SetProperty(ref _PCGame4, value); }
+        }
+        private GameRom _PCGame5;
+        public GameRom PCGame5
+        {
+            get { return _PCGame5; }
+            set { SetProperty(ref _PCGame5, value); }
+        }
+        private GameRom _PCGame6;
+        public GameRom PCGame6
+        {
+            get { return _PCGame6; }
+            set { SetProperty(ref _PCGame6, value); }
+        } 
+        #endregion
         #region Systemes
         public ObservableCollection<Systeme> RandomSystems { get; set; }
         private Systeme _System1;
@@ -192,10 +254,51 @@ namespace RetroFront.UWPClient.ViewModels
             set { SetProperty(ref _System5, value); }
         } 
         #endregion
+        #region CollecSystemes
+        public ObservableCollection<Systeme> CollecSystems { get; set; }
+        private Systeme _CollecSystem1;
+        public Systeme CollecSystem1
+        {
+            get { return _CollecSystem1; }
+            set { SetProperty(ref _CollecSystem1, value); }
+        }
+        private Systeme _CollecSystem3;
+        public Systeme CollecSystem3
+        {
+            get { return _CollecSystem3; }
+            set { SetProperty(ref _CollecSystem3, value); }
+        }
+        private Systeme _CollecSystem2;
+        public Systeme CollecSystem2
+        {
+            get { return _CollecSystem2; }
+            set { SetProperty(ref _CollecSystem2, value); }
+        }
+        private Systeme _CollecSystem4;
+        public Systeme CollecSystem4
+        {
+            get { return _CollecSystem4; }
+            set { SetProperty(ref _CollecSystem4, value); }
+        }
+        private Systeme _CollecSystem6;
+        public Systeme CollecSystem6
+        {
+            get { return _CollecSystem6; }
+            set { SetProperty(ref _CollecSystem6, value); }
+        }
+        private Systeme _CollecSystem5;
+        public Systeme CollecSystem5
+        {
+            get { return _CollecSystem5; }
+            set { SetProperty(ref _CollecSystem5, value); }
+        } 
+        #endregion
         public HomeViewModel()
         {
+            True = true;False = false;
             homeService = new HomeService();
-            DisplayType = HomeDisplay._0;
+            DisplayType = (int)HomeDisplay._0;
+            BCK = @"http://localhost:34322/api/Img/GetAppBackground";
         }
         public async void LoadDataAsync()
         {
@@ -203,30 +306,76 @@ namespace RetroFront.UWPClient.ViewModels
             MostPlayedGames = new ObservableCollection<GameRom>();
             FavGames = new ObservableCollection<GameRom>();
             RandomSystems = new ObservableCollection<Systeme>();
+            CollecSystems = new ObservableCollection<Systeme>();
+            PCGames = new ObservableCollection<GameRom>();
             await Init();
         }
 
         private async Task Init()
         {
-            DisplayType = await homeService.GetCurrentHomeDisplay();
+            DisplayType = (int)await homeService.GetCurrentHomeDisplay();
             await InitLastPlayed();
             await InitMostPlayed();
             await InitFavGames();
             await InitRandomSystems();
+            await InitPCGames();
+            await InitRandomCollection();
         }
-
+        private void GotoPlateformePage(bool plateforme = false)
+        {
+            NavigationService.Navigate<PlateformePage>(plateforme);
+        }
+        private void GotoGamePage(Systeme plateforme = null)
+        {
+            NavigationService.Navigate<JeuxPage>(plateforme);
+        }
+        private void GotoGameDetailPage(GameRom game)
+        {
+            NavigationService.Navigate<GameDetailPage>(game);
+        }
+        private void GotoGamespecificPage(string plateforme)
+        {
+                Systeme sys = new Systeme { Shortname = plateforme };
+                NavigationService.Navigate<JeuxPage>(sys);
+        }
+        private async Task InitPCGames()
+        {
+            foreach(var game in await homeService.GetRandomPCGames())
+            {
+                PCGames.Add(game);
+            }
+            PCGame1 = PCGames.ElementAtOrDefault(0);
+            PCGame2 = PCGames.ElementAtOrDefault(1);
+            PCGame3 = PCGames.ElementAtOrDefault(2);
+            PCGame4 = PCGames.ElementAtOrDefault(3);
+            PCGame5 = PCGames.ElementAtOrDefault(4);
+            PCGame6 = PCGames.ElementAtOrDefault(5);
+        }
+        private async Task InitRandomCollection()
+        {
+            foreach(var system in await homeService.GetRandomCustomCollection())
+            {
+                CollecSystems.Add(system);
+            }
+            CollecSystem1 = CollecSystems.ElementAtOrDefault(0);
+            CollecSystem2 = CollecSystems.ElementAtOrDefault(1);
+            CollecSystem3 = CollecSystems.ElementAtOrDefault(2);
+            CollecSystem4 = CollecSystems.ElementAtOrDefault(3);
+            CollecSystem5 = CollecSystems.ElementAtOrDefault(4);
+            CollecSystem6 = CollecSystems.ElementAtOrDefault(5);
+        }
         private async Task InitRandomSystems()
         {
             foreach(var system in await homeService.GetRandomPlateforme())
             {
                 RandomSystems.Add(system);
             }
-            System1 = RandomSystems.ElementAt(0);
-            System2 = RandomSystems.ElementAt(1);
-            System3 = RandomSystems.ElementAt(2);
-            System4 = RandomSystems.ElementAt(3);
-            System5 = RandomSystems.ElementAt(4);
-            System6 = RandomSystems.ElementAt(5);
+            System1 = RandomSystems.ElementAtOrDefault(0);
+            System2 = RandomSystems.ElementAtOrDefault(1);
+            System3 = RandomSystems.ElementAtOrDefault(2);
+            System4 = RandomSystems.ElementAtOrDefault(3);
+            System5 = RandomSystems.ElementAtOrDefault(4);
+            System6 = RandomSystems.ElementAtOrDefault(5);
         }
         private async Task InitFavGames()
         {
@@ -234,40 +383,38 @@ namespace RetroFront.UWPClient.ViewModels
             {
                 FavGames.Add(game);
             }
-            FavGame1 = FavGames.ElementAt(0);
-            FavGame2 = FavGames.ElementAt(1);
-            FavGame3 = FavGames.ElementAt(2);
-            FavGame4 = FavGames.ElementAt(3);
-            FavGame5 = FavGames.ElementAt(4);
-            FavGame6 = FavGames.ElementAt(5);
+            FavGame1 = FavGames.ElementAtOrDefault(0);
+            FavGame2 = FavGames.ElementAtOrDefault(1);
+            FavGame3 = FavGames.ElementAtOrDefault(2);
+            FavGame4 = FavGames.ElementAtOrDefault(3);
+            FavGame5 = FavGames.ElementAtOrDefault(4);
+            FavGame6 = FavGames.ElementAtOrDefault(5);
         }
-
         private async Task InitMostPlayed()
         {
             foreach (var game in await homeService.GetMostPlayedGames())
             {
                 MostPlayedGames.Add(game);
             }
-            MPGame1 = MostPlayedGames.ElementAt(0);
-            MPGame2 = MostPlayedGames.ElementAt(1);
-            MPGame3 = MostPlayedGames.ElementAt(2);
-            MPGame4 = MostPlayedGames.ElementAt(3);
-            MPGame5 = MostPlayedGames.ElementAt(4);
-            MPGame6 = MostPlayedGames.ElementAt(5);
+            MPGame1 = MostPlayedGames.ElementAtOrDefault(0);
+            MPGame2 = MostPlayedGames.ElementAtOrDefault(1);
+            MPGame3 = MostPlayedGames.ElementAtOrDefault(2);
+            MPGame4 = MostPlayedGames.ElementAtOrDefault(3);
+            MPGame5 = MostPlayedGames.ElementAtOrDefault(4);
+            MPGame6 = MostPlayedGames.ElementAtOrDefault(5);
         }
-
         private async Task InitLastPlayed()
         {
             foreach (var game in await homeService.GetLastPlayedGames())
             {
                 LastPlayedGames.Add(game);
             }
-            LPGame1 = LastPlayedGames.ElementAt(0);
-            LPGame2 = LastPlayedGames.ElementAt(1);
-            LPGame3 = LastPlayedGames.ElementAt(2);
-            LPGame4 = LastPlayedGames.ElementAt(3);
-            LPGame5 = LastPlayedGames.ElementAt(4);
-            LPGame6 = LastPlayedGames.ElementAt(5);
+            LPGame1 = LastPlayedGames.ElementAtOrDefault(0);
+            LPGame2 = LastPlayedGames.ElementAtOrDefault(1);
+            LPGame3 = LastPlayedGames.ElementAtOrDefault(2);
+            LPGame4 = LastPlayedGames.ElementAtOrDefault(3);
+            LPGame5 = LastPlayedGames.ElementAtOrDefault(4);
+            LPGame6 = LastPlayedGames.ElementAtOrDefault(5);
         }
     }
 }

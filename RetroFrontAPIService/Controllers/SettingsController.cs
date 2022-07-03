@@ -22,6 +22,26 @@ namespace RetroFrontAPIService.Controllers
             _fileJSONService = fileJSONService;
             _EnumService = EnumService;
         }
+        [HttpGet("SysDisplayValue")]
+        public ActionResult<List<KeyValuePair<int, string>>> GetSysDisplayValue()
+        {
+            return Ok(_EnumService.GetSysDisplayValue());
+        }
+        [HttpGet("HomeDisplayValue")]
+        public ActionResult<List<KeyValuePair<int, string>>> GetHomeDisplayValue()
+        {
+            return Ok(_EnumService.GetHomeDisplayValue());
+        }
+        [HttpGet("RomDisplayValue")]
+        public ActionResult<List<KeyValuePair<int, string>>> GetRomDisplayValue()
+        {
+            return Ok(_EnumService.GetRomDisplayValue());
+        }
+        [HttpGet("GameDetailDisplayValue")]
+        public ActionResult<List<KeyValuePair<int, string>>> GetGameDetailDisplayValue()
+        {
+            return Ok(_EnumService.GetGameDetailDisplayValue());
+        }
         [HttpGet("SysDisplay")]
         public ActionResult<SysDisplay> GetSysDisplays()
         {

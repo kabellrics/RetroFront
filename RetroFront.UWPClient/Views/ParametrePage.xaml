@@ -4,11 +4,55 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
-    <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
-        <Grid
+    <Grid x:Name="ContentArea">
+        <ParallaxView Source="{Binding ElementName=ParamPlace}" VerticalShift="50">
+            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind ViewModel.BCK, Mode=OneWay}"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"                                                      
+                                                      Stretch="Fill"/>
+        </ParallaxView>
+        <Grid x:Name="ParamPlace"
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="1" Grid.Column="0" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Affichage de l'Accueil" Foreground="WhiteSmoke"></TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="0" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Affichage des Plateformes" Foreground="WhiteSmoke"></TextBlock>
+            <TextBlock Grid.Row="5" Grid.Column="0" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Affichage des Jeux" Foreground="WhiteSmoke"></TextBlock>
+            <TextBlock Grid.Row="7" Grid.Column="0" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Affichage du détail des jeux" Foreground="WhiteSmoke"></TextBlock>
+
+            <ComboBox Grid.Row="1" Grid.Column="1" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="30"
+                      SelectedItem="{x:Bind ViewModel.SelectedHomeDisplay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{x:Bind ViewModel.HomeDisplays,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Value"></ComboBox>
+            <ComboBox Grid.Row="3" Grid.Column="1" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="30"
+                      SelectedItem="{x:Bind ViewModel.SelectedPlateFormeDisplay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{x:Bind ViewModel.PlateformeDisplays,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Value"></ComboBox>
+            <ComboBox Grid.Row="5" Grid.Column="1" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="30"
+                      SelectedItem="{x:Bind ViewModel.SelectedGameDisplay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{x:Bind ViewModel.GameDisplays,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Value"></ComboBox>
+            <ComboBox Grid.Row="7" Grid.Column="1" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="30"
+                      SelectedItem="{x:Bind ViewModel.SelectedGameDetailDisplay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{x:Bind ViewModel.GameDetailDisplays,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Value"></ComboBox>
+            <Button Grid.Row="9" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Center"
+                    Style="{StaticResource ButtonRevealStyle}" Command="{x:Bind ViewModel.ValidateChangeCommand}"
+                    FontSize="30" Foreground="WhiteSmoke" Content="Valider"></Button>
             <!--
                 The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
                 Place your content here.

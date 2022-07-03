@@ -1,4 +1,5 @@
 ﻿using RetroFront.UWPClient.Core.Models;
+using System.Collections.Generic;
 
 namespace RetroFront.UWPClient.Core.APIService
 {
@@ -300,14 +301,14 @@ namespace RetroFront.UWPClient.Core.APIService
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<GameRom> GetGamesForPlateformeAsync(int sysID)
+        public virtual System.Threading.Tasks.Task<IEnumerable<GameRom>> GetGamesForPlateformeAsync(int sysID)
         {
             return GetGamesForPlateformeAsync(sysID, System.Threading.CancellationToken.None);
         }
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual GameRom GetGamesForPlateforme(int sysID)
+        public virtual IEnumerable<GameRom> GetGamesForPlateforme(int sysID)
         {
             return System.Threading.Tasks.Task.Run(async () => await GetGamesForPlateformeAsync(sysID, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
@@ -315,7 +316,7 @@ namespace RetroFront.UWPClient.Core.APIService
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GameRom> GetGamesForPlateformeAsync(int sysID, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<IEnumerable<GameRom>> GetGamesForPlateformeAsync(int sysID, System.Threading.CancellationToken cancellationToken)
         {
             if (sysID == null)
                 throw new System.ArgumentNullException("sysID");
@@ -356,7 +357,7 @@ namespace RetroFront.UWPClient.Core.APIService
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<GameRom>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<IEnumerable<GameRom>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);

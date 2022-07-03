@@ -27,5 +27,11 @@ namespace RetroFront.UWPClient.Views.Plateforme
             this.InitializeComponent();
             DataContext = Ioc.Default.GetRequiredService<PlateformeViewModel>();
         }
+
+        private void FlipView_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if(e.Key == Windows.System.VirtualKey.Enter || e.Key == Windows.System.VirtualKey.Space)
+            ViewModel.GamelistCommand.Execute(null);
+        }
     }
 }

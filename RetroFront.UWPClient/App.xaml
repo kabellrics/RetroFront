@@ -8,6 +8,16 @@
 
     <Application.Resources>
         <ResourceDictionary>
+        <AcrylicBrush x:Key="CustomAcrylicDark"
+                      BackgroundSource="Backdrop"
+                      TintColor="Transparent"
+                      TintOpacity="0.8"
+                      FallbackColor="Transparent"/>
+        <AcrylicBrush x:Key="CustomAcrylicLight"
+                      BackgroundSource="Backdrop"
+                      TintColor="Transparent"
+                      TintOpacity="0.8"
+                      FallbackColor="Transparent"/>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources  xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <ResourceDictionary Source="/Styles/_Colors.xaml" />

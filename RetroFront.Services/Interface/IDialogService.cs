@@ -1,4 +1,5 @@
 ﻿using RetroFront.Models;
+using RetroFront.Models.StandaloneEmulator;
 using RetroFront.Models.SteamGridDB;
 using System;
 using System.Collections.Generic;
@@ -20,8 +21,8 @@ namespace RetroFront.Services.Interface
         string CreateJsonEmu();
         string CreateJsonSys();
         string[] CreateStandalone();
-        string OpenDetailEmu(Emulator emu);
-        string CreateRetroarchCore();
+        Emulator OpenDetailEmu(Emulator emu);
+        StandalonePlateforme CreateRetroarchCore(string retroarchpath);
         Systeme ShowSystemeDetail(Systeme sys);
         GameRom ShowGameDetail(GameRom game);
         bool ShowParameters();
@@ -30,5 +31,9 @@ namespace RetroFront.Services.Interface
         Search SearchSteamGridDBByName(string name, ScraperSource source);
         string SearchImgInSteamGridDB(GameRom game, ScraperType type, ScraperSource source);
         string SearchVideo(GameRom game, ScraperType type, ScraperSource source);
+        string ShowSaveFileDialog(string defaultfilename);
+        bool DllContent(string uritodll, string destifile, string targetname, string typetodll);
+        bool DllContent(byte[] bytetoWrite, string destifile, string targetname, string typetodll);
+        RetroFront.Models.ScreenScraper.System.Systeme SearchSSysInSSCPByName(string name);
     }
 }

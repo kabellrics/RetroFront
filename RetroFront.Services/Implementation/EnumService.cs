@@ -12,21 +12,15 @@ namespace RetroFront.Services.Implementation
         {
             return new List<SysDisplay>
             {
-                SysDisplay.Modern,
-                SysDisplay.BigLogo,
-                    SysDisplay.LogoBanner,
-                    SysDisplay.CarrouselLogo,
-                    SysDisplay.WheelLeftLogo,
-                    SysDisplay.WheelRightLogo,
-                    SysDisplay.WallLogo,
-                    SysDisplay.Bezel
+                SysDisplay.FlipView,
+                SysDisplay.CarrouselLogo
             };
         }
         public List<HomeDisplay> GetHomeDisplays()
         {
             return new List<HomeDisplay>
             {
-                HomeDisplay.FlixView,
+                HomeDisplay.SteamView,
                 HomeDisplay.GameOS,
                 HomeDisplay.Hub
             };
@@ -35,18 +29,8 @@ namespace RetroFront.Services.Implementation
         {
             return new List<RomDisplay>
             {
-                RomDisplay.Modern,
                 RomDisplay.WallBox,
-                    RomDisplay.WallLogo,
-                    RomDisplay.ListBox,
-                    RomDisplay.ListBanner,
-                    RomDisplay.Screenshot,
-                    RomDisplay.Fanart,
-                    RomDisplay.FanartBox,
-                    RomDisplay.BigBox,
-                    RomDisplay.FlixView,
-                    RomDisplay.Detail,
-                    RomDisplay.BigModern
+                RomDisplay.WallBanner,
             };
         }
         public List<SysType> GetSysTypes()

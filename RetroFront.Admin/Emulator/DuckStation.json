@@ -16,7 +16,8 @@
         "chd",
         "psexe",
         "m3u",
-        "cue"
+        "cue",
+        "iso"
       ],
       "StartupExecutable": "^duckstation-qt-x64-ReleaseLTCG\\.exe$"
     }
