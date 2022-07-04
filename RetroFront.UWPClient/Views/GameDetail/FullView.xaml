@@ -49,7 +49,8 @@
             AutoPlay="True"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
-            Source="{x:Bind ViewModel.CurrenGame.Id, Mode=OneWay, Converter={StaticResource GameVideoConverter}}"                >
+            Source="{x:Bind ViewModel.CurrenGame.Id, Mode=OneWay, Converter={StaticResource GameVideoConverter}}"
+            >
             </MediaPlayerElement>
         </Grid>
         <controls:ImageEx Grid.Row="1" Grid.Column="1"
@@ -58,12 +59,27 @@
                           CornerRadius="30"
                           PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                           Stretch="Uniform"/>
-        <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
-            <StackPanel Orientation="Horizontal">
+            <CommandBar Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" 
+                    VerticalContentAlignment="Stretch" HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+                         IsOpen="True" DefaultLabelPosition="Bottom">
+            <CommandBar.Background>
+                <SolidColorBrush Color="WhiteSmoke" Opacity="0.4"></SolidColorBrush>
+            </CommandBar.Background>
+            <AppBarButton Icon="Play" Label="Lancer le jeux" Background="Green" Foreground="WhiteSmoke"
+                          VerticalAlignment="Stretch" VerticalContentAlignment="Stretch"></AppBarButton>
+            <AppBarToggleButton x:Name="favbt" Icon="UnFavorite" IsThreeState="False" IsChecked="{x:Bind ViewModel.CurrenGame.IsFavorite, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Checked="AppBarToggleButton_Checked" Unchecked="AppBarToggleButton_Unchecked"
+                            VerticalAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                ></AppBarToggleButton>
+            <AppBarToggleButton x:Name="mutebt" Icon="Mute" IsThreeState="False" IsChecked="False"
+                            Checked="mutebt_Checked" Unchecked="mutebt_Unchecked"
+                                VerticalAlignment="Stretch" VerticalContentAlignment="Stretch"></AppBarToggleButton>
+        </CommandBar>
+
+        <!--<StackPanel Orientation="Horizontal">
                 <Button Content="Lancer le jeux" Margin="5" Style="{StaticResource AccentButtonStyle}"></Button>
                 <Button Content="Favoris" Margin="5"></Button>
                 <Button Content="Un/Mute" Margin="5" Click="Button_Click"></Button>
-            </StackPanel>
-        </Grid>
+            </StackPanel>-->
     </Grid>
 </UserControl>

@@ -55,7 +55,8 @@ namespace RetroFront.UWPClient.Core
                 pcgames.AddRange(await SystemeServiceAPI.GetGamesForPlateformeAsync(steam.SystemeID));
                 pcgames.AddRange(await SystemeServiceAPI.GetGamesForPlateformeAsync(origin.SystemeID));
                 pcgames.AddRange(await SystemeServiceAPI.GetGamesForPlateformeAsync(epic.SystemeID));
-                return pcgames.OrderBy(arg => Guid.NewGuid());
+                return pcgames.OrderBy(x => x.Name);
+                //return pcgames.OrderBy(arg => Guid.NewGuid());
             }
             else
             {

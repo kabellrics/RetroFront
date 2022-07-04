@@ -27,6 +27,15 @@ namespace RetroFront.UWPClient.Views.GameDetail
             this.InitializeComponent();
             DataContext = Ioc.Default.GetRequiredService<GameDetailViewModel>();
             player.MediaPlayer.IsMuted = true;
+            player.Visibility = Visibility.Visible;
+            player.MediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
+        }
+
+        private async void MediaPlayer_MediaEnded(Windows.Media.Playback.MediaPlayer sender, object args)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                player.Visibility = Visibility.Collapsed;
+            });
         }
 
         private void UserControl_LostFocus(object sender, RoutedEventArgs e)
@@ -37,6 +46,45 @@ namespace RetroFront.UWPClient.Views.GameDetail
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             player.MediaPlayer.IsMuted = !player.MediaPlayer.IsMuted;
+        }
+
+        private void AppBarToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            favbt.Icon = new SymbolIcon(Symbol.Favorite);
+            favbt.Label = "Favoris";
+        }
+
+        private void AppBarToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            favbt.Icon = new SymbolIcon(Symbol.UnFavorite);
+            favbt.Label = string.Empty;
+        }
+
+        private void favbt_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.CurrenGame.IsFavorite == true)
+            {
+                favbt.Icon = new SymbolIcon(Symbol.Favorite);
+                favbt.Label = "Favoris";
+            }
+            else
+            {
+                favbt.Icon = new SymbolIcon(Symbol.UnFavorite);
+                favbt.Label = string.Empty;
+            }
+
+        }
+
+        private void mutebt_Checked(object sender, RoutedEventArgs e)
+        {
+            mutebt.Icon = new SymbolIcon(Symbol.Volume);
+            mutebt.Label = "Sonore"; player.MediaPlayer.IsMuted = !player.MediaPlayer.IsMuted;
+        }
+
+        private void mutebt_Unchecked(object sender, RoutedEventArgs e)
+        {
+            mutebt.Icon = new SymbolIcon(Symbol.Mute);
+            mutebt.Label = "Muet"; player.MediaPlayer.IsMuted = !player.MediaPlayer.IsMuted;
         }
     }
 }

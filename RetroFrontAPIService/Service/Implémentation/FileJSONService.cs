@@ -50,18 +50,18 @@ namespace RetroFrontAPIService.Service.Implémentation
         public void UpdateSettings(AppSettings apps)
         {
             appSettings = apps;
-            var jsonApp = JsonConvert.SerializeObject(appSettings);
+            var jsonApp = JsonConvert.SerializeObject(appSettings, Formatting.Indented);
             File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
         }
         public void UpdateSettings()
         {
-            var jsonApp = JsonConvert.SerializeObject(appSettings);
+            var jsonApp = JsonConvert.SerializeObject(appSettings, Formatting.Indented);
             File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
         }
         public void ChangeCurrentTheme(Theme th)
         {
             appSettings.CurrentTheme = th.FolderName;
-            var jsonApp = JsonConvert.SerializeObject(appSettings);
+            var jsonApp = JsonConvert.SerializeObject(appSettings, Formatting.Indented);
             File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
         }
         public ThemePath GetCurrentTheme()

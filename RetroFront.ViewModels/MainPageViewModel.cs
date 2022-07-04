@@ -795,7 +795,11 @@ namespace RetroFront.ViewModels
                     if (game.Boxart != oldgamebox)
                     {
                         var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.Boxart);
-                        var targetfile = $"{targetfolder}{Path.GetExtension(game.Boxart)}";
+                        var targetfile = string.Empty;
+                        if (game.Boxart.Contains("screenscraper"))
+                            targetfile = $"{targetfolder}.png";
+                        else
+                            targetfile = $"{targetfolder}{Path.GetExtension(game.Boxart)}";
                         Directory.CreateDirectory(Path.GetDirectoryName(targetfile));
                         var fstream = File.Create(targetfile);
                         fstream.Close();
@@ -813,8 +817,11 @@ namespace RetroFront.ViewModels
                 {
                     if (game.Fanart != oldgamefanart)
                     {
-                        var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.Banner);
-                        var targetfile = $"{targetfolder}{Path.GetExtension(game.Fanart)}";
+                        var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.Banner); var targetfile = string.Empty;
+                        if (game.Fanart.Contains("screenscraper"))
+                            targetfile = $"{targetfolder}.png";
+                        else
+                            targetfile = $"{targetfolder}{Path.GetExtension(game.Fanart)}";
                         Directory.CreateDirectory(Path.GetDirectoryName(targetfile));
                         var fstream = File.Create(targetfile);
                         fstream.Close();
@@ -833,7 +840,11 @@ namespace RetroFront.ViewModels
                     if (game.Screenshoot != oldgamescreen)
                     {
                         var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.ArtWork);
-                        var targetfile = $"{targetfolder}{Path.GetExtension(game.Screenshoot)}";
+                        var targetfile = string.Empty;
+                        if(game.Screenshoot.Contains("screenscraper"))
+                            targetfile = $"{targetfolder}.png";
+                        else
+                            targetfile = $"{targetfolder}{Path.GetExtension(game.Screenshoot)}";
                         Directory.CreateDirectory(Path.GetDirectoryName(targetfile));
                         var fstream = File.Create(targetfile);
                         fstream.Close();
@@ -852,7 +863,11 @@ namespace RetroFront.ViewModels
                     if (game.Logo != oldgamelogo)
                     {
                         var targetfolder = _gameService.GetImgPathForGame(game, ScraperType.Logo);
-                        var targetfile = $"{targetfolder}{Path.GetExtension(game.Logo)}";
+                        var targetfile = string.Empty;
+                        if (game.Logo.Contains("screenscraper"))
+                            targetfile = $"{targetfolder}.png";
+                        else
+                            targetfile = $"{targetfolder}{Path.GetExtension(game.Logo)}";
                         Directory.CreateDirectory(Path.GetDirectoryName(targetfile));
                         var fstream = File.Create(targetfile);
                         fstream.Close();
@@ -912,6 +927,9 @@ namespace RetroFront.ViewModels
                 foreach (var duplicate in duplicates)
                 {
                     duplicate.Video = game.Video;
+                    duplicate.Desc = game.Desc;
+                    duplicate.Dev = game.Dev;
+                    duplicate.Name = game.Name;
                     duplicate.Boxart = game.Boxart;
                     duplicate.Fanart = game.Fanart;
                     duplicate.Screenshoot = game.Screenshoot;
@@ -923,6 +941,7 @@ namespace RetroFront.ViewModels
                     duplicate.IsFavorite = game.IsFavorite;
                     duplicate.LastStart = game.LastStart;
                     duplicate.NbTimeStarted = game.NbTimeStarted;
+                    _databaseService.SaveUpdate();
                 }
                 _databaseService.SaveUpdate();
                 ReloadData();

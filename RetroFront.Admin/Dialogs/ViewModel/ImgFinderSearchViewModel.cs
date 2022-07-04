@@ -22,6 +22,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         private ICommand _yesCommand;
         private ISteamGridDBService steamGridDBService;
         private IIGDBService iGDBService;
+        private IScreenScraperService ScreenScraperService;
         private IDialogService dialogService;
 
         private ScraperSource _currentsource;
@@ -74,6 +75,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
         {
             steamGridDBService = App.ServiceProvider.GetRequiredService<ISteamGridDBService>();
             iGDBService = App.ServiceProvider.GetRequiredService<IIGDBService>();
+            ScreenScraperService = App.ServiceProvider.GetRequiredService<IScreenScraperService>();
             dialogService = App.ServiceProvider.GetRequiredService<IDialogService>();
             Title = $"Recherche de {CurrentScraperType.ToString()} pour {game.Name}";
             ResultImgs = new ObservableCollection<string>();
@@ -104,18 +106,42 @@ namespace RetroFront.Admin.Dialogs.ViewModel
                         game.SGDBID = searchedGame.id;
                 }
             }
+            
+            else if (CurrentScrapeSource == ScraperSource.Screenscraper)
+            {
+                if (game.ScreenScraperID < 1)
+                {
+                    searchedGame = dialogService.SearchSteamGridDBByName(game.Name, CurrentScrapeSource);
+                    if (searchedGame != null)
+                        game.ScreenScraperID = searchedGame.id;
+                }
+            }
 
             if (searchedGame != null)
             {
                 ResultImgs = new ObservableCollection<string>();
                 if (CurrentScraperType == ScraperType.Logo)
                 {
-                    var result = steamGridDBService.GetLogoForId(game.SGDBID);
-                    if (result != null)
+                    if (CurrentScrapeSource == ScraperSource.SGDB)
                     {
-                        foreach (var img in result)
+                        var result = steamGridDBService.GetLogoForId(game.SGDBID);
+                        if (result != null)
                         {
-                            ResultImgs.Add(img.url);
+                            foreach (var img in result)
+                            {
+                                ResultImgs.Add(img.url);
+                            }
+                        } 
+                    }
+                    else if(CurrentScrapeSource == ScraperSource.Screenscraper)
+                    {
+                        var result = ScreenScraperService.GetJeuxDetail(game.ScreenScraperID);
+                        if (result != null)
+                        {
+                            foreach(var img in result.medias.Where(x => x.type == "wheel"))
+                            {
+                                ResultImgs.Add(img.url);
+                            }
                         }
                     }
                 }
@@ -154,15 +180,40 @@ namespace RetroFront.Admin.Dialogs.ViewModel
                             }
                         }
                     }
+                    else if (CurrentScrapeSource == ScraperSource.Screenscraper)
+                    {
+                        var arts = ScreenScraperService.GetJeuxDetail(game.ScreenScraperID);
+                        if (arts != null)
+                        {
+                            foreach (var img in arts.medias.Where(x => x.type == "fanart" || x.type == "ss"|| x.type == "sstitle"|| x.type == "themehs"))
+                            {
+                                ResultImgs.Add(img.url);
+                            }
+                        }
+                    }
                 }
                 else if (CurrentScraperType == ScraperType.Banner)
                 {
-                    var result = steamGridDBService.GetGridBannerForId(game.SGDBID);
-                    if (result != null)
+                    if (CurrentScrapeSource == ScraperSource.SGDB)
                     {
-                        foreach (var img in result)
+                        var result = steamGridDBService.GetGridBannerForId(game.SGDBID);
+                        if (result != null)
                         {
-                            ResultImgs.Add(img.url);
+                            foreach (var img in result)
+                            {
+                                ResultImgs.Add(img.url);
+                            }
+                        } 
+                    }
+                    else if (CurrentScrapeSource == ScraperSource.Screenscraper)
+                    {
+                        var arts = ScreenScraperService.GetJeuxDetail(game.ScreenScraperID);
+                        if (arts != null)
+                        {
+                            foreach (var img in arts.medias.Where(x => x.type == "marquee" || x.type == "screenmarquee" || x.type == "steamgrid"))
+                            {
+                                ResultImgs.Add(img.url);
+                            }
                         }
                     }
                 }
@@ -183,6 +234,17 @@ namespace RetroFront.Admin.Dialogs.ViewModel
                     {
                         var detail = iGDBService.GetDetailsGame(game.IGDBID);
                         ResultImgs.Add(iGDBService.GetCoverLink(detail.cover.image_id));
+                    }
+                    else if (CurrentScrapeSource == ScraperSource.Screenscraper)
+                    {
+                        var arts = ScreenScraperService.GetJeuxDetail(game.ScreenScraperID);
+                        if (arts != null)
+                        {
+                            foreach (var img in arts.medias.Where(x => x.type == "box-2D"))
+                            {
+                                ResultImgs.Add(img.url);
+                            }
+                        }
                     }
                 }
                 NBImg = ResultImgs.Count;
