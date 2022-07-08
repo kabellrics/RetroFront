@@ -10,6 +10,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
+    Loaded="UserControl_Loaded"
     mc:Ignorable="d">
     <UserControl.Resources>
         <viewHelper:SysLogoConverter x:Key="SysLogoConverter"></viewHelper:SysLogoConverter>
@@ -36,7 +37,7 @@
                 </DataTemplate>
             </FlipView.ItemTemplate>
         </FlipView>
-        <controls:Carousel Grid.Row="1"
+        <controls:Carousel Grid.Row="1" x:Name="FirstElement"
                            SelectedIndex="{x:Bind ViewModel.SelectedIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                            ItemsSource="{x:Bind ViewModel.Systems, Mode=OneWay}" Background="Transparent" BorderBrush="Transparent" BorderThickness="0"
                            KeyUp="Carousel_KeyUp"

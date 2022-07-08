@@ -55,8 +55,8 @@ namespace RetroFront.Models
         GameOS,
         [Description("Hub")]
         Hub, 
-        [Description("SteamView")]
-        SteamView
+        [Description("FlipRotate")]
+        FlipRotate
     }
     public enum SysDisplay
     {

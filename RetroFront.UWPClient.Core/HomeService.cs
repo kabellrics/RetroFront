@@ -14,10 +14,20 @@ namespace RetroFront.UWPClient.Core
         {
 
         }
-        public async Task<IEnumerable<Systeme>> GetRandomPlateforme()
+        public async Task<IEnumerable<GameRom>> GetGamesForPlateforme(Systeme plateforme)
+        {
+            var games = await SystemeServiceAPI.GetGamesForPlateformeAsync(plateforme.SystemeID);
+            return games;
+        }
+            public async Task<IEnumerable<Systeme>> GetRandomPlateforme()
         {
             var systemes = await ApiServiceAPI.SystemeGetAsync();
-            return systemes.Where(x => x.Type != SysType._4).OrderBy(arg => Guid.NewGuid()).Take(6);
+            return systemes.Where(x => x.Type != SysType._4).OrderBy(arg => Guid.NewGuid());
+        }
+        public async Task<IEnumerable<Systeme>> GetAllPlateforme()
+        {
+            var systemes = await ApiServiceAPI.SystemeGetAsync();
+            return systemes.OrderBy(arg => Guid.NewGuid());
         }
         public async Task<HomeDisplay> GetCurrentHomeDisplay()
         {
@@ -27,12 +37,12 @@ namespace RetroFront.UWPClient.Core
         public async Task<IEnumerable<GameRom>> GetLastPlayedGames()
         {
             var games = await ApiServiceAPI.GameGetAsync();
-            return games.Where(x => x.IsDuplicate == false).OrderByDescending(x => x.LastStart).Take(6);
+            return games.Where(x => x.IsDuplicate == false).OrderByDescending(x => x.LastStart);
         }
         public async Task<IEnumerable<GameRom>> GetMostPlayedGames()
         {
             var games = await ApiServiceAPI.GameGetAsync();
-            return games.Where(x => x.IsDuplicate == false).OrderByDescending(x => x.NbTimeStarted).Take(6);
+            return games.Where(x => x.IsDuplicate == false).OrderByDescending(x => x.NbTimeStarted);
         }
         public async Task<IEnumerable<GameRom>> GetFavGames()
         {
@@ -43,7 +53,7 @@ namespace RetroFront.UWPClient.Core
         public async Task<IEnumerable<Systeme>> GetRandomCustomCollection()
         {
             var systemes = await ApiServiceAPI.SystemeGetAsync();
-            return systemes.Where(x=>x.Type == SysType._4).OrderBy(arg => Guid.NewGuid()).Take(6);
+            return systemes.Where(x=>x.Type == SysType._4).OrderBy(arg => Guid.NewGuid());
         }
         public async Task<IEnumerable<GameRom>> GetRandomPCGames()
         {
@@ -55,7 +65,7 @@ namespace RetroFront.UWPClient.Core
             pcgames.AddRange(await SystemeServiceAPI.GetGamesForPlateformeAsync(steam.SystemeID));
             pcgames.AddRange(await SystemeServiceAPI.GetGamesForPlateformeAsync(origin.SystemeID));
             pcgames.AddRange(await SystemeServiceAPI.GetGamesForPlateformeAsync(epic.SystemeID));
-            return pcgames.OrderBy(arg => Guid.NewGuid()).Take(6);
+            return pcgames.OrderBy(arg => Guid.NewGuid());
         }
     }
 }

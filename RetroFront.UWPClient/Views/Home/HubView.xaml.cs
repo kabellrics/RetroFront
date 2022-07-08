@@ -27,5 +27,10 @@ namespace RetroFront.UWPClient.Views.Home
             this.InitializeComponent();
             DataContext = Ioc.Default.GetRequiredService<HomeViewModel>();
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            FirstElement.Focus(FocusState.Programmatic);
+        }
     }
 }

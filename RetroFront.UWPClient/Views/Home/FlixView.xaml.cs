@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using RetroFront.UWPClient.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,9 +21,16 @@ namespace RetroFront.UWPClient.Views.Home
 {
     public sealed partial class FlixView : UserControl
     {
+        public HomeViewModel ViewModel => (HomeViewModel)DataContext;
         public FlixView()
         {
             this.InitializeComponent();
+            DataContext = Ioc.Default.GetRequiredService<HomeViewModel>();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            FirstElement.Focus(FocusState.Programmatic);
         }
     }
 }

@@ -27,5 +27,10 @@ namespace RetroFront.UWPClient.Views.GameDetail
             this.InitializeComponent();
             DataContext = Ioc.Default.GetRequiredService<GameDetailViewModel>();
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            FirstElement.Focus(Windows.UI.Xaml.FocusState.Keyboard);
+        }
     }
 }

@@ -86,5 +86,10 @@ namespace RetroFront.UWPClient.Views.GameDetail
             mutebt.Icon = new SymbolIcon(Symbol.Mute);
             mutebt.Label = "Muet"; player.MediaPlayer.IsMuted = !player.MediaPlayer.IsMuted;
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            FirstElement.Focus(Windows.UI.Xaml.FocusState.Keyboard);
+        }
     }
 }

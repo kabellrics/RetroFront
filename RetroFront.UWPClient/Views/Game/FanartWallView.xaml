@@ -10,6 +10,7 @@
     xmlns:viewHelper="using:RetroFront.UWPClient.ViewHelper"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
+    Loaded="UserControl_Loaded"
     mc:Ignorable="d">
     <UserControl.Resources>
         <viewHelper:GameFanartConverter x:Key="GameFanartConverter"></viewHelper:GameFanartConverter>
@@ -22,36 +23,37 @@
                                                       Stretch="Fill"/>
         </ParallaxView>
         <GridView x:Name="datagrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel.Games, Mode=OneWay}" IsItemClickEnabled="True" SelectionMode="Single"
-                  SelectedIndex="{x:Bind ViewModel.SelectedIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" KeyUp="datagrid_KeyUp" SizeChanged="GridView_SizeChanged">
-            <!--<i:Interaction.Behaviors>
+                  SelectedIndex="{x:Bind ViewModel.SelectedIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" KeyUp="datagrid_KeyUp" SizeChanged="GridView_SizeChanged"
+                  ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.IsHorizontalRailEnabled="True" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollMode="Disabled">
+                <!--<i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="ItemClick">
                     <ic:InvokeCommandAction Command="{Binding ViewModel.GameDetailCommand}" />
                 </ic:EventTriggerBehavior>
             </i:Interaction.Behaviors>-->
-            <GridView.ItemTemplate>
-                <DataTemplate x:DataType="model:GameRom">
-                    <Grid>
-                        <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="model:GameRom">
+                        <Grid>
+                            <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="{x:Bind Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png"
                                           CornerRadius="33"
                                                       Stretch="Uniform"/>
-                    </Grid>
-                </DataTemplate>
-            </GridView.ItemTemplate>
-            <GridView.ItemContainerStyle>
-                <Style TargetType="GridViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                    <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
-                    <Setter Property="Margin" Value="10"></Setter>
-                    <Setter Property="Padding" Value="10"></Setter>
-                </Style>
-            </GridView.ItemContainerStyle>
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid Orientation="Vertical"></ItemsWrapGrid>
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
-        </GridView>
+                        </Grid>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+                <GridView.ItemContainerStyle>
+                    <Style TargetType="GridViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                        <Setter Property="Margin" Value="10"></Setter>
+                        <Setter Property="Padding" Value="10"></Setter>
+                    </Style>
+                </GridView.ItemContainerStyle>
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Vertical"></ItemsWrapGrid>
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+            </GridView>
     </Grid>
 </UserControl>

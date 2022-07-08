@@ -444,7 +444,11 @@ namespace RetroFront.ViewModels
                     var imgpath = _dialogService.showImgPickerForPlateformeDialog(sys.Systeme, newtheme, ScraperType.ArtWork);
                     if (imgpath != null)
                     {
-                        _themeService.LoadBckForSysteme(sys.Systeme, newtheme, imgpath);
+                        var path =_themeService.GetBckForTheme(sys.Systeme.Shortname, newtheme);
+                        if (Path.GetExtension(imgpath) == ".png")
+                            path = path.Replace("jpg","png");
+                        _dialogService.DllContent(imgpath, path, $"Theme :{newtheme} Background de {sys.Name}", ScraperType.ArtWork.ToString());
+                        //_themeService.LoadBckForSysteme(sys.Systeme, newtheme, imgpath);
                     }
                 }
             }

@@ -9,6 +9,10 @@ namespace RetroFront.UWPClient.Core
 {
     public class GameDetailService : BaseService
     {
+        public async Task SaveGame(GameRom game)
+        {
+            //await GameServiceAPI.
+        }
         public async Task<GameDetailDisplay> GetCurrentGameDisplay()
         {
             var appsetting = await SettingsServiceAPI.SettingsGetAsync();

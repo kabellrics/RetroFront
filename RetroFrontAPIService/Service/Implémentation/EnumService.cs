@@ -39,14 +39,14 @@ namespace RetroFrontAPIService.Service.Implémentation
             {
                 new KeyValuePair<int, string>((int)HomeDisplay.GameOS,HomeDisplay.GameOS.ToString()),
                 new KeyValuePair<int, string>((int)HomeDisplay.Hub,HomeDisplay.Hub.ToString()),
-                new KeyValuePair<int, string>((int)HomeDisplay.SteamView,HomeDisplay.SteamView.ToString())
+                new KeyValuePair<int, string>((int)HomeDisplay.FlipRotate,HomeDisplay.FlipRotate.ToString())
             };
         }
         public List<HomeDisplay> GetHomeDisplays()
         {
             return new List<HomeDisplay>
             {
-                HomeDisplay.SteamView,
+                HomeDisplay.FlipRotate,
                 HomeDisplay.GameOS,
                 HomeDisplay.Hub
             };

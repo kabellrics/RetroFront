@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace RetroFront.UWPClient.ViewModels
 {
-    public class BckChangeMessage : ValueChangedMessage<int>
+    public class BckChangeMessage : ValueChangedMessage<object>
     {
-        public BckChangeMessage(int ID) : base(ID)
+        public BckChangeMessage(object ID) : base(ID)
         {
         }
     }

@@ -7,6 +7,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:viewHelper="using:RetroFront.UWPClient.ViewHelper"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Loaded="UserControl_Loaded"
     mc:Ignorable="d">
     <UserControl.Resources>
         <viewHelper:SysLogoConverter x:Key="SysLogoConverter"></viewHelper:SysLogoConverter>
@@ -58,7 +59,7 @@
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Padding="0" Background="Transparent">
+                <Button x:Name="FirstElement" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Padding="0" Background="Transparent">
                     <controls:ImageEx
                           IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                           Source="{x:Bind ViewModel.CurrenGame.Id, Mode=TwoWay, Converter={StaticResource GameBoxartConverter}, UpdateSourceTrigger=PropertyChanged}"

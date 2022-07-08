@@ -6,16 +6,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     Style="{StaticResource PageStyle}"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
     <Grid x:Name="ContentArea">
         <ParallaxView Source="{Binding ElementName=ParamPlace}" VerticalShift="50">
             <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                                                      Source="{x:Bind ViewModel.BCK, Mode=OneWay}"
+                                                      Source="{x:Bind ViewModel.BCK, Mode=TwoWay}"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"                                                      
                                                       Stretch="Fill"/>
         </ParallaxView>
-        <Grid x:Name="ParamPlace"
-            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+        <Grid x:Name="ParamPlace">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="2*"></RowDefinition>
@@ -38,7 +38,7 @@
             <TextBlock Grid.Row="5" Grid.Column="0" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Affichage des Jeux" Foreground="WhiteSmoke"></TextBlock>
             <TextBlock Grid.Row="7" Grid.Column="0" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Affichage du détail des jeux" Foreground="WhiteSmoke"></TextBlock>
 
-            <ComboBox Grid.Row="1" Grid.Column="1" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="30"
+            <ComboBox x:Name="FirstElement" Grid.Row="1" Grid.Column="1" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="30"
                       SelectedItem="{x:Bind ViewModel.SelectedHomeDisplay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                       ItemsSource="{x:Bind ViewModel.HomeDisplays,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Value"></ComboBox>
             <ComboBox Grid.Row="3" Grid.Column="1" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="30"

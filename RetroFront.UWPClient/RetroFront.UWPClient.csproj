@@ -148,7 +148,9 @@
     <Compile Include="Activation\ActivationHandler.cs" />
     <Compile Include="Behaviors\NavigationViewHeaderBehavior.cs" />
     <Compile Include="Behaviors\NavigationViewHeaderMode.cs" />
+    <Compile Include="ViewHelper\FlipRotateTemplateSelector.cs" />
     <Compile Include="ViewHelper\GameVideoConverter.cs" />
+    <Compile Include="ViewHelper\ShellBackGroundConverter.cs" />
     <Compile Include="ViewModels\BckChangeMessage.cs" />
     <Compile Include="Views\GameDetailPage.xaml.cs">
       <DependentUpon>GameDetailPage.xaml</DependentUpon>

@@ -47,7 +47,7 @@ namespace RetroFront.UWPClient.ViewModels
         {
             try
             {
-                WeakReferenceMessenger.Default.Send(new BckChangeMessage(Systems[SelectedIndex].SystemeID));
+                WeakReferenceMessenger.Default.Send(new BckChangeMessage(Systems[SelectedIndex]));
             }
             catch (Exception ex)
             {

@@ -59,7 +59,7 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             }
             else
             {
-                path = dialogService.OpenUniqueFileDialog($"Fichier Image (*.jpg)|*.jpg");
+                path = dialogService.OpenUniqueFileDialog($"Fichier Jpg (*.jpg)|*.jpg|Fichier Png (*.png)|*.png");
             }
             if (path != null)
                 ImgPath = path;

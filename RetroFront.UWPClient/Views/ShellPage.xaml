@@ -15,7 +15,7 @@
     xmlns:viewHelper="using:RetroFront.UWPClient.ViewHelper"
     >
     <Page.Resources>
-        <viewHelper:SysScreenshootConverter x:Key="SysScreenshootConverter"></viewHelper:SysScreenshootConverter></Page.Resources>
+        <viewHelper:ShellBackGroundConverter x:Key="ShellBackGroundConverter"></viewHelper:ShellBackGroundConverter></Page.Resources>
     <i:Interaction.Behaviors>
         <ic:EventTriggerBehavior EventName="Loaded">
             <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
@@ -36,7 +36,7 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <controls:ImageEx Grid.Row="0" Grid.RowSpan="2" IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                                                      Source="{x:Bind ViewModel.BCK, Mode=OneWay, Converter={StaticResource SysScreenshootConverter}}" 
+                                                      Source="{x:Bind ViewModel.BCK, Mode=OneWay, Converter={StaticResource ShellBackGroundConverter}}" 
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"                                                      
                                                       Stretch="Fill">
                     </controls:ImageEx>

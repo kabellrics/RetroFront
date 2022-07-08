@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace RetroFront.UWPClient.Core.Models
 {
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v12.0.0.0))")]
-    public partial class GameRom
+    public partial class GameRom : IConvertedID
     {
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int Id { get; set; }

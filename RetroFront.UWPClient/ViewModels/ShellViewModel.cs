@@ -30,8 +30,8 @@ namespace RetroFront.UWPClient.ViewModels
         private WinUI.NavigationViewItem _selected;
         private ICommand _loadedCommand;
         private ICommand _itemInvokedCommand;
-        private string _BCK;
-        public string BCK
+        private object _BCK;
+        public object BCK
         {
             get { return _BCK; }
             set { SetProperty(ref _BCK, value); }
@@ -74,14 +74,11 @@ namespace RetroFront.UWPClient.ViewModels
                 //this.BCK = m.Value;
                 try
                 {
-                    if(m.Value == -1)
-                        this.BCK = string.Empty;
-                    else
-                        this.BCK = m.Value.ToString();
+                    this.BCK = m.Value;
                 }
                 catch(Exception ex)
                 {
-                    this.BCK = string.Empty;
+                    this.BCK = null;
                 }
             });
         }

@@ -18,6 +18,11 @@ namespace RetroFront.UWPClient.Views
             DataContext = Ioc.Default.GetRequiredService<ParametreViewModel>();
             ViewModel.LoadDataAsync();
         }
+
+        private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            FirstElement.Focus(Windows.UI.Xaml.FocusState.Keyboard);
+        }
         //protected override async void OnNavigatedTo(NavigationEventArgs e)
         //{
         //    base.OnNavigatedTo(e);

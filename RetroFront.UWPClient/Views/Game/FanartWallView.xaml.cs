@@ -46,5 +46,10 @@ namespace RetroFront.UWPClient.Views.Game
             if (e.Key == Windows.System.VirtualKey.Enter || e.Key == Windows.System.VirtualKey.Space || e.Key == Windows.System.VirtualKey.GamepadA || e.Key == Windows.System.VirtualKey.GamepadX)
                 ViewModel.GameDetailCommand.Execute(null);
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            datagrid.Focus(Windows.UI.Xaml.FocusState.Keyboard);
+        }
     }
 }

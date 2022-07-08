@@ -6,10 +6,135 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
-
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:model="using:RetroFront.UWPClient.Core.Models"
+    xmlns:VM="using:RetroFront.UWPClient.ViewModels"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:viewHelper="using:RetroFront.UWPClient.ViewHelper"
+    Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <viewHelper:GameScreenshootConverter x:Key="GameScreenshootConverter"></viewHelper:GameScreenshootConverter>
+        <viewHelper:GameLogoConverter x:Key="GamelogoConverter"></viewHelper:GameLogoConverter>
+        <viewHelper:SysScreenshootConverter x:Key="SysScreenshootConverter"></viewHelper:SysScreenshootConverter>
+        <viewHelper:SysLogoConverter x:Key="SysLogoConverter"></viewHelper:SysLogoConverter>
+        <viewHelper:NullToVisibilityConverter x:Key="NullToVisibilityConverter"></viewHelper:NullToVisibilityConverter>
+        <DataTemplate x:Key="PlateformeListTemplate" x:DataType="VM:FlipRotateElement">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"></RowDefinition>
+                    <RowDefinition Height="3*"></RowDefinition>
+                    <RowDefinition Height="3*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="3*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <controls:RotatorTile Grid.Row="0" Grid.RowSpan="5"
+                                      RotationDelay="0:0:3"
+                                        ExtraRandomDuration="0:0:3"
+                                        Direction="Left"
+                                      ItemsSource="{x:Bind Items}">
+                    <controls:RotatorTile.ItemTemplate>
+                        <DataTemplate x:DataType="model:Systeme">
+                                <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*"></RowDefinition>
+                                    <RowDefinition Height="3*"></RowDefinition>
+                                    <RowDefinition Height="3*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                    <controls:ImageEx Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" IsCacheEnabled="False" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind SystemeID, Mode=TwoWay, Converter={StaticResource SysScreenshootConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png"
+                                          CornerRadius="33"
+                                                      Stretch="UniformToFill"/>
+                                <controls:ImageEx Grid.Row="1" Grid.Column="1" IsCacheEnabled="False" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind SystemeID, Mode=TwoWay, Converter={StaticResource SysLogoConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png"
+                                          CornerRadius="33"
+                                                      Stretch="Uniform"/>
+                            </Grid>
+                        </DataTemplate>
+                    </controls:RotatorTile.ItemTemplate>
+                </controls:RotatorTile>
+                <Grid Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid.Background>
+                        <SolidColorBrush Color="WhiteSmoke" Opacity="0.7"></SolidColorBrush>
+                    </Grid.Background>
+                    <Grid Margin="10">
+                        <Grid.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.7"></SolidColorBrush>
+                        </Grid.Background>
+                        <Viewbox>
+                            <TextBlock Text="{x:Bind Name}" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        </Viewbox>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="GameListTemplate" x:DataType="VM:FlipRotateElement">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"></RowDefinition>
+                    <RowDefinition Height="3*"></RowDefinition>
+                    <RowDefinition Height="3*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="3*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <controls:RotatorTile Grid.Row="0" Grid.RowSpan="5"
+                                      RotationDelay="0:0:3"
+                                        ExtraRandomDuration="0:0:3"
+                                        Direction="Left"
+                                      ItemsSource="{x:Bind Items}">
+                    <controls:RotatorTile.ItemTemplate>
+                        <DataTemplate x:DataType="model:GameRom">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*"></RowDefinition>
+                                    <RowDefinition Height="3*"></RowDefinition>
+                                    <RowDefinition Height="3*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <controls:ImageEx Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" IsCacheEnabled="False" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind Id, Mode=TwoWay, Converter={StaticResource GameScreenshootConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png"
+                                          CornerRadius="33"
+                                                      Stretch="UniformToFill"/>
+                                <controls:ImageEx Grid.Row="1" Grid.Column="1" IsCacheEnabled="False" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      Source="{x:Bind Id, Mode=TwoWay, Converter={StaticResource GamelogoConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png"
+                                          CornerRadius="33"
+                                                      Stretch="Uniform"/>
+                                </Grid>
+                        </DataTemplate>
+                    </controls:RotatorTile.ItemTemplate>
+                </controls:RotatorTile>
+                <Grid Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid.Background>
+                        <SolidColorBrush Color="WhiteSmoke" Opacity="0.7"></SolidColorBrush>
+                    </Grid.Background>
+                    <Grid Margin="10">
+                        <Grid.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.7"></SolidColorBrush>
+                        </Grid.Background>
+                        <Viewbox>
+                            <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        </Viewbox>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+        <viewHelper:FlipRotateTemplateSelector x:Key="FlipRotateTemplateSelector"
+                                               GameListTemplate="{StaticResource GameListTemplate}"
+                                               PlateformeListTemplate="{StaticResource PlateformeListTemplate}"/>
+    </UserControl.Resources>
     <Grid>
-
+        <FlipView x:Name="FirstElement" ItemsSource="{x:Bind ViewModel.FlipRotateList}" SelectedIndex="{x:Bind ViewModel.FlipSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemTemplateSelector="{StaticResource FlipRotateTemplateSelector}"></FlipView>
     </Grid>
 </UserControl>

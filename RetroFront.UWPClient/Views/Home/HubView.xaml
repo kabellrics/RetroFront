@@ -7,7 +7,7 @@
     xmlns:viewHelper="using:RetroFront.UWPClient.ViewHelper"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <viewHelper:SysLogoConverter x:Key="SysLogoConverter"></viewHelper:SysLogoConverter>
         <viewHelper:SysScreenshootConverter x:Key="SysScreenshootConverter"></viewHelper:SysScreenshootConverter>
@@ -43,7 +43,7 @@
                         <ColumnDefinition Width=".25*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="1" HorizontalAlignment="Stretch">
-                        <Button Margin="15" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" CornerRadius="30" Padding="0"
+                        <Button x:Name="FirstElement" Margin="15" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" CornerRadius="30" Padding="0"
                                 Command="{x:Bind ViewModel.PlateformelistCommand}" CommandParameter="{x:Bind ViewModel.False}">
                             <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="/Assets/XXL.png"

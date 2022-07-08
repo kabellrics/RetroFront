@@ -20,7 +20,7 @@ namespace RetroFront.Services.Implementation
         {
             return new List<HomeDisplay>
             {
-                HomeDisplay.SteamView,
+                HomeDisplay.FlipRotate,
                 HomeDisplay.GameOS,
                 HomeDisplay.Hub
             };

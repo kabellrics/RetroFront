@@ -52,5 +52,10 @@ namespace RetroFront.UWPClient.Views.Home
                 //throw;
             }
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            FirstElement.Focus(FocusState.Programmatic);
+        }
     }
 }

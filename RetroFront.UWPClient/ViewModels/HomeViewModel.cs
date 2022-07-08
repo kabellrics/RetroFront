@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Uwp.UI;
 using RetroFront.UWPClient.Core;
 using RetroFront.UWPClient.Core.Models;
@@ -25,12 +26,19 @@ namespace RetroFront.UWPClient.ViewModels
         public ICommand GamelistCommand => _gamelistCommand ?? (_gamelistCommand = new RelayCommand<Systeme>(GotoGamePage));
         public ICommand GameDetailCommand => _gamedetailCommand ?? (_gamedetailCommand = new RelayCommand<GameRom>(GotoGameDetailPage));
         public ICommand GamelistSpecificCommand => _gamelistspecificCommand ?? (_gamelistspecificCommand = new RelayCommand<string>(GotoGamespecificPage));
+        public ObservableCollection<FlipRotateElement> FlipRotateList { get; set; }
 
         private int _displayType;
         public int DisplayType
         {
             get { return _displayType; }
             set { SetProperty(ref _displayType, value); }
+        }
+        private int _flipSelectedIndex;
+        public int FlipSelectedIndex
+        {
+            get { return _flipSelectedIndex; }
+            set { SetProperty(ref _flipSelectedIndex, value); }
         }
         public bool True;
         public bool False;
@@ -299,6 +307,7 @@ namespace RetroFront.UWPClient.ViewModels
             homeService = new HomeService();
             DisplayType = (int)HomeDisplay._0;
             BCK = @"http://localhost:34322/api/Img/GetAppBackground";
+            FlipSelectedIndex = 0;
         }
         public async void LoadDataAsync()
         {
@@ -308,7 +317,9 @@ namespace RetroFront.UWPClient.ViewModels
             RandomSystems = new ObservableCollection<Systeme>();
             CollecSystems = new ObservableCollection<Systeme>();
             PCGames = new ObservableCollection<GameRom>();
+            FlipRotateList = new ObservableCollection<FlipRotateElement>();
             await Init();
+            WeakReferenceMessenger.Default.Send(new BckChangeMessage(null));
         }
 
         private async Task Init()
@@ -320,6 +331,35 @@ namespace RetroFront.UWPClient.ViewModels
             await InitRandomSystems();
             await InitPCGames();
             await InitRandomCollection();
+            try
+            {
+                var favItem = new FlipRotateElement("Systemes", "sys", "plateforme", new ObservableCollection<IConvertedID>(RandomSystems));
+                FlipRotateList.Add(favItem);
+                var collecitem = new FlipRotateElement("Collections", "collec", "plateforme", new ObservableCollection<IConvertedID>(CollecSystems));
+                FlipRotateList.Add(collecitem);
+                var favitem = new FlipRotateElement("Favoris", "fav", "games", new ObservableCollection<IConvertedID>(FavGames));
+                FlipRotateList.Add(favitem);
+                var lastitem = new FlipRotateElement("Derniers jeux lancés", "last", "games", new ObservableCollection<IConvertedID>(LastPlayedGames));
+                FlipRotateList.Add(lastitem);
+                var mostitem = new FlipRotateElement("Jeux les plus lancés", "most", "games", new ObservableCollection<IConvertedID>(LastPlayedGames));
+                FlipRotateList.Add(mostitem);
+                var pcitem = new FlipRotateElement("Jeux PC", "pc", "games", new ObservableCollection<IConvertedID>(PCGames));
+                FlipRotateList.Add(pcitem);
+                foreach (var sys in RandomSystems)
+                {
+                    var item = new FlipRotateElement(sys.Name, sys.Shortname, "games", new ObservableCollection<IConvertedID>(await homeService.GetGamesForPlateforme(sys)));
+                    FlipRotateList.Add(item);
+                }
+                foreach (var sys in CollecSystems)
+                {
+                    var item = new FlipRotateElement(sys.Name, sys.Shortname, "games", new ObservableCollection<IConvertedID>(await homeService.GetGamesForPlateforme(sys)));
+                    FlipRotateList.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
         }
         private void GotoPlateformePage(bool plateforme = false)
         {
@@ -415,6 +455,41 @@ namespace RetroFront.UWPClient.ViewModels
             LPGame4 = LastPlayedGames.ElementAtOrDefault(3);
             LPGame5 = LastPlayedGames.ElementAtOrDefault(4);
             LPGame6 = LastPlayedGames.ElementAtOrDefault(5);
+        }
+    }
+
+    public class FlipRotateElement : ObservableObject
+    {
+        public string _name;
+        public string Name
+        {
+            get { return _name; }
+            set { SetProperty(ref _name, value); }
+        }
+        public string _shortname;
+        public string ShortName
+        {
+            get { return _shortname; }
+            set { SetProperty(ref _shortname, value); }
+        }
+        public string _type;
+        public string Type
+        {
+            get { return _type; }
+            set { SetProperty(ref _type, value); }
+        }
+        private ObservableCollection<IConvertedID> _items;
+        public ObservableCollection<IConvertedID> Items
+        {
+            get { return _items; }
+            set { SetProperty(ref _items, value); }
+        }
+        public FlipRotateElement(string name,string shortname,string type, ObservableCollection<IConvertedID> items)
+        {
+            this.Name = name;
+            this.Type = type;
+            this.ShortName = shortname;
+            this.Items = items;
         }
     }
 }

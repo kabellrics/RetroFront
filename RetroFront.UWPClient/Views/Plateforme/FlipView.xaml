@@ -10,13 +10,13 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Loaded="flipview_Loaded">
     <UserControl.Resources>
         <viewHelper:SysLogoConverter x:Key="SysLogoConverter"></viewHelper:SysLogoConverter>
         <viewHelper:SysScreenshootConverter x:Key="SysScreenshootConverter"></viewHelper:SysScreenshootConverter>
     </UserControl.Resources>
     <Grid>
-        <FlipView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel.Systems, Mode=OneWay}"
+        <FlipView  x:Name="FirstElement" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel.Systems, Mode=OneWay}"
                   SelectedIndex="{x:Bind ViewModel.SelectedIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" KeyUp="FlipView_KeyUp">
             <!--<i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="Tapped">

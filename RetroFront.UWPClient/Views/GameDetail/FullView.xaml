@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewHelper="using:RetroFront.UWPClient.ViewHelper"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    mc:Ignorable="d" Unloaded="UserControl_LostFocus">
+    mc:Ignorable="d" Unloaded="UserControl_LostFocus" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <viewHelper:SysLogoConverter x:Key="SysLogoConverter"></viewHelper:SysLogoConverter>
         <viewHelper:SysScreenshootConverter x:Key="SysScreenshootConverter"></viewHelper:SysScreenshootConverter>
@@ -59,7 +59,7 @@
                           CornerRadius="30"
                           PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                           Stretch="Uniform"/>
-            <CommandBar Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" 
+        <CommandBar x:Name="FirstElement" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" 
                     VerticalContentAlignment="Stretch" HorizontalAlignment="Left" HorizontalContentAlignment="Left"
                          IsOpen="True" DefaultLabelPosition="Bottom">
             <CommandBar.Background>

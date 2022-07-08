@@ -8,6 +8,7 @@
     xmlns:viewHelper="using:RetroFront.UWPClient.ViewHelper"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Loaded="UserControl_Loaded"
     mc:Ignorable="d">
     <UserControl.Resources>
         <viewHelper:SysLogoConverter x:Key="SysLogoConverter"></viewHelper:SysLogoConverter>
@@ -27,7 +28,7 @@
                     <Grid Height="720">
                         <Grid x:Name="MenuButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="25">
                             <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" CornerRadius="30" Padding="0"
-                                Command="{x:Bind ViewModel.PlateformelistCommand}" CommandParameter="{x:Bind ViewModel.False}">
+                                 x:Name="FirstElement" Command="{x:Bind ViewModel.PlateformelistCommand}" CommandParameter="{x:Bind ViewModel.False}">
                                 <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="/Assets/XXL.png"
                                                       CornerRadius="30"
