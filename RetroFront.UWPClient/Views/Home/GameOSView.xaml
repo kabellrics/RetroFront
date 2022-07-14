@@ -6,6 +6,7 @@
     xmlns:model="using:RetroFront.UWPClient.Core.Models"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:viewHelper="using:RetroFront.UWPClient.ViewHelper"
+    xmlns:uc="using:RetroFront.UWPClient.Views.Shared"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Loaded="UserControl_Loaded"
@@ -27,14 +28,19 @@
                 <StackPanel Orientation="Vertical">
                     <Grid Height="720">
                         <Grid x:Name="MenuButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="25">
-                            <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" CornerRadius="30" Padding="0"
+                            <!--<Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" CornerRadius="30" Padding="0"
                                  x:Name="FirstElement" Command="{x:Bind ViewModel.PlateformelistCommand}" CommandParameter="{x:Bind ViewModel.False}">
                                 <controls:ImageEx IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                                       Source="/Assets/XXL.png"
                                                       CornerRadius="30"
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
-                            </Button>
+                            </Button>-->
+                            <uc:GameScreenshootContentPreviewControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                                     VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                                                     CornerRadius="30" Padding="0"
+                                                                  Game="{x:Bind ViewModel.FavRandom,Mode=OneWay}">                                
+                            </uc:GameScreenshootContentPreviewControl>
                         </Grid>
                     </Grid>
                     <Grid Height="1620">
@@ -133,7 +139,31 @@
                         <TextBlock Text="Derniers Jeux lancés" Grid.Row="2" Grid.Column="0" Foreground="WhiteSmoke"></TextBlock>
                         <HyperlinkButton Grid.Row="2" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"
                                 Command="{x:Bind ViewModel.GamelistSpecificCommand}" CommandParameter="last"></HyperlinkButton>
-                        <Button Grid.Row="3" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.LPGame1, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                        <uc:GameFanartContentPreviewControl x:Name="BTLP1" Grid.Row="3" Grid.Column="0"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTLP1_Click"
+                                                                Game="{x:Bind ViewModel.LPGame1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTLP2" Grid.Row="3" Grid.Column="1"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTLP2_Click"
+                                                                Game="{x:Bind ViewModel.LPGame2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTLP3" Grid.Row="3" Grid.Column="2"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTLP3_Click"
+                                                                Game="{x:Bind ViewModel.LPGame3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTLP4" Grid.Row="3" Grid.Column="3"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTLP4_Click"
+                                                                Game="{x:Bind ViewModel.LPGame4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTLP5" Grid.Row="3" Grid.Column="4"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTLP5_Click"
+                                                                Game="{x:Bind ViewModel.LPGame5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTLP6" Grid.Row="3" Grid.Column="5"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTLP6_Click"
+                                                                Game="{x:Bind ViewModel.LPGame6, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <!--<Button Grid.Row="3" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.LPGame1, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
                             VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
                                 Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.LPGame1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -198,11 +228,35 @@
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
                             </Grid>
-                        </Button>
+                        </Button>-->
                         <TextBlock Text="Jeux les plus joués" Grid.Row="4" Grid.Column="0" Foreground="WhiteSmoke"></TextBlock>
                         <HyperlinkButton Grid.Row="4" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"
                                 Command="{x:Bind ViewModel.GamelistSpecificCommand}" CommandParameter="most"></HyperlinkButton>
-                        <Button Grid.Row="5" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.MPGame1, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                        <uc:GameFanartContentPreviewControl x:Name="BTMP1" Grid.Row="5" Grid.Column="0"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTMP1_Click"
+                                                                Game="{x:Bind ViewModel.MPGame1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTMP2" Grid.Row="5" Grid.Column="1"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTMP2_Click"
+                                                                Game="{x:Bind ViewModel.MPGame2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTMP3" Grid.Row="5" Grid.Column="2"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTMP3_Click"
+                                                                Game="{x:Bind ViewModel.MPGame3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTMP4" Grid.Row="5" Grid.Column="3"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTMP4_Click"
+                                                                Game="{x:Bind ViewModel.MPGame4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTMP5" Grid.Row="5" Grid.Column="4"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTMP5_Click"
+                                                                Game="{x:Bind ViewModel.MPGame5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTMP6" Grid.Row="5" Grid.Column="5"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTMP6_Click"
+                                                                Game="{x:Bind ViewModel.MPGame6, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <!--<Button Grid.Row="5" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.MPGame1, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
                             VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
                                 Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.MPGame1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -267,11 +321,35 @@
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
                             </Grid>
-                        </Button>
+                        </Button>-->
                         <TextBlock Text="Jeux Favoris" Grid.Row="6" Grid.Column="0" Foreground="WhiteSmoke"></TextBlock>
                         <HyperlinkButton Grid.Row="6" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"
                                 Command="{x:Bind ViewModel.GamelistSpecificCommand}" CommandParameter="fav"></HyperlinkButton>
-                        <Button Grid.Row="7" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.FavGame1, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                        <uc:GameFanartContentPreviewControl x:Name="BTFav1" Grid.Row="7" Grid.Column="0"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTFav1_Click"
+                                                                Game="{x:Bind ViewModel.FavGame1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTFav2" Grid.Row="7" Grid.Column="1"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTFav2_Click"
+                                                                Game="{x:Bind ViewModel.FavGame2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTFav3" Grid.Row="7" Grid.Column="2"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTFav3_Click"
+                                                                Game="{x:Bind ViewModel.FavGame3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTFav4" Grid.Row="7" Grid.Column="3"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTFav4_Click"
+                                                                Game="{x:Bind ViewModel.FavGame4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTFav5" Grid.Row="7" Grid.Column="4"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTFav5_Click"
+                                                                Game="{x:Bind ViewModel.FavGame5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTFav6" Grid.Row="7" Grid.Column="5"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTFav6_Click"
+                                                                Game="{x:Bind ViewModel.FavGame6, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <!--<Button Grid.Row="7" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.FavGame1, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
                             VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
                                 Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.FavGame1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -336,11 +414,35 @@
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
                             </Grid>
-                        </Button>
+                        </Button>-->
                         <TextBlock Text="Jeux PC" Grid.Row="8" Grid.Column="0" Foreground="WhiteSmoke"></TextBlock>
                         <HyperlinkButton Grid.Row="8" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"
                                 Command="{x:Bind ViewModel.GamelistSpecificCommand}" CommandParameter="pc"></HyperlinkButton>
-                        <Button Grid.Row="9" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.PCGame1, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                        <uc:GameFanartContentPreviewControl x:Name="BTPC1" Grid.Row="9" Grid.Column="0"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTPC1_Click"
+                                                                Game="{x:Bind ViewModel.PCGame1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTPC2" Grid.Row="9" Grid.Column="1"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTPC2_Click"
+                                                                Game="{x:Bind ViewModel.PCGame2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTPC3" Grid.Row="9" Grid.Column="2"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTPC3_Click"
+                                                                Game="{x:Bind ViewModel.PCGame3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTPC4" Grid.Row="9" Grid.Column="3"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTPC4_Click"
+                                                                Game="{x:Bind ViewModel.PCGame4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTPC5" Grid.Row="9" Grid.Column="4"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTPC5_Click"
+                                                                Game="{x:Bind ViewModel.PCGame5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <uc:GameFanartContentPreviewControl x:Name="BTPC6" Grid.Row="9" Grid.Column="5"
+                                                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="BTPC6_Click"
+                                                                Game="{x:Bind ViewModel.PCGame6, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        </uc:GameFanartContentPreviewControl>
+                        <!--<Button Grid.Row="9" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.PCGame1, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
                             VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="5" CornerRadius="30" Padding="0"
                                 Command="{x:Bind ViewModel.GameDetailCommand}" CommandParameter="{x:Bind ViewModel.PCGame1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -405,7 +507,7 @@
                                                       PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="Fill"
                                                       Stretch="Fill"/>
                             </Grid>
-                        </Button>
+                        </Button>-->
                         <TextBlock Text="Collection Personalisée" Grid.Row="10" Grid.Column="0" Foreground="WhiteSmoke"></TextBlock>
                         <HyperlinkButton Grid.Row="10" Grid.Column="5" Content="Voir Tout" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Right"
                                 Command="{x:Bind ViewModel.CustomcolleclistCommand}" CommandParameter="{x:Bind ViewModel.True}"></HyperlinkButton>

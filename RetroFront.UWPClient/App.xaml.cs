@@ -23,7 +23,7 @@ namespace RetroFront.UWPClient
         {
             InitializeComponent();
             UnhandledException += OnAppUnhandledException;
-            this.FocusVisualKind = FocusVisualKind.Reveal;
+            //this.FocusVisualKind = FocusVisualKind.Reveal;
             // Deferred execution until used. Check https://docs.microsoft.com/dotnet/api/system.lazy-1 for further info on Lazy<T> class.
             _activationService = new Lazy<ActivationService>(CreateActivationService);
         }

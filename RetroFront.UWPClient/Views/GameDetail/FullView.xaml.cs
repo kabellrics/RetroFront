@@ -89,7 +89,6 @@ namespace RetroFront.UWPClient.Views.GameDetail
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            FirstElement.Focus(Windows.UI.Xaml.FocusState.Keyboard);
         }
     }
 }

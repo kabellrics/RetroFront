@@ -220,6 +220,15 @@
     <Compile Include="Views\QuitterPage.xaml.cs">
       <DependentUpon>QuitterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\GameBoxartContentPreviewControl.xaml.cs">
+      <DependentUpon>GameBoxartContentPreviewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\GameFanartContentPreviewControl.xaml.cs">
+      <DependentUpon>GameFanartContentPreviewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\GameScreenshootContentPreviewControl.xaml.cs">
+      <DependentUpon>GameScreenshootContentPreviewControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ShellPage.xaml.cs">
       <DependentUpon>ShellPage.xaml</DependentUpon>
     </Compile>
@@ -231,6 +240,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\GameDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -311,6 +324,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Shared\GameBoxartContentPreviewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shared\GameFanartContentPreviewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shared\GameScreenshootContentPreviewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ShellPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -325,6 +350,7 @@
     <Compile Include="Helpers\ResourceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\loading.gif" />
     <Content Include="Assets\PlaceholderImage.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

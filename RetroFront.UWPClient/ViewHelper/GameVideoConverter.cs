@@ -20,8 +20,8 @@ namespace RetroFront.UWPClient.ViewHelper
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            var valueStr = value as String;
-            var id = valueStr.Substring(valueStr.ToString().LastIndexOf("/") + 1);
+            var valueStr = value as MediaSource;
+            var id = valueStr.Uri.ToString().Substring(valueStr.Uri.ToString().LastIndexOf("/") + 1);
             var valueInt = int.Parse(id);
             return valueInt;
             //throw new NotImplementedException();

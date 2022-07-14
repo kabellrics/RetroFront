@@ -147,6 +147,12 @@ namespace RetroFront.UWPClient.ViewModels
         #endregion
         #region Fav Games
         public ObservableCollection<GameRom> FavGames { get; set; }
+        private GameRom _FavRandom;
+        public GameRom FavRandom
+        {
+            get { return _FavRandom; }
+            set { SetProperty(ref _FavRandom, value); }
+        }
         private GameRom _FavGame1;
         public GameRom FavGame1
         {
@@ -324,13 +330,20 @@ namespace RetroFront.UWPClient.ViewModels
 
         private async Task Init()
         {
-            DisplayType = (int)await homeService.GetCurrentHomeDisplay();
-            await InitLastPlayed();
-            await InitMostPlayed();
-            await InitFavGames();
-            await InitRandomSystems();
-            await InitPCGames();
-            await InitRandomCollection();
+            try
+            {
+                DisplayType = (int)await homeService.GetCurrentHomeDisplay();
+                await InitLastPlayed();
+                await InitMostPlayed();
+                await InitFavGames();
+                await InitRandomSystems();
+                await InitPCGames();
+                await InitRandomCollection();
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
             try
             {
                 var favItem = new FlipRotateElement("Systemes", "sys", "plateforme", new ObservableCollection<IConvertedID>(RandomSystems));
@@ -361,19 +374,19 @@ namespace RetroFront.UWPClient.ViewModels
                 //throw;
             }
         }
-        private void GotoPlateformePage(bool plateforme = false)
+        public void GotoPlateformePage(bool plateforme = false)
         {
             NavigationService.Navigate<PlateformePage>(plateforme);
         }
-        private void GotoGamePage(Systeme plateforme = null)
+        public void GotoGamePage(Systeme plateforme = null)
         {
             NavigationService.Navigate<JeuxPage>(plateforme);
         }
-        private void GotoGameDetailPage(GameRom game)
+        public void GotoGameDetailPage(GameRom game)
         {
             NavigationService.Navigate<GameDetailPage>(game);
         }
-        private void GotoGamespecificPage(string plateforme)
+        public void GotoGamespecificPage(string plateforme)
         {
                 Systeme sys = new Systeme { Shortname = plateforme };
                 NavigationService.Navigate<JeuxPage>(sys);
@@ -429,6 +442,7 @@ namespace RetroFront.UWPClient.ViewModels
             FavGame4 = FavGames.ElementAtOrDefault(3);
             FavGame5 = FavGames.ElementAtOrDefault(4);
             FavGame6 = FavGames.ElementAtOrDefault(5);
+            FavRandom = FavGames.OrderBy(args => Guid.NewGuid()).First();
         }
         private async Task InitMostPlayed()
         {

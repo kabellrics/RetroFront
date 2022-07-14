@@ -16,6 +16,10 @@ namespace RetroFront.Models.Pegasus
         public string Logo { get; set; }
         public string Video { get; set; }
         public string Fanart { get; set; }
-        public string Screenshoot { get; set; }
+        public List<string> Screenshoot { get; set; }
+        public Game()
+        {
+            Screenshoot = new List<string>();
+        }
     }
 }
