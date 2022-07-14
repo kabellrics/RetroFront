@@ -1176,7 +1176,11 @@ namespace RetroFront.ViewModels
             {
                 games.Logo = result;
                 var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Logo);
-                var targetfile = $"{targetfolder}{Path.GetExtension(games.Logo)}";
+                var targetfile = string.Empty;
+                if (games.Logo.Contains("screenscraper"))
+                    targetfile = $"{targetfolder}.png";
+                else
+                    targetfile = $"{targetfolder}{Path.GetExtension(games.Logo)}";
                 //_gameService.DownloadImgData(games.Logo, targetfile);
                 _dialogService.DllContent(games.Logo, targetfile, games.Name, ScraperType.Logo.ToString());
                 games.Logo = targetfile;
@@ -1189,7 +1193,11 @@ namespace RetroFront.ViewModels
             {
                 games.Boxart = result;
                 var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Boxart);
-                var targetfile = $"{targetfolder}{Path.GetExtension(games.Boxart)}";
+                var targetfile = string.Empty;
+                if (games.Boxart.Contains("screenscraper"))
+                    targetfile = $"{targetfolder}.png";
+                else
+                    targetfile = $"{targetfolder}{Path.GetExtension(games.Boxart)}";
                 //_gameService.DownloadImgData(games.Boxart, targetfile);
                 _dialogService.DllContent(games.Boxart, targetfile, games.Name, ScraperType.Boxart.ToString());
                 games.Boxart = targetfile;
@@ -1202,7 +1210,11 @@ namespace RetroFront.ViewModels
             {
                 games.Fanart = result;
                 var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.Banner);
-                var targetfile = $"{targetfolder}{Path.GetExtension(games.Fanart)}";
+                var targetfile = string.Empty;
+                if (games.Fanart.Contains("screenscraper"))
+                    targetfile = $"{targetfolder}.png";
+                else
+                    targetfile = $"{targetfolder}{Path.GetExtension(games.Fanart)}";
                 //_gameService.DownloadImgData(games.Fanart, targetfile);
                 _dialogService.DllContent(games.Fanart, targetfile, games.Name, ScraperType.Banner.ToString());
                 games.Fanart = targetfile;
@@ -1215,7 +1227,11 @@ namespace RetroFront.ViewModels
             {
                 games.Screenshoot = result;
                 var targetfolder = _gameService.GetImgPathForGame(games, ScraperType.ArtWork);
-                var targetfile = $"{targetfolder}{Path.GetExtension(games.Screenshoot)}";
+                var targetfile = string.Empty;
+                if (games.Screenshoot.Contains("screenscraper"))
+                    targetfile = $"{targetfolder}.png";
+                else
+                    targetfile = $"{targetfolder}{Path.GetExtension(games.Screenshoot)}";
                 _gameService.DownloadImgData(games.Screenshoot, targetfile);
                 games.Screenshoot = targetfile;
             }

@@ -126,13 +126,13 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             if (e.Cancelled)
             {
                 ResultText = "The download has been cancelled";
-                //return;
+                return;
             }
 
             if (e.Error != null) // We have an error! Retry a few times, then abort.
             {
                 ResultText = "An error ocurred while trying to download file";
-                //return;
+                return;
             }
             ResultText = "File succesfully downloaded";
         }

@@ -38,7 +38,7 @@ namespace RetroFrontAPIService.Service.Implémentation
                 appSettings.ShowFav = true;
                 appSettings.ShowLastPlayed = true;
                 appSettings.ShowMostPlayed = true;
-                var jsonApp = JsonConvert.SerializeObject(appSettings);
+                var jsonApp = JsonConvert.SerializeObject(appSettings,Formatting.Indented);
                 File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
             }
             System.IO.Directory.CreateDirectory(appSettings.AppSettingsFolder);
