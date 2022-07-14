@@ -36,7 +36,6 @@ namespace RetroFront.UWPClient.Views.Plateforme
 
         private void flipview_Loaded(object sender, RoutedEventArgs e)
         {
-            FirstElement.Focus(Windows.UI.Xaml.FocusState.Keyboard);
         }
     }
 }

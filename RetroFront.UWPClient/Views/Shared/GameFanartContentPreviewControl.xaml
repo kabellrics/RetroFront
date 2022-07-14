@@ -1,0 +1,52 @@
+﻿<UserControl
+    x:Class="RetroFront.UWPClient.Views.Shared.GameFanartContentPreviewControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RetroFront.UWPClient.Views.Shared"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:viewHelper="using:RetroFront.UWPClient.ViewHelper"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    GotFocus="UserControl_GotFocus"
+    LostFocus="UserControl_LostFocus">
+    <UserControl.Resources>
+        <viewHelper:GameLogoConverter x:Key="GameLogoConverter"></viewHelper:GameLogoConverter>
+        <viewHelper:GameVideoConverter x:Key="GameVideoConverter"></viewHelper:GameVideoConverter>
+        <viewHelper:GameFanartConverter x:Key="GameFanartConverter"></viewHelper:GameFanartConverter>
+        <viewHelper:NullToVisibilityConverter x:Key="NullToVisibilityConverter"></viewHelper:NullToVisibilityConverter>
+    </UserControl.Resources>
+    <Button x:Name="btElement" Click="ClickForwarder"
+            VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+            Visibility="{x:Bind Game, Mode=OneWay, Converter={StaticResource NullToVisibilityConverter}}"
+                            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+            Margin="5" CornerRadius="30" Padding="0">
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="3*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Grid.RowSpan="4">
+                <MediaPlayerElement x:Name="player"
+            AreTransportControlsEnabled="False"
+            AutoPlay="False"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Source="{x:Bind Game.Id, Mode=OneWay, Converter={StaticResource GameVideoConverter}}" Stretch="UniformToFill"
+            ></MediaPlayerElement>
+            </Grid>
+            <controls:ImageEx Grid.Row="2" IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      CornerRadius="30"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="UniformToFill"
+                                                        Source="{x:Bind Game.Id, Mode=TwoWay, Converter={StaticResource GameLogoConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      Stretch="Uniform"/>
+            <controls:ImageEx x:Name="boxartImg" Grid.Row="0" Grid.RowSpan="4" IsCacheEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                                      CornerRadius="30"
+                                                      PlaceholderSource="/Assets/PlaceholderImage.png" PlaceholderStretch="UniformToFill"
+                                                        Source="{x:Bind Game.Id, Mode=TwoWay, Converter={StaticResource GameFanartConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                      Stretch="Fill"/>
+        </Grid>
+    </Button>
+</UserControl>

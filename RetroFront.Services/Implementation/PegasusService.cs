@@ -2,6 +2,7 @@
 using RetroFront.Services.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 
@@ -9,6 +10,8 @@ namespace RetroFront.Services.Implementation
 {
     public class PegasusService : IPegasusService
     {
+        private IGDBService iGDBService = new IGDBService();
+        private ScreenScraperService screenScraperService = new ScreenScraperService();
         public Models.Pegasus.Game PegasusGameFromGameRom(GameRom gamerom)
         {
             Models.Pegasus.Game pggame = new Models.Pegasus.Game();
@@ -23,7 +26,47 @@ namespace RetroFront.Services.Implementation
             pggame.Logo = gamerom.Logo;
             pggame.Video = gamerom.Video;
             pggame.Fanart = gamerom.Fanart;
-            pggame.Screenshoot = gamerom.Screenshoot;
+            pggame.Screenshoot.Add(gamerom.Screenshoot);
+            try
+            {
+                var arts = screenScraperService.GetJeuxDetail(gamerom.ScreenScraperID);
+                if (arts != null)
+                {
+                    foreach (var img in arts.medias.Where(x => x.type == "fanart" || x.type == "ss" || x.type == "themehs"))
+                    {
+                        pggame.Screenshoot.Add(img.url);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
+            try
+            {
+                var detailart = iGDBService.GetArtworksByGameId(gamerom.IGDBID);
+                var detailsch = iGDBService.GetScreenshotsByGameId(gamerom.IGDBID);
+                if (detailart != null)
+                {
+                    var resultartigdb = detailart.Select(x => iGDBService.GetArtWorkLink(x.image_id));
+                    foreach (var img in resultartigdb)
+                    {
+                        pggame.Screenshoot.Add(img);
+                    }
+                }
+                if (detailsch != null)
+                {
+                    var resultschigdb = detailsch.Select(x => iGDBService.GetArtWorkLink(x.image_id));
+                    foreach (var img in resultschigdb)
+                    {
+                        pggame.Screenshoot.Add(img);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
             return pggame;
         }
         public Models.Pegasus.Collection PegasusCollectionFromEmulator(Emulator emulator, Systeme sys)
@@ -38,7 +81,7 @@ namespace RetroFront.Services.Implementation
             else
             {
                 collection.launch = $"{emulator.Chemin} {emulator.Command.Replace("{ImagePath}", "{file.path}")}";
-                collection.launch = $"{emulator.Chemin} {emulator.Command.Replace("%ROMPATH%", "{file.path}")}";
+                collection.launch = $"{collection.launch.Replace("%ROMPATH%", "{file.path}")}";
             }
             collection.Logo = sys.Logo;
             collection.Background = sys.Screenshoot;
@@ -67,8 +110,9 @@ namespace RetroFront.Services.Implementation
             builder.AppendLine($"assets.poster : { game.BoxFront}");
             builder.AppendLine($"assets.logo : { game.Logo}");
             builder.AppendLine($"assets.video : { game.Video}");
-            builder.AppendLine($"assets.background : { game.Screenshoot}");
-            builder.AppendLine($"assets.screenshot : { game.Screenshoot}");
+            foreach(var img in game.Screenshoot)
+                builder.AppendLine($"assets.screenshot : { img}");
+            //builder.AppendLine($"assets.background : { game.}");
             builder.AppendLine($"assets.steam : { game.Fanart}");
             builder.AppendLine($"assets.banner : { game.Fanart}");
             return builder.ToString();

@@ -21,7 +21,6 @@ namespace RetroFront.UWPClient.Views
 
         private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            FirstElement.Focus(Windows.UI.Xaml.FocusState.Keyboard);
         }
         //protected override async void OnNavigatedTo(NavigationEventArgs e)
         //{

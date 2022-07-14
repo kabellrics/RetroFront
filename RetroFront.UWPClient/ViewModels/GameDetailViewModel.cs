@@ -45,11 +45,13 @@ namespace RetroFront.UWPClient.ViewModels
             gameDetailService = new GameDetailService();
             DisplayType = (int)GameDetailDisplay._0;
             BCK = @"http://localhost:34322/api/Img/GetAppBackground";
+            CurrenGame = null;
         }
         public async void LoadDataAsync(GameRom game)
         {
-            DisplayType = (int) await gameDetailService.GetCurrentGameDisplay();
-            CurrenGame = await gameDetailService.GetGame(game);
+            //CurrenGame = await gameDetailService.GetGame(game);
+            CurrenGame = game;
+            DisplayType = (int)await gameDetailService.GetCurrentGameDisplay();
             CurrentSys = await gameDetailService.GetTruePlateforme(CurrenGame);
             WeakReferenceMessenger.Default.Send(new BckChangeMessage(CurrenGame));
         }

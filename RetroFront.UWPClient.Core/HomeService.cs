@@ -37,12 +37,12 @@ namespace RetroFront.UWPClient.Core
         public async Task<IEnumerable<GameRom>> GetLastPlayedGames()
         {
             var games = await ApiServiceAPI.GameGetAsync();
-            return games.Where(x => x.IsDuplicate == false).OrderByDescending(x => x.LastStart);
+            return games.Where(x => x.IsDuplicate == false).OrderByDescending(x => x.LastStart).Take(10);
         }
         public async Task<IEnumerable<GameRom>> GetMostPlayedGames()
         {
             var games = await ApiServiceAPI.GameGetAsync();
-            return games.Where(x => x.IsDuplicate == false).OrderByDescending(x => x.NbTimeStarted);
+            return games.Where(x => x.IsDuplicate == false).OrderByDescending(x => x.NbTimeStarted).Take(10);
         }
         public async Task<IEnumerable<GameRom>> GetFavGames()
         {

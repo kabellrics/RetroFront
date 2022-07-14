@@ -50,7 +50,6 @@ namespace RetroFront.UWPClient.Views.Game
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            datagrid.Focus(Windows.UI.Xaml.FocusState.Keyboard);
         }
     }
 }

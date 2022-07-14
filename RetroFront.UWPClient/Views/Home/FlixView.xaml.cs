@@ -30,7 +30,6 @@ namespace RetroFront.UWPClient.Views.Home
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            FirstElement.Focus(FocusState.Programmatic);
         }
     }
 }
