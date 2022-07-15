@@ -67,14 +67,23 @@ namespace RetroFront.Admin.Dialogs.ViewModel
             _databaseService = App.ServiceProvider.GetRequiredService<IDatabaseService>();
             _fileJSONService = App.ServiceProvider.GetRequiredService<IFileJSONService>();
             _dialogService = App.ServiceProvider.GetRequiredService<IDialogService>();
-            var plateformes = _fileJSONService.GetStandaloneEmulators().FirstOrDefault(x=>x.Name == "RetroArch");
-            if(plateformes != null)
-            {
-                Systemes = new ObservableCollection<StandalonePlateforme>(plateformes.Plateformes.OrderBy(x=>x.Name));
-            }
+            var plateformes = _fileJSONService.GetStandaloneEmulators().FirstOrDefault(x => x.Name == "RetroArch");
+            LookForInstalledCore(retroarchpath, plateformes);
+        }
+
+        private void LookForInstalledCore(string retroarchpath, StandaloneEmulator plateformes)
+        {
+            //if (plateformes != null)
+            //{
+            //    Systemes = new ObservableCollection<StandalonePlateforme>(plateformes.Plateformes.OrderBy(x => x.Name));
+            //}
             var cores = _retroarchService.GetInstalledCore(retroarchpath);
             RetroarchCores = new ObservableCollection<RetroarchCore>(cores);
+            var InstalledCoreNames = RetroarchCores.Select(x=> x.path.Substring(x.path.LastIndexOf('\\')+1));
+            var SysTemesDispo = plateformes.Plateformes.Where(x=> InstalledCoreNames.Any(s=>x.StartupArguments.Contains(s)));
+            Systemes = new ObservableCollection<StandalonePlateforme>(SysTemesDispo.OrderBy(x => x.Name));
         }
+
         public void CloseDialogWithResult(Window dialog, bool result)
         {
             if (dialog != null)
