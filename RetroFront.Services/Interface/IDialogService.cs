@@ -35,5 +35,8 @@ namespace RetroFront.Services.Interface
         bool DllContent(string uritodll, string destifile, string targetname, string typetodll);
         bool DllContent(byte[] bytetoWrite, string destifile, string targetname, string typetodll);
         RetroFront.Models.ScreenScraper.System.Systeme SearchSSysInSSCPByName(string name);
+        void ShowRawDataSysteme();
+        void ShowRawDataEmulator();
+        void ShowRawDataGame();
     }
 }

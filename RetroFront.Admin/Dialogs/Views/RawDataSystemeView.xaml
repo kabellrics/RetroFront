@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="RetroFront.Admin.Dialogs.Views.RawDataSystemeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RetroFront.Admin.Dialogs.Views"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             Height="750" Width="1600">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding UnloadedCommand}"></i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Viewbox Grid.Row="0">
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center"
+                   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                   Content="Systèmes"></Label>
+        </Viewbox>
+                <DataGrid Grid.Row="1" ItemsSource="{Binding Systemes}" Padding="5"
+                          RowDetailsVisibilityMode="VisibleWhenSelected"
+                          Style="{StaticResource MaterialDesignDataGrid}">
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Height="75" Width="150" Source="{Binding Logo}" Stretch="Uniform" Margin="5"></Image>
+                        <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="ID: " FontWeight="Bold" Grid.Row="0" />
+                            <TextBlock Text="{Binding SystemeID}" Grid.Column="1" Grid.Row="0" />
+                            <TextBlock Text="ScreenScraper ID: " FontWeight="Bold" Grid.Row="1" />
+                            <TextBlock Text="{Binding SystemeSCSPID}" Grid.Column="1" Grid.Row="1" />
+                            <TextBlock Text="Name: " FontWeight="Bold" Grid.Row="2" />
+                            <TextBlock Text="{Binding Name}" Grid.Column="1" Grid.Row="2" />
+                            <TextBlock Text="Shortname: " FontWeight="Bold" Grid.Row="3" />
+                            <TextBlock Text="{Binding Shortname}" Grid.Column="1" Grid.Row="3" />
+                            <TextBlock Text="Type: " FontWeight="Bold" Grid.Row="4" />
+                            <TextBlock Text="{Binding Type}" Grid.Column="1" Grid.Row="4" />
+                        </Grid>
+                        <Image Height="75" Width="150" Source="{Binding Screenshoot}" Stretch="Uniform" Margin="5"></Image>
+                    </StackPanel>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+                </DataGrid>
+
+    </Grid>
+</UserControl>

@@ -65,6 +65,15 @@
         <DataTemplate DataType="{x:Type vms:FindScreenScraperSystemeViewModel}">
             <vm:FindScreenScraperSystemeView></vm:FindScreenScraperSystemeView>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:RawDataSystemeViewModel}">
+            <vm:RawDataSystemeView></vm:RawDataSystemeView>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:RawDataEmulatorViewModel}">
+            <vm:RawDataEmulatorView></vm:RawDataEmulatorView>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:RawDataGameViewModel}">
+            <vm:RawDataGameView></vm:RawDataGameView>
+        </DataTemplate>
     </mah:MetroWindow.Resources>
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>

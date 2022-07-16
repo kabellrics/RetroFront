@@ -556,6 +556,11 @@
                             </MenuItem>
                         </MenuItem>
                     </MenuItem>
+                    <MenuItem Header="Données Brut" Style="{DynamicResource MaterialDesignMenuItem}">
+                        <MenuItem Header="Systèmes" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding DataRawSystemeCommand}"></MenuItem>
+                        <MenuItem Header="Emulateurs" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding DataRawEmulatorCommand}"></MenuItem>
+                        <MenuItem Header="Jeux" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding DataRawGameCommand}"></MenuItem>
+                    </MenuItem>
                     <MenuItem Header="Paramètres" Style="{DynamicResource MaterialDesignMenuItem}" Command="{Binding ShowSettingsCommand}" />
                 </Menu>
                 <Grid DataContext="{Binding Systemes}">

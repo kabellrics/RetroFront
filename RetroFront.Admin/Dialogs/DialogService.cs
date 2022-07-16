@@ -60,6 +60,27 @@ namespace RetroFront.Admin.Dialogs
             else
                 return false;
         }
+        public void ShowRawDataSysteme()
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new RawDataSystemeViewModel();
+            modalWindow.DataContext = vm;
+            modalWindow.ShowDialog();
+        }
+        public void ShowRawDataEmulator()
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new RawDataEmulatorViewModel();
+            modalWindow.DataContext = vm;
+            modalWindow.ShowDialog();
+        }
+        public void ShowRawDataGame()
+        {
+            ModalWindow modalWindow = new ModalWindow();
+            var vm = new RawDataGameViewModel();
+            modalWindow.DataContext = vm;
+            modalWindow.ShowDialog();
+        }
         public string showInputDialog(string title = null)
         {
             var modaltitle = string.IsNullOrEmpty(title) ? "Entrez le nom de votre thème" : title;

@@ -180,6 +180,34 @@ namespace RetroFront.ViewModels
         private ICommand _GetSystemeIMGCommand;
         private ICommand _SetBckCommand;
         private ICommand _ExportToPegasusCommand;
+
+        private ICommand _DataRawSystemeCommand;
+        private ICommand _DataRawEmulatorCommand;
+        private ICommand _DataRawGameCommand;
+        public ICommand DataRawSystemeCommand
+        {
+            get
+            {
+                return _DataRawSystemeCommand ?? (_DataRawSystemeCommand = new RelayCommand(DataRawSysteme));
+            }
+        }
+
+        public ICommand DataRawEmulatorCommand
+        {
+            get
+            {
+                return _DataRawEmulatorCommand ?? (_DataRawEmulatorCommand = new RelayCommand(DataRawEmulator));
+            }
+        }
+
+        public ICommand DataRawGameCommand
+        {
+            get
+            {
+                return _DataRawGameCommand ?? (_DataRawGameCommand = new RelayCommand(DataRawGame));
+            }
+        }
+
         public ICommand SetBckCommand
         {
             get
@@ -381,6 +409,21 @@ namespace RetroFront.ViewModels
             _pegasusService = pegasusService;
             LoadThemeSettings();
             ReloadData();
+        }
+
+
+
+        private void DataRawGame()
+        {
+            _dialogService.ShowRawDataGame();
+        }
+        private void DataRawEmulator()
+        {
+            _dialogService.ShowRawDataEmulator();
+        }
+        private void DataRawSysteme()
+        {
+            _dialogService.ShowRawDataSysteme();
         }
         private void LoadThemeSettings()
         {

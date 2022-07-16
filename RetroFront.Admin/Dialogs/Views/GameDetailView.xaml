@@ -13,7 +13,7 @@
              xmlns:viewmodel="clr-namespace:RetroFront.Admin.Dialogs.ViewModel"
              LostFocus="UserControl_LostFocus"
              GotFocus="UserControl_GotFocus"
-             Height="900" Width="900"
+             Height="750" Width="900"
              HorizontalAlignment="Stretch"
              HorizontalContentAlignment="Stretch"
              VerticalAlignment="Stretch"
