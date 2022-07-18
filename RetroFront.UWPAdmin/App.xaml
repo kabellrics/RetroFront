@@ -2,10 +2,12 @@
     x:Class="RetroFront.UWPAdmin.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RetroFront.UWPAdmin.Styles"
     >
 
     <Application.Resources>
-        <ResourceDictionary>
+        <ResourceDictionary
+            xmlns:models="using:RetroFront.UWPAdmin.Core.Models">
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources  xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <ResourceDictionary Source="/Styles/_Colors.xaml" />
@@ -15,6 +17,7 @@
                 <ResourceDictionary Source="/Styles/TextBlock.xaml" />
                 <ResourceDictionary Source="/Styles/Image.xaml"/>
                 <ResourceDictionary Source="/Styles/Page.xaml"/>
+                <local:DataTemplates></local:DataTemplates>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

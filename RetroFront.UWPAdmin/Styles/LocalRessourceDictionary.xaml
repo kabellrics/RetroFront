@@ -1,0 +1,23 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:models="using:RetroFront.UWPAdmin.Core.Models"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    x:Class="RetroFront.UWPAdmin.Styles.DataTemplates">
+    <DataTemplate x:Key="TemplateSysteme" x:DataType="models:DisplaySysteme">
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="{x:Bind Name}" FontSize="45" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="TemplateEmulator" x:DataType="models:DisplayEmulator">
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="{x:Bind Name}" FontSize="45" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+            <TextBlock Text="{x:Bind Chemin}" FontSize="30" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="TemplateGame" x:DataType="models:DisplayGame">
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="{x:Bind Name}" FontSize="45" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>

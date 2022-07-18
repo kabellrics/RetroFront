@@ -1,7 +1,9 @@
 ﻿using System;
-
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using RetroFront.UWPAdmin.Core.Services;
 using RetroFront.UWPAdmin.Services;
-
+using RetroFront.UWPAdmin.ViewModels;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 
@@ -31,6 +33,14 @@ namespace RetroFront.UWPAdmin
             {
                 await ActivationService.ActivateAsync(args);
             }
+            Ioc.Default.ConfigureServices(
+               new ServiceCollection()
+               .AddSingleton<HomeViewModel>()
+               .AddSingleton<SystèmesViewModel>()
+               .AddSingleton<EmulateursViewModel>()
+               .AddSingleton<GamesViewModel>()
+               .AddSingleton<SettingsViewModel>()
+               .BuildServiceProvider());
         }
 
         protected override async void OnActivated(IActivatedEventArgs args)
