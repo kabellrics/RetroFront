@@ -52,5 +52,22 @@ namespace RetroFrontAPIService.Controllers
 
             return todoItem;
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, GameRom Item)
+        {
+            if (id != Item.ID)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                _databaseService.UpdateGame(id, Item);
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
     }
 }

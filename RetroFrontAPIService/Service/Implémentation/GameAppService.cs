@@ -1,35 +1,118 @@
-﻿
-using RetroFront.Services.Interface;
+﻿using Gameloop.Vdf;
+using Gameloop.Vdf.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using RetroFront.Models;
+using RetroFront.Models.EAOrigin;
+using RetroFrontAPIService.Service.Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Gameloop.Vdf;
-using System.Text;
-using Gameloop.Vdf.Linq;
-using RetroFront.Models;
 using System.Linq;
 using System.Net;
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
-using System.Runtime.Serialization.Json;
-using Newtonsoft.Json.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
-namespace RetroFront.Services.Implementation
+namespace RetroFrontAPIService.Service.Implémentation
 {
-    public class SteamService : ISteamService
+    public class GameAppService : IGameAppService
     {
         private FileJSONService FileJSONService = new FileJSONService();
         private DatabaseService dbService = new DatabaseService();
         private string LogoPath = @"https://cdn.cloudflare.steamstatic.com/steam/apps/%STEAMID%/logo.png";
         private string BoxPath = @"https://cdn.cloudflare.steamstatic.com/steam/apps/%STEAMID%/library_600x900.jpg";
+        public List<GameRom> GetEpicGame(Emulator emu)
+        {
+            var originPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Epic", "EpicGamesLauncher", "Data", "Manifests");
+            var manifestsFiles = Directory.GetFiles(originPath, "*.item", SearchOption.TopDirectoryOnly);
+            List<GameRom> gamesfind = new List<GameRom>();
+            foreach (var manifestsFile in manifestsFiles)
+            {
+                var manifestObject = JObject.Parse(File.ReadAllText(manifestsFile));
+                var name = (string)manifestObject["DisplayName"];
+                var appId = (string)manifestObject["AppName"];
+                GameRom game = new GameRom();
+                game.Name = name;
+                game.EpicID = appId;
+                game.EmulatorID = emu.EmulatorID;
+                game.Path = $"com.epicgames.launcher://apps/{appId}?action=launch&silent=true";
+                gamesfind.Add(game);
+            }
+            return gamesfind;
+        }
+        public List<GameRom> GetOriginGame(Emulator emu)
+        {
+            var originPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Origin", "LocalContent");
+            if (Directory.Exists(originPath))
+            {
+                var manifests = Directory.GetFiles(originPath, "*.mfst", SearchOption.AllDirectories);
+                List<GameRom> gamesfind = new List<GameRom>();
+                foreach (var files in manifests)
+                {
+                    //string gameName;
+                    string gameId;
+                    try
+                    {
+                        gameId = Path.GetFileNameWithoutExtension(files);
+                        if (!gameId.StartsWith("Origin"))
+                        {
+                            var match = Regex.Match(gameId, @"^(.*?)(\d+)$");
+                            if (!match.Success)
+                            {
+                                continue;
+                            }
+                            gameId = match.Groups[1].Value + ":" + match.Groups[2].Value;
+                        }
+                        if (gameId.Contains("@"))
+                        {
+                            gameId = gameId.Substring(0, gameId.IndexOf("@"));
+                        }
+                        var origindata = GetGameLocalData(gameId);
+                        if (origindata != null)
+                        {
+                            GameRom game = new GameRom();
+                            game.EmulatorID = emu.EmulatorID;
+                            game.Name = origindata.localizableAttributes.displayName;
+                            game.Desc = origindata.localizableAttributes.longDescription;
+                            game.OriginID = gameId;
+                            game.Path = $"origin://launchgame/{gameId}";
+                            gamesfind.Add(game);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        continue;
+                    }
+                }
+                return gamesfind;
+            }
+            else
+                return null;
+        }
+        private OriginGame GetGameLocalData(string gameId)
+        {
+            try
+            {
+                var url = $@"https://api1.origin.com/ecommerce2/public/{gameId}/fr_FR";
+                var webClient = new WebClient();
+                var stringData = Encoding.UTF8.GetString(webClient.DownloadData(url));
+                var data = JsonConvert.DeserializeObject<OriginGame>(stringData);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         public List<GameRom> GetSteamGame(Emulator emu)
         {
             string steamfolder;
             var key64 = @"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Valve\Steam";
             var key32 = @"HKEY_LOCAL_MACHINE\SOFTWARE\Valve\Steam";
-            if(Environment.Is64BitOperatingSystem)
+            if (Environment.Is64BitOperatingSystem)
             {
-                steamfolder = (string)Microsoft.Win32.Registry.GetValue(key64, "InstallPath",string.Empty);
+                steamfolder = (string)Microsoft.Win32.Registry.GetValue(key64, "InstallPath", string.Empty);
             }
             else
             {
@@ -53,7 +136,7 @@ namespace RetroFront.Services.Implementation
                         if (Directory.Exists(((VProperty)pathchildKV).Value.ToString()))
                         {
                             foldersTosearch.Add(Path.Combine(((VProperty)pathchildKV).Value.ToString(), "steamapps"));
-                        } 
+                        }
                     }
                 }
                 List<GameRom> gamesfind = new List<GameRom>();
@@ -78,11 +161,10 @@ namespace RetroFront.Services.Implementation
             else
                 return null;
         }
-        public GameRom GetSteamInfos(GameRom game, Emulator emu)
+        public GameRom GetSteamInfos(GameRom game)
         {
-            var urlinfos = @"https://store.steampowered.com/api/appdetails?appids="+game.SteamID+ "&l=french";
-            var plateforme = dbService.GetSysteme(emu.SystemeID);
-            string imgfolder = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme.Shortname);
+            var urlinfos = @"https://store.steampowered.com/api/appdetails?appids=" + game.SteamID + "&l=french";
+            string imgfolder = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", "steam");
             var newgame = game;
             try
             {
@@ -98,7 +180,7 @@ namespace RetroFront.Services.Implementation
                     var data = JsonConvert.DeserializeObject<Data>(datajson.ToString());
 
                     newgame.Path = $"steam://rungameid/{newgame.SteamID.ToString()}";
-                    newgame.Genre = string.Join(", ", data.genres.Select(x=>x.description));
+                    newgame.Genre = string.Join(", ", data.genres.Select(x => x.description));
                     newgame.Editeur = string.Join(", ", data.publishers);
                     newgame.Dev = string.Join(", ", data.developers);
                     newgame.Desc = data.short_description;
@@ -130,7 +212,7 @@ namespace RetroFront.Services.Implementation
 
             return game;
         }
-        public void DownloadSteamData(string dllpath,string target)
+        private void DownloadSteamData(string dllpath, string target)
         {
             using (var file = File.Create(target))
             {

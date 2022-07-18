@@ -15,11 +15,11 @@ namespace RetroFront.Services.Implementation
     {
         private string apipath = @"https://www.steamgriddb.com/api/v2";
         private FileJSONService  jSONService = new FileJSONService();
-        private RestClient client;
+        private RestClient sgdbclient;
         public SteamGridDBService()
         {
-            client = new RestClient(apipath);
-            client.Authenticator = new JwtAuthenticator(jSONService.appSettings.SGDBKey);
+            sgdbclient = new RestClient(apipath);
+            sgdbclient.Authenticator = new JwtAuthenticator(jSONService.appSettings.SGDBKey);
         }
 
         public IEnumerable<Search> SearchByName(string name)
@@ -27,7 +27,7 @@ namespace RetroFront.Services.Implementation
             try
             {
                 var request = new RestRequest($"/search/autocomplete/{name}", Method.GET, DataFormat.Json);
-                var response = client.Get(request);
+                var response = sgdbclient.Get(request);
                 var content = response.Content;
                 var result = JsonConvert.DeserializeObject<SearchByNameResult>(content);
                 return result.data;
@@ -43,7 +43,7 @@ namespace RetroFront.Services.Implementation
             try
             {
                 var request = new RestRequest($"games/steam/{steamId}",Method.GET);
-                var response = client.Get(request);
+                var response = sgdbclient.Get(request);
                 var content = response.Content;
                 JObject json = JObject.Parse(content);
                 var datajson = json["data"];
@@ -61,7 +61,7 @@ namespace RetroFront.Services.Implementation
             try
             {
                 var request = new RestRequest($"heroes/game/{gameId}", DataFormat.Json);
-                var response = client.Get(request);
+                var response = sgdbclient.Get(request);
                 var content = response.Content;
                 var result = JsonConvert.DeserializeObject<SearchHeroesByIdResult>(content);
                 return result.data;
@@ -77,7 +77,7 @@ namespace RetroFront.Services.Implementation
             try
             {
                 var request = new RestRequest($"logos/game/{gameId}", DataFormat.Json);
-                var response = client.Get(request);
+                var response = sgdbclient.Get(request);
                 var content = response.Content;
                 var result = JsonConvert.DeserializeObject<SearchLogoByIdResult>(content);
                 return result.data;
@@ -93,7 +93,7 @@ namespace RetroFront.Services.Implementation
             try
             {
                 var request = new RestRequest($"grids/game/{gameId}?dimensions=600x900,342x482,660x930", DataFormat.Json);
-                var response = client.Get(request);
+                var response = sgdbclient.Get(request);
                 var content = response.Content;
                 var result = JsonConvert.DeserializeObject<SearchGridByIdResult>(content);
                 return result.data;
@@ -109,7 +109,7 @@ namespace RetroFront.Services.Implementation
             try
             {
                 var request = new RestRequest($"grids/game/{gameId}?dimensions=460x215,920x430", DataFormat.Json);
-                var response = client.Get(request);
+                var response = sgdbclient.Get(request);
                 var content = response.Content;
                 var result = JsonConvert.DeserializeObject<SearchGridByIdResult>(content);
                 return result.data;

@@ -1275,7 +1275,8 @@ namespace RetroFront.ViewModels
                     targetfile = $"{targetfolder}.png";
                 else
                     targetfile = $"{targetfolder}{Path.GetExtension(games.Screenshoot)}";
-                _gameService.DownloadImgData(games.Screenshoot, targetfile);
+                //_gameService.DownloadImgData(games.Screenshoot, targetfile);
+                _dialogService.DllContent(games.Screenshoot, targetfile, games.Name, ScraperType.ArtWork.ToString());
                 games.Screenshoot = targetfile;
             }
         }

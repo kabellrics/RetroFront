@@ -72,5 +72,22 @@ namespace RetroFrontAPIService.Controllers
 
             return todoItem;
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, Systeme Item)
+        {
+            if (id != Item.SystemeID)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                _databaseService.UpdateSystem(id, Item);
+            }
+            catch (Exception ex)
+            {
+               return NotFound();
+            }
+            return NoContent();
+        }
     }
 }

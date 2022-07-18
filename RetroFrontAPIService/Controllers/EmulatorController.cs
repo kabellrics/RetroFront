@@ -62,5 +62,22 @@ namespace RetroFrontAPIService.Controllers
 
             return todoItem;
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, Emulator Item)
+        {
+            if (id != Item.EmulatorID)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                _databaseService.UpdateEmulator(id, Item);
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace RetroFront.Services.Implementation
 {
     public class ScreenScraperService : IScreenScraperService
     {
-        RestClient client;
+        RestClient sscpclient;
         private string devid;
         private string devpwd;
         private FileJSONService FileJSONService = new FileJSONService();
@@ -24,7 +24,7 @@ namespace RetroFront.Services.Implementation
         {
             var request = InitREquestDefaultParam("systemesListe.php");
             //request.Resource = ;
-            var SystemResult = await client.ExecuteAsync<SCSPSystemListRequest>(request);
+            var SystemResult = await sscpclient.ExecuteAsync<SCSPSystemListRequest>(request);
             return SystemResult.Data.response.systemes;
             //return GetSSCPSystemes;
         }
@@ -55,8 +55,8 @@ namespace RetroFront.Services.Implementation
 
         public ScreenScraperService()
         {
-            client = new RestClient("https://www.screenscraper.fr/api2");
-            client.Timeout = -1;
+            sscpclient = new RestClient("https://www.screenscraper.fr/api2");
+            sscpclient.Timeout = -1;
             //LoadingSysteme();
         }
         private RestRequest InitREquestDefaultParam(string method)
@@ -82,7 +82,7 @@ namespace RetroFront.Services.Implementation
             //request.Resource = ;
             request.AddParameter("recherche", name);
             //request.AddHeader("Cookie", "PHPSESSID=b03ec97508aac291eaea253d453b6af9; SERVERID=clone");
-            var response = client.Execute<SCSPGameRequest>(request);
+            var response = sscpclient.Execute<SCSPGameRequest>(request);
             var result = response.Data.response.jeux;
             foreach(var game in result)
             {
@@ -108,7 +108,7 @@ namespace RetroFront.Services.Implementation
                 //request.Resource = ;
                 request.AddParameter("gameid", id.ToString());
 
-                var response = client.Execute<SCSPGameSpecificRequest>(request);
+                var response = sscpclient.Execute<SCSPGameSpecificRequest>(request);
                 return response.Data.response.jeu;
             }
             catch (Exception ex)
@@ -128,7 +128,7 @@ namespace RetroFront.Services.Implementation
                 var request = InitREquestDefaultParam("mediaSysteme.php");
                 request.AddParameter("systemeid", SCSPSysID);
                 request.AddParameter("media", $"{type}(wor)");
-                return client.BuildUri(request).ToString();
+                return sscpclient.BuildUri(request).ToString();
                 //var response = client.Execute(request);
                 //Console.WriteLine(response.Content);
             }
@@ -144,7 +144,7 @@ namespace RetroFront.Services.Implementation
                 var request = InitREquestDefaultParam("mediaVideoSysteme.php");
                 request.AddParameter("systemeid", SCSPSysID);
                 request.AddParameter("media", "video");
-                return client.BuildUri(request).ToString();
+                return sscpclient.BuildUri(request).ToString();
             }
             catch (Exception ex)
             {

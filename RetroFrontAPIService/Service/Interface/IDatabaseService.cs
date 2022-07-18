@@ -11,6 +11,9 @@ namespace RetroFrontAPIService.Service.Interface
         Emulator AddEmulator(Emulator sys);
         GameRom AddGame(GameRom sys);
         Systeme AddSystem(Systeme sys);
+        Systeme UpdateSystem(int id, Systeme sys);
+        Emulator UpdateEmulator(int id, Emulator emu);
+        GameRom UpdateGame(int id, GameRom game);
         Emulator GetEmulator(int id);
         Emulator GetEmulatorByName(string name);
         IEnumerable<Emulator> GetEmulators();

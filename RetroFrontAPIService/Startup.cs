@@ -37,6 +37,8 @@ namespace RetroFrontAPIService
             services.AddSingleton<IFileJSONService, FileJSONService>();
             services.AddSingleton<IThemeService, ThemeService>();
             services.AddSingleton<IEnumService, EnumService>();
+            services.AddSingleton<IHelperModelService, HelperModelService>();
+            services.AddSingleton<IGameAppService, GameAppService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

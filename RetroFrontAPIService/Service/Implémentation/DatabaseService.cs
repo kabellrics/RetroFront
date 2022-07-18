@@ -103,6 +103,76 @@ namespace RetroFrontAPIService.Service.Implémentation
             _SQLIteContext.SaveChanges();
             return sys;
         }
+        public Systeme UpdateSystem(int id, Systeme sys)
+        {
+            var oldsys = this.GetSysteme(id);
+            if (oldsys !=null)
+            {
+                oldsys.Logo = sys.Logo;
+                oldsys.Name = sys.Name;
+                oldsys.Screenshoot = sys.Screenshoot;
+                oldsys.Shortname = sys.Shortname;
+                oldsys.SystemeSCSPID = oldsys.SystemeSCSPID;
+                oldsys.Type = oldsys.Type;
+                oldsys.Video = oldsys.Video;
+                _SQLIteContext.SaveChanges();
+                return oldsys; 
+            }
+            throw new Exception("Systeme Not Found");
+        }
+        public Emulator UpdateEmulator(int id, Emulator emu)
+        {
+            var oldemu = this.GetEmulator(id);
+            if (oldemu != null)
+            {
+                oldemu.Chemin = emu.Chemin;
+                oldemu.Command = emu.Command;
+                oldemu.Extension = emu.Extension;
+                oldemu.IsDuplicate = emu.IsDuplicate;
+                oldemu.Name = emu.Name;
+                oldemu.SystemeID = emu.SystemeID;
+                _SQLIteContext.SaveChanges();
+                return oldemu;
+            }
+            throw new Exception("Emulator Not Found");
+        }
+        public GameRom UpdateGame(int id, GameRom game)
+        {
+            var oldgame = this.GetGame(id);
+            if (oldgame != null)
+            {
+                oldgame.Boxart = game.Boxart;
+                oldgame.Desc = game.Desc;
+                oldgame.Dev = game.Dev;
+                oldgame.Editeur = game.Editeur;
+                oldgame.EmulatorID = game.EmulatorID;
+                oldgame.EpicID = game.EpicID;
+                oldgame.Fanart = game.Fanart;
+                oldgame.Genre = game.Genre;
+                oldgame.IGDBID = game.IGDBID;
+                oldgame.IsDuplicate = game.IsDuplicate;
+                oldgame.IsFavorite = game.IsFavorite;
+                oldgame.LastStart = game.LastStart;
+                oldgame.Logo = game.Logo;
+                oldgame.Name = game.Name;
+                oldgame.NbTimeStarted = game.NbTimeStarted;
+                oldgame.OriginID = game.OriginID;
+                oldgame.Path = game.Path;
+                oldgame.Plateforme = game.Plateforme;
+                oldgame.RAWGID = game.RAWGID;
+                oldgame.RecalView = game.RecalView;
+                oldgame.ScreenScraperID = game.ScreenScraperID;
+                oldgame.Screenshoot = game.Screenshoot;
+                oldgame.SGDBID = game.SGDBID;
+                oldgame.SteamID = game.SteamID;
+                oldgame.TitleScreen = game.TitleScreen;
+                oldgame.Video = game.Video;
+                oldgame.Year = game.Year;
+                _SQLIteContext.SaveChanges();
+                return oldgame;
+            }
+            throw new Exception("Game Not Found");
+        }
         public void RemoveSystem(Systeme sys)
         {
             _SQLIteContext.Systemes.Remove(sys);

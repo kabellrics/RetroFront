@@ -1,19 +1,56 @@
 ﻿using RetroFront.Models;
-using RetroFront.Services.Interface;
-using System.IO;
+using RetroFrontAPIService.Service.Interface;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
-using System.Net;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
 
-namespace RetroFront.Services.Implementation
+namespace RetroFrontAPIService.Service.Implémentation
 {
-    public class GameService : IGameService
+    public class HelperModelService : IHelperModelService
     {
         private FileJSONService FileJSONService = new FileJSONService();
         private DatabaseService dbService = new DatabaseService();
+
+        public Emulator CreateEmulateur(Systeme platform, string Name, string Command, string Extension)
+        {
+            Emulator emu = new Emulator();
+            emu.Name = Name;
+            emu.Command = Command;
+            emu.Extension = Extension;
+            emu.IsDuplicate = false;
+            return emu;
+        }
+        public Emulator DuplicateEmulator(Emulator emulator)
+        {
+            Emulator duplicate = new Emulator();
+            duplicate.Name = emulator.Name;
+            duplicate.Command = emulator.Command;
+            duplicate.Extension = emulator.Extension;
+            duplicate.Chemin = emulator.Chemin;
+            duplicate.IsDuplicate = true;
+            return duplicate;
+        }
+        public Emulator AddExplorer(Systeme systeme)
+        {
+            Emulator emuexe = new Emulator();
+            emuexe.Name = $"{systeme.Name} Explorer.exe";
+            emuexe.Chemin = @"C:\Windows\explorer.exe";
+            emuexe.Command = "%ROMPATH% --fullscreen";
+            emuexe.SystemeID = systeme.SystemeID;
+            emuexe.Extension = ".exe .EXE .lnk .url";
+            emuexe.IsDuplicate = false;
+            return emuexe;
+        }
+        public string FormatExtension(Emulator ext)
+        {
+            string str = ext.Extension.Replace(".", "*.");
+            var extlist = str.Split(" ").ToList();
+            var exext = $"({string.Join(", ", extlist)})|{string.Join("; ", extlist)}";
+            return $"Fichier pour {ext.Name} {exext} ";
+        }
         public GameRom CreateGame(string gamefile, Emulator emulator)
         {
             GameRom game = new GameRom();
@@ -22,10 +59,10 @@ namespace RetroFront.Services.Implementation
             game.Path = gamefile;
             game.Name = System.IO.Path.GetFileNameWithoutExtension(gamefile);
             game.EmulatorID = emulator.EmulatorID;
-            game.Boxart = Path.Combine(imgfolder, "box2dfront",$"{game.Name}.png");
-            game.Fanart = Path.Combine(imgfolder,"steamgrid", $"{game.Name}.jpg");
-            game.Screenshoot = Path.Combine(imgfolder,"fanart", $"{game.Name}.png");
-            game.Logo = Path.Combine(imgfolder,"wheel", $"{game.Name}.png");
+            game.Boxart = Path.Combine(imgfolder, "box2dfront", $"{game.Name}.png");
+            game.Fanart = Path.Combine(imgfolder, "steamgrid", $"{game.Name}.jpg");
+            game.Screenshoot = Path.Combine(imgfolder, "fanart", $"{game.Name}.png");
+            game.Logo = Path.Combine(imgfolder, "wheel", $"{game.Name}.png");
             game.TitleScreen = Path.Combine(imgfolder, "screentitle", $"{game.Name}.png");
             game.RecalView = Path.Combine(imgfolder, "recalview", $"{game.Name}.png");
             game.Video = Path.Combine(imgfolder, "videos", $"{game.Name}.mp4");
@@ -64,7 +101,7 @@ namespace RetroFront.Services.Implementation
         {
 
             var plateforme = dbService.GetSysteme(emulator.SystemeID);
-            string imgfolder = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme.Shortname); 
+            string imgfolder = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme.Shortname);
             var xmlgamelist = File.ReadAllText(gamelistpath);
             var folderpath = Path.GetDirectoryName(gamelistpath);
             XmlSerializer serializer = new XmlSerializer(typeof(GameList));
@@ -74,7 +111,7 @@ namespace RetroFront.Services.Implementation
                 var gamelist = gamelistfile.Game;
                 foreach (var gamedata in gamelist)
                 {
-                    if(File.Exists(Path.Combine(folderpath,gamedata.Path.Substring(2))))
+                    if (File.Exists(Path.Combine(folderpath, gamedata.Path.Substring(2))))
                     {
                         var newgame = new GameRom();
                         newgame.Name = Path.GetFileNameWithoutExtension(gamedata.Path);
@@ -97,7 +134,7 @@ namespace RetroFront.Services.Implementation
         public GameRom LookForData(GameRom game)
         {
             var filefolder = Path.GetDirectoryName(game.Path);
-            if(File.Exists(Path.Combine(filefolder, "gamelist.xml")))
+            if (File.Exists(Path.Combine(filefolder, "gamelist.xml")))
             {
                 var xmlgamelist = File.ReadAllText(Path.Combine(filefolder, "gamelist.xml"));
                 XmlSerializer serializer = new XmlSerializer(typeof(GameList));
@@ -105,10 +142,10 @@ namespace RetroFront.Services.Implementation
                 {
                     var gamelistfile = (GameList)serializer.Deserialize(reader);
                     var gamelist = gamelistfile.Game;
-                    foreach(var gamedata in gamelist)
+                    foreach (var gamedata in gamelist)
                     {
                         var gamedatapath = Path.Combine(filefolder, gamedata.Path.Substring(2));
-                        if(gamedatapath == game.Path)
+                        if (gamedatapath == game.Path)
                         {
                             game = ScrapeGamefromGamelist(game, filefolder, gamedata);
                         }
@@ -117,53 +154,33 @@ namespace RetroFront.Services.Implementation
             }
             return game;
         }
-        public string GetImgPathForGame(GameRom game, ScraperType sGDBType)
+        public string GetImgPathForGame(GameRom game, int sGDBType)
         {
             var emulator = dbService.GetEmulator(game.EmulatorID);
             var plateforme = dbService.GetSysteme(emulator.SystemeID);
             string imgfolder = Path.Combine(FileJSONService.appSettings.AppSettingsFolder, "media", plateforme.Shortname);
-            if(sGDBType == ScraperType.ArtWork)
+            if ((ScraperType)sGDBType == ScraperType.ArtWork)
             {
-                //if(game.SteamID > 0)
-                //    return Path.Combine(imgfolder, "fanart", $"{game.SteamID}");
-                //else
-                //    return Path.Combine(imgfolder, "fanart", $"{game.Name}");
                 Directory.CreateDirectory(Path.Combine(imgfolder, "fanart"));
                 return Path.Combine(imgfolder, "fanart", $"{Guid.NewGuid().ToString()}");
             }
-            else if (sGDBType == ScraperType.Boxart) 
+            else if ((ScraperType)sGDBType == ScraperType.Boxart)
             {
-                //if (game.SteamID > 0)
-                //    return Path.Combine(imgfolder, "box2dfront", $"{game.SteamID}");
-                //else
-                //    return Path.Combine(imgfolder, "box2dfront", $"{game.Name}");
                 Directory.CreateDirectory(Path.Combine(imgfolder, "box2dfront"));
                 return Path.Combine(imgfolder, "box2dfront", $"{Guid.NewGuid().ToString()}");
             }
-            else if (sGDBType == ScraperType.Banner)
+            else if ((ScraperType)sGDBType == ScraperType.Banner)
             {
-                //if (game.SteamID > 0)
-                //    return Path.Combine(imgfolder, "steamgrid", $"{game.SteamID}");
-                //else
-                //    return Path.Combine(imgfolder, "steamgrid", $"{game.Name}");
                 Directory.CreateDirectory(Path.Combine(imgfolder, "steamgrid"));
                 return Path.Combine(imgfolder, "steamgrid", $"{Guid.NewGuid().ToString()}");
             }
-            else if (sGDBType == ScraperType.Logo)
+            else if ((ScraperType)sGDBType == ScraperType.Logo)
             {
-                //if (game.SteamID > 0)
-                //    return Path.Combine(imgfolder, "wheel", $"{game.SteamID}");
-                //else
-                //    return Path.Combine(imgfolder, "wheel", $"{game.Name}");
                 Directory.CreateDirectory(Path.Combine(imgfolder, "wheel"));
                 return Path.Combine(imgfolder, "wheel", $"{Guid.NewGuid().ToString()}");
             }
-            else if (sGDBType == ScraperType.Video)
+            else if ((ScraperType)sGDBType == ScraperType.Video)
             {
-                //if (game.SteamID > 0)
-                //    return Path.Combine(imgfolder, "wheel", $"{game.SteamID}");
-                //else
-                //    return Path.Combine(imgfolder, "wheel", $"{game.Name}");
                 Directory.CreateDirectory(Path.Combine(imgfolder, "videos"));
                 return Path.Combine(imgfolder, "videos", $"{Guid.NewGuid().ToString()}");
             }
@@ -172,36 +189,17 @@ namespace RetroFront.Services.Implementation
                 return string.Empty;
             }
         }
-        private GameRom ScrapeGamefromGamelist(GameRom game, string filefolder, Game gamedata)
+        public GameRom ScrapeGamefromGamelist(GameRom game, string filefolder, Game gamedata)
         {
             game.Desc = gamedata.Desc;
             game.Dev = gamedata.Developer;
             game.Editeur = gamedata.Publisher;
-            if(!string.IsNullOrEmpty(gamedata.Releasedate) && !string.IsNullOrWhiteSpace(gamedata.Releasedate))
+            if (!string.IsNullOrEmpty(gamedata.Releasedate) && !string.IsNullOrWhiteSpace(gamedata.Releasedate))
                 game.Year = gamedata.Releasedate.Substring(0, 4);
             game.Genre = gamedata.Genre;
             game.Name = gamedata.Name;
             return game;
         }
-        public string DownloadImgData(string dllpath, string target)
-        {
-            try
-            {
-                using (WebClient client = new WebClient())
-                {
-                    client.DownloadFile(new Uri(dllpath), target);
-                    return target;
-                }
-            }
-            catch (Exception ex)
-            {
-                //throw;
-                return string.Empty;
-            }
-        }
-        public GameRom ScrapeGame(GameRom game)
-        {
-            return game;
-        }
+
     }
 }
