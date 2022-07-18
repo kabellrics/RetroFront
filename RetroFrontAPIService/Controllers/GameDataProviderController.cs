@@ -54,25 +54,25 @@ namespace RetroFrontAPIService.Controllers
         #endregion
 
         #region ScreenScraper
-        [HttpGet("ScreenScraper/GetSSCPSystemes")]
-        public ActionResult<List<RetroFront.Models.ScreenScraper.System.Systeme>> GetSSCPSystemes()
-        {
-            return Ok(_gameDataProviderService.GetSSCPSystemes());
-        }
+        //[HttpGet]
+        //public ActionResult<IEnumerable<RetroFront.Models.ScreenScraper.System.Systeme>> GetSSCPSystemes()
+        //{
+        //    return Ok( _gameDataProviderService.GetSSCPSystemes().Result);
+        //}
         [HttpGet("ScreenScraper/SearchGame/{name}")]
         public ActionResult<IEnumerable<GameRom>> SearchGame(string name)
         {
             return Ok(_gameDataProviderService.SearchGame(name));
         }
         [HttpGet("ScreenScraper/GetJeuxDetail/{id}")]
-        public ActionResult<Jeux> GetJeuxDetail(int id)
+        public ActionResult<IEnumerable<RetroFront.Models.IGDB.Artwork>> GetJeuxDetail(int id)
         {
             return Ok(_gameDataProviderService.GetJeuxDetail(id));
         }
         [HttpGet("ScreenScraper/GetSystemeImgDLL/{type}/{SCSPSysID}")]
         public ActionResult<string> GetSystemeImgDLL(string type, string SCSPSysID)
         {
-            return Ok(_gameDataProviderService.GetSystemeImgDLL(type,SCSPSysID));
+            return Ok(_gameDataProviderService.GetSystemeImgDLL(type, SCSPSysID));
         }
         [HttpGet("ScreenScraper/GetSystemeVideoDLL/{SCSPSysID}")]
         public ActionResult<string> GetSystemeVideoDLL(string SCSPSysID)
@@ -117,12 +117,12 @@ namespace RetroFrontAPIService.Controllers
         public ActionResult<IEnumerable<RetroFront.Models.IGDB.Video>> GetVideosByGameId(int id)
         {
             return Ok(_gameDataProviderService.GetVideosByGameId(id));
-        }
+        } 
         [HttpGet("IGDB/GetThemesByGameId/{id}")]
-        public ActionResult<IEnumerable<RetroFront.Models.IGDB.Theme>> GetThemesByGameId(int id)
+        public ActionResult<IEnumerable<RetroFront.Models.IGDB.Video>> GetThemesByGameId(int id)
         {
             return Ok(_gameDataProviderService.GetThemesByGameId(id));
-        }
+        }      
         [HttpGet("IGDB/GetInvolvedCompanyByGameId/{id}")]
         public ActionResult<IEnumerable<RetroFront.Models.IGDB.InvolvedCompany>> GetInvolvedCompanyByGameId(int id)
         {

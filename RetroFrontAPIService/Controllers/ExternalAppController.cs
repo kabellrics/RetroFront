@@ -26,7 +26,7 @@ namespace RetroFrontAPIService.Controllers
         [HttpGet("ExportToPegasus/{emuID}/{sysID}")]
         public ActionResult<string> ExportToPegasus(int emuID, int sysID)
         {
-            return Ok(_externalAppService.ExportToPegasus(emuID,sysID));
+            return Ok(_externalAppService.ExportToPegasus(emuID, sysID));
         }
     }
 }
