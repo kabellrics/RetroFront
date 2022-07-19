@@ -8,12 +8,51 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:RetroFront.UWPAdmin.Core.Models"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     NavigationCacheMode="Required"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
-        <GridView
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ToggleButton x:Name="toggleRawBT" IsChecked="{x:Bind ViewModel.ToggleRaw,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" HorizontalAlignment="Right" HorizontalContentAlignment="Center"
+                      Content="Voir les données Bruts" Click="toggleRawBT_Click" Style="{StaticResource ToggleButtonRevealStyle}"></ToggleButton>
+        <controls:AdaptiveGridView  Grid.Row="2" x:Name="presentData"
+            Padding="{StaticResource MediumLeftRightMargin}"
+            IsItemClickEnabled="True" ItemHeight="300" DesiredWidth="400"
+            ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}"
+            ItemClickCommand="{x:Bind ViewModel.ItemSelectedCommand}"
+            SelectionMode="Single" ItemTemplate="{StaticResource TemplateEmulator}"></controls:AdaptiveGridView>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <controls:DataGrid x:Name="rawData" Visibility="Collapsed" Grid.Row="0"
+        AreRowGroupHeadersFrozen="True"
+        CanUserSortColumns="False"
+        CanUserReorderColumns="False"
+        CanUserResizeColumns="True"
+        AutoGenerateColumns="False"
+        IsReadOnly="False"
+            ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}">
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Header="ID" Binding="{Binding ID}"/>
+                    <controls:DataGridTextColumn Header="Emulator ID" Binding="{Binding EmulatorID}"/>
+                    <controls:DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                    <controls:DataGridTextColumn Header="Chemin" Binding="{Binding Chemin}"/>
+                    <controls:DataGridTextColumn Header="Command" Binding="{Binding Command}"/>
+                    <controls:DataGridTextColumn Header="Extension" Binding="{Binding Extension}"/>
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
+            <Button x:Name="rawBT" Visibility="Collapsed" Grid.Row="1"
+                 Style="{StaticResource AccentButtonStyle}" Content="Enregistrer les changements" HorizontalAlignment="Right"></Button>
+        </Grid>
+        <!--<GridView
             Padding="{StaticResource MediumLeftRightMargin}"
             animations:Connected.ListItemElementName="thumbnailImage"
             animations:Connected.ListItemKey="galleryAnimationKey"
@@ -35,6 +74,6 @@
                         Style="{StaticResource ThumbnailImageStyle}" />
                 </DataTemplate>
             </GridView.ItemTemplate>
-        </GridView>
+        </GridView>-->
     </Grid>
 </Page>

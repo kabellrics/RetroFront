@@ -8,12 +8,82 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:RetroFront.UWPAdmin.Core.Models"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     NavigationCacheMode="Required"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
-        <GridView
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ToggleButton x:Name="toggleRawBT" IsChecked="{x:Bind ViewModel.ToggleRaw,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" HorizontalAlignment="Right" HorizontalContentAlignment="Center"
+                      Content="Voir les données Bruts" Click="toggleRawBT_Click" Style="{StaticResource ToggleButtonRevealStyle}"></ToggleButton>
+        <Pivot x:Name="presentData" Grid.Row="2" ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}">
+            <Pivot.HeaderTemplate>
+                <DataTemplate x:DataType="models:DisplayGroupedGame">
+                    <TextBlock Text="{x:Bind Name}"/>
+                </DataTemplate>
+            </Pivot.HeaderTemplate>
+            <Pivot.ItemTemplate>
+                <DataTemplate x:DataType="models:DisplayGroupedGame">
+                    <controls:AdaptiveGridView 
+            Padding="{StaticResource MediumLeftRightMargin}"
+            animations:Connected.ListItemElementName="thumbnailImage"
+            animations:Connected.ListItemKey="galleryAnimationKey"
+            IsItemClickEnabled="True" ItemHeight="450" DesiredWidth="300"
+            ItemsSource="{x:Bind Items, Mode=OneWay}"
+            SelectionMode="Single" ItemTemplate="{StaticResource TemplateGame}">
+                    </controls:AdaptiveGridView>
+                </DataTemplate>
+            </Pivot.ItemTemplate>
+        </Pivot>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <controls:DataGrid x:Name="rawData" Visibility="Collapsed" Grid.Row="0"
+        AreRowGroupHeadersFrozen="True"
+        CanUserSortColumns="False"
+        CanUserReorderColumns="False"
+        CanUserResizeColumns="True"
+        AutoGenerateColumns="False"
+        IsReadOnly="False"
+            ItemsSource="{x:Bind ViewModel.RawSource, Mode=OneWay}"
+                               ScrollViewer.HorizontalScrollMode="Enabled"
+                               ScrollViewer.VerticalScrollMode="Enabled">
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Header="ID" Binding="{Binding ID}"/>
+                    <controls:DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                    <controls:DataGridTextColumn Header="ScreenScraper ID" Binding="{Binding ScreenScraperID}"/>
+                    <controls:DataGridTextColumn Header="IGDB ID" Binding="{Binding IGDBID}"/>
+                    <controls:DataGridTextColumn Header="SteamGridDB ID" Binding="{Binding SteamGridDBID}"/>
+                    <controls:DataGridTextColumn Header="Steam ID" Binding="{Binding SteamID}"/>
+                    <controls:DataGridTextColumn Header="Origin ID" Binding="{Binding OriginID}"/>
+                    <controls:DataGridTextColumn Header="Epic Game ID" Binding="{Binding EpicGameID}"/>
+                    <controls:DataGridTextColumn Header="Path" Binding="{Binding Path}"/>
+                    <controls:DataGridTextColumn Header="Year" Binding="{Binding Year}"/>
+                    <controls:DataGridTextColumn Header="Développeur" Binding="{Binding Développeur}"/>
+                    <controls:DataGridTextColumn Header="Editeur" Binding="{Binding Editeur}"/>
+                    <controls:DataGridTextColumn Header="Genre" Binding="{Binding Genre}"/>
+                    <controls:DataGridTextColumn Header="Path" Binding="{Binding Path}"/>
+                    <controls:DataGridCheckBoxColumn Header="Is Duplicate" Binding="{Binding IsDuplicate}"/>
+                    <controls:DataGridCheckBoxColumn Header="Is Favorite" Binding="{Binding IsFavorite}"/>
+                    <controls:DataGridTextColumn Header="LastStart" Binding="{Binding LastStart}"/>
+                    <controls:DataGridTextColumn Header="Logo" Binding="{Binding LogoPath}"/>
+                    <controls:DataGridTextColumn Header="Screenshoot" Binding="{Binding ScreenshootPath}"/>
+                    <controls:DataGridTextColumn Header="Boxart" Binding="{Binding BoxartPath}"/>
+                    <controls:DataGridTextColumn Header="Banner" Binding="{Binding BannerPath}"/>
+                    <controls:DataGridTextColumn Header="Video" Binding="{Binding VideoPath}"/>
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
+            <Button x:Name="rawBT" Visibility="Collapsed" Grid.Row="1"
+                Style="{StaticResource AccentButtonStyle}" Content="Enregistrer les changements" HorizontalAlignment="Right"></Button>
+        </Grid>
+        <!--<GridView
             Padding="{StaticResource MediumLeftRightMargin}"
             animations:Connected.ListItemElementName="thumbnailImage"
             animations:Connected.ListItemKey="galleryAnimationKey"
@@ -35,6 +105,6 @@
                         Style="{StaticResource ThumbnailImageStyle}" />
                 </DataTemplate>
             </GridView.ItemTemplate>
-        </GridView>
+        </GridView>-->
     </Grid>
 </Page>

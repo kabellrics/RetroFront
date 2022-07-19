@@ -20,15 +20,25 @@ namespace RetroFront.UWPAdmin.ViewModels
     public class EmulateursViewModel : ObservableObject
     {
         public const string EmulateursSelectedIdKey = "EmulateursSelectedIdKey";
-
+        private EmulatorsService emulatorsService;
         private ICommand _itemSelectedCommand;
 
-        public ObservableCollection<SampleImage> Source { get; } = new ObservableCollection<SampleImage>();
+        public ObservableCollection<DisplayEmulator> Source { get; } = new ObservableCollection<DisplayEmulator>();
 
         public ICommand ItemSelectedCommand => _itemSelectedCommand ?? (_itemSelectedCommand = new RelayCommand<ItemClickEventArgs>(OnItemSelected));
-
+        private bool _toggleRaw;
+        public bool ToggleRaw
+        {
+            get => _toggleRaw;
+            set
+            {
+                SetProperty(ref _toggleRaw, value);
+            }
+        }
         public EmulateursViewModel()
         {
+            emulatorsService = new EmulatorsService();
+            ToggleRaw = false;
         }
 
         public async Task LoadDataAsync()
@@ -36,8 +46,8 @@ namespace RetroFront.UWPAdmin.ViewModels
             Source.Clear();
 
             // Replace this with your actual data
-            var data = await SampleDataService.GetImageGalleryDataAsync("ms-appx:///Assets");
-
+            //var data = await SampleDataService.GetImageGalleryDataAsync("ms-appx:///Assets");
+            var data = emulatorsService.GetEmulators();
             foreach (var item in data)
             {
                 Source.Add(item);
@@ -46,10 +56,10 @@ namespace RetroFront.UWPAdmin.ViewModels
 
         private void OnItemSelected(ItemClickEventArgs args)
         {
-            var selected = args.ClickedItem as SampleImage;
-            ImagesNavigationHelper.AddImageId(EmulateursSelectedIdKey, selected.ID);
-            NavigationService.Frame.SetListDataItemForNextConnectedAnimation(selected);
-            NavigationService.Navigate<EmulateursDetailPage>(selected.ID);
+            var selected = args.ClickedItem as DisplayEmulator;
+            //ImagesNavigationHelper.AddImageId(EmulateursSelectedIdKey, selected.ID);
+            //NavigationService.Frame.SetListDataItemForNextConnectedAnimation(selected);
+            //NavigationService.Navigate<EmulateursDetailPage>(selected.ID);
         }
     }
 }

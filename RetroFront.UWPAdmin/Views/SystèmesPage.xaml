@@ -7,25 +7,66 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:RetroFront.UWPAdmin.Core.Models"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     NavigationCacheMode="Required"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
-        <GridView
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ToggleButton x:Name="toggleRawBT" IsChecked="{x:Bind ViewModel.ToggleRaw,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" HorizontalAlignment="Right" HorizontalContentAlignment="Center"
+                      Content="Voir les données Bruts" Click="toggleRawBT_Click" Style="{StaticResource ToggleButtonRevealStyle}"></ToggleButton>
+        <controls:AdaptiveGridView Grid.Row="2" x:Name="presentData"
+            Padding="{StaticResource MediumLeftRightMargin}"
+            animations:Connected.ListItemElementName="thumbnailImage"
+            animations:Connected.ListItemKey="galleryAnimationKey"
+            IsItemClickEnabled="True" ItemHeight="600" DesiredWidth="400"
+            ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}"
+            ItemClickCommand="{x:Bind ViewModel.ItemSelectedCommand}"
+            SelectionMode="Single" ItemTemplate="{StaticResource TemplateSysteme}"></controls:AdaptiveGridView>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <controls:DataGrid x:Name="rawData" Visibility="Collapsed" Grid.Row="0"
+        AreRowGroupHeadersFrozen="True"
+        CanUserSortColumns="False"
+        CanUserReorderColumns="False"
+        CanUserResizeColumns="True"
+        AutoGenerateColumns="False"
+        IsReadOnly="False"
+            ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}">
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Header="ID" Binding="{Binding ID}"/>
+                    <controls:DataGridTextColumn Header="ScreenScraper ID" Binding="{Binding ScreenScraperID}"/>
+                    <controls:DataGridComboBoxColumn Header="Type" Binding="{Binding Type}"/>
+                    <controls:DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                    <controls:DataGridTextColumn Header="ShortName" Binding="{Binding ShortName}"/>
+                    <controls:DataGridTextColumn Header="Logo" Binding="{Binding LogoPath}"/>
+                    <controls:DataGridTextColumn Header="Screenshoot" Binding="{Binding ScreenshootPath}"/>
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
+            <Button x:Name="rawBT" Visibility="Collapsed" Grid.Row="1"
+                 Style="{StaticResource AccentButtonStyle}" Content="Enregistrer les changements" HorizontalAlignment="Right"></Button>
+        </Grid>
+        <!--<GridView
             Padding="{StaticResource MediumLeftRightMargin}"
             animations:Connected.ListItemElementName="thumbnailImage"
             animations:Connected.ListItemKey="galleryAnimationKey"
             IsItemClickEnabled="True"
             ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}"
-            SelectionMode="None">
+            SelectionMode="None" ItemTemplate="{StaticResource TemplateSysteme}">
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="ItemClick">
                     <ic:InvokeCommandAction Command="{x:Bind ViewModel.ItemSelectedCommand}" />
                 </ic:EventTriggerBehavior>
             </i:Interaction.Behaviors>
-            <GridView.ItemTemplate>
+            --><!--<GridView.ItemTemplate>
                 <DataTemplate x:DataType="models:SampleImage">
                     <Image
                         x:Name="thumbnailImage"
@@ -34,7 +75,7 @@
                         Source="{x:Bind Source}"
                         Style="{StaticResource ThumbnailImageStyle}" />
                 </DataTemplate>
-            </GridView.ItemTemplate>
-        </GridView>
+            </GridView.ItemTemplate>--><!--
+        </GridView>-->
     </Grid>
 </Page>

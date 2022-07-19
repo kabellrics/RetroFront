@@ -12,17 +12,17 @@ namespace RetroFront.UWPAdmin.Core.APIHelper
     public enum SysType
     {
 
-        _0 = 0,
+        Arcade = 0,
 
-        _1 = 1,
+        Console = 1,
 
-        _2 = 2,
+        ConsolePortable = 2,
 
-        _3 = 3,
+        GameStore = 3,
 
-        _4 = 4,
+        Collection = 4,
 
-        _5 = 5,
+        Standalone = 5,
 
     }
 

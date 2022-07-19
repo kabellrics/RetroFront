@@ -663,7 +663,7 @@ namespace RetroFront.UWPAdmin.Core.APIClient
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual SwaggerResponse<GameRom> GetGamesForPlateforme(int sysID)
+        public virtual SwaggerResponse<System.Collections.Generic.ICollection<GameRom>> GetGamesForPlateforme(int sysID)
         {
             return System.Threading.Tasks.Task.Run(async () => await GetGamesForPlateformeAsync(sysID, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
@@ -671,7 +671,7 @@ namespace RetroFront.UWPAdmin.Core.APIClient
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<SwaggerResponse<GameRom>> GetGamesForPlateformeAsync(int sysID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<SwaggerResponse<System.Collections.Generic.ICollection<GameRom>>> GetGamesForPlateformeAsync(int sysID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (sysID == null)
                 throw new System.ArgumentNullException("sysID");
@@ -712,12 +712,12 @@ namespace RetroFront.UWPAdmin.Core.APIClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<GameRom>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<GameRom>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new SwaggerResponse<GameRom>(status_, headers_, objectResponse_.Object);
+                            return new SwaggerResponse<System.Collections.Generic.ICollection<GameRom>>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         {

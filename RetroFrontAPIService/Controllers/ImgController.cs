@@ -170,30 +170,38 @@ namespace RetroFrontAPIService.Controllers
         }
         private ActionResult GetFile(string path)
         {
-            var name = System.IO.Path.GetFileName(path);
-            var imgbyte = System.IO.File.ReadAllBytes(path);
-            string imgtype = string.Empty;
-            if (System.IO.Path.GetExtension(name) == ".png")
+            try
             {
-                imgtype = "image/png";
+                var name = System.IO.Path.GetFileName(path);
+                var imgbyte = System.IO.File.ReadAllBytes(path);
+                string imgtype = string.Empty;
+                if (System.IO.Path.GetExtension(name) == ".png")
+                {
+                    imgtype = "image/png";
+                }
+                else if (System.IO.Path.GetExtension(name) == ".jpg")
+                {
+                    imgtype = "image/jpg";
+                }
+                else if (System.IO.Path.GetExtension(name) == ".jpeg")
+                {
+                    imgtype = "image/jpeg";
+                }
+                else if (System.IO.Path.GetExtension(name) == ".avi")
+                {
+                    imgtype = "video/avi";
+                }
+                else if (System.IO.Path.GetExtension(name) == ".mp4")
+                {
+                    imgtype = "video/mp4";
+                }
+                return File(imgbyte, imgtype);
             }
-            else if (System.IO.Path.GetExtension(name) == ".jpg")
+            catch (Exception ex)
             {
-                imgtype = "image/jpg";
+                return null;
+                //throw;
             }
-            else if (System.IO.Path.GetExtension(name) == ".jpeg")
-            {
-                imgtype = "image/jpeg";
-            }
-            else if (System.IO.Path.GetExtension(name) == ".avi")
-            {
-                imgtype = "video/avi";
-            }
-            else if (System.IO.Path.GetExtension(name) == ".mp4")
-            {
-                imgtype = "video/mp4";
-            }
-            return File(imgbyte, imgtype);
         }
     }
 }

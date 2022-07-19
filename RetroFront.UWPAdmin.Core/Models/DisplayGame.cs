@@ -118,6 +118,31 @@ namespace RetroFront.UWPAdmin.Core.Models
             get => Game.Year;
             set => SetProperty(Game.Year, value, Game, (game, item) => Game.Year = item);
         }
+        public string LogoPath
+        {
+            get => Game.Logo;
+            set => SetProperty(Game.Logo, value, Game, (game, item) => Game.Logo = item);
+        }
+        public string ScreenshootPath
+        {
+            get => Game.Screenshoot;
+            set => SetProperty(Game.Screenshoot, value, Game, (game, item) => Game.Screenshoot = item);
+        }
+        public string BoxartPath
+        {
+            get => Game.Boxart;
+            set => SetProperty(Game.Boxart, value, Game, (game, item) => Game.Boxart = item);
+        }
+        public string BannerPath
+        {
+            get => Game.Fanart;
+            set => SetProperty(Game.Fanart, value, Game, (game, item) => Game.Fanart = item);
+        }
+        public string VideoPath
+        {
+            get => Game.Video;
+            set => SetProperty(Game.Video, value, Game, (game, item) => Game.Video = item);
+        }
         public string Logo
         {
             get => $"http://localhost:34322/api/Img/GetLogoForGame/{ID}";

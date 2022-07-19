@@ -16,7 +16,7 @@ namespace RetroFront.UWPAdmin.ViewModels
     public class SystèmesDetailViewModel : ObservableObject
     {
         private object _selectedImage;
-
+        private SystemeDetailService systemeDetailService;
         public object SelectedImage
         {
             get => _selectedImage;
@@ -27,38 +27,31 @@ namespace RetroFront.UWPAdmin.ViewModels
             }
         }
 
-        public ObservableCollection<SampleImage> Source { get; } = new ObservableCollection<SampleImage>();
+        public DisplaySysteme Source { get; set; }
 
         public SystèmesDetailViewModel()
         {
+            systemeDetailService = new SystemeDetailService();
         }
 
         public async Task LoadDataAsync()
         {
-            Source.Clear();
+            //Source.Clear();
 
             // Replace this with your actual data
-            var data = await SampleDataService.GetImageGalleryDataAsync("ms-appx:///Assets");
+            //var data = await SampleDataService.GetImageGalleryDataAsync("ms-appx:///Assets");
 
-            foreach (var item in data)
-            {
-                Source.Add(item);
-            }
+            //foreach (var item in data)
+            //{
+            //    Source.Add(item);
+            //}
         }
 
-        public void Initialize(string selectedImageID, NavigationMode navigationMode)
+        public void Initialize(string selectedsysID, NavigationMode navigationMode)
         {
-            if (!string.IsNullOrEmpty(selectedImageID) && navigationMode == NavigationMode.New)
+            if (!string.IsNullOrEmpty(selectedsysID))
             {
-                SelectedImage = Source.FirstOrDefault(i => i.ID == selectedImageID);
-            }
-            else
-            {
-                selectedImageID = ImagesNavigationHelper.GetImageId(SystèmesViewModel.SystèmesSelectedIdKey);
-                if (!string.IsNullOrEmpty(selectedImageID))
-                {
-                    SelectedImage = Source.FirstOrDefault(i => i.ID == selectedImageID);
-                }
+                Source = systemeDetailService.GetSysteme(int.Parse(selectedsysID));
             }
         }
     }

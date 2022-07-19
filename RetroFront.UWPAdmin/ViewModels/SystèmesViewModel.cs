@@ -20,15 +20,26 @@ namespace RetroFront.UWPAdmin.ViewModels
     public class SystèmesViewModel : ObservableObject
     {
         public const string SystèmesSelectedIdKey = "SystèmesSelectedIdKey";
-
+        private SystemesService systemesService;
         private ICommand _itemSelectedCommand;
 
-        public ObservableCollection<SampleImage> Source { get; } = new ObservableCollection<SampleImage>();
+        public ObservableCollection<DisplaySysteme> Source { get; } = new ObservableCollection<DisplaySysteme>();
 
-        public ICommand ItemSelectedCommand => _itemSelectedCommand ?? (_itemSelectedCommand = new RelayCommand<ItemClickEventArgs>(OnItemSelected));
-
+        public ICommand ItemSelectedCommand => _itemSelectedCommand ?? (_itemSelectedCommand = new RelayCommand<DisplaySysteme>(OnItemSelected));
+        //public ICommand ItemSelectedCommand => _itemSelectedCommand ?? (_itemSelectedCommand = new RelayCommand<ItemClickEventArgs>(OnItemSelected));
+        private bool _toggleRaw;
+        public bool ToggleRaw
+        {
+            get => _toggleRaw;
+            set
+            {
+                SetProperty(ref _toggleRaw, value);
+            }
+        }
         public SystèmesViewModel()
         {
+            systemesService = new SystemesService();
+            ToggleRaw = false;
         }
 
         public async Task LoadDataAsync()
@@ -36,20 +47,20 @@ namespace RetroFront.UWPAdmin.ViewModels
             Source.Clear();
 
             // Replace this with your actual data
-            var data = await SampleDataService.GetImageGalleryDataAsync("ms-appx:///Assets");
-
+            //var data = await SampleDataService.GetImageGalleryDataAsync("ms-appx:///Assets");
+            var data = systemesService.GetSystemes();
             foreach (var item in data)
             {
                 Source.Add(item);
             }
         }
 
-        private void OnItemSelected(ItemClickEventArgs args)
+        private void OnItemSelected(DisplaySysteme args)
         {
-            var selected = args.ClickedItem as SampleImage;
-            ImagesNavigationHelper.AddImageId(SystèmesSelectedIdKey, selected.ID);
+            var selected = args;
+            //ImagesNavigationHelper.AddImageId(SystèmesSelectedIdKey, selected.ID);
             NavigationService.Frame.SetListDataItemForNextConnectedAnimation(selected);
-            NavigationService.Navigate<SystèmesDetailPage>(selected.ID);
+            NavigationService.Navigate<SystèmesDetailPage>(selected.ID.ToString());
         }
     }
 }

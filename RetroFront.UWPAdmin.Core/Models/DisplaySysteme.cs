@@ -38,6 +38,16 @@ namespace RetroFront.UWPAdmin.Core.Models
             get => Systeme.Type;
             set => SetProperty(Systeme.Type, value, Systeme,(syteme,item) => Systeme.Type = item);
         }
+        public string LogoPath
+        {
+            get => Systeme.Logo;
+            set => SetProperty(Systeme.Logo, value, Systeme, (syteme, item) => Systeme.Logo = item);
+        }
+        public string ScreenshootPath
+        {
+            get => Systeme.Screenshoot;
+            set => SetProperty(Systeme.Screenshoot, value, Systeme, (syteme, item) => Systeme.Screenshoot = item);
+        }
         public string Logo
         {
             get => $"http://localhost:34322/api/Img/GetLogoForSystem/{ID}";

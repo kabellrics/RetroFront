@@ -5,19 +5,48 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     x:Class="RetroFront.UWPAdmin.Styles.DataTemplates">
     <DataTemplate x:Key="TemplateSysteme" x:DataType="models:DisplaySysteme">
-        <StackPanel Orientation="Vertical">
-            <TextBlock Text="{x:Bind Name}" FontSize="45" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-        </StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <controls:ImageEx Grid.Row="0" Source="{x:Bind Screenshoot}" Stretch="Fill"></controls:ImageEx>
+            <Border Grid.Row="0">
+                <Border.Background>
+                    <SolidColorBrush Color="Gray" Opacity="0.6"></SolidColorBrush>
+                </Border.Background>
+            </Border>
+            <controls:ImageEx
+                        x:Name="thumbnailImage" Grid.Row="0" Source="{x:Bind Logo}" Stretch="Uniform"></controls:ImageEx>
+            <TextBlock Grid.Row="1" Text="{x:Bind Name}" FontSize="30"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                       HorizontalTextAlignment="Center" TextWrapping="Wrap"
+                       Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+        </Grid>
     </DataTemplate>
     <DataTemplate x:Key="TemplateEmulator" x:DataType="models:DisplayEmulator">
         <StackPanel Orientation="Vertical">
-            <TextBlock Text="{x:Bind Name}" FontSize="45" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-            <TextBlock Text="{x:Bind Chemin}" FontSize="30" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
+            <TextBlock Text="{x:Bind Name}" FontSize="45"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                       HorizontalTextAlignment="Center" TextWrapping="Wrap"
+                       Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+            <TextBlock Text="{x:Bind Chemin}" FontSize="30"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                       HorizontalTextAlignment="Center" TextWrapping="Wrap"
+                        Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
         </StackPanel>
     </DataTemplate>
     <DataTemplate x:Key="TemplateGame" x:DataType="models:DisplayGame">
-        <StackPanel Orientation="Vertical">
-            <TextBlock Text="{x:Bind Name}" FontSize="45" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-        </StackPanel>
+        <Grid Height="450" Width="300">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <controls:ImageEx Grid.Row="0" Source="{x:Bind Boxart}" Stretch="Fill"></controls:ImageEx>
+            <TextBlock Grid.Row="1" Text="{x:Bind Name}" FontSize="30"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                       HorizontalTextAlignment="Center" TextWrapping="Wrap"
+                        Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+        </Grid>
     </DataTemplate>
 </ResourceDictionary>

@@ -6,25 +6,54 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:RetroFront.UWPAdmin.Core.Models"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     KeyDown="OnPageKeyDown"
     mc:Ignorable="d">
 
     <Grid>
-        <FlipView
-            animations:Connected.Key="galleryAnimationKey"
-            animations:Connected.AnchorElement="{Binding ElementName=detailImage}"
-            ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}"
-            SelectedItem="{x:Bind ViewModel.SelectedImage, Mode=TwoWay}">
-            <FlipView.ItemTemplate>
-                <DataTemplate x:DataType="models:SampleImage">
-                    <Viewbox StretchDirection="DownOnly">
-                        <Image
-                            x:Name="detailImage"
-                            Source="{x:Bind Source}"
-                            Stretch="None" />
-                    </Viewbox>
-                </DataTemplate>
-            </FlipView.ItemTemplate>
-        </FlipView>
+        <ScrollViewer VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height=".05*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height=".25*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <controls:ImageEx Grid.Row="1" Grid.Column="1" Height="500" Width="500" Stretch="Uniform" Source="{x:Bind ViewModel.Source.Logo}"></controls:ImageEx>
+                <controls:ImageEx Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Height="540" Width="960" Stretch="Fill" Source="{x:Bind ViewModel.Source.Screenshoot}"></controls:ImageEx>
+                <Grid Grid.Row="2" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="25" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Name : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.Source.Name}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="ShortName : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.Source.ShortName}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="ScreenScraper ID : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.Source.ScreenScraperID}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Type : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.Source.Type}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Logo : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{x:Bind ViewModel.Source.LogoPath}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Screenshoot : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                    <TextBlock Grid.Row="5" Grid.Column="1" Text="{x:Bind ViewModel.Source.ScreenshootPath}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>
