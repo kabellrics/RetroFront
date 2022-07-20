@@ -15,19 +15,17 @@ namespace RetroFront.UWPAdmin.ViewModels
 {
     public class SystèmesDetailViewModel : ObservableObject
     {
-        private object _selectedImage;
         private SystemeDetailService systemeDetailService;
-        public object SelectedImage
+
+        private DisplaySysteme _source;
+        public DisplaySysteme Source
         {
-            get => _selectedImage;
+            get => _source;
             set
             {
-                SetProperty(ref _selectedImage, value);
-                ImagesNavigationHelper.UpdateImageId(SystèmesViewModel.SystèmesSelectedIdKey, ((SampleImage)SelectedImage)?.ID);
+                SetProperty(ref _source, value);
             }
         }
-
-        public DisplaySysteme Source { get; set; }
 
         public SystèmesDetailViewModel()
         {

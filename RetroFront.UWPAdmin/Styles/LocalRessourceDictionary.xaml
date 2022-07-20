@@ -3,7 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:models="using:RetroFront.UWPAdmin.Core.Models"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:helper="using:RetroFront.UWPAdmin.Helpers"
     x:Class="RetroFront.UWPAdmin.Styles.DataTemplates">
+    <helper:GameVideoConverter x:Key="GameVideoConverter"></helper:GameVideoConverter>
     <DataTemplate x:Key="TemplateSysteme" x:DataType="models:DisplaySysteme">
         <Grid>
             <Grid.RowDefinitions>

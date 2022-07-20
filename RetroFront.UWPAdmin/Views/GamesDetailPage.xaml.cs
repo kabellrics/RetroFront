@@ -6,7 +6,7 @@ using RetroFront.UWPAdmin.Core.Models;
 using RetroFront.UWPAdmin.Helpers;
 using RetroFront.UWPAdmin.Services;
 using RetroFront.UWPAdmin.ViewModels;
-
+using Windows.Media.Playback;
 using Windows.System;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -30,15 +30,15 @@ namespace RetroFront.UWPAdmin.Views
             ViewModel.Initialize(e.Parameter as string, e.NavigationMode);
         }
 
-        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
-        {
-            base.OnNavigatingFrom(e);
-            if (e.NavigationMode == NavigationMode.Back)
-            {
-                NavigationService.Frame.SetListDataItemForNextConnectedAnimation(ViewModel.SelectedImage);
-                ImagesNavigationHelper.RemoveImageId(GamesViewModel.GamesSelectedIdKey);
-            }
-        }
+        //protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        //{
+        //    base.OnNavigatingFrom(e);
+        //    if (e.NavigationMode == NavigationMode.Back)
+        //    {
+        //        NavigationService.Frame.SetListDataItemForNextConnectedAnimation(ViewModel.SelectedImage);
+        //        ImagesNavigationHelper.RemoveImageId(GamesViewModel.GamesSelectedIdKey);
+        //    }
+        //}
 
         private void OnPageKeyDown(object sender, KeyRoutedEventArgs e)
         {
@@ -47,6 +47,32 @@ namespace RetroFront.UWPAdmin.Views
                 NavigationService.GoBack();
                 e.Handled = true;
             }
+        }
+
+        private void playpauseBT_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if(player.MediaPlayer.CurrentState == MediaPlayerState.Playing)
+            {
+                player.MediaPlayer.Pause();
+                playpauseBT.Content = "Play";
+            }
+            else
+            {
+                player.MediaPlayer.Play();
+                playpauseBT.Content = "Pause";
+            }
+        }
+
+        private void btshowIntel_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            btshowIntel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            btEditIntel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+
+        private void btEditIntel_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            btshowIntel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            btEditIntel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
     }
 }

@@ -4,18 +4,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RetroFront.UWPAdmin.Core.Services
 {
     public class SystemesService
     {
         private SystemeClient systemeClient = new SystemeClient();
-        public IEnumerable<DisplaySysteme> GetSystemes()
+        public async Task<IEnumerable<DisplaySysteme>> GetSystemes()
         {
-            foreach(var sys in systemeClient.SystemeGet().Result.OrderBy(x=>x.Type).ThenBy(x=>x.Name))
+            List<DisplaySysteme> displaySystemes = new List<DisplaySysteme>();
+            var result = await systemeClient.SystemeGetAsync();
+            foreach (var sys in result.Result.OrderBy(x=>x.Type).ThenBy(x=>x.Name))
             {
-                yield return new DisplaySysteme(sys);
+                displaySystemes.Add(new DisplaySysteme(sys));
             }
+            return displaySystemes;
         }
 
     }

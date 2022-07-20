@@ -28,7 +28,7 @@ namespace RetroFront.UWPAdmin.Core.Models
             get => Game.Desc;
             set => SetProperty(Game.Desc, value, Game, (game, item) => Game.Desc = item);
         }
-        public string Développeur
+        public string Developpeur
         {
             get => Game.Dev;
             set => SetProperty(Game.Dev, value, Game, (game, item) => Game.Dev = item);

@@ -1,4 +1,4 @@
-﻿<Page
+﻿<Page x:Name="GamelistPage"
     x:Class="RetroFront.UWPAdmin.Views.GamesPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:RetroFront.UWPAdmin.Core.Models"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     NavigationCacheMode="Required"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
@@ -19,8 +20,24 @@
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="20*"></RowDefinition>
         </Grid.RowDefinitions>
-        <ToggleButton x:Name="toggleRawBT" IsChecked="{x:Bind ViewModel.ToggleRaw,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" HorizontalAlignment="Right" HorizontalContentAlignment="Center"
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="7*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Grouper par :" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+            <muxc:RadioButtons Grid.Column="1" SelectedIndex="0" MaxColumns="6" SelectionChanged="RadioButtons_SelectionChanged">
+                <x:String>Système</x:String>
+                <x:String>Emulateur</x:String>
+                <x:String>Genre</x:String>
+                <x:String>Année</x:String>
+                <x:String>Editeur</x:String>
+                <x:String>Devellopeur</x:String>
+            </muxc:RadioButtons>
+            <ToggleButton Grid.Column="2" x:Name="toggleRawBT" IsChecked="{x:Bind ViewModel.ToggleRaw,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" HorizontalContentAlignment="Center"
                       Content="Voir les données Bruts" Click="toggleRawBT_Click" Style="{StaticResource ToggleButtonRevealStyle}"></ToggleButton>
+        </Grid>
         <Pivot x:Name="presentData" Grid.Row="2" ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}">
             <Pivot.HeaderTemplate>
                 <DataTemplate x:DataType="models:DisplayGroupedGame">
@@ -34,6 +51,7 @@
             animations:Connected.ListItemElementName="thumbnailImage"
             animations:Connected.ListItemKey="galleryAnimationKey"
             IsItemClickEnabled="True" ItemHeight="450" DesiredWidth="300"
+                        ItemClick="AdaptiveGridView_ItemClick"
             ItemsSource="{x:Bind Items, Mode=OneWay}"
             SelectionMode="Single" ItemTemplate="{StaticResource TemplateGame}">
                     </controls:AdaptiveGridView>
@@ -69,7 +87,6 @@
                     <controls:DataGridTextColumn Header="Développeur" Binding="{Binding Développeur}"/>
                     <controls:DataGridTextColumn Header="Editeur" Binding="{Binding Editeur}"/>
                     <controls:DataGridTextColumn Header="Genre" Binding="{Binding Genre}"/>
-                    <controls:DataGridTextColumn Header="Path" Binding="{Binding Path}"/>
                     <controls:DataGridCheckBoxColumn Header="Is Duplicate" Binding="{Binding IsDuplicate}"/>
                     <controls:DataGridCheckBoxColumn Header="Is Favorite" Binding="{Binding IsFavorite}"/>
                     <controls:DataGridTextColumn Header="LastStart" Binding="{Binding LastStart}"/>

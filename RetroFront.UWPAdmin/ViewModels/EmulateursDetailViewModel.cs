@@ -15,50 +15,40 @@ namespace RetroFront.UWPAdmin.ViewModels
 {
     public class EmulateursDetailViewModel : ObservableObject
     {
-        private object _selectedImage;
-
-        public object SelectedImage
+        private EmulatorDetailService emulatorDetailService;
+        private DisplayEmulator _source;
+        public DisplayEmulator Source
         {
-            get => _selectedImage;
+            get => _source;
             set
             {
-                SetProperty(ref _selectedImage, value);
-                ImagesNavigationHelper.UpdateImageId(EmulateursViewModel.EmulateursSelectedIdKey, ((SampleImage)SelectedImage)?.ID);
+                SetProperty(ref _source, value);
             }
         }
 
-        public ObservableCollection<SampleImage> Source { get; } = new ObservableCollection<SampleImage>();
-
         public EmulateursDetailViewModel()
         {
+            emulatorDetailService = new EmulatorDetailService();
         }
 
         public async Task LoadDataAsync()
         {
-            Source.Clear();
+            //Source.Clear();
 
-            // Replace this with your actual data
-            var data = await SampleDataService.GetImageGalleryDataAsync("ms-appx:///Assets");
+            //Replace this with your actual data
+            //var data = await SampleDataService.GetImageGalleryDataAsync("ms-appx:///Assets");
 
-            foreach (var item in data)
-            {
-                Source.Add(item);
-            }
+            //foreach (var item in data)
+            //{
+            //    Source.Add(item);
+            //}
         }
 
-        public void Initialize(string selectedImageID, NavigationMode navigationMode)
+        public void Initialize(string selectedsysID, NavigationMode navigationMode)
         {
-            if (!string.IsNullOrEmpty(selectedImageID) && navigationMode == NavigationMode.New)
+            if (!string.IsNullOrEmpty(selectedsysID))
             {
-                SelectedImage = Source.FirstOrDefault(i => i.ID == selectedImageID);
-            }
-            else
-            {
-                selectedImageID = ImagesNavigationHelper.GetImageId(EmulateursViewModel.EmulateursSelectedIdKey);
-                if (!string.IsNullOrEmpty(selectedImageID))
-                {
-                    SelectedImage = Source.FirstOrDefault(i => i.ID == selectedImageID);
-                }
+                Source = emulatorDetailService.GetEmulator(int.Parse(selectedsysID));
             }
         }
     }

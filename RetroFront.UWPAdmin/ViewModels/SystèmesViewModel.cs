@@ -48,7 +48,7 @@ namespace RetroFront.UWPAdmin.ViewModels
 
             // Replace this with your actual data
             //var data = await SampleDataService.GetImageGalleryDataAsync("ms-appx:///Assets");
-            var data = systemesService.GetSystemes();
+            var data = await systemesService.GetSystemes();
             foreach (var item in data)
             {
                 Source.Add(item);

@@ -17,41 +17,79 @@
                     <RowDefinition Height=".05*"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height=".25*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <controls:ImageEx Grid.Row="1" Grid.Column="1" Height="500" Width="500" Stretch="Uniform" Source="{x:Bind ViewModel.Source.Logo}"></controls:ImageEx>
-                <controls:ImageEx Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Height="540" Width="960" Stretch="Fill" Source="{x:Bind ViewModel.Source.Screenshoot}"></controls:ImageEx>
-                <Grid Grid.Row="2" Grid.Column="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="25" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Name : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.Source.Name}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="ShortName : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.Source.ShortName}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="ScreenScraper ID : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.Source.ScreenScraperID}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Type : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.Source.Type}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Logo : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{x:Bind ViewModel.Source.LogoPath}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Screenshoot : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                    <TextBlock Grid.Row="5" Grid.Column="1" Text="{x:Bind ViewModel.Source.ScreenshootPath}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                <Button Style="{StaticResource ButtonRevealStyle}" Grid.Row="1" Grid.Column="0" >
+                    <controls:ImageEx x:Name="thumbnailImage" Height="500" Width="500" Stretch="Uniform" Source="{x:Bind ViewModel.Source.Logo}"></controls:ImageEx>
+                </Button>
+                <Button Style="{StaticResource ButtonRevealStyle}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                    <controls:ImageEx Height="540" Width="960" Stretch="Fill" Source="{x:Bind ViewModel.Source.Screenshoot}"></controls:ImageEx>
+                </Button>
+                <Grid x:Name="btTextblock" Grid.Row="1" Grid.Column="1" Visibility="Visible" VerticalAlignment="Stretch">
+                    <Button Style="{StaticResource ButtonRevealStyle}" VerticalAlignment="Stretch">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="25" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Name : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.Source.Name}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="ShortName : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.Source.ShortName}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="ScreenScraper ID : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.Source.ScreenScraperID}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Type : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.Source.Type}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Logo : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBlock Grid.Row="4" Grid.Column="1" Text="{x:Bind ViewModel.Source.LogoPath}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBlock Grid.Row="5" Grid.Column="0" Text="Screenshoot : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBlock Grid.Row="5" Grid.Column="1" Text="{x:Bind ViewModel.Source.ScreenshootPath}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                        </Grid>
+                    </Button>
+                </Grid>
+                <Grid x:Name="btTextbox" Grid.Row="1" Grid.Column="1" Visibility="Collapsed" VerticalAlignment="Stretch">
+                    <Button Style="{StaticResource ButtonRevealStyle}" VerticalAlignment="Stretch">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="25" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Name : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.Source.Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TitleTextBlockStyle}"></TextBox>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="ShortName : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.Source.ShortName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TitleTextBlockStyle}"></TextBox>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="ScreenScraper ID : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.Source.ScreenScraperID,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TitleTextBlockStyle}"></TextBox>
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Type : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBox Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.Source.Type,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TitleTextBlockStyle}"></TextBox>
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Logo : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBlock Grid.Row="4" Grid.Column="1" Text="{x:Bind ViewModel.Source.LogoPath}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBlock Grid.Row="5" Grid.Column="0" Text="Screenshoot : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                            <TextBlock Grid.Row="5" Grid.Column="1" Text="{x:Bind ViewModel.Source.ScreenshootPath}" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                        </Grid>
+                    </Button>
                 </Grid>
             </Grid>
         </ScrollViewer>

@@ -15,50 +15,40 @@ namespace RetroFront.UWPAdmin.ViewModels
 {
     public class GamesDetailViewModel : ObservableObject
     {
-        private object _selectedImage;
-
-        public object SelectedImage
+        private GameDetailService gameDetailService;
+        private DisplayGame _source;
+        public DisplayGame Source
         {
-            get => _selectedImage;
+            get => _source;
             set
             {
-                SetProperty(ref _selectedImage, value);
-                ImagesNavigationHelper.UpdateImageId(GamesViewModel.GamesSelectedIdKey, ((SampleImage)SelectedImage)?.ID);
+                SetProperty(ref _source, value);
             }
         }
 
-        public ObservableCollection<SampleImage> Source { get; } = new ObservableCollection<SampleImage>();
-
         public GamesDetailViewModel()
         {
+            gameDetailService = new GameDetailService();
         }
 
         public async Task LoadDataAsync()
         {
-            Source.Clear();
+            //Source.Clear();
 
-            // Replace this with your actual data
-            var data = await SampleDataService.GetImageGalleryDataAsync("ms-appx:///Assets");
+            //// Replace this with your actual data
+            //var data = await SampleDataService.GetImageGalleryDataAsync("ms-appx:///Assets");
 
-            foreach (var item in data)
-            {
-                Source.Add(item);
-            }
+            //foreach (var item in data)
+            //{
+            //    Source.Add(item);
+            //}
         }
 
-        public void Initialize(string selectedImageID, NavigationMode navigationMode)
+        public async void Initialize(string selectedGameID, NavigationMode navigationMode)
         {
-            if (!string.IsNullOrEmpty(selectedImageID) && navigationMode == NavigationMode.New)
+            if (!string.IsNullOrEmpty(selectedGameID))
             {
-                SelectedImage = Source.FirstOrDefault(i => i.ID == selectedImageID);
-            }
-            else
-            {
-                selectedImageID = ImagesNavigationHelper.GetImageId(GamesViewModel.GamesSelectedIdKey);
-                if (!string.IsNullOrEmpty(selectedImageID))
-                {
-                    SelectedImage = Source.FirstOrDefault(i => i.ID == selectedImageID);
-                }
+                Source = await gameDetailService.GetGame(int.Parse(selectedGameID));
             }
         }
     }

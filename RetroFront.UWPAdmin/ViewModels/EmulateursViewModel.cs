@@ -25,7 +25,8 @@ namespace RetroFront.UWPAdmin.ViewModels
 
         public ObservableCollection<DisplayEmulator> Source { get; } = new ObservableCollection<DisplayEmulator>();
 
-        public ICommand ItemSelectedCommand => _itemSelectedCommand ?? (_itemSelectedCommand = new RelayCommand<ItemClickEventArgs>(OnItemSelected));
+        //public ICommand ItemSelectedCommand => _itemSelectedCommand ?? (_itemSelectedCommand = new RelayCommand<ItemClickEventArgs>(OnItemSelected));
+        public ICommand ItemSelectedCommand => _itemSelectedCommand ?? (_itemSelectedCommand = new RelayCommand<DisplayEmulator>(OnItemSelected));
         private bool _toggleRaw;
         public bool ToggleRaw
         {
@@ -47,19 +48,19 @@ namespace RetroFront.UWPAdmin.ViewModels
 
             // Replace this with your actual data
             //var data = await SampleDataService.GetImageGalleryDataAsync("ms-appx:///Assets");
-            var data = emulatorsService.GetEmulators();
+            var data = await emulatorsService.GetEmulators();
             foreach (var item in data)
             {
                 Source.Add(item);
             }
         }
 
-        private void OnItemSelected(ItemClickEventArgs args)
+        private void OnItemSelected(DisplayEmulator args)
         {
-            var selected = args.ClickedItem as DisplayEmulator;
+            var selected = args;
             //ImagesNavigationHelper.AddImageId(EmulateursSelectedIdKey, selected.ID);
-            //NavigationService.Frame.SetListDataItemForNextConnectedAnimation(selected);
-            //NavigationService.Navigate<EmulateursDetailPage>(selected.ID);
+            NavigationService.Frame.SetListDataItemForNextConnectedAnimation(selected);
+            NavigationService.Navigate<EmulateursDetailPage>(selected.ID.ToString());
         }
     }
 }

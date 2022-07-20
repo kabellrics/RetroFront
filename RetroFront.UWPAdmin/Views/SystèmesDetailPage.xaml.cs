@@ -30,15 +30,15 @@ namespace RetroFront.UWPAdmin.Views
             ViewModel.Initialize(e.Parameter as string, e.NavigationMode);
         }
 
-        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
-        {
-            base.OnNavigatingFrom(e);
-            if (e.NavigationMode == NavigationMode.Back)
-            {
-                NavigationService.Frame.SetListDataItemForNextConnectedAnimation(ViewModel.SelectedImage);
-                ImagesNavigationHelper.RemoveImageId(SystèmesViewModel.SystèmesSelectedIdKey);
-            }
-        }
+        //protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        //{
+        //    base.OnNavigatingFrom(e);
+        //    if (e.NavigationMode == NavigationMode.Back)
+        //    {
+        //        NavigationService.Frame.SetListDataItemForNextConnectedAnimation(ViewModel.SelectedImage);
+        //        ImagesNavigationHelper.RemoveImageId(SystèmesViewModel.SystèmesSelectedIdKey);
+        //    }
+        //}
 
         private void OnPageKeyDown(object sender, KeyRoutedEventArgs e)
         {
