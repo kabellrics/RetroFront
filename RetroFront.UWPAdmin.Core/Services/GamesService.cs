@@ -61,61 +61,62 @@ namespace RetroFront.UWPAdmin.Core.Services
         public async Task<IEnumerable<DisplayGroupedGame>> GetGroupedByGenres()
         {
             List<DisplayGroupedGame> groupedGames = new List<DisplayGroupedGame>();
-            DisplayGroupedGame nullvalue = new DisplayGroupedGame("Non renseigné",null);
             var gamesSW = await gameClient.GameGetAsync();
-            IEnumerable<GameRom> games = gamesSW.Result;
+            IEnumerable<DisplayGame> games = gamesSW.Result.Select(x => new DisplayGame(x));
             var genresstr = string.Join(",", games.Select(x => x.Genre));
-            var genres = genresstr.Split(new Char[] { ',', '/',' ' });
-            foreach(var g in genres.OrderBy(x=>x))
+            var genres = genresstr.Split(new Char[] { ',', '/'}).Distinct();
+            var genresUpper = genres.Select(x => x.Trim()).Distinct();
+            foreach (var g in genresUpper.OrderBy(x => x))
             {
-                var gamesIngenres = games.Where(x => genres.Any(s => x.Genre.Contains(s)));
-                groupedGames.Add(new DisplayGroupedGame(g, gamesIngenres.OrderBy(x => x.Name).Select(x => new DisplayGame(x))));
+                //var gamesIngenres = games.Where(x => genresUpper.Any(s => x.Genre.Contains(s)));
+                var gamesIngenres = games.Where(x => x.Genre.Contains(g));
+                groupedGames.Add(new DisplayGroupedGame(g, gamesIngenres.OrderBy(x => x.Name)));
             }
-            groupedGames.Add(new DisplayGroupedGame("Tous les jeux", games.Select(x => new DisplayGame(x))));
+            groupedGames.Add(new DisplayGroupedGame("Tous les jeux", games));
             return groupedGames;
         }
         public async Task<IEnumerable<DisplayGroupedGame>> GetGroupedByYears()
         {
             List<DisplayGroupedGame> groupedGames = new List<DisplayGroupedGame>();
             var gamesSW = await gameClient.GameGetAsync();
-            IEnumerable<GameRom> games = gamesSW.Result;
+            IEnumerable<DisplayGame> games = gamesSW.Result.Select(x => new DisplayGame(x));
             var results = from game in games
                           group game by game.Year into grp
                           orderby grp.Key
-                          select new DisplayGroupedGame(grp.Key, grp.ToList().OrderBy(x => x.Name).Select(x => new DisplayGame(x)));
+                          select new DisplayGroupedGame(grp.Key, grp.ToList().OrderBy(x => x.Name));
             groupedGames.AddRange(results);
-            groupedGames.Add(new DisplayGroupedGame("Tous les jeux", games.Select(x => new DisplayGame(x))));
+            groupedGames.Add(new DisplayGroupedGame("Tous les jeux", games));
             return groupedGames;
         }
         public async Task<IEnumerable<DisplayGroupedGame>> GetGroupedByDevs()
         {
             List<DisplayGroupedGame> groupedGames = new List<DisplayGroupedGame>();
             var gamesSW = await gameClient.GameGetAsync();
-            IEnumerable<GameRom> games = gamesSW.Result;
-            var devSTR = string.Join(",", games.Select(x => x.Dev));
-            var devs = devSTR.Split(new Char[] { ',', '/', ' ' });
-            foreach (var g in devs.OrderBy(x => x))
-            {
-                var gamesInDev = games.Where(x => devs.Any(s => x.Dev.Contains(s)));
-                groupedGames.Add(new DisplayGroupedGame(g, gamesInDev.OrderBy(x => x.Name).Select(x => new DisplayGame(x))));
-            }
-            groupedGames.Add(new DisplayGroupedGame("Tous les jeux", games.Select(x => new DisplayGame(x))));
+            IEnumerable<DisplayGame> games = gamesSW.Result.Select(x => new DisplayGame(x));
+            var results = from game in games
+                          group game by game.Developpeur into grp
+                          orderby grp.Key
+                          select new DisplayGroupedGame(grp.Key, grp.ToList().OrderBy(x => x.Name));
+            groupedGames.AddRange(results);
+            groupedGames.Add(new DisplayGroupedGame("Tous les jeux", games));
             return groupedGames;
         }
         public async Task<IEnumerable<DisplayGroupedGame>> GetGroupedByEditeurs()
         {
             List<DisplayGroupedGame> groupedGames = new List<DisplayGroupedGame>();
             var gamesSW = await gameClient.GameGetAsync();
-            IEnumerable<GameRom> games = gamesSW.Result;
-            var editeurSTR = string.Join(",", games.Select(x => x.Editeur));
-            var editeurs = editeurSTR.Split(new Char[] { ',', '/', ' ' });
-            foreach (var g in editeurs.OrderBy(x => x))
-            {
-                var gamesInEditeur = games.Where(x => editeurs.Any(s => x.Editeur.Contains(s)));
-                groupedGames.Add(new DisplayGroupedGame(g, gamesInEditeur.OrderBy(x => x.Name).Select(x => new DisplayGame(x))));
-            }
-            groupedGames.Add(new DisplayGroupedGame("Tous les jeux", games.Select(x => new DisplayGame(x))));
+            IEnumerable<DisplayGame> games = gamesSW.Result.Select(x => new DisplayGame(x));
+            var results = from game in games
+                          group game by game.Editeur into grp
+                          orderby grp.Key
+                          select new DisplayGroupedGame(grp.Key, grp.ToList().OrderBy(x => x.Name));
+            groupedGames.AddRange(results);
+            groupedGames.Add(new DisplayGroupedGame("Tous les jeux", games));
             return groupedGames;
+        }
+        public async Task UpdateSysteme(DisplayGame game)
+        {
+            await gameClient.GamePutAsync(game.ID, game.Game);
         }
     }
 }

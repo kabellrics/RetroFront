@@ -17,6 +17,7 @@ namespace RetroFront.UWPAdmin.Core.Models
                 SetProperty(ref _hasChanged, value);
             }
         }
+        protected void ChangeStatus() { HasChanged = true; }
         public DisplayBase()
         {
             HasChanged = false;

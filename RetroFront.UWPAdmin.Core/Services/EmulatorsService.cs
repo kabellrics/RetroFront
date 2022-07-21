@@ -21,5 +21,9 @@ namespace RetroFront.UWPAdmin.Core.Services
             }
             return displayEmus;
         }
+        public async Task UpdateSysteme(DisplayEmulator emulator)
+        {
+            await emulatorClient.EmulatorPutAsync(emulator.ID, emulator.Emulator);
+        }
     }
 }

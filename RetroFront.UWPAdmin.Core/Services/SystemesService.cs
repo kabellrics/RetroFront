@@ -21,6 +21,9 @@ namespace RetroFront.UWPAdmin.Core.Services
             }
             return displaySystemes;
         }
-
+        public async Task UpdateSysteme(DisplaySysteme system)
+        {
+            await systemeClient.SystemePutAsync(system.ID, system.Systeme);
+        }
     }
 }

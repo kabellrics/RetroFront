@@ -3,6 +3,7 @@ using RetroFront.UWPAdmin.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RetroFront.UWPAdmin.Core.Services
 {
@@ -13,6 +14,10 @@ namespace RetroFront.UWPAdmin.Core.Services
         {
             var sys = systemeClient.SystemeGet(ID).Result;
             return new DisplaySysteme(sys);
+        }
+        public async Task UpdateSysteme(DisplaySysteme system)
+        {
+            await systemeClient.SystemePutAsync(system.ID, system.Systeme);
         }
     }
 }

@@ -73,7 +73,11 @@ namespace RetroFront.UWPAdmin.Views
                         break;
                 }
             }
+        }
 
+        private void RadioButtons_Loaded(object sender, RoutedEventArgs e)
+        {
+            radiogrpBtS.SelectedIndex = 0;
         }
     }
 }

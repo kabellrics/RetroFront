@@ -65,14 +65,18 @@ namespace RetroFront.UWPAdmin.Views
 
         private void btshowIntel_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            btshowIntel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-            btEditIntel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+
+            if (btshowIntel.Visibility == Windows.UI.Xaml.Visibility.Visible)
+            {
+                btshowIntel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                btEditIntel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
+            else
+            {
+                btshowIntel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                btEditIntel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
         }
 
-        private void btEditIntel_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            btshowIntel.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            btEditIntel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-        }
     }
 }

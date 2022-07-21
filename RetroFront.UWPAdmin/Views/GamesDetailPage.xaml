@@ -25,7 +25,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Button Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent">
-                <controls:ImageEx Height="200" Width="500" Stretch="Uniform" Source="{x:Bind ViewModel.Source.Logo ,Mode=OneWay}"></controls:ImageEx>
+                    <controls:ImageEx Height="200" Width="500" Stretch="Uniform" Source="{x:Bind ViewModel.Source.Logo ,Mode=OneWay}"></controls:ImageEx>
             </Button>
             <Button Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent">
                 <controls:ImageEx Height="600" Width="400" Stretch="Uniform" Source="{x:Bind ViewModel.Source.Boxart,Mode=OneWay}"></controls:ImageEx>
@@ -36,10 +36,16 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent">
-                    <controls:ImageEx Stretch="Uniform" Source="{x:Bind ViewModel.Source.Banner,Mode=OneWay}"></controls:ImageEx>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Bannière" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                        <controls:ImageEx Stretch="Uniform" Source="{x:Bind ViewModel.Source.Banner,Mode=OneWay}"></controls:ImageEx>
+                    </StackPanel>
                 </Button>
                 <Button Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent">
-                    <controls:ImageEx Stretch="Uniform" Source="{x:Bind ViewModel.Source.Screenshoot,Mode=OneWay}"></controls:ImageEx>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Artwork" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                        <controls:ImageEx Stretch="Uniform" Source="{x:Bind ViewModel.Source.Screenshoot,Mode=OneWay}"></controls:ImageEx>
+                    </StackPanel>
                 </Button>
             </Grid>
             <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" >
@@ -55,75 +61,77 @@
                 </Button>
                 <Button HorizontalAlignment="Center" x:Name="playpauseBT" Click="playpauseBT_Click" Content="Play"></Button>
             </StackPanel>
-            <Button x:Name="btshowIntel" Click="btshowIntel_Click" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="ID : " FontWeight="Bold" Grid.Row="0" Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.ID ,Mode=OneWay}" Grid.Column="1" Grid.Row="0"  Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="Name : " FontWeight="Bold" Grid.Row="1"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.Name ,Mode=OneWay}" Grid.Column="1" Grid.Row="1" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="Path : " FontWeight="Bold" Grid.Row="2"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.Path,Mode=OneWay}" Grid.Column="1" Grid.Row="2" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="Année : " FontWeight="Bold" Grid.Row="3"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.Year,Mode=OneWay}" Grid.Column="1" Grid.Row="3" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="Genre : " FontWeight="Bold" Grid.Row="4"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.Genre,Mode=OneWay}" Grid.Column="1" Grid.Row="4" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="Editeur : " FontWeight="Bold" Grid.Row="5"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.Editeur,Mode=OneWay}" Grid.Column="1" Grid.Row="5" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="Développeur : " FontWeight="Bold" Grid.Row="6"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.Developpeur,Mode=OneWay}" Grid.Column="1" Grid.Row="6" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="Description : " FontWeight="Bold" Grid.Row="7"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.Description,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="7" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="Logo Path : " FontWeight="Bold" Grid.Row="8"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.LogoPath,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="8" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="Screenshoot Path : " FontWeight="Bold" Grid.Row="9"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.ScreenshootPath,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="9" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="Boxart Path : " FontWeight="Bold" Grid.Row="10"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.BoxartPath,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="10" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="Banner Path : " FontWeight="Bold" Grid.Row="11"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.BannerPath,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="11" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="Video Path : " FontWeight="Bold" Grid.Row="12"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.VideoPath,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="12" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="IGDB ID : " FontWeight="Bold" Grid.Row="13"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.IGDBID,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="13" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="ScreenScraper ID : " FontWeight="Bold" Grid.Row="14"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.ScreenScraperID,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="14" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="SteamGridDB ID : " FontWeight="Bold" Grid.Row="15"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.SteamGridDBID,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="15" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="Steam ID : " FontWeight="Bold" Grid.Row="16"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.SteamID,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="16" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="Origin ID : " FontWeight="Bold" Grid.Row="17"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.OriginID,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="17" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="EpicGame ID : " FontWeight="Bold" Grid.Row="18"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind ViewModel.Source.EpicGameID,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="18" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                </Grid>
-            </Button>
-            <Button x:Name="btEditIntel" Click="btEditIntel_Click" Visibility="Collapsed" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-                <Grid>
+            <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" >
+                <StackPanel Orientation="Horizontal">
+                    <Button Click="btshowIntel_Click" Content="Modifier les Champs"></Button>
+                    <Button Content="Scraper les Champs"></Button>
+                </StackPanel>
+                <Grid x:Name="btshowIntel">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="ID : " FontWeight="Bold" Grid.Row="0" Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.ID ,Mode=OneWay}" Grid.Column="1" Grid.Row="0"  Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Name : " FontWeight="Bold" Grid.Row="1"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.Name ,Mode=OneWay}" Grid.Column="1" Grid.Row="1" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Path : " FontWeight="Bold" Grid.Row="2"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.Path,Mode=OneWay}" Grid.Column="1" Grid.Row="2" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Année : " FontWeight="Bold" Grid.Row="3"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.Year,Mode=OneWay}" Grid.Column="1" Grid.Row="3" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Genre : " FontWeight="Bold" Grid.Row="4"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.Genre,Mode=OneWay}" Grid.Column="1" Grid.Row="4" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Editeur : " FontWeight="Bold" Grid.Row="5"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.Editeur,Mode=OneWay}" Grid.Column="1" Grid.Row="5" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Développeur : " FontWeight="Bold" Grid.Row="6"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.Developpeur,Mode=OneWay}" Grid.Column="1" Grid.Row="6" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Description : " FontWeight="Bold" Grid.Row="7"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.Description,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="7" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Logo Path : " FontWeight="Bold" Grid.Row="8"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.LogoPath,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="8" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Screenshoot Path : " FontWeight="Bold" Grid.Row="9"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.ScreenshootPath,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="9" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Boxart Path : " FontWeight="Bold" Grid.Row="10"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.BoxartPath,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="10" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Banner Path : " FontWeight="Bold" Grid.Row="11"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.BannerPath,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="11" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Video Path : " FontWeight="Bold" Grid.Row="12"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.VideoPath,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="12" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="IGDB ID : " FontWeight="Bold" Grid.Row="13"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.IGDBID,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="13" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="ScreenScraper ID : " FontWeight="Bold" Grid.Row="14"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.ScreenScraperID,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="14" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="SteamGridDB ID : " FontWeight="Bold" Grid.Row="15"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.SteamGridDBID,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="15" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Steam ID : " FontWeight="Bold" Grid.Row="16"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.SteamID,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="16" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="Origin ID : " FontWeight="Bold" Grid.Row="17"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.OriginID,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="17" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <TextBlock Text="EpicGame ID : " FontWeight="Bold" Grid.Row="18"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Source.EpicGameID,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="18" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                    </Grid>
+                <Grid x:Name="btEditIntel" Visibility="Collapsed">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -175,7 +183,7 @@
                     <TextBlock Text="EpicGame ID : " FontWeight="Bold" Grid.Row="13"  Style="{StaticResource TitleTextBlockStyle}"/>
                     <TextBox Text="{x:Bind ViewModel.Source.EpicGameID,Mode=TwoWay}" Grid.Column="1" Grid.Row="13" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
                 </Grid>
-            </Button>
+            </StackPanel>
         </Grid>
     </ScrollViewer>
 </Page>

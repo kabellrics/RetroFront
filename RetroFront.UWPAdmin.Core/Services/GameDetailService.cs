@@ -15,5 +15,9 @@ namespace RetroFront.UWPAdmin.Core.Services
             var sys = await gameClient.GameGetAsync(ID);
             return new DisplayGame(sys.Result);
         }
+        public async Task UpdateSysteme(DisplayGame game)
+        {
+            await gameClient.GamePutAsync(game.ID, game.Game);
+        }
     }
 }

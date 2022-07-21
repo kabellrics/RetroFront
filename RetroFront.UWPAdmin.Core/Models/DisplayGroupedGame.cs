@@ -11,8 +11,11 @@ namespace RetroFront.UWPAdmin.Core.Models
         {
             Name = name;
             Items = new ObservableCollection<DisplayGame>();
-            foreach (var item in list)
-                Items.Add(item);
+            if (list != null)
+            {
+                foreach (var item in list)
+                    Items.Add(item); 
+            }
         }
         private string _name;
 

@@ -3,6 +3,7 @@ using RetroFront.UWPAdmin.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RetroFront.UWPAdmin.Core.Services
 {
@@ -13,6 +14,10 @@ namespace RetroFront.UWPAdmin.Core.Services
         {
             var sys = emulatorClient.EmulatorGet(ID).Result;
             return new DisplayEmulator(sys);
+        }
+        public async Task UpdateSysteme(DisplayEmulator emulator)
+        {
+            await emulatorClient.EmulatorPutAsync(emulator.ID, emulator.Emulator);
         }
     }
 }

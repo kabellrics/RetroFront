@@ -40,6 +40,7 @@ namespace RetroFront.UWPAdmin
                .AddSingleton<EmulateursViewModel>()
                .AddSingleton<GamesViewModel>()
                .AddSingleton<SettingsViewModel>()
+               .AddSingleton<DialogService>()
                .BuildServiceProvider());
         }
 
