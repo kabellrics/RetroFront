@@ -13,6 +13,11 @@
     NavigationCacheMode="Required"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
+    <!--<i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="OnNavigatingFrom">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.SaveChangeCommand}" />
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>-->
 
     <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>

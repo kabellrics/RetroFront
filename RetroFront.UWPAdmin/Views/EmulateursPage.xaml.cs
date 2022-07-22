@@ -4,6 +4,7 @@ using RetroFront.UWPAdmin.ViewModels;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace RetroFront.UWPAdmin.Views
 {
@@ -20,6 +21,11 @@ namespace RetroFront.UWPAdmin.Views
         private async void EmulateursPage_Loaded(object sender, RoutedEventArgs e)
         {
             await ViewModel.LoadDataAsync();
+        }
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            ViewModel.SaveChangeCommand.Execute(true);
         }
         private void toggleRawBT_Click(object sender, RoutedEventArgs e)
         {

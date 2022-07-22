@@ -62,6 +62,7 @@ namespace RetroFrontAPIService.Controllers
             try
             {
                 _databaseService.UpdateGame(id, Item);
+                return Ok();
             }
             catch (Exception ex)
             {

@@ -7,7 +7,13 @@ namespace RetroFront.UWPAdmin.Core.APIHelper
     public class EnumHelper
     {
     }
-
+    public enum ScraperSource
+    {
+        IGDB,
+        SGDB,
+        Screenscraper,
+        Local
+    }
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v11.0.0.0))")]
     public enum SysType
     {

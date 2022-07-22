@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 
@@ -20,9 +22,26 @@ namespace RetroFront.UWPAdmin.ViewModels
     public class EmulateursViewModel : ObservableObject
     {
         public const string EmulateursSelectedIdKey = "EmulateursSelectedIdKey";
+        private DialogService dialogService;
         private EmulatorsService emulatorsService;
         private ICommand _itemSelectedCommand;
+        private ICommand _SaveChangeCommand;
+        public ICommand SaveChangeCommand => _SaveChangeCommand ?? (_SaveChangeCommand = new RelayCommand(SaveChange));
 
+        private async void SaveChange()
+        {
+            if (Source.Any(x => x.HasChanged == true))
+            {
+                var result = await dialogService.ConfirmationDialogAsync("Voulez vous sauvegarder les changements effectués ?", "Oui", "Non");
+                if (result == true)
+                {
+                    foreach (var row in Source.Where(x => x.HasChanged == true))
+                    {
+                        await emulatorsService.UpdateEmulator(row);
+                    }
+                }
+            }
+        }
         public ObservableCollection<DisplayEmulator> Source { get; } = new ObservableCollection<DisplayEmulator>();
 
         //public ICommand ItemSelectedCommand => _itemSelectedCommand ?? (_itemSelectedCommand = new RelayCommand<ItemClickEventArgs>(OnItemSelected));
@@ -39,6 +58,7 @@ namespace RetroFront.UWPAdmin.ViewModels
         public EmulateursViewModel()
         {
             emulatorsService = new EmulatorsService();
+            dialogService = Ioc.Default.GetRequiredService<DialogService>();
             ToggleRaw = false;
         }
 

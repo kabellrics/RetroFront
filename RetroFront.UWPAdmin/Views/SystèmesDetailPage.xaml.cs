@@ -29,7 +29,11 @@ namespace RetroFront.UWPAdmin.Views
             await ViewModel.LoadDataAsync();
             ViewModel.Initialize(e.Parameter as string, e.NavigationMode);
         }
-
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            ViewModel.SaveChangeCommand.Execute(true);
+        }
         //protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         //{
         //    base.OnNavigatingFrom(e);

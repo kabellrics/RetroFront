@@ -1,0 +1,52 @@
+﻿<ContentDialog
+    x:Class="RetroFront.UWPAdmin.Views.Modals.ScrapeResolverContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RetroFront.UWPAdmin.Views.Modals"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    Title="{x:Bind ViewModel.Title,Mode=OneWay}"
+    PrimaryButtonText="Annuler"
+    SecondaryButtonText="Valider"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".25*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height=".25*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" Text="{x:Bind ViewModel.Name,Mode=TwoWay}" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"></TextBox>
+            <Button Grid.Column="1" Content="Chercher" Command="{x:Bind ViewModel.SearchCommand}" Style="{StaticResource TextBlockButtonStyle}"></Button>
+        </Grid>
+        <controls:DataGrid x:Name="rawData" Grid.Row="3" Grid.Column="1"
+        AreRowGroupHeadersFrozen="True"
+        CanUserSortColumns="False"
+        CanUserReorderColumns="False"
+        CanUserResizeColumns="True"
+        AutoGenerateColumns="False"
+        MinHeight="400"
+        IsReadOnly="False" SelectedItem="{x:Bind ViewModel.Resultgame, Mode=TwoWay}"
+            ItemsSource="{x:Bind ViewModel.FoundedGame, Mode=TwoWay}"
+                               ScrollViewer.VerticalScrollMode="Enabled">
+            <controls:DataGrid.Columns>
+                <controls:DataGridTextColumn Header="Id" Binding="{Binding Id}" MinWidth="150"/>
+                <controls:DataGridTextColumn Header="Name" Binding="{Binding Name}" MinWidth="500"/>
+            </controls:DataGrid.Columns>
+        </controls:DataGrid>
+    </Grid>
+</ContentDialog>

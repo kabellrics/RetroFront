@@ -7,8 +7,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:RetroFront.UWPAdmin.Core.Models"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     KeyDown="OnPageKeyDown"
     mc:Ignorable="d">
+    <!--<i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="OnNavigatingFrom">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.SaveChangeCommand}" />
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>-->
 
     <Grid>
         <ScrollViewer VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled">

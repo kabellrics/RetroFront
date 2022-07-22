@@ -72,6 +72,7 @@ namespace RetroFrontAPIService.Controllers
             try
             {
                 _databaseService.UpdateEmulator(id, Item);
+                return Ok();
             }
             catch (Exception ex)
             {

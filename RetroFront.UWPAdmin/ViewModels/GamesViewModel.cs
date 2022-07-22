@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 
@@ -21,25 +23,26 @@ namespace RetroFront.UWPAdmin.ViewModels
     {
         public const string GamesSelectedIdKey = "GamesSelectedIdKey";
         private GamesService gamesService;
-        private ICommand _itemSelectedCommand;
-        private ICommand _GroupedSystemeCommand;
-        private ICommand _GroupedEmulatorCommand;
-        private ICommand _GroupedYearCommand;
-        private ICommand _GroupedGenreCommand;
-        private ICommand _GroupedDevCommand;
-        private ICommand _GroupedEditeurCommand;
+        private DialogService dialogService;
+        private ICommand _SaveChangeCommand;
+        public ICommand SaveChangeCommand => _SaveChangeCommand ?? (_SaveChangeCommand = new RelayCommand(SaveChange));
 
+        private async void SaveChange()
+        {
+            if (Source.Any(x => x.HasChanged == true))
+            {
+                var result = await dialogService.ConfirmationDialogAsync("Voulez vous sauvegarder les changements effectués ?", "Oui", "Non");
+                if (result == true)
+                {
+                    foreach (var row in Source.SelectMany(x=>x.Items).Where(x => x.HasChanged == true))
+                    {
+                        await gamesService.UpdateGame(row);
+                    }
+                }
+            }
+        }
         public ObservableCollection<DisplayGroupedGame> Source { get; } = new ObservableCollection<DisplayGroupedGame>();
         public ObservableCollection<DisplayGame> RawSource { get; } = new ObservableCollection<DisplayGame>();
-
-        //public ICommand ItemSelectedCommand => _itemSelectedCommand ?? (_itemSelectedCommand = new RelayCommand<ItemClickEventArgs>(OnItemSelected));
-        //public ICommand ItemSelectedCommand => _itemSelectedCommand ?? (_itemSelectedCommand = new RelayCommand<DisplayGame>(OnItemSelected));
-        //public ICommand GroupedSystemeCommand => _GroupedSystemeCommand ?? (_GroupedSystemeCommand = new RelayCommand(GroupedSysteme));
-        //public ICommand GroupedEmulatorCommand => _GroupedEmulatorCommand ?? (_GroupedEmulatorCommand = new RelayCommand(GroupedEmulator));
-        //public ICommand GroupedYearCommand => _GroupedYearCommand ?? (_GroupedYearCommand = new RelayCommand(GroupedYear));
-        //public ICommand GroupedGenreCommand => _GroupedGenreCommand ?? (_GroupedGenreCommand = new RelayCommand(GroupedGenre));
-        //public ICommand GroupedDevCommand => _GroupedDevCommand ?? (_GroupedDevCommand = new RelayCommand(GroupedDev));
-        //public ICommand GroupedEditeurCommand => _GroupedEditeurCommand ?? (_GroupedEditeurCommand = new RelayCommand(GroupedEditeur));
 
         private bool _toggleRaw;
         public bool ToggleRaw
@@ -53,6 +56,7 @@ namespace RetroFront.UWPAdmin.ViewModels
         public GamesViewModel()
         {
             gamesService = new GamesService();
+            dialogService = Ioc.Default.GetRequiredService<DialogService>();
             ToggleRaw = false;
         }
 

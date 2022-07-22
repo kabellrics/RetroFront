@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 
@@ -21,7 +23,25 @@ namespace RetroFront.UWPAdmin.ViewModels
     {
         public const string SystèmesSelectedIdKey = "SystèmesSelectedIdKey";
         private SystemesService systemesService;
+        private DialogService dialogService;
         private ICommand _itemSelectedCommand;
+        private ICommand _SaveChangeCommand;
+        public ICommand SaveChangeCommand => _SaveChangeCommand ?? (_SaveChangeCommand = new RelayCommand(SaveChange));
+
+        private async void SaveChange()
+        {
+           if(Source.Any(x=>x.HasChanged == true))
+            {
+                var result = await dialogService.ConfirmationDialogAsync("Voulez vous sauvegarder les changements effectués ?","Oui","Non");
+                if(result == true)
+                {
+                    foreach(var row in Source.Where(x=>x.HasChanged == true))
+                    {
+                        await systemesService.UpdateSysteme(row);
+                    }
+                }
+            }
+        }
 
         public ObservableCollection<DisplaySysteme> Source { get; } = new ObservableCollection<DisplaySysteme>();
 
@@ -39,6 +59,7 @@ namespace RetroFront.UWPAdmin.ViewModels
         public SystèmesViewModel()
         {
             systemesService = new SystemesService();
+            dialogService = Ioc.Default.GetRequiredService<DialogService>();
             ToggleRaw = false;
         }
 

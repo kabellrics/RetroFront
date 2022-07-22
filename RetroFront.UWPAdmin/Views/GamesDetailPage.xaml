@@ -6,10 +6,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:RetroFront.UWPAdmin.Core.Models"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     KeyDown="OnPageKeyDown"
     mc:Ignorable="d">
-
+    <!--<i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="OnNavigatingFrom">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.SaveChangeCommand}" />
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>-->
     <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollMode="Enabled">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -182,6 +188,16 @@
                     <TextBox Text="{x:Bind ViewModel.Source.OriginID,Mode=TwoWay}" Grid.Column="1" Grid.Row="12" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
                     <TextBlock Text="EpicGame ID : " FontWeight="Bold" Grid.Row="13"  Style="{StaticResource TitleTextBlockStyle}"/>
                     <TextBox Text="{x:Bind ViewModel.Source.EpicGameID,Mode=TwoWay}" Grid.Column="1" Grid.Row="13" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
+                </Grid>
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="Scrape IGDB" FontSize="30" Style="{StaticResource TextBlockButtonStyle}" Command="{x:Bind ViewModel.ScrapeIGDBCommand}"></Button>
+                    <Button Grid.Column="1" Content="Scrape SteamGrid DB" FontSize="30" Style="{StaticResource TextBlockButtonStyle}" Command="{x:Bind ViewModel.ScrapeSGDBCommand}"></Button>
+                    <Button Grid.Column="2" Content="Scrape ScreenScraper" FontSize="30" Style="{StaticResource TextBlockButtonStyle}" Command="{x:Bind ViewModel.ScrapeSNSPCommand}"></Button>
                 </Grid>
             </StackPanel>
         </Grid>

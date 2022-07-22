@@ -6,8 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:RetroFront.UWPAdmin.Core.Models"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     KeyDown="OnPageKeyDown"
     mc:Ignorable="d">
+    <!--<i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="OnNavigatingFrom">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.SaveChangeCommand}" />
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>-->
 
         <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>

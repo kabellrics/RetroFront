@@ -114,7 +114,7 @@ namespace RetroFront.UWPAdmin.Core.Services
             groupedGames.Add(new DisplayGroupedGame("Tous les jeux", games));
             return groupedGames;
         }
-        public async Task UpdateSysteme(DisplayGame game)
+        public async Task UpdateGame(DisplayGame game)
         {
             await gameClient.GamePutAsync(game.ID, game.Game);
         }

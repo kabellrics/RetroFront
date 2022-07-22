@@ -4,15 +4,48 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
-    <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
-        <Grid
-            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-            <!--
-                The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
-                Place your content here.
-            -->
+    <ScrollViewer VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled">
+        <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height=".25*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height=".25*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="1" Style="{StaticResource TitleTextBlockStyle}" Text="Jeux sans IGDB ID"/>
+                <controls:AdaptiveGridView Grid.Row="2"
+            Padding="{StaticResource MediumLeftRightMargin}" ItemClick="AdaptiveGridView_ItemClick"
+            IsItemClickEnabled="True" ItemHeight="450" DesiredWidth="300"
+            ItemsSource="{x:Bind ViewModel.NoIGDBSource, Mode=OneWay}" OneRowModeEnabled="True"
+            SelectionMode="Single" ItemTemplate="{StaticResource TemplateGame}">
+                </controls:AdaptiveGridView>
+
+                <TextBlock Grid.Row="4" Style="{StaticResource TitleTextBlockStyle}" Text="Jeux sans SteamGrid ID"/>
+                <controls:AdaptiveGridView Grid.Row="5"
+            Padding="{StaticResource MediumLeftRightMargin}" ItemClick="AdaptiveGridView_ItemClick"
+            IsItemClickEnabled="True" ItemHeight="450" DesiredWidth="300"
+            ItemsSource="{x:Bind ViewModel.NoSGDBSource, Mode=OneWay}" OneRowModeEnabled="True"
+            SelectionMode="Single" ItemTemplate="{StaticResource TemplateGame}">
+                </controls:AdaptiveGridView>
+
+                <TextBlock Grid.Row="7" Style="{StaticResource TitleTextBlockStyle}" Text="Jeux sans ScreenSraper ID"/>
+                <controls:AdaptiveGridView Grid.Row="8"
+            Padding="{StaticResource MediumLeftRightMargin}" ItemClick="AdaptiveGridView_ItemClick"
+            IsItemClickEnabled="True" ItemHeight="450" DesiredWidth="300"
+            ItemsSource="{x:Bind ViewModel.NoSSDBSource, Mode=OneWay}" OneRowModeEnabled="True"
+            SelectionMode="Single" ItemTemplate="{StaticResource TemplateGame}">
+                </controls:AdaptiveGridView>
+            </Grid>
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </Page>

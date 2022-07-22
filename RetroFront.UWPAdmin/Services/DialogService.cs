@@ -1,4 +1,7 @@
-﻿using System;
+﻿using RetroFront.UWPAdmin.Core.APIHelper;
+using RetroFront.UWPAdmin.ViewModels.Modals;
+using RetroFront.UWPAdmin.Views.Modals;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -109,7 +112,17 @@ namespace RetroFront.UWPAdmin.Services
         {
             return await InputTextDialogAsync(title, defaultText, "OK", "Cancel");
         }
-
+        public async Task<Search> SearchSteamGridDBByName(string name, ScraperSource source)
+        {
+            var vm = new ScrapeResolverViewModel(name, source);
+            ScrapeResolverContentDialog contentDialog = new ScrapeResolverContentDialog(vm);
+            var dialog = await contentDialog.ShowAsync();
+            if (dialog == ContentDialogResult.Secondary)
+            {
+                return vm.Resultgame;
+            }
+            return null;
+        }
         public async Task<string> InputTextDialogAsync(string title, string defaultText, string okButtonText, string cancelButtonText)
         {
             var inputTextBox = new TextBox

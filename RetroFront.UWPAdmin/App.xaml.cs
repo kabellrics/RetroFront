@@ -4,6 +4,7 @@ using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using RetroFront.UWPAdmin.Core.Services;
 using RetroFront.UWPAdmin.Services;
 using RetroFront.UWPAdmin.ViewModels;
+using RetroFront.UWPAdmin.ViewModels.Modals;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 
@@ -41,6 +42,7 @@ namespace RetroFront.UWPAdmin
                .AddSingleton<GamesViewModel>()
                .AddSingleton<SettingsViewModel>()
                .AddSingleton<DialogService>()
+               .AddSingleton<ScrapeResolverViewModel>()
                .BuildServiceProvider());
         }
 

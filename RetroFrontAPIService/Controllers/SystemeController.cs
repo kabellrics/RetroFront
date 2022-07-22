@@ -82,6 +82,7 @@ namespace RetroFrontAPIService.Controllers
             try
             {
                 _databaseService.UpdateSystem(id, Item);
+                return Ok();
             }
             catch (Exception ex)
             {

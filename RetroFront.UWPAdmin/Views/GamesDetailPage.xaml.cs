@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Threading.Tasks;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 
 using RetroFront.UWPAdmin.Core.Models;
@@ -28,6 +28,11 @@ namespace RetroFront.UWPAdmin.Views
             base.OnNavigatedTo(e);
             await ViewModel.LoadDataAsync();
             ViewModel.Initialize(e.Parameter as string, e.NavigationMode);
+        }
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            ViewModel.SaveChangeCommand.Execute(true);
+            base.OnNavigatingFrom(e);
         }
 
         //protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
