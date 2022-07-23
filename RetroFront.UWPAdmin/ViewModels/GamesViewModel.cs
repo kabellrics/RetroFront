@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 
 using RetroFront.UWPAdmin.Core.Models;
@@ -14,7 +15,7 @@ using RetroFront.UWPAdmin.Core.Services;
 using RetroFront.UWPAdmin.Helpers;
 using RetroFront.UWPAdmin.Services;
 using RetroFront.UWPAdmin.Views;
-
+using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml.Controls;
 
 namespace RetroFront.UWPAdmin.ViewModels
@@ -58,7 +59,23 @@ namespace RetroFront.UWPAdmin.ViewModels
             gamesService = new GamesService();
             dialogService = Ioc.Default.GetRequiredService<DialogService>();
             ToggleRaw = false;
+            WeakReferenceMessenger.Default.Register<ReloadBckMessage>(this, async (r, m) =>
+            {
+                try
+                {
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => {
+                        //Load();
+                    });
+                }
+                catch (Exception ex)
+                {
+                }
+            });
         }
+        //public async void Load()
+        //{
+        //    await LoadDataAsync();
+        //}
 
         public async Task LoadDataAsync()
         {

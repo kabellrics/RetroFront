@@ -9,6 +9,7 @@ using RetroFront.UWPAdmin.Core.Services;
 using RetroFront.UWPAdmin.Helpers;
 using RetroFront.UWPAdmin.Services;
 using RetroFront.UWPAdmin.Views;
+using Windows.ApplicationModel.Core;
 
 namespace RetroFront.UWPAdmin.ViewModels
 {
@@ -21,11 +22,13 @@ namespace RetroFront.UWPAdmin.ViewModels
         public HomeViewModel()
         {
             homeService = new HomeService();
-            WeakReferenceMessenger.Default.Register<ReloadBckMessage>(this, (r, m) =>
+            WeakReferenceMessenger.Default.Register<ReloadBckMessage>(this, async (r, m) =>
             {
                 try
                 {
-                    Load();
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => {
+                        Load();
+                    });
                 }
                 catch (Exception ex)
                 {
@@ -34,9 +37,7 @@ namespace RetroFront.UWPAdmin.ViewModels
         }
         public async void Load()
         {
-            await Windows.UI.Core.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
                 await LoadDataAsync();
-            });
         }
         public async Task LoadDataAsync()
         {
