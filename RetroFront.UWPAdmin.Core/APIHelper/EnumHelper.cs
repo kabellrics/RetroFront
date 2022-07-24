@@ -7,6 +7,16 @@ namespace RetroFront.UWPAdmin.Core.APIHelper
     public class EnumHelper
     {
     }
+    public enum ScraperType
+    {
+        Full,
+        Metadata,
+        Logo,
+        Boxart,
+        ArtWork,
+        Banner,
+        Video
+    }
     public enum ScraperSource
     {
         IGDB,
