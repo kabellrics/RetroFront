@@ -34,5 +34,15 @@ namespace RetroFront.UWPAdmin.Views.Modals
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ProposalGrid.Visibility = Visibility.Visible;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            ProposalGrid.Visibility = Visibility.Collapsed;
+        }
     }
 }

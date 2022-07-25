@@ -20,7 +20,9 @@
             <ColumnDefinition Width=".25*"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width=".25*"></ColumnDefinition>
-            <ColumnDefinition Width="6*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width=".25*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width=".25*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -29,11 +31,12 @@
             <RowDefinition Height=".25*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Column="1" Grid.Row="1"
-                          Height="{x:Bind ViewModel.ImgHeight,Mode=OneWay}" Width="{x:Bind ViewModel.ImgWidth,Mode=OneWay}">
-            <controls:ImageEx VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                          Height="600" Width="600">
+            <controls:ImageEx VerticalAlignment="Center" HorizontalAlignment="Center"
+                          Height="500" Width="500"
                           Stretch="Uniform" Source="{x:Bind ViewModel.ImgToChange ,Mode=OneWay}"></controls:ImageEx>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="3" Margin="20">
+        <Grid Grid.Row="1" Grid.Column="3" Padding="20" Width="300">
             <Grid.RowDefinitions>
                 <RowDefinition Height=".05*"></RowDefinition>
                 <RowDefinition Height="2*"></RowDefinition>
@@ -46,17 +49,35 @@
                 <RowDefinition Height=".05*"></RowDefinition>
             </Grid.RowDefinitions>
             <Button Grid.Row="1" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
-                    Command="{x:Bind ViewModel.ScrapeSNSPCommand}"
+                    Command="{x:Bind ViewModel.ScrapeSNSPCommand}" Click="Button_Click"
                     Content="ScreenScraper" IsEnabled="{x:Bind ViewModel.EnableSCSP,Mode=OneWay}"></Button>
             <Button Grid.Row="3" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
-                    Command="{x:Bind ViewModel.ScrapeSGDBCommand}"
+                    Command="{x:Bind ViewModel.ScrapeSGDBCommand}" Click="Button_Click"
                     Content="SteamGridDB" IsEnabled="{x:Bind ViewModel.EnableSGDB,Mode=OneWay}"></Button>
             <Button Grid.Row="5" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
-                    Command="{x:Bind ViewModel.ScrapeIGDBCommand}"
+                    Command="{x:Bind ViewModel.ScrapeIGDBCommand}" Click="Button_Click"
                     Content="IGDB" IsEnabled="{x:Bind ViewModel.EnableIGDB,Mode=OneWay}"></Button>
             <Button Grid.Row="7" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
                     Command="{x:Bind ViewModel.ScrapeLocalCommand}"
                     Content="Fichier Local"></Button>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="5" x:Name="ProposalGrid" Width="600" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="75"></RowDefinition>
+            </Grid.RowDefinitions>
+            <FlipView Grid.Row="0" ItemsSource="{x:Bind ViewModel.IMGProposal,Mode=OneWay}" Height="600" Width="600"
+                      SelectedItem="{x:Bind ViewModel.Result,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Background="Transparent">
+                <FlipView.ItemTemplate>
+                    <DataTemplate>
+                        <controls:ImageEx VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                          Height="500" Width="500"
+                                          Stretch="Uniform" Source="{Binding}"></controls:ImageEx>
+                    </DataTemplate>
+                </FlipView.ItemTemplate>
+            </FlipView>
+            <Button Grid.Row="1" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
+                    Content="Utiliser cette image ?" Click="Button_Click_1" Command="{x:Bind ViewModel.ChooseImgCommand}"></Button>
         </Grid>
     </Grid>
 </ContentDialog>

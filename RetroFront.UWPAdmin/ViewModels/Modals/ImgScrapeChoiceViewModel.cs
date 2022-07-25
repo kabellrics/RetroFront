@@ -3,8 +3,10 @@ using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Input;
 using RetroFront.UWPAdmin.Core.APIHelper;
 using RetroFront.UWPAdmin.Core.Models;
+using RetroFront.UWPAdmin.Core.Services;
 using RetroFront.UWPAdmin.Services;
 using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -12,7 +14,8 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
 {
     public class ImgScrapeChoiceViewModel : ObservableObject
     {
-        private DialogService dialogService;
+        private GameDetailModalService service;
+        private DialogService DialogService;
         private String _title;
         public String Title
         {
@@ -49,42 +52,6 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
                 SetProperty(ref _typeimg, value);
             }
         }
-        private int _imgheight;
-        public int ImgHeight
-        {
-            get => _imgheight;
-            set
-            {
-                SetProperty(ref _imgheight, value);
-            }
-        }
-        private int _imgwidht;
-        public int ImgWidth
-        {
-            get => _imgwidht;
-            set
-            {
-                SetProperty(ref _imgwidht, value);
-            }
-        }
-        //private int _ctdgheight;
-        //public int CTDGHeight
-        //{
-        //    get => _ctdgheight;
-        //    set
-        //    {
-        //        SetProperty(ref _ctdgheight, value);
-        //    }
-        //}
-        //private int _ctdgwidht;
-        //public int CTDGWidth
-        //{
-        //    get => _ctdgwidht;
-        //    set
-        //    {
-        //        SetProperty(ref _ctdgwidht, value);
-        //    }
-        //}
         private bool _showigdb;
         public bool EnableIGDB
         {
@@ -112,7 +79,18 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
                 SetProperty(ref _showSCSP, value);
             }
         }
-
+        private ObservableCollection<String> _imgproposals;
+        public ObservableCollection<String> IMGProposal
+        {
+            get { return _imgproposals; }
+            set { SetProperty(ref _imgproposals, value); }
+        }
+        private String _result;
+        public String Result
+        {
+            get { return _result; }
+            set { SetProperty(ref _result, value); }
+        }
         private ICommand _ScrapeLocalCommand;
         public ICommand ScrapeLocalCommand => _ScrapeLocalCommand ?? (_ScrapeLocalCommand = new RelayCommand(ScrapeLocal));
 
@@ -124,10 +102,13 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
 
         private ICommand _ScrapeSNSPCommand;
         public ICommand ScrapeSNSPCommand => _ScrapeSNSPCommand ?? (_ScrapeSNSPCommand = new RelayCommand(ScrapeSNSP));
+        private ICommand _ChooseImgCommand;
+        public ICommand ChooseImgCommand => _ChooseImgCommand ?? (_ChooseImgCommand = new RelayCommand(ChooseImg));
 
         public ImgScrapeChoiceViewModel(DisplayGame Game, ScraperType typeImg)
         {
-            dialogService = Ioc.Default.GetRequiredService<DialogService>();
+            service = new GameDetailModalService();
+            DialogService = Ioc.Default.GetService<DialogService>();
             CurrentGame = Game;
             TypeImg = typeImg;
             EnableIGDB = true;
@@ -135,35 +116,19 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
             EnableSGDB = true;
             if (TypeImg == ScraperType.Boxart)
             {
-                ImgHeight = 900;
-                ImgWidth = 600;
-                //CTDGHeight = 950;
-                //CTDGWidth = 900;
                 ImgToChange = CurrentGame.Boxart;
             }
             else if (TypeImg == ScraperType.Banner)
             {
-                ImgHeight = 600;
-                ImgWidth = 900;
-                //CTDGHeight = 650;
-                //CTDGWidth = 1200;
                 EnableIGDB = false;
                 ImgToChange = CurrentGame.Banner;
             }
             else if (TypeImg == ScraperType.Logo)
             {
-                ImgHeight = 500;
-                ImgWidth = 500;
-                //CTDGHeight = 550;
-                //CTDGWidth = 700;
                 ImgToChange = CurrentGame.Logo;
             }
             else if (TypeImg == ScraperType.ArtWork)
             {
-                ImgHeight = 540;
-                ImgWidth = 960;
-                //CTDGHeight = 600;
-                //CTDGWidth = 1200;
                 ImgToChange = CurrentGame.Screenshoot;
             }
             if (CurrentGame.ScreenScraperID < 1)
@@ -185,36 +150,32 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
         }
         private async void ScrapeSNSP()
         {
-            var result = await dialogService.ShowIMGProposal(CurrentGame.ScreenScraperID, ScraperSource.Screenscraper, TypeImg);
-            if(!string.IsNullOrEmpty(result))
-            {
-                ImgToChange = result;
-            }
+            await SearchImg(ScraperSource.Screenscraper);
         }
         private async void ScrapeSGDB()
         {
-            var result = await dialogService.ShowIMGProposal(CurrentGame.SteamGridDBID, ScraperSource.SGDB, TypeImg);
-            if (!string.IsNullOrEmpty(result))
-            {
-                ImgToChange = result;
-            }
+            await SearchImg(ScraperSource.SGDB);
         }
         private async void ScrapeIGDB()
         {
-            var result = await dialogService.ShowIMGProposal(CurrentGame.IGDBID, ScraperSource.IGDB, TypeImg);
-            if (!string.IsNullOrEmpty(result))
-            {
-                ImgToChange = result;
-            }
+            await SearchImg(ScraperSource.IGDB);
         }
         private async void ScrapeLocal()
         {
-            var result = await dialogService.FilePicker(new System.Collections.Generic.List<string>() { ".jpg", ".jpeg", ".png" }) ;
-            if (!string.IsNullOrEmpty(result))
-            {
-                ImgToChange = result;
-            }
+            this.ImgToChange = await DialogService.FilePicker(new System.Collections.Generic.List<string>() { ".jpg", ".jpeg", ".png" });
         }
-
+        public async Task SearchImg(ScraperSource CurrentScrapeSource)
+        {
+            if (CurrentScrapeSource == ScraperSource.IGDB)
+                IMGProposal = new ObservableCollection<string>(await service.GetImgProposal(CurrentGame.IGDBID, CurrentScrapeSource, TypeImg));
+            else if (CurrentScrapeSource == ScraperSource.SGDB)
+                IMGProposal = new ObservableCollection<string>(await service.GetImgProposal(CurrentGame.SteamGridDBID, CurrentScrapeSource, TypeImg));
+            else if (CurrentScrapeSource == ScraperSource.Screenscraper)
+                IMGProposal = new ObservableCollection<string>(await service.GetImgProposal(CurrentGame.ScreenScraperID, CurrentScrapeSource, TypeImg));
+        }
+        private void ChooseImg()
+        {
+            ImgToChange = Result;
+        }
     }
 }
