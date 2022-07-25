@@ -1,4 +1,5 @@
 ﻿using RetroFront.UWPAdmin.Core.APIHelper;
+using RetroFront.UWPAdmin.Core.Models;
 using RetroFront.UWPAdmin.ViewModels.Modals;
 using RetroFront.UWPAdmin.Views.Modals;
 using System;
@@ -123,6 +124,39 @@ namespace RetroFront.UWPAdmin.Services
             }
             return null;
         }
+        public async Task<DisplayGame> ShowImgScrapeChoice(DisplayGame Game, ScraperType typeImg)
+        {
+            var vm = new ImgScrapeChoiceViewModel(Game, typeImg);
+            ImgScrapeChoiceContentDialog contentDialog = new ImgScrapeChoiceContentDialog(vm);
+            var dialog = await contentDialog.ShowAsync();
+            if (dialog == ContentDialogResult.Secondary)
+            {
+                return vm.CurrentGame;
+            }
+            return null;
+        }
+        public async Task<DisplayGame> ShowMetadataScrapeChoice(DisplayGame Game)
+        {
+            var vm = new MetadataScrapeChooseViewModel(Game);
+            MetadataScrapeChooseContentDialog contentDialog = new MetadataScrapeChooseContentDialog(vm);
+            var dialog = await contentDialog.ShowAsync();
+            if (dialog == ContentDialogResult.Secondary)
+            {
+                return vm.CurrentGame;
+            }
+            return null;
+        }
+        public async Task<String> ShowIMGProposal(int gameId, ScraperSource CurrentScrapeSource, ScraperType CurrentScraperType)
+        {
+            var vm = new ImgProposalViewModel(gameId, CurrentScrapeSource, CurrentScraperType);
+            ImgProposalContentDialog contentDialog = new ImgProposalContentDialog(vm);
+            var dialog = await contentDialog.ShowAsync();
+            if (dialog == ContentDialogResult.Secondary)
+            {
+                return vm.Result;
+            }
+            return null;
+        }
         public async Task<string> InputTextDialogAsync(string title, string defaultText, string okButtonText, string cancelButtonText)
         {
             var inputTextBox = new TextBox
@@ -170,6 +204,27 @@ namespace RetroFront.UWPAdmin.Services
             if (file != null)
             {
                 return file.Path;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        public async Task<String> FolderPicker()
+        {
+            var folderPicker = new Windows.Storage.Pickers.FolderPicker();
+            folderPicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop;
+            folderPicker.FileTypeFilter.Add("*");
+
+            Windows.Storage.StorageFolder folder = await folderPicker.PickSingleFolderAsync();
+            if (folder != null)
+            {
+                //// Application now has read/write access to all contents in the picked folder
+                //// (including other sub-folder contents)
+                //Windows.Storage.AccessCache.StorageApplicationPermissions.
+                //FutureAccessList.AddOrReplace("PickedFolderToken", folder);
+                return folder.Path;
             }
             else
             {

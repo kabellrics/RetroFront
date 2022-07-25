@@ -31,7 +31,7 @@ namespace RetroFront.UWPAdmin.Views
         }
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            ViewModel.SaveChangeCommand.Execute(true);
+            ViewModel.SaveChange();
             base.OnNavigatingFrom(e);
         }
 

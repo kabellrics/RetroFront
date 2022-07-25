@@ -5,6 +5,8 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:helper="using:RetroFront.UWPAdmin.Helpers"
     x:Class="RetroFront.UWPAdmin.Styles.DataTemplates">
+    <x:Double x:Key="ContentDialogMaxWidth">1600</x:Double>
+    <x:Double x:Key="ContentDialogMaxHeight">950</x:Double>
     <helper:GameVideoConverter x:Key="GameVideoConverter"></helper:GameVideoConverter>
     <DataTemplate x:Key="TemplateSysteme" x:DataType="models:DisplaySysteme">
         <Grid>

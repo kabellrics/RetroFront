@@ -30,10 +30,12 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent">
+            <Button Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent"
+                    Command="{x:Bind ViewModel.ScrapeLogoCommand}">
                     <controls:ImageEx Height="200" Width="500" Stretch="Uniform" Source="{x:Bind ViewModel.Source.Logo ,Mode=OneWay}"></controls:ImageEx>
             </Button>
-            <Button Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent">
+            <Button Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent"
+                    Command="{x:Bind ViewModel.ScrapeBoxartCommand}">
                 <controls:ImageEx Height="600" Width="400" Stretch="Uniform" Source="{x:Bind ViewModel.Source.Boxart,Mode=OneWay}"></controls:ImageEx>
             </Button>
             <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4">
@@ -41,13 +43,15 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent">
+                <Button Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent"
+                        Command="{x:Bind ViewModel.ScrapeBannerCommand}">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Bannière" Style="{StaticResource SubheaderTextBlockStyle}"/>
                         <controls:ImageEx Stretch="Uniform" Source="{x:Bind ViewModel.Source.Banner,Mode=OneWay}"></controls:ImageEx>
                     </StackPanel>
                 </Button>
-                <Button Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent">
+                <Button Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent"
+                        Command="{x:Bind ViewModel.ScrapeScreenshootCommand}">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Artwork" Style="{StaticResource SubheaderTextBlockStyle}"/>
                         <controls:ImageEx Stretch="Uniform" Source="{x:Bind ViewModel.Source.Screenshoot,Mode=OneWay}"></controls:ImageEx>
@@ -70,7 +74,7 @@
             <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" >
                 <StackPanel Orientation="Horizontal">
                     <Button Click="btshowIntel_Click" Content="Modifier les Champs"></Button>
-                    <Button Content="Scraper les Champs"></Button>
+                    <Button Content="Scraper les Champs" Command="{x:Bind ViewModel.ScrapeMetadataCommand}"></Button>
                 </StackPanel>
                 <Grid x:Name="btshowIntel">
                         <Grid.ColumnDefinitions>

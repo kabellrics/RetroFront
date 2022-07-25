@@ -1,0 +1,69 @@
+﻿<ContentDialog
+    x:Class="RetroFront.UWPAdmin.Views.Modals.MetadataScrapeChooseContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RetroFront.UWPAdmin.Views.Modals"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="TITLE"
+    PrimaryButtonText="Annuler"
+    SecondaryButtonText="Valider"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    <!--Background="{StaticResource ApplicationForegroundThemeBrush}"-->
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".25*"></ColumnDefinition>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
+            <ColumnDefinition Width=".25*"></ColumnDefinition>
+            <ColumnDefinition Width="6*"></ColumnDefinition>
+            <ColumnDefinition Width=".25*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".25*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height=".25*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="1" Grid.Column="1" HorizontalScrollMode="Disabled" VerticalScrollMode="Enabled">
+            <Grid x:Name="btshowIntel">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="Name : " FontWeight="Bold" Grid.Row="0"  Style="{StaticResource TitleTextBlockStyle}"/>
+                <TextBlock Text="{x:Bind ViewModel.CurrentGame.Name ,Mode=OneWay}" Grid.Column="1" Grid.Row="0" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                <TextBlock Text="Année : " FontWeight="Bold" Grid.Row="1"  Style="{StaticResource TitleTextBlockStyle}"/>
+                <TextBlock Text="{x:Bind ViewModel.CurrentGame.Year,Mode=OneWay}" Grid.Column="1" Grid.Row="1" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                <TextBlock Text="Genre : " FontWeight="Bold" Grid.Row="2"  Style="{StaticResource TitleTextBlockStyle}"/>
+                <TextBlock Text="{x:Bind ViewModel.CurrentGame.Genre,Mode=OneWay}" Grid.Column="1" Grid.Row="2" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                <TextBlock Text="Editeur : " FontWeight="Bold" Grid.Row="3"  Style="{StaticResource TitleTextBlockStyle}"/>
+                <TextBlock Text="{x:Bind ViewModel.CurrentGame.Editeur,Mode=OneWay}" Grid.Column="1" Grid.Row="3" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                <TextBlock Text="Développeur : " FontWeight="Bold" Grid.Row="4"  Style="{StaticResource TitleTextBlockStyle}"/>
+                <TextBlock Text="{x:Bind ViewModel.CurrentGame.Developpeur,Mode=OneWay}" Grid.Column="1" Grid.Row="4" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                <TextBlock Text="Description : " FontWeight="Bold" Grid.Row="5"  Style="{StaticResource TitleTextBlockStyle}"/>
+                <TextBlock Text="{x:Bind ViewModel.CurrentGame.Description,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="5" Style="{StaticResource SubtitleTextBlockStyle}"/>
+            </Grid>
+        </ScrollViewer>
+        <Grid Grid.Row="1" Grid.Column="3" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".05*"></RowDefinition>
+                <RowDefinition Height="5*"></RowDefinition>
+                <RowDefinition Height=".5*"></RowDefinition>
+                <RowDefinition Height="5*"></RowDefinition>
+                <RowDefinition Height=".05*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="1" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Content="ScreenScraper" IsEnabled="{x:Bind ViewModel.EnableSCSP,Mode=OneWay}"></Button>
+            <Button Grid.Row="3" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Content="IGDB" IsEnabled="{x:Bind ViewModel.EnableIGDB,Mode=OneWay}"></Button>
+    </Grid>
+    </Grid>
+</ContentDialog>

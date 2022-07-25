@@ -29,7 +29,7 @@ namespace RetroFront.UWPAdmin.ViewModels
             }
         }
         private ICommand _SaveChangeCommand;
-        public ICommand SaveChangeCommand => _SaveChangeCommand ?? (_SaveChangeCommand = new RelayCommand(SaveChange));
+        public ICommand SaveChangeCommand => _SaveChangeCommand ?? (_SaveChangeCommand = new RelayCommand(SavingChange));
 
         private ICommand _ScrapeIGDBCommand;
         public ICommand ScrapeIGDBCommand => _ScrapeIGDBCommand ?? (_ScrapeIGDBCommand = new RelayCommand(ScrapeIGDB));
@@ -40,8 +40,24 @@ namespace RetroFront.UWPAdmin.ViewModels
         private ICommand _ScrapeSNSPCommand;
         public ICommand ScrapeSNSPCommand => _ScrapeSNSPCommand ?? (_ScrapeSNSPCommand = new RelayCommand(ScrapeSNSP));
 
+        private ICommand _ScrapeLogoCommand;
+        public ICommand ScrapeLogoCommand => _ScrapeLogoCommand ?? (_ScrapeLogoCommand = new RelayCommand(ScrapeLogo));
 
-        private async void SaveChange()
+        private ICommand _ScrapeBoxartCommand;
+        public ICommand ScrapeBoxartCommand => _ScrapeBoxartCommand ?? (_ScrapeBoxartCommand = new RelayCommand(ScrapeBoxart));
+
+        private ICommand _ScrapeBannerCommand;
+        public ICommand ScrapeBannerCommand => _ScrapeBannerCommand ?? (_ScrapeBannerCommand = new RelayCommand(ScrapeBanner));
+        private ICommand _ScrapeScreenshootCommand;
+        public ICommand ScrapeScreenshootCommand => _ScrapeScreenshootCommand ?? (_ScrapeScreenshootCommand = new RelayCommand(ScrapeScreenshoot));
+        private ICommand _ScrapeMetadataCommand;
+        public ICommand ScrapeMetadataCommand => _ScrapeMetadataCommand ?? (_ScrapeMetadataCommand = new RelayCommand(ScrapeMetadata));
+
+        private async void SavingChange()
+        {
+            await SaveChange();
+        }
+        public async Task SaveChange()
         {
             if (Source.HasChanged == true)
             {
@@ -102,6 +118,41 @@ namespace RetroFront.UWPAdmin.ViewModels
             if (findgame != null)
             {
                 Source.ScreenScraperID = findgame.Id;
+            }
+        }
+        private async void ScrapeLogo()
+        {
+            var findgame = await dialogService.ShowImgScrapeChoice(Source, Core.APIHelper.ScraperType.Logo);
+            if(findgame != null)
+            {
+            }
+        }
+        private async void ScrapeBoxart()
+        {
+            var findgame = await dialogService.ShowImgScrapeChoice(Source, Core.APIHelper.ScraperType.Boxart);
+            if (findgame != null)
+            {
+            }
+        }
+        private async void ScrapeBanner()
+        {
+            var findgame = await dialogService.ShowImgScrapeChoice(Source, Core.APIHelper.ScraperType.Banner);
+            if (findgame != null)
+            {
+            }
+        }
+        private async void ScrapeScreenshoot()
+        {
+            var findgame = await dialogService.ShowImgScrapeChoice(Source, Core.APIHelper.ScraperType.ArtWork);
+            if (findgame != null)
+            {
+            }
+        }
+        private async void ScrapeMetadata()
+        {
+            var findgame = await dialogService.ShowMetadataScrapeChoice(Source);
+            if (findgame != null)
+            {
             }
         }
     }

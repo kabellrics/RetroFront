@@ -1,0 +1,62 @@
+﻿<ContentDialog
+    x:Class="RetroFront.UWPAdmin.Views.Modals.ImgScrapeChoiceContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RetroFront.UWPAdmin.Views.Modals"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="{x:Bind ViewModel.Title,Mode=OneWay}"
+    PrimaryButtonText="Annuler"
+    SecondaryButtonText="Valider"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    <!--Height="{x:Bind ViewModel.CTDGHeight,Mode=OneWay}"
+    Width="{x:Bind ViewModel.CTDGWidth,Mode=OneWay}"-->
+    <Grid
+     Background="{StaticResource ApplicationForegroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".25*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width=".25*"></ColumnDefinition>
+            <ColumnDefinition Width="6*"></ColumnDefinition>
+            <ColumnDefinition Width=".25*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".25*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height=".25*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="1" Grid.Row="1"
+                          Height="{x:Bind ViewModel.ImgHeight,Mode=OneWay}" Width="{x:Bind ViewModel.ImgWidth,Mode=OneWay}">
+            <controls:ImageEx VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                          Stretch="Uniform" Source="{x:Bind ViewModel.ImgToChange ,Mode=OneWay}"></controls:ImageEx>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="3" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".05*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height=".5*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height=".5*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height=".5*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height=".05*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="1" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
+                    Command="{x:Bind ViewModel.ScrapeSNSPCommand}"
+                    Content="ScreenScraper" IsEnabled="{x:Bind ViewModel.EnableSCSP,Mode=OneWay}"></Button>
+            <Button Grid.Row="3" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
+                    Command="{x:Bind ViewModel.ScrapeSGDBCommand}"
+                    Content="SteamGridDB" IsEnabled="{x:Bind ViewModel.EnableSGDB,Mode=OneWay}"></Button>
+            <Button Grid.Row="5" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
+                    Command="{x:Bind ViewModel.ScrapeIGDBCommand}"
+                    Content="IGDB" IsEnabled="{x:Bind ViewModel.EnableIGDB,Mode=OneWay}"></Button>
+            <Button Grid.Row="7" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
+                    Command="{x:Bind ViewModel.ScrapeLocalCommand}"
+                    Content="Fichier Local"></Button>
+        </Grid>
+    </Grid>
+</ContentDialog>

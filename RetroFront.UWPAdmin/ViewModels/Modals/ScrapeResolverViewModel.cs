@@ -2,6 +2,7 @@
 using Microsoft.Toolkit.Mvvm.Input;
 using RetroFront.UWPAdmin.Core.APIClient;
 using RetroFront.UWPAdmin.Core.APIHelper;
+using RetroFront.UWPAdmin.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +50,6 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
             get { return _resultgame; }
             set { SetProperty(ref _resultgame, value); }
         }
-        private GameDataProviderClient gameDataProvider;
         private ICommand _searchCommand;
         public ICommand SearchCommand
         {
@@ -59,9 +59,10 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
             }
         }
 
+        private GameDetailModalService service;
         public ScrapeResolverViewModel(String name, ScraperSource scraper)
         {
-            gameDataProvider = new GameDataProviderClient();
+            service = new GameDetailModalService();
             Name = name;
             Source = scraper;
             Title = $"Recherche de l'Id {Source.ToString()} pour {Name}";
@@ -86,26 +87,7 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
         }
         private async Task SearchByNameResult()
         {
-            FoundedGame = new List<Search>();
-            if (Source == ScraperSource.SGDB)
-            {
-                var games = await gameDataProvider.SearchByNameAsync(Name);
-                FoundedGame = games.Result.ToList();
-            }
-            else if (Source == ScraperSource.IGDB)
-            {
-                var games = await gameDataProvider.GetGameByNameAsync(Name);
-                FoundedGame = games.Result.ToList();
-            }
-            else if (Source == ScraperSource.Screenscraper)
-            {
-                var games = await gameDataProvider.SearchGameAsync(Name);
-                var SCSPFoundedGame = games.Result.ToList();
-                foreach (var SCSPgame in SCSPFoundedGame)
-                {
-                    FoundedGame.Add(new Search() { Id = SCSPgame.ScreenScraperID, Name = SCSPgame.Name });
-                }
-            }
+            FoundedGame = await service.ResolveByName(Name, Source);
         }
     }
 }

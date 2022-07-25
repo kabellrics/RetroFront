@@ -64,10 +64,15 @@ namespace RetroFrontAPIService.Controllers
         {
             return Ok(_gameDataProviderService.SearchGame(name));
         }
-        [HttpGet("ScreenScraper/GetJeuxDetail/{id}")]
-        public ActionResult<IEnumerable<RetroFront.Models.IGDB.Artwork>> GetJeuxDetail(int id)
+        //[HttpGet("ScreenScraper/GetJeuxDetail/{id}")]
+        //public ActionResult<Jeux> GetJeuxDetail(int id)
+        //{
+        //    return Ok(_gameDataProviderService.GetJeuxDetail(id));
+        //}
+        [HttpGet("ScreenScraper/GetJeuxMedias/{id}")]
+        public ActionResult<List<Media>> GetJeuxMedia(int id)
         {
-            return Ok(_gameDataProviderService.GetJeuxDetail(id));
+            return Ok(_gameDataProviderService.GetJeuxDetail(id).medias);
         }
         [HttpGet("ScreenScraper/GetSystemeImgDLL/{type}/{SCSPSysID}")]
         public ActionResult<string> GetSystemeImgDLL(string type, string SCSPSysID)
