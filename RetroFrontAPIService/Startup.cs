@@ -41,6 +41,7 @@ namespace RetroFrontAPIService
             services.AddSingleton<IGameAppService, GameAppService>();
             services.AddSingleton<IGameDataProviderService, GameDataProviderService>();
             services.AddSingleton<IExternalAppService, ExternalAppService>();
+            services.AddSingleton<IComputerService, ComputerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
