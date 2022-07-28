@@ -62,8 +62,8 @@
                 <RowDefinition Height="5*"></RowDefinition>
                 <RowDefinition Height=".05*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Button Grid.Row="1" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Content="ScreenScraper" IsEnabled="{x:Bind ViewModel.EnableSCSP,Mode=OneWay}"></Button>
-            <Button Grid.Row="3" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Content="IGDB" IsEnabled="{x:Bind ViewModel.EnableIGDB,Mode=OneWay}"></Button>
+            <Button Grid.Row="1" Margin="5" Padding="5" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.ScrapeSNSPCommand}" Style="{StaticResource AccentButtonStyle}" Content="ScreenScraper" IsEnabled="{x:Bind ViewModel.EnableSCSP,Mode=OneWay}"></Button>
+            <Button Grid.Row="3" Margin="5" Padding="5" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.ScrapeIGDBCommand}" Style="{StaticResource AccentButtonStyle}" Content="IGDB" IsEnabled="{x:Bind ViewModel.EnableIGDB,Mode=OneWay}"></Button>
     </Grid>
     </Grid>
 </ContentDialog>

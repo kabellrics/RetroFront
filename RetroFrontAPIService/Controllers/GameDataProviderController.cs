@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RetroFront.Models;
 using RetroFront.Models.ScreenScraper.GameSearch;
 using RetroFront.Models.SteamGridDB;
+using RetroFrontAPIService.Service;
 using RetroFrontAPIService.Service.Interface;
 using System;
 using System.Collections.Generic;
@@ -64,11 +65,11 @@ namespace RetroFrontAPIService.Controllers
         {
             return Ok(_gameDataProviderService.SearchGame(name));
         }
-        //[HttpGet("ScreenScraper/GetJeuxDetail/{id}")]
-        //public ActionResult<Jeux> GetJeuxDetail(int id)
-        //{
-        //    return Ok(_gameDataProviderService.GetJeuxDetail(id));
-        //}
+        [HttpGet("ScreenScraper/GetJeuxDetail/{id}")]
+        public ActionResult<SCGamedetail> GetJeuxDetail(int id)
+        {
+            return Ok( new SCGamedetail(_gameDataProviderService.GetJeuxDetail(id)));
+        }
         [HttpGet("ScreenScraper/GetJeuxMedias/{id}")]
         public ActionResult<List<Media>> GetJeuxMedia(int id)
         {

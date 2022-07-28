@@ -1,17 +1,18 @@
-﻿using RetroFront.UWPAdmin.Core.APIClient;
+﻿using Microsoft.Toolkit.Mvvm.Input;
+using RetroFront.UWPAdmin.Core.APIClient;
 using RetroFront.UWPAdmin.Core.APIHelper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace RetroFront.UWPAdmin.Core.Services
 {
     public class GameDetailModalService
     {
         private GameDataProviderClient gameDataProvider;
-
         public GameDetailModalService()
         {
             gameDataProvider = new GameDataProviderClient();
@@ -164,5 +165,27 @@ namespace RetroFront.UWPAdmin.Core.Services
             }
             return ResultImgs;
         }
+
+        public async Task<SCGamedetail> GetMetadataScreenscraper(int SSCPID)
+        {
+            return await gameDataProvider.GetJeuxDetailAsync(SSCPID);
+        }
+        public async Task<SCGamedetail> GetMetadataIGDB(int IGDBID)
+        {
+            SCGamedetail detail = new SCGamedetail();
+            var dev = await gameDataProvider.GetDevByGameIdAsync(IGDBID);
+            detail.Developpeur = string.Join(", ",dev.Result.Select(x => x.Name));
+            var editeur = await gameDataProvider.GetPublishersByGameIdAsync(IGDBID);
+            detail.Editeur = string.Join(", ", editeur.Result.Select(x => x.Name));
+            var genres = await gameDataProvider.GetGenresByGameIdAsync(IGDBID);
+            detail.Genres = string.Join(", ", genres.Result.Select(x=>x.Name));
+            var desc = gameDataProvider.GetDetailsGame(IGDBID);
+            detail.Synopsis = desc.Result.Summary;
+            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            dateTime = dateTime.AddSeconds(desc.Result.First_release_date).ToLocalTime();
+            detail.Year = dateTime.Year.ToString();
+            return detail;
+        }
+
     }
 }

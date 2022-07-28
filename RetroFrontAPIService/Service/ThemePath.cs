@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RetroFront.Models.ScreenScraper.GameSearch;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -50,6 +51,25 @@ namespace RetroFrontAPIService.Service
                     Dest = string.Empty;
 
             }
+        }
+    }
+
+    public class SCGamedetail
+    {
+        public String editeur { get; set; }
+        public String developpeur { get; set; }
+        public String synopsis { get; set; }
+        public String genres { get; set; }
+        public String Year { get; set; }
+
+        public SCGamedetail(Jeux jeux)
+        {
+            this.editeur = jeux.editeur.text;
+            this.developpeur = jeux.developpeur.text;
+            this.synopsis = jeux.synopsis.FirstOrDefault(x => x.langue == "fr").text;
+            var listgenre = jeux.genres.SelectMany(x => x.noms.Where(n => n.langue == "fr"));
+            genres = string.Join(", ",listgenre.Select(x=>x.text));
+            this.Year = jeux.dates.FirstOrDefault(x => x.region == "fr").text;
         }
     }
 }
