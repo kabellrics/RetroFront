@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace RetroFront.UWPAdmin.Core.Services
 {
-    public class SystemeDetailService
+    public class SystemeDetailService: BaseService
     {
-        private SystemeClient systemeClient = new SystemeClient();
         public DisplaySysteme GetSysteme(int ID)
         {
             var sys = systemeClient.SystemeGet(ID).Result;

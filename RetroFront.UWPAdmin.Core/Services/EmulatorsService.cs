@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace RetroFront.UWPAdmin.Core.Services
 {
-    public class EmulatorsService
+    public class EmulatorsService: BaseService
     {
-        private EmulatorClient emulatorClient = new EmulatorClient();
         public async Task<IEnumerable<DisplayEmulator>> GetEmulators()
         {
             List<DisplayEmulator> displayEmus = new List<DisplayEmulator>();

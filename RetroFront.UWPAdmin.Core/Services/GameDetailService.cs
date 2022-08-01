@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace RetroFront.UWPAdmin.Core.Services
 {
-    public class GameDetailService
+    public class GameDetailService: BaseService
     {
-        private GameClient gameClient = new GameClient();
         public async Task<DisplayGame> GetGame(int ID)
         {
             var sys = await gameClient.GameGetAsync(ID);
@@ -18,6 +17,11 @@ namespace RetroFront.UWPAdmin.Core.Services
         public async Task UpdateGame(DisplayGame game)
         {
             await gameClient.GamePutAsync(game.ID, game.Game);
+        }
+        public async Task<String> GetNewImgPath(DisplayGame game, int sGDBType)
+        {
+            var result = await helperModelClient.GetImgPathForGameAsync(sGDBType, game.Game);
+            return result.Result.Path;
         }
     }
 }

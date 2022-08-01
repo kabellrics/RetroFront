@@ -686,7 +686,7 @@ namespace RetroFront.UWPAdmin.Core.APIClient
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual SwaggerResponse<string> GetImgPathForGame(int? sGDBType = null, GameRom body = null)
+        public virtual SwaggerResponse<ThemePath> GetImgPathForGame(int? sGDBType = null, GameRom body = null)
         {
             return System.Threading.Tasks.Task.Run(async () => await GetImgPathForGameAsync(sGDBType, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
@@ -694,7 +694,7 @@ namespace RetroFront.UWPAdmin.Core.APIClient
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<SwaggerResponse<string>> GetImgPathForGameAsync(int? sGDBType = null, GameRom body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<SwaggerResponse<ThemePath>> GetImgPathForGameAsync(int? sGDBType = null, GameRom body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/HelperModel/GetImgPathForGame?");
@@ -739,12 +739,12 @@ namespace RetroFront.UWPAdmin.Core.APIClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ThemePath>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return new SwaggerResponse<string>(status_, headers_, objectResponse_.Object);
+                            return new SwaggerResponse<ThemePath>(status_, headers_, objectResponse_.Object);
                         }
                         else
                         {

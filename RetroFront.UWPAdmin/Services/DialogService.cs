@@ -124,14 +124,14 @@ namespace RetroFront.UWPAdmin.Services
             }
             return null;
         }
-        public async Task<DisplayGame> ShowImgScrapeChoice(DisplayGame Game, ScraperType typeImg)
+        public async Task<String> ShowImgScrapeChoice(DisplayGame Game, ScraperType typeImg)
         {
             var vm = new ImgScrapeChoiceViewModel(Game, typeImg);
             ImgScrapeChoiceContentDialog contentDialog = new ImgScrapeChoiceContentDialog(vm);
             var dialog = await contentDialog.ShowAsync();
             if (dialog == ContentDialogResult.Secondary)
             {
-                return vm.CurrentGame;
+                return vm.ImgToChange;
             }
             return null;
         }
@@ -145,6 +145,32 @@ namespace RetroFront.UWPAdmin.Services
                 return vm.CurrentGame;
             }
             return null;
+        }
+        public async Task DLLFile(String source, String dest, string typeElement, string nameElement)
+        {
+            try
+            {
+                var vm = new FileModalDLLViewModel(source, dest, typeElement, nameElement);
+                FileDLLContentDialog contentDialog = new FileDLLContentDialog(vm);
+                await contentDialog.ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
+        }
+        public async Task WriteFile(byte[] source, String dest, string typeElement, string nameElement)
+        {
+            try
+            {
+                var vm = new FileModalDLLViewModel(source, dest, typeElement, nameElement);
+                FileDLLContentDialog contentDialog = new FileDLLContentDialog(vm);
+                await contentDialog.ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
         }
         public async Task<String> ShowIMGProposal(int gameId, ScraperSource CurrentScrapeSource, ScraperType CurrentScraperType)
         {

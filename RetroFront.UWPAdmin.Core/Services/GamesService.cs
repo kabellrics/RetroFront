@@ -9,11 +9,8 @@ using System.Threading.Tasks;
 
 namespace RetroFront.UWPAdmin.Core.Services
 {
-    public class GamesService
+    public class GamesService: BaseService
     {
-        private GameClient gameClient = new GameClient();
-        private EmulatorClient emulatorClient = new EmulatorClient();
-        private SystemeClient systemeClient = new SystemeClient();
         public async Task<IEnumerable<DisplayGame>> GetGame()
         {
             var result = await gameClient.GameGetAsync();

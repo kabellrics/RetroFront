@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace RetroFront.UWPAdmin.Core.Services
 {
-    public class HomeService
+    public class HomeService: BaseService
     {
-        private GameClient gameClient = new GameClient();
 
         public async Task<IEnumerable<DisplayGame>> GetGameWithoutIGDB()
         {

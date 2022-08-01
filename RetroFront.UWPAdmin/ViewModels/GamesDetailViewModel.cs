@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -7,6 +8,7 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
+using RetroFront.UWPAdmin.Core.APIHelper;
 using RetroFront.UWPAdmin.Core.Models;
 using RetroFront.UWPAdmin.Core.Services;
 using RetroFront.UWPAdmin.Helpers;
@@ -26,6 +28,42 @@ namespace RetroFront.UWPAdmin.ViewModels
             set
             {
                 SetProperty(ref _source, value);
+            }
+        }
+        private String _newLogo;
+        public String NewLogo
+        {
+            get => _newLogo;
+            set
+            {
+                SetProperty(ref _newLogo, value);
+            }
+        }
+        private String _newBoxart;
+        public String NewBoxart
+        {
+            get => _newBoxart;
+            set
+            {
+                SetProperty(ref _newBoxart, value);
+            }
+        }
+        private String _newArtwork;
+        public String NewArtwork
+        {
+            get => _newArtwork;
+            set
+            {
+                SetProperty(ref _newArtwork, value);
+            }
+        }
+        private String _newBanner;
+        public String NewBanner
+        {
+            get => _newBanner;
+            set
+            {
+                SetProperty(ref _newBanner, value);
             }
         }
         private ICommand _SaveChangeCommand;
@@ -52,6 +90,8 @@ namespace RetroFront.UWPAdmin.ViewModels
         public ICommand ScrapeScreenshootCommand => _ScrapeScreenshootCommand ?? (_ScrapeScreenshootCommand = new RelayCommand(ScrapeScreenshoot));
         private ICommand _ScrapeMetadataCommand;
         public ICommand ScrapeMetadataCommand => _ScrapeMetadataCommand ?? (_ScrapeMetadataCommand = new RelayCommand(ScrapeMetadata));
+        private ICommand _SaveAndDLLCommand;
+        public ICommand SaveAndDLLCommand => _SaveAndDLLCommand ?? (_SaveAndDLLCommand = new RelayCommand(SaveChangeAndDLLImg));
 
         private async void SavingChange()
         {
@@ -94,12 +134,16 @@ namespace RetroFront.UWPAdmin.ViewModels
             if (!string.IsNullOrEmpty(selectedGameID))
             {
                 Source = await gameDetailService.GetGame(int.Parse(selectedGameID));
+                NewLogo = Source.LogoPath;
+                NewBoxart = Source.BoxartPath;
+                NewBanner = Source.BannerPath;
+                NewArtwork = Source.ScreenshootPath;
             }
         }
         private async void ScrapeIGDB()
         {
             var findgame = await dialogService.SearchSteamGridDBByName(Source.Name, Core.APIHelper.ScraperSource.IGDB);
-            if(findgame != null)
+            if (findgame != null)
             {
                 Source.IGDBID = findgame.Id;
             }
@@ -123,8 +167,9 @@ namespace RetroFront.UWPAdmin.ViewModels
         private async void ScrapeLogo()
         {
             var findgame = await dialogService.ShowImgScrapeChoice(Source, Core.APIHelper.ScraperType.Logo);
-            if(findgame != null)
+            if (findgame != null)
             {
+                NewLogo = findgame;
             }
         }
         private async void ScrapeBoxart()
@@ -132,6 +177,7 @@ namespace RetroFront.UWPAdmin.ViewModels
             var findgame = await dialogService.ShowImgScrapeChoice(Source, Core.APIHelper.ScraperType.Boxart);
             if (findgame != null)
             {
+                NewBoxart = findgame;
             }
         }
         private async void ScrapeBanner()
@@ -139,6 +185,7 @@ namespace RetroFront.UWPAdmin.ViewModels
             var findgame = await dialogService.ShowImgScrapeChoice(Source, Core.APIHelper.ScraperType.Banner);
             if (findgame != null)
             {
+                NewBanner = findgame;
             }
         }
         private async void ScrapeScreenshoot()
@@ -146,13 +193,80 @@ namespace RetroFront.UWPAdmin.ViewModels
             var findgame = await dialogService.ShowImgScrapeChoice(Source, Core.APIHelper.ScraperType.ArtWork);
             if (findgame != null)
             {
+                NewArtwork = findgame;
             }
+        }
+        private async void SaveChangeAndDLLImg()
+        {
+            if (Source.LogoPath != NewLogo)
+            {
+                await gameDetailService.GetNewImgPath(Source, (int)ScraperType.Logo).ContinueWith(async task => {
+                    var path = task.Result;
+                    if (NewArtwork.Contains("png"))
+                        path += ".png";
+                    else if (NewArtwork.Contains("jpg"))
+                        path += ".jpg";
+                    else if (NewArtwork.Contains("jpeg"))
+                        path += ".jpeg";
+                    await dialogService.DLLFile(NewLogo, path, "Logo", Source.Name);
+                    Source.LogoPath = path;
+                });
+            }
+            if (Source.BoxartPath != NewBoxart)
+            {
+                await gameDetailService.GetNewImgPath(Source, (int)ScraperType.Boxart).ContinueWith(async task => {
+                    var path = task.Result;
+                    if (NewArtwork.Contains("png"))
+                        path += ".png";
+                    else if (NewArtwork.Contains("jpg"))
+                        path += ".jpg";
+                    else if (NewArtwork.Contains("jpeg"))
+                        path += ".jpeg";
+                    await dialogService.DLLFile(NewBoxart, path, "Boxart", Source.Name);
+                    Source.BoxartPath = path;
+                });
+            }
+            if (Source.BannerPath != NewBanner)
+            {
+                await gameDetailService.GetNewImgPath(Source, (int)ScraperType.Banner).ContinueWith(async task => {
+                    var path = task.Result;
+                    if (NewArtwork.Contains("png"))
+                        path += ".png";
+                    else if (NewArtwork.Contains("jpg"))
+                        path += ".jpg";
+                    else if (NewArtwork.Contains("jpeg"))
+                        path += ".jpeg";
+                    await dialogService.DLLFile(NewBanner, path, "Banner", Source.Name);
+                    Source.BannerPath = path;
+                });
+            }
+            if (Source.ScreenshootPath != NewArtwork)
+            {
+                await gameDetailService.GetNewImgPath(Source, (int)ScraperType.ArtWork).ContinueWith(async task =>
+                {
+                    var path = task.Result;
+                    if (NewArtwork.Contains("png"))
+                        path += ".png";
+                    else if (NewArtwork.Contains("jpg"))
+                        path += ".jpg";
+                    else if (NewArtwork.Contains("jpeg"))
+                        path += ".jpeg";
+                    await dialogService.DLLFile(NewArtwork,path, "Artwork", Source.Name);
+                    Source.ScreenshootPath = path;
+                });
+            }
+            await SaveChange();
         }
         private async void ScrapeMetadata()
         {
             var findgame = await dialogService.ShowMetadataScrapeChoice(Source);
             if (findgame != null)
             {
+                Source.Year = findgame.Year;
+                Source.Genre = findgame.Genre;
+                Source.Editeur = findgame.Editeur;
+                Source.Developpeur = findgame.Developpeur;
+                Source.Description = findgame.Description;
             }
         }
     }

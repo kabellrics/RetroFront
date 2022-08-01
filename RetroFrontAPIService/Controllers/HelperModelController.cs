@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RetroFront.Models;
+using RetroFrontAPIService.Service;
 using RetroFrontAPIService.Service.Interface;
 using System;
 using System.Collections.Generic;
@@ -73,10 +74,10 @@ namespace RetroFrontAPIService.Controllers
             return Ok(item);
         }
         [HttpPost("GetImgPathForGame")]
-        public ActionResult<string> GetImgPathForGame(GameRom game, int sGDBType)
+        public ActionResult<ThemePath> GetImgPathForGame(GameRom game, int sGDBType)
         {
             var item = _helperModelService.GetImgPathForGame(game, sGDBType);
-            return Ok(item);
+            return Ok(new ThemePath(item));
         }
     }
 }

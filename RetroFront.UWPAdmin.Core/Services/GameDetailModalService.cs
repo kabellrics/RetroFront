@@ -10,9 +10,8 @@ using System.Windows.Input;
 
 namespace RetroFront.UWPAdmin.Core.Services
 {
-    public class GameDetailModalService
+    public class GameDetailModalService: BaseService
     {
-        private GameDataProviderClient gameDataProvider;
         public GameDetailModalService()
         {
             gameDataProvider = new GameDataProviderClient();

@@ -75,6 +75,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Button Click="btshowIntel_Click" Content="Modifier les Champs"></Button>
                     <Button Content="Scraper les Champs" Command="{x:Bind ViewModel.ScrapeMetadataCommand}"></Button>
+                    <Button Content="Sauvegarder les modifications" Command="{x:Bind ViewModel.SaveAndDLLCommand}"></Button>
                 </StackPanel>
                 <Grid x:Name="btshowIntel">
                         <Grid.ColumnDefinitions>

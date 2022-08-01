@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace RetroFront.UWPAdmin.Core.Services
 {
-    public class EmulatorDetailService
+    public class EmulatorDetailService: BaseService
     {
-        private EmulatorClient emulatorClient = new EmulatorClient();
         public DisplayEmulator GetEmulator(int ID)
         {
             var sys = emulatorClient.EmulatorGet(ID).Result;

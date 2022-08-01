@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace RetroFront.UWPAdmin.Core.Services
 {
-    public class SystemesService
+    public class SystemesService: BaseService
     {
-        private SystemeClient systemeClient = new SystemeClient();
         public async Task<IEnumerable<DisplaySysteme>> GetSystemes()
         {
             List<DisplaySysteme> displaySystemes = new List<DisplaySysteme>();
