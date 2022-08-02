@@ -13,6 +13,7 @@ using RetroFront.UWPAdmin.Core.Models;
 using RetroFront.UWPAdmin.Core.Services;
 using RetroFront.UWPAdmin.Helpers;
 using RetroFront.UWPAdmin.Services;
+using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml.Navigation;
 
 namespace RetroFront.UWPAdmin.ViewModels
@@ -140,6 +141,17 @@ namespace RetroFront.UWPAdmin.ViewModels
                 NewArtwork = Source.ScreenshootPath;
             }
         }
+        public async void Initialize(string selectedGameID)
+        {
+            if (!string.IsNullOrEmpty(selectedGameID))
+            {
+                Source = await gameDetailService.GetGame(int.Parse(selectedGameID));
+                NewLogo = Source.LogoPath;
+                NewBoxart = Source.BoxartPath;
+                NewBanner = Source.BannerPath;
+                NewArtwork = Source.ScreenshootPath;
+            }
+        }
         private async void ScrapeIGDB()
         {
             var findgame = await dialogService.SearchSteamGridDBByName(Source.Name, Core.APIHelper.ScraperSource.IGDB);
@@ -200,62 +212,81 @@ namespace RetroFront.UWPAdmin.ViewModels
         {
             if (Source.LogoPath != NewLogo)
             {
-                await gameDetailService.GetNewImgPath(Source, (int)ScraperType.Logo).ContinueWith(async task => {
-                    var path = task.Result;
-                    if (NewArtwork.Contains("png"))
-                        path += ".png";
-                    else if (NewArtwork.Contains("jpg"))
-                        path += ".jpg";
-                    else if (NewArtwork.Contains("jpeg"))
-                        path += ".jpeg";
-                    await dialogService.DLLFile(NewLogo, path, "Logo", Source.Name);
-                    Source.LogoPath = path;
+                var path = await gameDetailService.GetNewImgPath(Source, (int)ScraperType.Logo);
+                if (NewLogo.Contains("screenscraper"))
+                    path += ".png";
+                else if (NewLogo.Contains("png"))
+                    path += ".png";
+                else if (NewLogo.Contains("jpg"))
+                    path += ".jpg";
+                else if (NewLogo.Contains("jpeg"))
+                    path += ".jpeg";
+                await dialogService.DLLFile(NewLogo, path, "Logo", Source.Name).ContinueWith(async task =>
+                {
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => {
+                        Source.LogoPath = path;
+                });
                 });
             }
             if (Source.BoxartPath != NewBoxart)
             {
-                await gameDetailService.GetNewImgPath(Source, (int)ScraperType.Boxart).ContinueWith(async task => {
-                    var path = task.Result;
-                    if (NewArtwork.Contains("png"))
-                        path += ".png";
-                    else if (NewArtwork.Contains("jpg"))
-                        path += ".jpg";
-                    else if (NewArtwork.Contains("jpeg"))
-                        path += ".jpeg";
-                    await dialogService.DLLFile(NewBoxart, path, "Boxart", Source.Name);
-                    Source.BoxartPath = path;
+                var path = await gameDetailService.GetNewImgPath(Source, (int)ScraperType.Boxart);
+                if (NewBoxart.Contains("screenscraper"))
+                    path += ".jpg";
+                else if (NewBoxart.Contains("png"))
+                    path += ".png";
+                else if (NewBoxart.Contains("jpg"))
+                    path += ".jpg";
+                else if (NewBoxart.Contains("jpeg"))
+                    path += ".jpeg";
+                await dialogService.DLLFile(NewBoxart, path, "Boxart", Source.Name).ContinueWith(async task =>
+                {
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => {
+                        Source.BoxartPath = path;
+                });
                 });
             }
             if (Source.BannerPath != NewBanner)
             {
-                await gameDetailService.GetNewImgPath(Source, (int)ScraperType.Banner).ContinueWith(async task => {
-                    var path = task.Result;
-                    if (NewArtwork.Contains("png"))
-                        path += ".png";
-                    else if (NewArtwork.Contains("jpg"))
-                        path += ".jpg";
-                    else if (NewArtwork.Contains("jpeg"))
-                        path += ".jpeg";
-                    await dialogService.DLLFile(NewBanner, path, "Banner", Source.Name);
-                    Source.BannerPath = path;
+                var path = await gameDetailService.GetNewImgPath(Source, (int)ScraperType.Banner);
+                if (NewBanner.Contains("screenscraper"))
+                    path += ".jpg";
+                else if (NewBanner.Contains("png"))
+                    path += ".png";
+                else if (NewBanner.Contains("jpg"))
+                    path += ".jpg";
+                else if (NewBanner.Contains("jpeg"))
+                    path += ".jpeg";
+                await dialogService.DLLFile(NewBanner, path, "Banner", Source.Name).ContinueWith(async task =>
+                {
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => {
+                        Source.BannerPath = path;
+                });
                 });
             }
             if (Source.ScreenshootPath != NewArtwork)
             {
-                await gameDetailService.GetNewImgPath(Source, (int)ScraperType.ArtWork).ContinueWith(async task =>
+                var path = await gameDetailService.GetNewImgPath(Source, (int)ScraperType.ArtWork);
+                if (NewArtwork.Contains("screenscraper"))
+                    path += ".jpg";
+                else if (NewArtwork.Contains("png"))
+                    path += ".png";
+                else if (NewArtwork.Contains("jpg"))
+                    path += ".jpg";
+                else if (NewArtwork.Contains("jpeg"))
+                    path += ".jpeg";
+                await dialogService.DLLFile(NewArtwork, path, "Artwork", Source.Name).ContinueWith(async task =>
                 {
-                    var path = task.Result;
-                    if (NewArtwork.Contains("png"))
-                        path += ".png";
-                    else if (NewArtwork.Contains("jpg"))
-                        path += ".jpg";
-                    else if (NewArtwork.Contains("jpeg"))
-                        path += ".jpeg";
-                    await dialogService.DLLFile(NewArtwork,path, "Artwork", Source.Name);
-                    Source.ScreenshootPath = path;
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => {
+                        Source.ScreenshootPath = path;
                 });
+                });
+
+
             }
             await SaveChange();
+            Initialize(Source.ID.ToString()); ;
+
         }
         private async void ScrapeMetadata()
         {

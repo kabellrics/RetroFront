@@ -32,10 +32,19 @@
             Or to use an IconElement instead of a Symbol see https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/UWP/projectTypes/navigationpane.md
             Edit String/en-US/Resources.resw: Add a menu item title for each page
             -->
-            <winui:NavigationViewItem x:Uid="Shell_Home" Icon="Document" helpers:NavHelper.NavigateTo="views:HomePage" />
-            <winui:NavigationViewItem x:Uid="Shell_Systèmes" Icon="Document" helpers:NavHelper.NavigateTo="views:SystèmesPage" />
-            <winui:NavigationViewItem x:Uid="Shell_Emulateurs" Icon="Document" helpers:NavHelper.NavigateTo="views:EmulateursPage" />
-            <winui:NavigationViewItem x:Uid="Shell_Games" Icon="Document" helpers:NavHelper.NavigateTo="views:GamesPage" />
+            <winui:NavigationViewItem x:Uid="Shell_Home" Icon="Home" helpers:NavHelper.NavigateTo="views:HomePage" />
+            <winui:NavigationViewItem x:Uid="Shell_Systèmes" Icon="Library" helpers:NavHelper.NavigateTo="views:SystèmesPage" />
+            <winui:NavigationViewItem x:Uid="Shell_Emulateurs" Icon="XboxOneConsole" helpers:NavHelper.NavigateTo="views:EmulateursPage" />
+            <winui:NavigationViewItem x:Uid="Shell_Games" Icon="Folder">
+                <winui:NavigationViewItem.MenuItems>
+                    <winui:NavigationViewItem Name="Systèmes" Content="Systèmes" Tag="Systèmes" Icon="Library"  helpers:NavHelper.NavigateTo="views:GamesPage"/>
+                    <winui:NavigationViewItem Name="Emulateur" Content="Emulateur" Tag="Emulateur" Icon="XboxOneConsole" helpers:NavHelper.NavigateTo="views:GamesPage"/>
+                    <winui:NavigationViewItem Name="Genre" Content="Genre" Tag="Genre" Icon="Library" helpers:NavHelper.NavigateTo="views:GamesPage"/>
+                    <winui:NavigationViewItem Name="Année" Content="Année" Tag="Année" Icon="Calendar" helpers:NavHelper.NavigateTo="views:GamesPage"/>
+                    <winui:NavigationViewItem Name="Dévellopeur" Content="Dévellopeur" Tag="Dévellopeur" Icon="Admin" helpers:NavHelper.NavigateTo="views:GamesPage"/>
+                    <winui:NavigationViewItem Name="Editeur" Content="Editeur" Tag="Editeur" Icon="Account" helpers:NavHelper.NavigateTo="views:GamesPage"/>
+                </winui:NavigationViewItem.MenuItems>
+            </winui:NavigationViewItem>
         </winui:NavigationView.MenuItems>
         <i:Interaction.Behaviors>
             <behaviors:NavigationViewHeaderBehavior

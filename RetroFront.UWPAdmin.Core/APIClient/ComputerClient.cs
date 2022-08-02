@@ -183,6 +183,8 @@ namespace RetroFront.UWPAdmin.Core.APIClient
                     }
                 }
             }
+            catch(Exception ex) 
+            { }
             finally
             {
                 if (client_ != null)

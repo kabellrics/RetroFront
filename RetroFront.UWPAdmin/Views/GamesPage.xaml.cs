@@ -16,13 +16,18 @@ namespace RetroFront.UWPAdmin.Views
         public GamesPage()
         {
             InitializeComponent();
-            Loaded += GamesPage_Loaded;
+            //Loaded += GamesPage_Loaded;
         }
-
-        private async void GamesPage_Loaded(object sender, RoutedEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            await ViewModel.LoadDataAsync();
+            base.OnNavigatedTo(e);
+            await ViewModel.LoadDataAsync(e.Parameter as string);
+            //ViewModel.Initialize(e.Parameter as string, e.NavigationMode);
         }
+        //private async void GamesPage_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    await ViewModel.LoadDataAsync();
+        //}
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             base.OnNavigatingFrom(e);
@@ -52,38 +57,6 @@ namespace RetroFront.UWPAdmin.Views
             ViewModel.OnItemSelected(e.ClickedItem as DisplayGame);
         }
 
-        private void RadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (sender is RadioButtons rb)
-            {
-                string groupedType = rb.SelectedItem as string;
-                switch (groupedType)
-                {
-                    case "Système":
-                        ViewModel.GroupedSysteme();
-                        break;
-                    case "Emulateur":
-                        ViewModel.GroupedEmulator();
-                        break;
-                    case "Genre":
-                        ViewModel.GroupedGenre();
-                        break;
-                    case "Année":
-                        ViewModel.GroupedYear();
-                        break;
-                    case "Editeur":
-                        ViewModel.GroupedEditeur();
-                        break;
-                    case "Devellopeur":
-                        ViewModel.GroupedDev();
-                        break;
-                }
-            }
-        }
 
-        private void RadioButtons_Loaded(object sender, RoutedEventArgs e)
-        {
-            radiogrpBtS.SelectedIndex = 0;
-        }
     }
 }

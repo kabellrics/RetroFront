@@ -54,6 +54,15 @@ namespace RetroFront.UWPAdmin.ViewModels
                 SetProperty(ref _toggleRaw, value);
             }
         }
+        private String _typepage;
+        public String TypePage
+        {
+            get => _typepage;
+            set
+            {
+                SetProperty(ref _typepage, value);
+            }
+        }
         public GamesViewModel()
         {
             gamesService = new GamesService();
@@ -77,17 +86,17 @@ namespace RetroFront.UWPAdmin.ViewModels
         //    await LoadDataAsync();
         //}
 
-        public async Task LoadDataAsync()
+        public async Task LoadDataAsync(string type = "")
         {
             Source.Clear();
             RawSource.Clear();
-            // Replace this with your actual data
-            //var data = await SampleDataService.GetImageGalleryDataAsync("ms-appx:///Assets");
-            //var data = await gamesService.GetGroupedBySystemes();
-            //foreach (var item in data)
-            //{
-            //    Source.Add(item);
-            //}
+            TypePage = type;
+            if(TypePage == "Systèmes") { GroupedSysteme(); }
+            else if(TypePage == "Emulateur") { GroupedEmulator(); }
+            else if(TypePage == "Genre") { GroupedGenre(); }
+            else if(TypePage == "Année") { GroupedYear(); }
+            else if(TypePage == "Dévellopeur") { GroupedDev(); }
+            else if(TypePage == "Editeur") { GroupedEditeur(); }
         }
         public async void InitRawData()
         {

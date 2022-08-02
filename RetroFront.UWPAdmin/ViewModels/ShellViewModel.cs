@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -60,6 +61,7 @@ namespace RetroFront.UWPAdmin.ViewModels
             NavigationService.NavigationFailed += Frame_NavigationFailed;
             NavigationService.Navigated += Frame_Navigated;
             _navigationView.BackRequested += OnBackRequested;
+
         }
 
         private async void OnLoaded()
@@ -84,7 +86,7 @@ namespace RetroFront.UWPAdmin.ViewModels
 
                 if (pageType != null)
                 {
-                    NavigationService.Navigate(pageType, null, args.RecommendedNavigationTransitionInfo);
+                    NavigationService.Navigate(pageType, selectedItem.Tag, args.RecommendedNavigationTransitionInfo);
                 }
             }
         }
@@ -158,4 +160,5 @@ namespace RetroFront.UWPAdmin.ViewModels
             args.Handled = result;
         }
     }
+
 }

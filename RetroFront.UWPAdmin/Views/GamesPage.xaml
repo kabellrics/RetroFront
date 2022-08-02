@@ -31,15 +31,6 @@
                 <ColumnDefinition Width="7*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Grouper par :" Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-            <muxc:RadioButtons x:Name="radiogrpBtS" Grid.Column="1" SelectedIndex="0" MaxColumns="6" SelectionChanged="RadioButtons_SelectionChanged" Loaded="RadioButtons_Loaded">
-                <x:String>Système</x:String>
-                <x:String>Emulateur</x:String>
-                <x:String>Genre</x:String>
-                <x:String>Année</x:String>
-                <x:String>Editeur</x:String>
-                <x:String>Devellopeur</x:String>
-            </muxc:RadioButtons>
             <ToggleButton Grid.Column="2" x:Name="toggleRawBT" IsChecked="{x:Bind ViewModel.ToggleRaw,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" HorizontalContentAlignment="Center"
                       Content="Voir les données Bruts" Click="toggleRawBT_Click" Style="{StaticResource ToggleButtonRevealStyle}"></ToggleButton>
         </Grid>

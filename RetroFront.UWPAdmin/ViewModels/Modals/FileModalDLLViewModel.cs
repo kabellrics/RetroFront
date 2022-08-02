@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 
 namespace RetroFront.UWPAdmin.ViewModels.Modals
 {
@@ -71,33 +72,28 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
         public FileModalDLLViewModel()
         {
         }
-
+        public async void FinishedTask()
+        {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => {
+                EnableNextButton = true;
+                ProgressRolling = false;
+            });
+        }
         public async void StartLoading()
         {
+            //EnableNextButton = false;
             ProgressRolling = true;
             if (SourceByte != null)
             {
-                var tachebyte = Task.Run(() => service.WriteByte(SourceByte, Dest)).ContinueWith(task =>
-                {
-                    EnableNextButton = true;
-                    ProgressRolling = false;
-                });
+                await service.WriteByte(SourceByte, Dest).ContinueWith(task => FinishedTask());
             }
             else if (Source.StartsWith("http"))
             {
-                var tachedll = Task.Run(() => service.DLLFile(Source, Dest)).ContinueWith(task =>
-                {
-                    EnableNextButton = true;
-                    ProgressRolling = false;
-                });
+                await service.DLLFile(Source, Dest).ContinueWith(task => FinishedTask());
             }
             else
             {
-                var tachecopy = Task.Run(() => service.CopyFile(Source, Dest)).ContinueWith(task =>
-                {
-                    EnableNextButton = true;
-                    ProgressRolling = false;
-                });
+                await service.CopyFile(Source, Dest).ContinueWith(task => FinishedTask());
             }
         }
     }

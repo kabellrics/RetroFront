@@ -35,21 +35,21 @@ namespace RetroFront.UWPAdmin.Core.Services
             var obj = new CopyAndDLLObject();
             obj.Dest = dest;
             obj.Source = source;
-            Task t = Task.Run(()=> computerClient.FileCopyAsync(string.Empty, obj));
+            await computerClient.FileCopyAsync(dest, obj);
         }
         public async Task DLLFile(String source, String dest)
         {
             var obj = new CopyAndDLLObject();
             obj.Dest = dest;
             obj.Source = source;
-            Task t = Task.Run(() => computerClient.FileDLLAsync(string.Empty, obj));
+            await computerClient.FileDLLAsync(dest, obj);
         }
         public async Task WriteByte(byte[] source, String dest)
         {
             var obj = new DLLByteObject();
             obj.Source = source;
             obj.Dest = dest;
-            Task t = Task.Run(() => computerClient.ByteArrayDLLAsync(string.Empty, obj));
+            await computerClient.ByteArrayDLLAsync(dest, obj);
         }
     }
 }
