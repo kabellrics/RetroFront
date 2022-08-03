@@ -81,17 +81,18 @@ namespace RetroFront.UWPAdmin.Core.Services
                 else if (CurrentScrapeSource == ScraperSource.IGDB)
                 {                    
                     var detailart = gameDataProvider.GetArtworksByGameId(gameId).Result;
-                    var detailsch = gameDataProvider.GetScreenshotsByGameId(gameId).Result;
+                    //var detailsch = gameDataProvider.GetScreenshotsByGameId(gameId).Result;
                     if (detailart != null)
                     {
-                        var resultartigdb = detailart.Select(x => x.Url);
+                        var resultartigdb = detailart.Select(x => $"https://images.igdb.com/igdb/image/upload/t_1080p/" + x.Image_id + ".jpg");
                         ResultImgs.AddRange(resultartigdb);
+                        //$"https://images.igdb.com/igdb/image/upload/t_1080p/" + resultartigdb + ".jpg"
                     }
-                    if (detailsch != null)
-                    {
-                        var resultschigdb = detailsch.Select(x => x.Url);
-                        ResultImgs.AddRange(resultschigdb);
-                    }
+                    //if (detailsch != null)
+                    //{
+                    //    var resultschigdb = detailsch.Select(x => x.Url);
+                    //    ResultImgs.AddRange(resultschigdb);
+                    //}
                 }
                 else if (CurrentScrapeSource == ScraperSource.Screenscraper)
                 {

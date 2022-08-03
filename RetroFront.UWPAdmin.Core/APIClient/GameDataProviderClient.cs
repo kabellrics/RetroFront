@@ -1186,6 +1186,10 @@ namespace RetroFront.UWPAdmin.Core.APIClient
                     }
                 }
             }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
             finally
             {
                 if (disposeClient_)

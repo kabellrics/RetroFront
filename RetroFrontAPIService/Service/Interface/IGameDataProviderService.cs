@@ -26,7 +26,7 @@ namespace RetroFrontAPIService.Service.Interface
         IEnumerable<ImgResult> GetLogoForId(int gameId);
         IEnumerable<Search> GetPlatformByName(string name);
         IEnumerable<Company> GetPublishersByGameId(int id);
-        IEnumerable<RetroFront.Models.IGDB.Screenshot> GetScreenshotsByGameId(int id);
+        IEnumerable<RetroFront.Models.IGDB.Artwork> GetScreenshotsByGameId(int id);
         Task<List<RetroFront.Models.ScreenScraper.System.Systeme>> GetSSCPSystemes();
         string GetSystemeImgDLL(string type, string SCSPSysID);
         string GetSystemeVideoDLL(string SCSPSysID);

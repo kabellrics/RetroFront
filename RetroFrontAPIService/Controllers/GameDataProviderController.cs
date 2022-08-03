@@ -68,7 +68,7 @@ namespace RetroFrontAPIService.Controllers
         [HttpGet("ScreenScraper/GetJeuxDetail/{id}")]
         public ActionResult<SCGamedetail> GetJeuxDetail(int id)
         {
-            return Ok( new SCGamedetail(_gameDataProviderService.GetJeuxDetail(id)));
+            return Ok(new SCGamedetail(_gameDataProviderService.GetJeuxDetail(id)));
         }
         [HttpGet("ScreenScraper/GetJeuxMedias/{id}")]
         public ActionResult<List<Media>> GetJeuxMedia(int id)
@@ -107,7 +107,14 @@ namespace RetroFrontAPIService.Controllers
         [HttpGet("IGDB/GetArtworksByGameId/{id}")]
         public ActionResult<IEnumerable<RetroFront.Models.IGDB.Artwork>> GetArtworksByGameId(int id)
         {
-            return Ok(_gameDataProviderService.GetArtworksByGameId(id));
+            List<RetroFront.Models.IGDB.Artwork> result = new List<RetroFront.Models.IGDB.Artwork>();
+            var artl = _gameDataProviderService.GetArtworksByGameId(id);
+            if (artl != null)
+                result.AddRange(artl);
+            var scrl = _gameDataProviderService.GetScreenshotsByGameId(id);
+            if (scrl != null)
+                result.AddRange(scrl);
+            return Ok(result);
         }
         [HttpGet("IGDB/GetGenresByGameId/{id}")]
         public ActionResult<IEnumerable<RetroFront.Models.IGDB.Genre>> GetGenresByGameId(int id)
@@ -123,12 +130,12 @@ namespace RetroFrontAPIService.Controllers
         public ActionResult<IEnumerable<RetroFront.Models.IGDB.Video>> GetVideosByGameId(int id)
         {
             return Ok(_gameDataProviderService.GetVideosByGameId(id));
-        } 
+        }
         [HttpGet("IGDB/GetThemesByGameId/{id}")]
         public ActionResult<IEnumerable<RetroFront.Models.IGDB.Video>> GetThemesByGameId(int id)
         {
             return Ok(_gameDataProviderService.GetThemesByGameId(id));
-        }      
+        }
         [HttpGet("IGDB/GetInvolvedCompanyByGameId/{id}")]
         public ActionResult<IEnumerable<RetroFront.Models.IGDB.InvolvedCompany>> GetInvolvedCompanyByGameId(int id)
         {

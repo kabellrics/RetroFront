@@ -178,7 +178,7 @@ namespace RetroFrontAPIService.Service.Implémentation
             else
                 return null;
         }
-        public IEnumerable<RetroFront.Models.IGDB.Screenshot> GetScreenshotsByGameId(int id)
+        public IEnumerable<RetroFront.Models.IGDB.Artwork> GetScreenshotsByGameId(int id)
         {
             //string urlrequest = "https://api.igdb.com/v4/games/" + id.ToString() + "?fields=id,name,artworks.*,cover.*,first_release_date,genres.*,screenshots.*,storyline,summary,version_title,videos.*,themes.*";
             string urlrequest = "https://api.igdb.com/v4/games/" + id.ToString() + "?fields=id,screenshots.*";
@@ -196,11 +196,11 @@ namespace RetroFrontAPIService.Service.Implémentation
             if (jsondata["screenshots"] != null)
             {
                 IList<JToken> results = jsondata["screenshots"].Children().ToList();
-                IList<RetroFront.Models.IGDB.Screenshot> searchResults = new List<RetroFront.Models.IGDB.Screenshot>();
+                IList<RetroFront.Models.IGDB.Artwork> searchResults = new List<RetroFront.Models.IGDB.Artwork>();
                 foreach (JToken result in results)
                 {
                     // JToken.ToObject is a helper method that uses JsonSerializer internally
-                    RetroFront.Models.IGDB.Screenshot searchResult = result.ToObject<RetroFront.Models.IGDB.Screenshot>();
+                    RetroFront.Models.IGDB.Artwork searchResult = result.ToObject<RetroFront.Models.IGDB.Artwork>();
                     searchResults.Add(searchResult);
                 }
                 return searchResults;
