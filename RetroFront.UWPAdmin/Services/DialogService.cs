@@ -237,6 +237,25 @@ namespace RetroFront.UWPAdmin.Services
             }
         }
 
+        public async Task<String> FileImgPicker()
+        {
+            var picker = new Windows.Storage.Pickers.FileOpenPicker();
+            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
+            foreach(var ext in new System.Collections.Generic.List<string>() { ".jpg", ".jpeg", ".png" })
+                {
+                    picker.FileTypeFilter.Add(ext);
+                }
+            Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
+            if (file != null)
+            {
+                return file.Path;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
         public async Task<String> FolderPicker()
         {
             var folderPicker = new Windows.Storage.Pickers.FolderPicker();

@@ -23,6 +23,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height=".05*"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height=".25*"></RowDefinition>
                 </Grid.RowDefinitions>
@@ -30,12 +31,16 @@
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Style="{StaticResource ButtonRevealStyle}" Grid.Row="1" Grid.Column="0" >
+                <Button Style="{StaticResource ButtonRevealStyle}" Grid.Row="1" Grid.Column="0" Command="{x:Bind ViewModel.ScrapeLogoCommand}">
                     <controls:ImageEx x:Name="thumbnailImage" Height="500" Width="500" Stretch="Uniform" Source="{x:Bind ViewModel.Source.Logo}"></controls:ImageEx>
                 </Button>
-                <Button Style="{StaticResource ButtonRevealStyle}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                <Button Style="{StaticResource ButtonRevealStyle}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Command="{x:Bind ViewModel.ScrapeScreenshootCommand}">
                     <controls:ImageEx Height="540" Width="960" Stretch="Fill" Source="{x:Bind ViewModel.Source.Screenshoot}"></controls:ImageEx>
                 </Button>
+                <StackPanel Orientation="Horizontal" Grid.Row="2">
+                    <Button Content="Modifier les Champs" Click="Button_Click"></Button>
+                    <Button Content="Sauvegarder les modifications" Command="{x:Bind ViewModel.SaveAndDLLCommand}"></Button>
+                </StackPanel>
                 <Grid x:Name="btTextblock" Grid.Row="1" Grid.Column="1" Visibility="Visible" VerticalAlignment="Stretch">
                     <Button Style="{StaticResource ButtonRevealStyle}" VerticalAlignment="Stretch">
                         <Grid>

@@ -18,5 +18,15 @@ namespace RetroFront.UWPAdmin.Core.Services
         {
             await systemeClient.SystemePutAsync(system.ID, system.Systeme);
         }
+        public async Task<String> GetNewLogoPath(DisplaySysteme system)
+        {
+            var result = await themeClient.GetLogoPathForThemeAsync(system.Systeme.Shortname);
+            return result.Result.Path;
+        }
+        public async Task<String> GetNewScreenshootPath(DisplaySysteme system)
+        {
+            var result = await themeClient.GetImagePathForThemeAsync(system.Systeme.Shortname);
+            return result.Result.Path;
+        }
     }
 }

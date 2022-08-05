@@ -285,7 +285,9 @@ namespace RetroFront.UWPAdmin.ViewModels
 
             }
             await SaveChange();
-            Initialize(Source.ID.ToString()); ;
+            var saveID = Source.ID;
+            Source = null;
+            Initialize(saveID.ToString());
 
         }
         private async void ScrapeMetadata()

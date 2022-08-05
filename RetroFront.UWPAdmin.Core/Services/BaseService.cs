@@ -15,6 +15,7 @@ namespace RetroFront.UWPAdmin.Core.Services
         protected GameDataProviderClient gameDataProvider;
         protected ComputerClient computerClient = new ComputerClient();
         protected HelperModelClient helperModelClient = new HelperModelClient();
+        protected ThemeClient themeClient = new ThemeClient();
 
         public async Task CopyDLLFile(String source,String dest)
         {

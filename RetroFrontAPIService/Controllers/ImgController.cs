@@ -53,17 +53,17 @@ namespace RetroFrontAPIService.Controllers
             var sys = _databaseService.GetSysteme(idsys);
             if(sys !=null)
             {
-                //if (System.IO.File.Exists(sys.Screenshoot))
-                //{
-                //    return GetFile(sys.Screenshoot);
-                //}
-                //else
-                //{
+                if (System.IO.File.Exists(sys.Screenshoot))
+                {
+                    return GetFile(sys.Screenshoot);
+                }
+                else
+                {
                     var currenttheme = _fileJSONService.GetCurrentTheme().Path;
                    var bckforsystem = _themeService.GetBckForTheme(sys.Shortname, currenttheme).Path;
                     return GetFile(bckforsystem);
-                //}
             }
+        }
             return NotFound();
         }
         [HttpGet("GetLogoForGame/{idgame}")]

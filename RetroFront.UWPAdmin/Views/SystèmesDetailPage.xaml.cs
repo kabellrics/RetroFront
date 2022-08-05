@@ -32,7 +32,7 @@ namespace RetroFront.UWPAdmin.Views
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             base.OnNavigatingFrom(e);
-            ViewModel.SaveChangeCommand.Execute(true);
+            //ViewModel.SaveChangeCommand.Execute(true);
         }
         //protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         //{
@@ -50,6 +50,20 @@ namespace RetroFront.UWPAdmin.Views
             {
                 NavigationService.GoBack();
                 e.Handled = true;
+            }
+        }
+
+        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (btTextblock.Visibility == Windows.UI.Xaml.Visibility.Visible)
+            {
+                btTextblock.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                btTextbox.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
+            else
+            {
+                btTextblock.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                btTextbox.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             }
         }
     }
