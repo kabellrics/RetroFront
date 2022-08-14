@@ -1,0 +1,26 @@
+{
+  "Id": "pcsx2",
+  "Name": "PCSX2",
+  "Website": "https://pcsx2.net/",
+  "Plateformes": [
+    {
+      "Name": "Playstation 2",
+      "Shortname": "ps2",
+      "StartupArguments": "\"{ImagePath}\" --nogui --fullscreen",
+      "Platforms": [
+        "sony_playstation2"
+      ],
+      "ImageExtensions": [
+        "iso",
+        "bin",
+        "mdf",
+        "nrg",
+        "img",
+        "gz",
+        "cso",
+        "chd"
+      ],
+      "StartupExecutable": "^pcsx2\\.exe$"
+    }
+  ]
+}

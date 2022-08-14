@@ -9,4 +9,8 @@
      <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.2" />
      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
    </ItemGroup>
+
+   <ItemGroup>
+     <Folder Include="Models\EpicGame\" />
+   </ItemGroup>
 </Project>

@@ -16,6 +16,8 @@ namespace RetroFront.UWPAdmin.Core.Services
         protected ComputerClient computerClient = new ComputerClient();
         protected HelperModelClient helperModelClient = new HelperModelClient();
         protected ThemeClient themeClient = new ThemeClient();
+        protected SettingsClient settingsClient = new SettingsClient();
+        protected ExternalAppClient externalAppClient = new ExternalAppClient();
 
         public async Task CopyDLLFile(String source,String dest)
         {

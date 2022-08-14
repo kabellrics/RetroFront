@@ -1,0 +1,2037 @@
+{
+  "Name": "RetroArch",
+  "Plateformes": [
+    {
+      "Name": "3DO Interactive Multiplayer",
+      "Shortname": "3do",
+      "StartupArguments": "-L \".\\cores\\4do_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "3do"
+      ],
+      "ImageExtensions": [
+        "iso",
+        "bin",
+        "chd",
+        "cue",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sinclair ZX81",
+      "Shortname": "sinclair_zx81",
+      "StartupArguments": "-L \".\\cores\\81_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sinclair_zx81"
+      ],
+      "ImageExtensions": [
+        "p",
+        "tzx",
+        "t81",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Atari 8-bit",
+      "Shortname": "atari_8bit",
+      "StartupArguments": "-L \".\\cores\\atari800_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "atari_8bit"
+      ],
+      "ImageExtensions": [
+        "xfd",
+        "atr",
+        "atx",
+        "cdm",
+        "cas",
+        "bin",
+        "a52",
+        "xex",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sega Genesis",
+      "Shortname": "sega_genesis",
+      "StartupArguments": "-L \".\\cores\\blastem_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sega_genesis"
+      ],
+      "ImageExtensions": [
+        "md",
+        "bin",
+        "smd",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Entertainment System",
+      "Shortname": "nintendo_nes",
+      "StartupArguments": "-L \".\\cores\\bnes_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_nes"
+      ],
+      "ImageExtensions": [
+        "nes",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\bsnes_cplusplus98_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes"
+      ],
+      "ImageExtensions": [
+        "sfc",
+        "smc",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\bsnes_hd_beta_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes"
+      ],
+      "ImageExtensions": [
+        "sfc",
+        "smc",
+        "gb",
+        "gbc",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\bsnes_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes"
+      ],
+      "ImageExtensions": [
+        "sfc",
+        "smc",
+        "gb",
+        "gbc",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\bsnes_mercury_accuracy_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes"
+      ],
+      "ImageExtensions": [
+        "sfc",
+        "smc",
+        "bml",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\bsnes_mercury_balanced_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes"
+      ],
+      "ImageExtensions": [
+        "sfc",
+        "smc",
+        "bml",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\bsnes_mercury_performance_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes"
+      ],
+      "ImageExtensions": [
+        "sfc",
+        "smc",
+        "bml",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\bsnes2014_accuracy_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes"
+      ],
+      "ImageExtensions": [
+        "sfc",
+        "smc",
+        "bml",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\bsnes2014_balanced_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes"
+      ],
+      "ImageExtensions": [
+        "sfc",
+        "smc",
+        "bml",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\bsnes2014_performance_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes"
+      ],
+      "ImageExtensions": [
+        "sfc",
+        "smc",
+        "bml",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Amstrad CPC",
+      "Shortname": "amstrad_cpc",
+      "StartupArguments": "-L \".\\cores\\cap32_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "amstrad_cpc"
+      ],
+      "ImageExtensions": [
+        "dsk",
+        "sna",
+        "zip",
+        "tap",
+        "cdt",
+        "voc",
+        "m3u",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo 3DS",
+      "Shortname": "nintendo_3ds",
+      "StartupArguments": "-L \".\\cores\\citra_canary_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_3ds"
+      ],
+      "ImageExtensions": [
+        "3ds",
+        "3dsx",
+        "elf",
+        "axf",
+        "cci",
+        "cxi",
+        "app",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo 3DS",
+      "Shortname": "nintendo_3ds",
+      "StartupArguments": "-L \".\\cores\\citra_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_3ds"
+      ],
+      "ImageExtensions": [
+        "3ds",
+        "3dsx",
+        "elf",
+        "axf",
+        "cci",
+        "cxi",
+        "app",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Amstrad CPC",
+      "Shortname": "amstrad_cpc",
+      "StartupArguments": "-L \".\\cores\\crocods_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "amstrad_cpc"
+      ],
+      "ImageExtensions": [
+        "dsk",
+        "sna",
+        "kcr",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo DS",
+      "Shortname": "nintendo_ds",
+      "StartupArguments": "-L \".\\cores\\desmume_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_ds"
+      ],
+      "ImageExtensions": [
+        "nds",
+        "bin",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo DS",
+      "Shortname": "nintendo_ds",
+      "StartupArguments": "-L \".\\cores\\desmume2015_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_ds"
+      ],
+      "ImageExtensions": [
+        "nds",
+        "bin",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo GameCube",
+      "Shortname": "nintendo_gamecube",
+      "StartupArguments": "-L \".\\cores\\dolphin_launcher_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_gamecube",
+        "nintendo_wii"
+      ],
+      "ImageExtensions": [
+        "elf",
+        "dol",
+        "gcm",
+        "iso",
+        "wbfs",
+        "ciso",
+        "gcz",
+        "wad",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo GameCube",
+      "Shortname": "nintendo_gamecube",
+      "StartupArguments": "-L \".\\cores\\dolphin_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_gamecube",
+        "nintendo_wii"
+      ],
+      "ImageExtensions": [
+        "gcm",
+        "iso",
+        "wbfs",
+        "ciso",
+        "gcz",
+        "elf",
+        "dol",
+        "dff",
+        "tgc",
+        "wad",
+        "zip",
+        "7z",
+        "rvz"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "PC (DOS)",
+      "Shortname": "pc_dos",
+      "StartupArguments": "-L \".\\cores\\dosbox_core_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "pc_dos"
+      ],
+      "ImageExtensions": [
+        "exe",
+        "com",
+        "bat",
+        "conf",
+        "cue",
+        "iso",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "PC (DOS)",
+      "Shortname": "pc_dos",
+      "StartupArguments": "-L \".\\cores\\dosbox_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "pc_dos"
+      ],
+      "ImageExtensions": [
+        "exe",
+        "com",
+        "bat",
+        "conf",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "PC (DOS)",
+      "Shortname": "pc_dos",
+      "StartupArguments": "-L \".\\cores\\dosbox_svn_ce_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "pc_dos"
+      ],
+      "ImageExtensions": [
+        "exe",
+        "com",
+        "bat",
+        "conf",
+        "cue",
+        "iso",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "PC (DOS)",
+      "Shortname": "pc_dos",
+      "StartupArguments": "-L \".\\cores\\dosbox_svn_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "pc_dos"
+      ],
+      "ImageExtensions": [
+        "exe",
+        "com",
+        "bat",
+        "conf",
+        "cue",
+        "iso",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Game Boy",
+      "Shortname": "nintendo_gameboy",
+      "StartupArguments": "-L \".\\cores\\emux_gb_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_gameboy",
+        "nintendo_gameboycolor"
+      ],
+      "ImageExtensions": [
+        "gb",
+        "bin",
+        "rom",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Entertainment System",
+      "Shortname": "nintendo_nes",
+      "StartupArguments": "-L \".\\cores\\emux_nes_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_nes"
+      ],
+      "ImageExtensions": [
+        "nes",
+        "bin",
+        "rom",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sega Master System",
+      "Shortname": "sega_mastersystem",
+      "StartupArguments": "-L \".\\cores\\emux_sms_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sega_mastersystem"
+      ],
+      "ImageExtensions": [
+        "sms",
+        "bin",
+        "rom",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Entertainment System",
+      "Shortname": "nintendo_nes",
+      "StartupArguments": "-L \".\\cores\\fceumm_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_nes",
+        "nintendo_famicom_disk"
+      ],
+      "ImageExtensions": [
+        "fds",
+        "nes",
+        "unif",
+        "unf",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Game Boy",
+      "Shortname": "nintendo_gameboy",
+      "StartupArguments": "-L \".\\cores\\fixgb_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_gameboy",
+        "nintendo_gameboycolor"
+      ],
+      "ImageExtensions": [
+        "gb",
+        "gbc",
+        "gbs",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Entertainment System",
+      "Shortname": "nintendo_nes",
+      "StartupArguments": "-L \".\\cores\\fixnes_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_nes",
+        "nintendo_famicom_disk"
+      ],
+      "ImageExtensions": [
+        "nes",
+        "fds",
+        "qd",
+        "nsf",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sega Dreamcast",
+      "Shortname": "sega_dreamcast",
+      "StartupArguments": "-L \".\\cores\\flycast_gles2_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sega_dreamcast"
+      ],
+      "ImageExtensions": [
+        "chd",
+        "cdi",
+        "iso",
+        "elf",
+        "bin",
+        "cue",
+        "gdi",
+        "lst",
+        "zip",
+        "dat",
+        "7z",
+        "m3u"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sega Dreamcast",
+      "Shortname": "sega_dreamcast",
+      "StartupArguments": "-L \".\\cores\\flycast_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sega_dreamcast"
+      ],
+      "ImageExtensions": [
+        "chd",
+        "cdi",
+        "iso",
+        "elf",
+        "bin",
+        "cue",
+        "gdi",
+        "lst",
+        "zip",
+        "dat",
+        "7z",
+        "m3u"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Mattel Intellivision",
+      "Shortname": "mattel_intellivision",
+      "StartupArguments": "-L \".\\cores\\freeintv_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "mattel_intellivision"
+      ],
+      "ImageExtensions": [
+        "int",
+        "bin",
+        "rom",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Commodore 64",
+      "Shortname": "commodore_64",
+      "StartupArguments": "-L \".\\cores\\frodo_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "commodore_64"
+      ],
+      "ImageExtensions": [
+        "d64",
+        "t64",
+        "x64",
+        "p00",
+        "lnx",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Commodore Amiga",
+      "Shortname": "commodore_amiga",
+      "StartupArguments": "-L \".\\cores\\fsuae_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "commodore_amiga"
+      ],
+      "ImageExtensions": [
+        "adf",
+        "ipf",
+        "fs-uae",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sinclair ZX Spectrum +3",
+      "Shortname": "sinclair_zxspectrum3",
+      "StartupArguments": "-L \".\\cores\\fuse_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sinclair_zxspectrum3",
+        "sinclair_zxspectrum"
+      ],
+      "ImageExtensions": [
+        "tzx",
+        "tap",
+        "z80",
+        "rzx",
+        "scl",
+        "trd",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Game Boy",
+      "Shortname": "nintendo_gameboy",
+      "StartupArguments": "-L \".\\cores\\gambatte_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_gameboy",
+        "nintendo_gameboycolor"
+      ],
+      "ImageExtensions": [
+        "gb",
+        "gbc",
+        "dmg",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Game Boy",
+      "Shortname": "nintendo_gameboy",
+      "StartupArguments": "-L \".\\cores\\gearboy_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_gameboy",
+        "nintendo_gameboycolor"
+      ],
+      "ImageExtensions": [
+        "gb",
+        "dmg",
+        "gbc",
+        "cgb",
+        "sgb",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sega Game Gear",
+      "Shortname": "sega_gamegear",
+      "StartupArguments": "-L \".\\cores\\gearsystem_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sega_gamegear",
+        "sega_mastersystem"
+      ],
+      "ImageExtensions": [
+        "sms",
+        "gg",
+        "sg",
+        "bin",
+        "rom",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sega Game Gear",
+      "Shortname": "sega_gamegear",
+      "StartupArguments": "-L \".\\cores\\genesis_plus_gx_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sega_gamegear",
+        "sega_mastersystem",
+        "sega_cd",
+        "sega_genesis"
+      ],
+      "ImageExtensions": [
+        "mdx",
+        "md",
+        "smd",
+        "gen",
+        "bin",
+        "cue",
+        "iso",
+        "sms",
+        "gg",
+        "sg",
+        "68k",
+        "chd",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sega Game Gear",
+      "Shortname": "sega_gamegear",
+      "StartupArguments": "-L \".\\cores\\genesis_plus_gx_wide_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sega_gamegear",
+        "sega_mastersystem",
+        "sega_cd",
+        "sega_genesis"
+      ],
+      "ImageExtensions": [
+        "mdx",
+        "md",
+        "smd",
+        "gen",
+        "bin",
+        "cue",
+        "iso",
+        "sms",
+        "gg",
+        "sg",
+        "68k",
+        "chd",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Game Boy Advance",
+      "Shortname": "nintendo_gameboyadvance",
+      "StartupArguments": "-L \".\\cores\\gpsp_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_gameboyadvance"
+      ],
+      "ImageExtensions": [
+        "gba",
+        "bin",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Atari Lynx",
+      "Shortname": "atari_lynx",
+      "StartupArguments": "-L \".\\cores\\handy_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "atari_lynx"
+      ],
+      "ImageExtensions": [
+        "lnx",
+        "o",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Atari ST/STE",
+      "Shortname": "atari_st",
+      "StartupArguments": "-L \".\\cores\\hatari_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "atari_st"
+      ],
+      "ImageExtensions": [
+        "st",
+        "msa",
+        "zip",
+        "stx",
+        "dim",
+        "ipf",
+        "m3u",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\higan_sfc_balanced_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes",
+        "nintendo_gameboy",
+        "nintendo_gameboycolor"
+      ],
+      "ImageExtensions": [
+        "sfc",
+        "smc",
+        "gb",
+        "gbc",
+        "bml",
+        "rom",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\higan_sfc_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes",
+        "nintendo_gameboy",
+        "nintendo_gameboycolor"
+      ],
+      "ImageExtensions": [
+        "sfc",
+        "smc",
+        "gb",
+        "gbc",
+        "bml",
+        "rom",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo GameCube",
+      "Shortname": "nintendo_gamecube",
+      "StartupArguments": "-L \".\\cores\\ishiiruka_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_gamecube",
+        "nintendo_wii"
+      ],
+      "ImageExtensions": [
+        "gcm",
+        "iso",
+        "wbfs",
+        "ciso",
+        "gcz",
+        "elf",
+        "dol",
+        "dff",
+        "tgc",
+        "wad",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sega Saturn",
+      "Shortname": "sega_saturn",
+      "StartupArguments": "-L \".\\cores\\kronos_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sega_saturn"
+      ],
+      "ImageExtensions": [
+        "bin",
+        "ccd",
+        "chd",
+        "cue",
+        "iso",
+        "mds",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Game Boy Advance",
+      "Shortname": "nintendo_gameboyadvance",
+      "StartupArguments": "-L \".\\cores\\mednafen_gba_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_gameboyadvance"
+      ],
+      "ImageExtensions": [
+        "gba",
+        "agb",
+        "bin",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Atari Lynx",
+      "Shortname": "atari_lynx",
+      "StartupArguments": "-L \".\\cores\\mednafen_lynx_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "atari_lynx"
+      ],
+      "ImageExtensions": [
+        "lnx",
+        "o",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "SNK Neo Geo Pocket",
+      "Shortname": "snk_neogeopocket",
+      "StartupArguments": "-L \".\\cores\\mednafen_ngp_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "snk_neogeopocket",
+        "snk_neogeopocket_color"
+      ],
+      "ImageExtensions": [
+        "ngp",
+        "ngc",
+        "ngpc",
+        "npc",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "NEC TurboGrafx 16",
+      "Shortname": "nec_turbografx_16",
+      "StartupArguments": "-L \".\\cores\\mednafen_pce_fast_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nec_turbografx_16",
+        "nec_turbografx_cd"
+      ],
+      "ImageExtensions": [
+        "pce",
+        "cue",
+        "ccd",
+        "iso",
+        "img",
+        "bin",
+        "chd",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "NEC SuperGrafx",
+      "Shortname": "nec_supergrafx",
+      "StartupArguments": "-L \".\\cores\\mednafen_pce_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nec_supergrafx",
+        "nec_turbografx_16",
+        "nec_turbografx_cd"
+      ],
+      "ImageExtensions": [
+        "pce",
+        "cue",
+        "ccd",
+        "iso",
+        "img",
+        "bin",
+        "chd",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "NEC PC-FX",
+      "Shortname": "nec_pcfx",
+      "StartupArguments": "-L \".\\cores\\mednafen_pcfx_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nec_pcfx"
+      ],
+      "ImageExtensions": [
+        "cue",
+        "ccd",
+        "toc",
+        "chd",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sony PlayStation",
+      "Shortname": "sony_playstation",
+      "StartupArguments": "-L \".\\cores\\mednafen_psx_hw_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sony_playstation"
+      ],
+      "ImageExtensions": [
+        "cue",
+        "toc",
+        "m3u",
+        "ccd",
+        "exe",
+        "pbp",
+        "chd",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sony PlayStation",
+      "Shortname": "sony_playstation",
+      "StartupArguments": "-L \".\\cores\\mednafen_psx_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sony_playstation"
+      ],
+      "ImageExtensions": [
+        "cue",
+        "toc",
+        "m3u",
+        "ccd",
+        "exe",
+        "pbp",
+        "chd",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sega Saturn",
+      "Shortname": "sega_saturn",
+      "StartupArguments": "-L \".\\cores\\mednafen_saturn_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sega_saturn"
+      ],
+      "ImageExtensions": [
+        "ccd",
+        "chd",
+        "cue",
+        "toc",
+        "m3u",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\mednafen_snes_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes"
+      ],
+      "ImageExtensions": [
+        "smc",
+        "fig",
+        "bs",
+        "st",
+        "sfc",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "NEC SuperGrafx",
+      "Shortname": "nec_supergrafx",
+      "StartupArguments": "-L \".\\cores\\mednafen_supergrafx_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nec_supergrafx",
+        "nec_turbografx_16",
+        "nec_turbografx_cd"
+      ],
+      "ImageExtensions": [
+        "pce",
+        "sgx",
+        "cue",
+        "ccd",
+        "chd",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Virtual Boy",
+      "Shortname": "nintendo_virtualboy",
+      "StartupArguments": "-L \".\\cores\\mednafen_vb_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_virtualboy"
+      ],
+      "ImageExtensions": [
+        "vb",
+        "vboy",
+        "bin",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Bandai WonderSwan",
+      "Shortname": "bandai_wonderswan",
+      "StartupArguments": "-L \".\\cores\\mednafen_wswan_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "bandai_wonderswan",
+        "bandai_wonderswan_color"
+      ],
+      "ImageExtensions": [
+        "ws",
+        "wsc",
+        "pc2",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo DS",
+      "Shortname": "nintendo_ds",
+      "StartupArguments": "-L \".\\cores\\melonds_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_ds"
+      ],
+      "ImageExtensions": [
+        "nds",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Entertainment System",
+      "Shortname": "nintendo_nes",
+      "StartupArguments": "-L \".\\cores\\mesen_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_nes",
+        "nintendo_famicom_disk"
+      ],
+      "ImageExtensions": [
+        "nes",
+        "fds",
+        "unf",
+        "unif",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\mesen-s_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes"
+      ],
+      "ImageExtensions": [
+        "sfc",
+        "smc",
+        "fig",
+        "swc",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Game Boy Advance",
+      "Shortname": "nintendo_gameboyadvance",
+      "StartupArguments": "-L \".\\cores\\meteor_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_gameboyadvance"
+      ],
+      "ImageExtensions": [
+        "gba",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Game Boy",
+      "Shortname": "nintendo_gameboy",
+      "StartupArguments": "-L \".\\cores\\mgba_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_gameboy",
+        "nintendo_gameboycolor",
+        "nintendo_gameboyadvance"
+      ],
+      "ImageExtensions": [
+        "gb",
+        "gbc",
+        "gba",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo 64",
+      "Shortname": "nintendo_64",
+      "StartupArguments": "-L \".\\cores\\mupen64plus_next_develop_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_64"
+      ],
+      "ImageExtensions": [
+        "n64",
+        "v64",
+        "z64",
+        "bin",
+        "u1",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo 64",
+      "Shortname": "nintendo_64",
+      "StartupArguments": "-L \".\\cores\\mupen64plus_next_gles3_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_64"
+      ],
+      "ImageExtensions": [
+        "n64",
+        "v64",
+        "z64",
+        "bin",
+        "u1",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo 64",
+      "Shortname": "nintendo_64",
+      "StartupArguments": "-L \".\\cores\\mupen64plus_next_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_64"
+      ],
+      "ImageExtensions": [
+        "n64",
+        "v64",
+        "z64",
+        "bin",
+        "u1",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "SNK Neo Geo CD",
+      "Shortname": "snk_neogeo_cd",
+      "StartupArguments": "-L \".\\cores\\neocd_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "snk_neogeo_cd"
+      ],
+      "ImageExtensions": [
+        "cue",
+        "chd",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Entertainment System",
+      "Shortname": "nintendo_nes",
+      "StartupArguments": "-L \".\\cores\\nestopia_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_nes",
+        "nintendo_famicom_disk"
+      ],
+      "ImageExtensions": [
+        "nes",
+        "fds",
+        "unf",
+        "unif",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "3DO Interactive Multiplayer",
+      "Shortname": "3do",
+      "StartupArguments": "-L \".\\cores\\opera_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "3do"
+      ],
+      "ImageExtensions": [
+        "iso",
+        "bin",
+        "chd",
+        "cue",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo 64",
+      "Shortname": "nintendo_64",
+      "StartupArguments": "-L \".\\cores\\parallel_n64_debug_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_64"
+      ],
+      "ImageExtensions": [
+        "n64",
+        "v64",
+        "z64",
+        "bin",
+        "u1",
+        "ndd",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo 64",
+      "Shortname": "nintendo_64",
+      "StartupArguments": "-L \".\\cores\\parallel_n64_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_64"
+      ],
+      "ImageExtensions": [
+        "n64",
+        "v64",
+        "z64",
+        "bin",
+        "u1",
+        "ndd",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sony PlayStation",
+      "Shortname": "sony_playstation",
+      "StartupArguments": "-L \".\\cores\\pcsx_rearmed_interpreter_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sony_playstation"
+      ],
+      "ImageExtensions": [
+        "bin",
+        "cue",
+        "img",
+        "mdf",
+        "pbp",
+        "cbn",
+        "toc",
+        "chd",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sony PlayStation",
+      "Shortname": "sony_playstation",
+      "StartupArguments": "-L \".\\cores\\pcsx_rearmed_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sony_playstation"
+      ],
+      "ImageExtensions": [
+        "bin",
+        "cue",
+        "img",
+        "mdf",
+        "pbp",
+        "toc",
+        "cbn",
+        "m3u",
+        "ccd",
+        "chd",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sony PlayStation",
+      "Shortname": "sony_playstation",
+      "StartupArguments": "-L \".\\cores\\pcsx_rearmed_libretro_neon.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sony_playstation"
+      ],
+      "ImageExtensions": [
+        "bin",
+        "cue",
+        "img",
+        "mdf",
+        "pbp",
+        "toc",
+        "cbn",
+        "m3u",
+        "chd",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sony PlayStation",
+      "Shortname": "sony_playstation",
+      "StartupArguments": "-L \".\\cores\\pcsx1_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sony_playstation"
+      ],
+      "ImageExtensions": [
+        "bin",
+        "cue",
+        "img",
+        "mdf",
+        "pbp",
+        "toc",
+        "cbn",
+        "m3u",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sega Master System",
+      "Shortname": "sega_mastersystem",
+      "StartupArguments": "-L \".\\cores\\picodrive_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sega_mastersystem",
+        "sega_cd",
+        "sega_genesis",
+        "sega_32x"
+      ],
+      "ImageExtensions": [
+        "bin",
+        "gen",
+        "smd",
+        "md",
+        "32x",
+        "cue",
+        "iso",
+        "sms",
+        "68k",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sony PlayStation 2",
+      "Shortname": "sony_playstation2",
+      "StartupArguments": "-L \".\\cores\\play_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sony_playstation2"
+      ],
+      "ImageExtensions": [
+        "iso",
+        "isz",
+        "cso",
+        "bin",
+        "elf",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sony PlayStation Portable",
+      "Shortname": "sony_psp",
+      "StartupArguments": "-L \".\\cores\\ppsspp_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sony_psp"
+      ],
+      "ImageExtensions": [
+        "elf",
+        "iso",
+        "cso",
+        "prx",
+        "pbp",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Atari 7800",
+      "Shortname": "atari_7800",
+      "StartupArguments": "-L \".\\cores\\prosystem_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "atari_7800"
+      ],
+      "ImageExtensions": [
+        "a78",
+        "bin",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Commodore Amiga",
+      "Shortname": "commodore_amiga",
+      "StartupArguments": "-L \".\\cores\\puae_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "commodore_amiga"
+      ],
+      "ImageExtensions": [
+        "adf",
+        "adz",
+        "dms",
+        "fdi",
+        "ipf",
+        "hdf",
+        "hdz",
+        "lha",
+        "cue",
+        "ccd",
+        "nrg",
+        "mds",
+        "iso",
+        "uae",
+        "m3u",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Entertainment System",
+      "Shortname": "nintendo_nes",
+      "StartupArguments": "-L \".\\cores\\quicknes_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_nes"
+      ],
+      "ImageExtensions": [
+        "nes",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "SNK Neo Geo Pocket",
+      "Shortname": "snk_neogeopocket",
+      "StartupArguments": "-L \".\\cores\\race_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "snk_neogeopocket",
+        "snk_neogeopocket_color"
+      ],
+      "ImageExtensions": [
+        "ngp",
+        "ngc",
+        "ngpc",
+        "npc",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sega Dreamcast",
+      "Shortname": "sega_dreamcast",
+      "StartupArguments": "-L \".\\cores\\redream_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sega_dreamcast"
+      ],
+      "ImageExtensions": [
+        "gdi",
+        "chd",
+        "cdi",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sony PlayStation",
+      "Shortname": "sony_playstation",
+      "StartupArguments": "-L \".\\cores\\rustation_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sony_playstation"
+      ],
+      "ImageExtensions": [
+        "cue",
+        "toc",
+        "m3u",
+        "ccd",
+        "exe",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Game Boy",
+      "Shortname": "nintendo_gameboy",
+      "StartupArguments": "-L \".\\cores\\sameboy_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_gameboy",
+        "nintendo_gameboycolor"
+      ],
+      "ImageExtensions": [
+        "gb",
+        "gbc",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sega Game Gear",
+      "Shortname": "sega_gamegear",
+      "StartupArguments": "-L \".\\cores\\smsplus_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sega_gamegear",
+        "sega_mastersystem"
+      ],
+      "ImageExtensions": [
+        "sms",
+        "bin",
+        "rom",
+        "col",
+        "gg",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\snes9x_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes"
+      ],
+      "ImageExtensions": [
+        "smc",
+        "sfc",
+        "swc",
+        "fig",
+        "bs",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\snes9x2002_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes"
+      ],
+      "ImageExtensions": [
+        "smc",
+        "fig",
+        "sfc",
+        "gd3",
+        "gd7",
+        "dx2",
+        "bsx",
+        "swc",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\snes9x2005_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes"
+      ],
+      "ImageExtensions": [
+        "smc",
+        "fig",
+        "sfc",
+        "gd3",
+        "gd7",
+        "dx2",
+        "bsx",
+        "swc",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\snes9x2005_plus_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes"
+      ],
+      "ImageExtensions": [
+        "smc",
+        "fig",
+        "sfc",
+        "gd3",
+        "gd7",
+        "dx2",
+        "bsx",
+        "swc",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \".\\cores\\snes9x2010_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes"
+      ],
+      "ImageExtensions": [
+        "smc",
+        "fig",
+        "sfc",
+        "gd3",
+        "gd7",
+        "dx2",
+        "bsx",
+        "swc",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Atari 2600",
+      "Shortname": "atari_2600",
+      "StartupArguments": "-L \".\\cores\\stella_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "atari_2600"
+      ],
+      "ImageExtensions": [
+        "a26",
+        "bin",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Atari 2600",
+      "Shortname": "atari_2600",
+      "StartupArguments": "-L \".\\cores\\stella2014_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "atari_2600"
+      ],
+      "ImageExtensions": [
+        "a26",
+        "bin",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sony PlayStation",
+      "Shortname": "sony_playstation",
+      "StartupArguments": "-L \".\\cores\\swanstation_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sony_playstation"
+      ],
+      "ImageExtensions": [
+        "exe",
+        "psexe",
+        "cue",
+        "bin",
+        "img",
+        "iso",
+        "chd",
+        "pbp",
+        "ecm",
+        "mds",
+        "psf",
+        "m3u"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Game Boy Advance",
+      "Shortname": "nintendo_gameboyadvance",
+      "StartupArguments": "-L \".\\cores\\tempgba_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_gameboyadvance"
+      ],
+      "ImageExtensions": [
+        "gba",
+        "bin",
+        "agb",
+        "gbz",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Game Boy",
+      "Shortname": "nintendo_gameboy",
+      "StartupArguments": "-L \".\\cores\\tgbdual_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_gameboy",
+        "nintendo_gameboycolor"
+      ],
+      "ImageExtensions": [
+        "gb",
+        "gbc",
+        "sgb",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Commodore Amiga",
+      "Shortname": "commodore_amiga",
+      "StartupArguments": "-L \".\\cores\\uae4arm_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "commodore_amiga"
+      ],
+      "ImageExtensions": [
+        "adf",
+        "dms",
+        "zip",
+        "ipf",
+        "adz",
+        "uae",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Game Boy Advance",
+      "Shortname": "nintendo_gameboyadvance",
+      "StartupArguments": "-L \".\\cores\\vba_next_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_gameboyadvance"
+      ],
+      "ImageExtensions": [
+        "gba",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo Game Boy",
+      "Shortname": "nintendo_gameboy",
+      "StartupArguments": "-L \".\\cores\\vbam_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_gameboy",
+        "nintendo_gameboycolor",
+        "nintendo_gameboyadvance"
+      ],
+      "ImageExtensions": [
+        "dmg",
+        "gb",
+        "gbc",
+        "cgb",
+        "sgb",
+        "gba",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "GCE Vectrex",
+      "Shortname": "vectrex",
+      "StartupArguments": "-L \".\\cores\\vecx_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "vectrex"
+      ],
+      "ImageExtensions": [
+        "bin",
+        "vec",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Atari Jaguar",
+      "Shortname": "atari_jaguar",
+      "StartupArguments": "-L \".\\cores\\virtualjaguar_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "atari_jaguar"
+      ],
+      "ImageExtensions": [
+        "j64",
+        "jag",
+        "rom",
+        "abs",
+        "cof",
+        "bin",
+        "prg",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sega Saturn",
+      "Shortname": "sega_saturn",
+      "StartupArguments": "-L \".\\cores\\yabasanshiro_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sega_saturn"
+      ],
+      "ImageExtensions": [
+        "bin",
+        "ccd",
+        "chd",
+        "cue",
+        "iso",
+        "mds",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sega Saturn",
+      "Shortname": "sega_saturn",
+      "StartupArguments": "-L \".\\cores\\yabause_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sega_saturn"
+      ],
+      "ImageExtensions": [
+        "bin",
+        "ccd",
+        "chd",
+        "cue",
+        "iso",
+        "mds",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sony PlayStation 2",
+      "Shortname": "sony_playstation2",
+      "StartupArguments": "-L \".\\cores\\pcsx2_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sony_playstation2"
+      ],
+      "ImageExtensions": [
+        "elf",
+        "iso",
+        "ciso",
+        "chd",
+        "cso",
+        "bin",
+        "mdf",
+        "nrg",
+        "dump",
+        "gz",
+        "img",
+        "m3u"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Sony PlayStation",
+      "Shortname": "sony_playstation",
+      "StartupArguments": "-L \".\\cores\\duckstation_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "sony_playstation"
+      ],
+      "ImageExtensions": [
+        "exe",
+        "psexe",
+        "cue",
+        "bin",
+        "img",
+        "iso",
+        "chd",
+        "pbp",
+        "ecm",
+        "mds",
+        "psf",
+        "m3u"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    }
+  ]
+}

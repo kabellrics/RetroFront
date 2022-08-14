@@ -27,6 +27,8 @@ namespace RetroFront.UWPAdmin.ViewModels
         private ICommand _itemSelectedCommand;
         private ICommand _SaveChangeCommand;
         public ICommand SaveChangeCommand => _SaveChangeCommand ?? (_SaveChangeCommand = new RelayCommand(SaveChange));
+        private ICommand _addPlateformeCommand;
+        public ICommand AddPlateformeCommand => _addPlateformeCommand ?? (_addPlateformeCommand = new RelayCommand(AddPlateforme));
 
         private async void SaveChange()
         {
@@ -40,6 +42,24 @@ namespace RetroFront.UWPAdmin.ViewModels
                         await emulatorsService.UpdateEmulator(row);
                     }
                 }
+            }
+        }
+        private async void AddPlateforme()
+        {
+            var result = await dialogService.AddPlateformeDialog();
+            if (result != null)
+            {
+                var emupath = await dialogService.FilePicker(new System.Collections.Generic.List<string>() { ".exe" });
+                if (!string.IsNullOrEmpty(emupath))
+                {
+                    var sys = result.systeme;
+                    sys = await emulatorsService.CreateSysteme(sys);
+                    var emu = result.emulator;
+                    emu.SystemeID = sys.SystemeID;
+                    emu.Chemin = emupath;
+                    emu = await emulatorsService.CreateEmulator(emu);
+                    await dialogService.MessageDialogAsync("Plateforme et Emulateur créer en base de données", "Veuillez rechargez la page");
+                } 
             }
         }
         public ObservableCollection<DisplayEmulator> Source { get; } = new ObservableCollection<DisplayEmulator>();

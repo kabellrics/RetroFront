@@ -11,6 +11,7 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Search = RetroFront.UWPAdmin.Core.APIHelper.Search;
 
 namespace RetroFront.UWPAdmin.Services
 {
@@ -112,6 +113,19 @@ namespace RetroFront.UWPAdmin.Services
         public async Task<string> InputTextDialogAsync(string title, string defaultText)
         {
             return await InputTextDialogAsync(title, defaultText, "OK", "Cancel");
+        }
+
+        public async Task<CreatedSysAndPlateformeObject> AddPlateformeDialog()
+        {
+
+            var vm = new AddPlateformeViewModal();
+            AddPlateformeContentDialog contentDialog = new AddPlateformeContentDialog(vm);
+            var dialog = await contentDialog.ShowAsync();
+            if (dialog == ContentDialogResult.Secondary)
+            {
+                return vm.ResultObject;
+            }
+            return null;
         }
         public async Task<Search> SearchSteamGridDBByName(string name, ScraperSource source)
         {

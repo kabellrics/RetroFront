@@ -1,0 +1,25 @@
+{
+  "Id": "duckstation",
+  "Name": "DuckStation",
+  "Plateformes": [
+    {
+      "Name": "Playstation",
+      "Shortname": "psx",
+      "Platforms": [
+        "sony_playstation"
+      ],
+      "StartupArguments": "\"{ImagePath}\" -batch -fullscreen",
+      "ImageExtensions": [
+        "bin",
+        "img",
+        "exe",
+        "chd",
+        "psexe",
+        "m3u",
+        "cue",
+        "iso"
+      ],
+      "StartupExecutable": "^duckstation-qt-x64-ReleaseLTCG\\.exe$"
+    }
+  ]
+}

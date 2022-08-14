@@ -165,6 +165,7 @@
     <Compile Include="ViewModels\GamesDetailViewModel.cs" />
     <Compile Include="ViewModels\GamesViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\Modals\AddPlateformeViewModal.cs" />
     <Compile Include="ViewModels\Modals\FileModalDLLViewModel.cs" />
     <Compile Include="ViewModels\Modals\ImgProposalViewModel.cs" />
     <Compile Include="ViewModels\Modals\ImgScrapeChoiceViewModel.cs" />
@@ -188,6 +189,9 @@
     </Compile>
     <Compile Include="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Modals\AddPlateformeContentDialog.xaml.cs">
+      <DependentUpon>AddPlateformeContentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Modals\FileDLLContentDialog.xaml.cs">
       <DependentUpon>FileDLLContentDialog.xaml</DependentUpon>
@@ -272,6 +276,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Modals\AddPlateformeContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Modals\FileDLLContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -341,6 +349,9 @@
   <ItemGroup>
     <None Include=".editorconfig" />
     <None Include="RetroFront.UWPAdmin_TemporaryKey.pfx" />
+    <None Include="SystemListSCSP.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

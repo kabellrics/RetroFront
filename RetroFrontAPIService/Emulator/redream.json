@@ -1,0 +1,20 @@
+{
+  "Name": "redream",
+  "Plateformes": [
+    {
+      "Name": "Sega Dreamcast",
+      "Shortname": "sega_dreamcast",
+      "StartupArguments": "\"{ImagePath}\"",
+      "Platforms": [
+        "sega_dreamcast"
+      ],
+      "ImageExtensions": [
+        "cdi",
+        "gdi",
+        "chd",
+        "cue"
+      ],
+      "StartupExecutable": "^redream\\.exe$"
+    }
+  ]
+}

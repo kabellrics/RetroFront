@@ -5,6 +5,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Emulator\Dolphin.json" />
+    <Content Remove="Emulator\DuckStation.json" />
+    <Content Remove="Emulator\PCSX2.json" />
+    <Content Remove="Emulator\ppsspp.json" />
+    <Content Remove="Emulator\redream.json" />
+    <Content Remove="Emulator\RetroArch.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Emulator\Dolphin.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Emulator\DuckStation.json" />
+    <None Include="Emulator\PCSX2.json" />
+    <None Include="Emulator\ppsspp.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Emulator\redream.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Emulator\RetroArch.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Gameloop.Vdf" Version="0.6.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
