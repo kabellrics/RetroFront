@@ -12,6 +12,8 @@ namespace RetroFrontAPIService.Service.Implémentation
         {
             try
             {
+                System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(destfile));
+                //System.IO.File.Create(destfile);
                 System.IO.File.Copy(sourcefile, destfile, true);
                 return true;
             }
@@ -26,6 +28,8 @@ namespace RetroFrontAPIService.Service.Implémentation
             {
                 using (WebClient wc = new WebClient())
                 {
+                    System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(destfile));
+                    //System.IO.File.Create(destfile);
                     var t = Task.Run(() => wc.DownloadFile(new Uri(sourcefile), destfile));
                     //wc.DownloadFileAsync(new Uri(sourcefile), destfile);
                 }
@@ -41,6 +45,8 @@ namespace RetroFrontAPIService.Service.Implémentation
         {
             try
             {
+                System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(destfile));
+                //System.IO.File.Create(destfile);
                 var t = Task.Run(() => File.WriteAllBytes(destfile, bytetoWrite));
                 //await File.WriteAllBytesAsync(destfile, bytetoWrite);
                 return true;

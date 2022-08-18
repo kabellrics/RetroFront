@@ -1,4 +1,5 @@
 ﻿using RetroFront.UWPAdmin.Core.APIClient;
+using RetroFront.UWPAdmin.Core.APIHelper;
 using RetroFront.UWPAdmin.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,10 @@ namespace RetroFront.UWPAdmin.Core.Services
         public async Task UpdateEmulator(DisplayEmulator emulator)
         {
             await emulatorClient.EmulatorPutAsync(emulator.ID, emulator.Emulator);
+        }
+        public async Task<GameRom> CreateGame(GameRom game)
+        {
+            return (await gameClient.GamePostAsync(game)).Result;
         }
     }
 }

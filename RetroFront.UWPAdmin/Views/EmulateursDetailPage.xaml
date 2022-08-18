@@ -15,8 +15,21 @@
             <ic:InvokeCommandAction Command="{x:Bind ViewModel.SaveChangeCommand}" />
         </ic:EventTriggerBehavior>
     </i:Interaction.Behaviors>-->
-
-        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+    <Grid x:Name="ContentArea">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Viewbox Width="250">
+                    <AppBarButton Icon="Add" Label="Ajouter des jeux" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Center"
+                                  Command="{x:Bind ViewModel.AddGameCommand}"></AppBarButton>
+                </Viewbox>
+            </StackPanel>
+        </Grid>
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -40,5 +53,6 @@
             <TextBox Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.Source.Extension}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
             <TextBlock Grid.Row="4" Grid.Column="0" Text="SystemeID : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
             <TextBox Grid.Row="4" Grid.Column="1" Text="{x:Bind ViewModel.Source.SystemeID}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
+        </Grid>
         </Grid>
 </Page>

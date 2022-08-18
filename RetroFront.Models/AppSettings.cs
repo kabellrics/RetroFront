@@ -13,6 +13,7 @@ namespace RetroFront.Models
         public string AppSettingsLocation { get; set; }
         public string AppSettingsFolder { get; set; }
         public string RetroarchPath { get; set; }
+        public string AssetsFolder { get; set; }
         //public string RetroarchCMD { get; set; }
         public SysDisplay CurrentSysDisplay { get; set; }
         public RomDisplay CurrentGameDisplay { get; set; }
