@@ -7,11 +7,13 @@ using System.Windows.Input;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 using RetroFront.UWPAdmin.Core.APIHelper;
 using RetroFront.UWPAdmin.Core.Models;
 using RetroFront.UWPAdmin.Core.Services;
 using RetroFront.UWPAdmin.Helpers;
 using RetroFront.UWPAdmin.Services;
+using RetroFront.UWPAdmin.Views;
 using Windows.UI.Xaml.Navigation;
 
 namespace RetroFront.UWPAdmin.ViewModels
@@ -29,6 +31,7 @@ namespace RetroFront.UWPAdmin.ViewModels
                 SetProperty(ref _source, value);
             }
         }
+        public ObservableCollection<DisplayGame> Roms { get; } = new ObservableCollection<DisplayGame>();
         private ICommand _SaveChangeCommand;
         public ICommand SaveChangeCommand => _SaveChangeCommand ?? (_SaveChangeCommand = new RelayCommand(SaveChange));
         private ICommand _AddGameCommand;
@@ -49,6 +52,14 @@ namespace RetroFront.UWPAdmin.ViewModels
         {
             emulatorDetailService = new EmulatorDetailService();
             dialogService = Ioc.Default.GetRequiredService<DialogService>();
+        }
+
+        internal void OnItemSelected(DisplayGame args)
+        {
+            var selected = args;
+            //ImagesNavigationHelper.AddImageId(GamesSelectedIdKey, selected.ID);
+            NavigationService.Frame.SetListDataItemForNextConnectedAnimation(selected);
+            NavigationService.Navigate<GamesDetailPage>(selected.ID.ToString());
         }
 
         public async Task LoadDataAsync()
@@ -108,11 +119,15 @@ namespace RetroFront.UWPAdmin.ViewModels
             }
             await dialogService.ConfirmationDialogAsync($"Fin du traitement de l'ajout des jeux");
         }
-        public void Initialize(string selectedsysID, NavigationMode navigationMode)
+        public async void Initialize(string selectedsysID, NavigationMode navigationMode)
         {
             if (!string.IsNullOrEmpty(selectedsysID))
             {
                 Source = emulatorDetailService.GetEmulator(int.Parse(selectedsysID));
+                Roms.Clear();
+                var games = await emulatorDetailService.GetGameForEmulator(Source);
+                foreach (var rom in games)
+                    Roms.Add(rom);
             }
         }
     }

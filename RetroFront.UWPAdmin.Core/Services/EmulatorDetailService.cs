@@ -3,6 +3,7 @@ using RetroFront.UWPAdmin.Core.APIHelper;
 using RetroFront.UWPAdmin.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,6 +23,11 @@ namespace RetroFront.UWPAdmin.Core.Services
         public async Task<GameRom> CreateGame(GameRom game)
         {
             return (await gameClient.GamePostAsync(game)).Result;
+        }
+        public async Task<IEnumerable<DisplayGame>> GetGameForEmulator(DisplayEmulator emulator)
+        {
+            var result = await gameClient.GameGetAsync();
+            return result.Result.Where(x=>x.EmulatorID == emulator.ID).Select(x => new DisplayGame(x));
         }
     }
 }

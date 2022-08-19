@@ -5,6 +5,7 @@
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:models="using:RetroFront.UWPAdmin.Core.Models"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
@@ -19,6 +20,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="20*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -54,5 +56,14 @@
             <TextBlock Grid.Row="4" Grid.Column="0" Text="SystemeID : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
             <TextBox Grid.Row="4" Grid.Column="1" Text="{x:Bind ViewModel.Source.SystemeID}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
         </Grid>
-        </Grid>
+        <StackPanel Orientation="Vertical" Grid.Row="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <TextBlock  Style="{StaticResource TitleTextBlockStyle}" Text="Jeux lancés par cette émulateur"/>
+            <controls:AdaptiveGridView ItemClick="AdaptiveGridView_ItemClick"
+            Padding="{StaticResource MediumLeftRightMargin}"
+            IsItemClickEnabled="True" ItemHeight="450" DesiredWidth="300"
+            ItemsSource="{x:Bind ViewModel.Roms, Mode=OneWay}" OneRowModeEnabled="True"
+            SelectionMode="Single" ItemTemplate="{StaticResource TemplateGame}">
+            </controls:AdaptiveGridView>
+        </StackPanel>
+        </Grid>    
 </Page>

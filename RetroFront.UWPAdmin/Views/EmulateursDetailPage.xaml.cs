@@ -53,5 +53,10 @@ namespace RetroFront.UWPAdmin.Views
                 e.Handled = true;
             }
         }
+
+        private void AdaptiveGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ViewModel.OnItemSelected(e.ClickedItem as DisplayGame);
+        }
     }
 }
