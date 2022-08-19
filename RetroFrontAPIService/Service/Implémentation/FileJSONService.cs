@@ -35,7 +35,6 @@ namespace RetroFrontAPIService.Service.Implémentation
                 appSettings.AppSettingsFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\.retrofront";
                 appSettings.AppSettingsLocation = $"{appSettings.AppSettingsFolder}\\AppSettings.json";
                 appSettings.RetroarchPath = string.Empty;
-                appSettings.AssetsFolder = string.Empty;
                 appSettings.ShowAll = true;
                 appSettings.ShowFav = true;
                 appSettings.ShowLastPlayed = true;

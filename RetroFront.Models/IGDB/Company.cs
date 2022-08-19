@@ -15,7 +15,7 @@ namespace RetroFront.Models.IGDB
         public int logo { get; set; }
         public string name { get; set; }
         public string slug { get; set; }
-        public int start_date { get; set; }
+        public Int64 start_date { get; set; }
         public int start_date_category { get; set; }
         public int updated_at { get; set; }
         public string url { get; set; }

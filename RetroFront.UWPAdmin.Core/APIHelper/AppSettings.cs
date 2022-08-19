@@ -54,8 +54,6 @@ namespace RetroFront.UWPAdmin.Core.APIHelper
         public bool ShowMostPlayed { get; set; }
         [Newtonsoft.Json.JsonProperty("RetroarchPath", Required = Newtonsoft.Json.Required.AllowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string RetroarchPath { get; set; }
-        [Newtonsoft.Json.JsonProperty("AssetsFolder", Required = Newtonsoft.Json.Required.AllowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string AssetsFolder { get; set; }
 
     }
 }

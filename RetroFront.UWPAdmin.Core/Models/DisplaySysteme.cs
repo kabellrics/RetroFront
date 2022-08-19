@@ -71,12 +71,15 @@ namespace RetroFront.UWPAdmin.Core.Models
         }
         public string Logo
         {
-            get => $"http://localhost:34322/api/Img/GetLogoForSystem/{ID}";
+            get => string.Format(LogoWebPath,ID);
+            private set { }
         }
         public string Screenshoot
         {
-            get => $"http://localhost:34322/api/Img/GetScreenshootForSystem/{ID}";
+            get => string.Format(ScreenshootWebPath,ID);
+            private set { }
         }
-
+        private string LogoWebPath = "http://localhost:34322/api/Img/GetLogoForSystem/{0}";
+        private string ScreenshootWebPath =  "http://localhost:34322/api/Img/GetScreenshootForSystem/{0}";
     }
 }

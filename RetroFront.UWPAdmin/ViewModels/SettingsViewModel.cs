@@ -4,7 +4,8 @@ using System.Windows.Input;
 
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
-
+using RetroFront.UWPAdmin.Core.Models;
+using RetroFront.UWPAdmin.Core.Services;
 using RetroFront.UWPAdmin.Helpers;
 using RetroFront.UWPAdmin.Services;
 
@@ -16,6 +17,7 @@ namespace RetroFront.UWPAdmin.ViewModels
     // TODO WTS: Add other settings as necessary. For help see https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/UWP/pages/settings.md
     public class SettingsViewModel : ObservableObject
     {
+        private Settings_Service service = new Settings_Service();
         private ElementTheme _elementTheme = ThemeSelectorService.Theme;
 
         public ElementTheme ElementTheme
@@ -32,6 +34,15 @@ namespace RetroFront.UWPAdmin.ViewModels
             get { return _versionDescription; }
 
             set { SetProperty(ref _versionDescription, value); }
+        }
+        
+        private DisplaySettings _Settings;
+
+        public DisplaySettings Settings
+        {
+            get { return _Settings; }
+
+            set { SetProperty(ref _Settings, value); }
         }
 
         private ICommand _switchThemeCommand;
@@ -61,6 +72,7 @@ namespace RetroFront.UWPAdmin.ViewModels
         public async Task InitializeAsync()
         {
             VersionDescription = GetVersionDescription();
+            Settings = service.GetSetting();
             await Task.CompletedTask;
         }
 

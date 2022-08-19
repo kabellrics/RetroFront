@@ -52,8 +52,41 @@
                     </RadioButton>
                 </StackPanel>
             </StackPanel>
+            <TextBlock Text="Paramètres de l'application" Style="{ThemeResource SubtitleTextBlockStyle}" Margin="{StaticResource SmallTopBottomMargin}"/>
+            <Grid Margin="{StaticResource SmallTopBottomMargin}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Theme Actuel" Margin="{StaticResource SmallTopBottomMargin}" Style="{ThemeResource SubtitleTextBlockStyle}" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="ScreenScraper ID" Margin="{StaticResource SmallTopBottomMargin}" Style="{ThemeResource SubtitleTextBlockStyle}" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="ScreenScraper Password" Margin="{StaticResource SmallTopBottomMargin}" Style="{ThemeResource SubtitleTextBlockStyle}" />
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Clé SteamGrid DB" Margin="{StaticResource SmallTopBottomMargin}" Style="{ThemeResource SubtitleTextBlockStyle}" />
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Dossier des Paramètres Locaux" Margin="{StaticResource SmallTopBottomMargin}" Style="{ThemeResource SubtitleTextBlockStyle}" />
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Fichier des Paramètres Locaux" Margin="{StaticResource SmallTopBottomMargin}" Style="{ThemeResource SubtitleTextBlockStyle}" />
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="Arrière plan par défaut" Margin="{StaticResource SmallTopBottomMargin}" Style="{ThemeResource SubtitleTextBlockStyle}" />
+                <TextBlock Grid.Row="7" Grid.Column="0" Text="Chemin de Retroarch" Margin="{StaticResource SmallTopBottomMargin}" Style="{ThemeResource SubtitleTextBlockStyle}" />
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.Settings.CurrentTheme}" Margin="{StaticResource SmallTopBottomMargin}" Style="{ThemeResource AutoSuggestBoxTextBoxStyle}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.Settings.ScreenScraperID}" Margin="{StaticResource SmallTopBottomMargin}" Style="{ThemeResource AutoSuggestBoxTextBoxStyle}" />
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.Settings.ScreenScraperPWD}" Margin="{StaticResource SmallTopBottomMargin}" Style="{ThemeResource AutoSuggestBoxTextBoxStyle}" />
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.Settings.SteamGridDB_Key}" Margin="{StaticResource SmallTopBottomMargin}" Style="{ThemeResource AutoSuggestBoxTextBoxStyle}" />
+                <TextBox Grid.Row="4" Grid.Column="1" Text="{x:Bind ViewModel.Settings.AppSettingsFolder}" Margin="{StaticResource SmallTopBottomMargin}" Style="{ThemeResource AutoSuggestBoxTextBoxStyle}" />
+                <TextBox Grid.Row="5" Grid.Column="1" Text="{x:Bind ViewModel.Settings.AppSettingsLocation}" Margin="{StaticResource SmallTopBottomMargin}" Style="{ThemeResource AutoSuggestBoxTextBoxStyle}" />
+                <TextBox Grid.Row="6" Grid.Column="1" Text="{x:Bind ViewModel.Settings.DefaultBCK}" Margin="{StaticResource SmallTopBottomMargin}" Style="{ThemeResource AutoSuggestBoxTextBoxStyle}" />
+                <TextBox Grid.Row="7" Grid.Column="1" Text="{x:Bind ViewModel.Settings.RetroarchPath}" Margin="{StaticResource SmallTopBottomMargin}" Style="{ThemeResource AutoSuggestBoxTextBoxStyle}" />
+            </Grid>
 
-            <TextBlock x:Uid="Settings_About" Style="{ThemeResource SubtitleTextBlockStyle}" />
+            <TextBlock x:Uid="Settings_About" Style="{ThemeResource SubtitleTextBlockStyle}" Margin="{StaticResource SmallTopBottomMargin}"/>
 
             <StackPanel Margin="{StaticResource XSmallTopMargin}">
                 <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Text="{x:Bind ViewModel.VersionDescription, Mode=OneWay}" />

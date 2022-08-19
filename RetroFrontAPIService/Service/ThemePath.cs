@@ -69,7 +69,7 @@ namespace RetroFrontAPIService.Service
             this.synopsis = jeux.synopsis.FirstOrDefault(x => x.langue == "fr").text;
             var listgenre = jeux.genres.SelectMany(x => x.noms.Where(n => n.langue == "fr"));
             genres = string.Join(", ",listgenre.Select(x=>x.text));
-            this.Year = jeux.dates.FirstOrDefault(x => x.region == "fr").text;
+            this.Year = jeux.dates.FirstOrDefault(x => x.region == "fr" || x.region == "eu").text;
         }
     }
 }
