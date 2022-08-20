@@ -16,68 +16,111 @@
             <ic:InvokeCommandAction Command="{x:Bind ViewModel.SaveChangeCommand}" />
         </ic:EventTriggerBehavior>
     </i:Interaction.Behaviors>-->
-    <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollMode="Enabled">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Button Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Viewbox Width="250">
+                    <AppBarButton Icon="Save" Label="Sauvegarder les modifications" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                  Command="{x:Bind ViewModel.SaveAndDLLCommand}"></AppBarButton>
+                </Viewbox>
+                <Viewbox Width="250">
+                    <AppBarButton Icon="Edit" Label="Modifier les Champs" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                   Click="btshowIntel_Click"></AppBarButton>
+                </Viewbox>
+                <Viewbox Width="250">
+                    <AppBarButton Icon="Globe" Label="Scraper les Champs" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                  Command="{x:Bind ViewModel.ScrapeMetadataCommand}"></AppBarButton>
+                </Viewbox>
+                <Viewbox Width="250">
+                    <AppBarButton Label="Scrape IGDB" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                  Command="{x:Bind ViewModel.ScrapeIGDBCommand}">
+                        <AppBarButton.Icon>
+                            <BitmapIcon UriSource="ms-appx:///Assets/igdb_logo.png"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </Viewbox>
+                <Viewbox Width="250">
+                    <AppBarButton Label="Scrape SteamGrid DB" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                  Command="{x:Bind ViewModel.ScrapeSGDBCommand}">
+                        <AppBarButton.Icon>
+                            <BitmapIcon UriSource="ms-appx:///Assets/sgdb.png"/>
+                        </AppBarButton.Icon></AppBarButton>
+                </Viewbox>
+                <Viewbox Width="250">
+                    <AppBarButton Label="Scrape ScreenScraper" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                  Command="{x:Bind ViewModel.ScrapeSNSPCommand}">
+                        <AppBarButton.Icon>
+                            <BitmapIcon UriSource="ms-appx:///Assets/sscp.png"/>
+                        </AppBarButton.Icon></AppBarButton>
+                </Viewbox>
+            </StackPanel>
+        </Grid>
+        <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollMode="Enabled" Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent"
                     Command="{x:Bind ViewModel.ScrapeLogoCommand}">
                     <controls:ImageEx Height="200" Width="500" Stretch="Uniform" Source="{x:Bind ViewModel.Source.Logo ,Mode=OneWay}"></controls:ImageEx>
-            </Button>
-            <Button Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent"
+                </Button>
+                <Button Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent"
                     Command="{x:Bind ViewModel.ScrapeBoxartCommand}">
-                <controls:ImageEx Height="600" Width="400" Stretch="Uniform" Source="{x:Bind ViewModel.Source.Boxart,Mode=OneWay}"></controls:ImageEx>
-            </Button>
-            <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent"
+                    <controls:ImageEx Height="600" Width="400" Stretch="Uniform" Source="{x:Bind ViewModel.Source.Boxart,Mode=OneWay}"></controls:ImageEx>
+                </Button>
+                <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent"
                         Command="{x:Bind ViewModel.ScrapeBannerCommand}">
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="Bannière" Style="{StaticResource SubheaderTextBlockStyle}"/>
-                        <controls:ImageEx Stretch="Uniform" Source="{x:Bind ViewModel.Source.Banner,Mode=OneWay}"></controls:ImageEx>
-                    </StackPanel>
-                </Button>
-                <Button Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent"
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="Bannière" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                            <controls:ImageEx Stretch="Uniform" Source="{x:Bind ViewModel.Source.Banner,Mode=OneWay}"></controls:ImageEx>
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="5" Margin="5" Background="Transparent"
                         Command="{x:Bind ViewModel.ScrapeScreenshootCommand}">
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="Artwork" Style="{StaticResource SubheaderTextBlockStyle}"/>
-                        <controls:ImageEx Stretch="Uniform" Source="{x:Bind ViewModel.Source.Screenshoot,Mode=OneWay}"></controls:ImageEx>
-                    </StackPanel>
-                </Button>
-            </Grid>
-            <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" >
-                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Padding="5" Margin="5" Background="Transparent">
-                    <MediaPlayerElement x:Name="player"
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="Artwork" Style="{StaticResource SubheaderTextBlockStyle}"/>
+                            <controls:ImageEx Stretch="Uniform" Source="{x:Bind ViewModel.Source.Screenshoot,Mode=OneWay}"></controls:ImageEx>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+                <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" >
+                    <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Padding="5" Margin="5" Background="Transparent">
+                        <MediaPlayerElement x:Name="player"
             AreTransportControlsEnabled="False"
             AutoPlay="False" Height="540" Width="960" 
             HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
             VerticalAlignment="Stretch" VerticalContentAlignment="Center"
             Stretch="Uniform"
             Source="{x:Bind ViewModel.Source.Video,Mode=OneWay,Converter={StaticResource GameVideoConverter}}">
-                    </MediaPlayerElement>
-                </Button>
-                <Button HorizontalAlignment="Center" x:Name="playpauseBT" Click="playpauseBT_Click" Content="Play"></Button>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" >
-                <StackPanel Orientation="Horizontal">
-                    <Button Click="btshowIntel_Click" Content="Modifier les Champs"></Button>
-                    <Button Content="Scraper les Champs" Command="{x:Bind ViewModel.ScrapeMetadataCommand}"></Button>
-                    <Button Content="Sauvegarder les modifications" Command="{x:Bind ViewModel.SaveAndDLLCommand}"></Button>
+                        </MediaPlayerElement>
+                    </Button>
+                    <Button HorizontalAlignment="Center" x:Name="playpauseBT" Click="playpauseBT_Click" Content="Play"></Button>
                 </StackPanel>
-                <Grid x:Name="btshowIntel">
+                <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" >
+                    <!--<StackPanel Orientation="Horizontal">
+                        <Button Click="btshowIntel_Click" Content="Modifier les Champs"></Button>
+                        <Button Content="Scraper les Champs" Command="{x:Bind ViewModel.ScrapeMetadataCommand}"></Button>
+                        <Button Content="Sauvegarder les modifications" Command="{x:Bind ViewModel.SaveAndDLLCommand}"></Button>
+                    </StackPanel>-->
+                    <Grid x:Name="btshowIntel">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -142,69 +185,70 @@
                         <TextBlock Text="EpicGame ID : " FontWeight="Bold" Grid.Row="18"  Style="{StaticResource TitleTextBlockStyle}"/>
                         <TextBlock Text="{x:Bind ViewModel.Source.EpicGameID,Mode=OneWay}" TextWrapping="WrapWholeWords" Grid.Column="1" Grid.Row="18" Style="{StaticResource SubtitleTextBlockStyle}"/>
                     </Grid>
-                <Grid x:Name="btEditIntel" Visibility="Collapsed">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="Name : " FontWeight="Bold" Grid.Row="1"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBox Text="{x:Bind ViewModel.Source.Name ,Mode=TwoWay}" Grid.Column="1" Grid.Row="1" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
-                    <TextBlock Text="Path : " FontWeight="Bold" Grid.Row="2"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBox Text="{x:Bind ViewModel.Source.Path,Mode=TwoWay}" Grid.Column="1" Grid.Row="2" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
-                    <TextBlock Text="Année : " FontWeight="Bold" Grid.Row="3"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBox Text="{x:Bind ViewModel.Source.Year,Mode=TwoWay}" Grid.Column="1" Grid.Row="3" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
-                    <TextBlock Text="Genre : " FontWeight="Bold" Grid.Row="4"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBox Text="{x:Bind ViewModel.Source.Genre,Mode=TwoWay}" Grid.Column="1" Grid.Row="4" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
-                    <TextBlock Text="Editeur : " FontWeight="Bold" Grid.Row="5"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBox Text="{x:Bind ViewModel.Source.Editeur,Mode=TwoWay}" Grid.Column="1" Grid.Row="5" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
-                    <TextBlock Text="Développeur : " FontWeight="Bold" Grid.Row="6"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBox Text="{x:Bind ViewModel.Source.Developpeur,Mode=TwoWay}" Grid.Column="1" Grid.Row="6" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
-                    <TextBlock Text="Description : " FontWeight="Bold" Grid.Row="7"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBox Text="{x:Bind ViewModel.Source.Description,Mode=TwoWay}" TextWrapping="Wrap"  Grid.Column="1" Grid.Row="7" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
-                    <TextBlock Text="IGDB ID : " FontWeight="Bold" Grid.Row="8"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBox Text="{x:Bind ViewModel.Source.IGDBID,Mode=TwoWay}" Grid.Column="1" Grid.Row="8" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
-                    <TextBlock Text="ScreenScraper ID : " FontWeight="Bold" Grid.Row="9"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBox Text="{x:Bind ViewModel.Source.ScreenScraperID,Mode=TwoWay}" Grid.Column="1" Grid.Row="9" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
-                    <TextBlock Text="SteamGridDB ID : " FontWeight="Bold" Grid.Row="10"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBox Text="{x:Bind ViewModel.Source.SteamGridDBID,Mode=TwoWay}" Grid.Column="1" Grid.Row="10" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
-                    <TextBlock Text="Steam ID : " FontWeight="Bold" Grid.Row="11"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBox Text="{x:Bind ViewModel.Source.SteamID,Mode=TwoWay}" Grid.Column="1" Grid.Row="11" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
-                    <TextBlock Text="Origin ID : " FontWeight="Bold" Grid.Row="12"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBox Text="{x:Bind ViewModel.Source.OriginID,Mode=TwoWay}" Grid.Column="1" Grid.Row="12" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
-                    <TextBlock Text="EpicGame ID : " FontWeight="Bold" Grid.Row="13"  Style="{StaticResource TitleTextBlockStyle}"/>
-                    <TextBox Text="{x:Bind ViewModel.Source.EpicGameID,Mode=TwoWay}" Grid.Column="1" Grid.Row="13" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
-                </Grid>
-                <Grid Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Content="Scrape IGDB" FontSize="30" Style="{StaticResource TextBlockButtonStyle}" Command="{x:Bind ViewModel.ScrapeIGDBCommand}"></Button>
-                    <Button Grid.Column="1" Content="Scrape SteamGrid DB" FontSize="30" Style="{StaticResource TextBlockButtonStyle}" Command="{x:Bind ViewModel.ScrapeSGDBCommand}"></Button>
-                    <Button Grid.Column="2" Content="Scrape ScreenScraper" FontSize="30" Style="{StaticResource TextBlockButtonStyle}" Command="{x:Bind ViewModel.ScrapeSNSPCommand}"></Button>
-                </Grid>
-            </StackPanel>
-        </Grid>
-    </ScrollViewer>
+                    <Grid x:Name="btEditIntel" Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Name : " FontWeight="Bold" Grid.Row="1"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBox Text="{x:Bind ViewModel.Source.Name ,Mode=TwoWay}" Grid.Column="1" Grid.Row="1" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
+                        <TextBlock Text="Path : " FontWeight="Bold" Grid.Row="2"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBox Text="{x:Bind ViewModel.Source.Path,Mode=TwoWay}" Grid.Column="1" Grid.Row="2" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
+                        <TextBlock Text="Année : " FontWeight="Bold" Grid.Row="3"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBox Text="{x:Bind ViewModel.Source.Year,Mode=TwoWay}" Grid.Column="1" Grid.Row="3" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
+                        <TextBlock Text="Genre : " FontWeight="Bold" Grid.Row="4"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBox Text="{x:Bind ViewModel.Source.Genre,Mode=TwoWay}" Grid.Column="1" Grid.Row="4" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
+                        <TextBlock Text="Editeur : " FontWeight="Bold" Grid.Row="5"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBox Text="{x:Bind ViewModel.Source.Editeur,Mode=TwoWay}" Grid.Column="1" Grid.Row="5" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
+                        <TextBlock Text="Développeur : " FontWeight="Bold" Grid.Row="6"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBox Text="{x:Bind ViewModel.Source.Developpeur,Mode=TwoWay}" Grid.Column="1" Grid.Row="6" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
+                        <TextBlock Text="Description : " FontWeight="Bold" Grid.Row="7"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBox Text="{x:Bind ViewModel.Source.Description,Mode=TwoWay}" TextWrapping="Wrap"  Grid.Column="1" Grid.Row="7" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
+                        <TextBlock Text="IGDB ID : " FontWeight="Bold" Grid.Row="8"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBox Text="{x:Bind ViewModel.Source.IGDBID,Mode=TwoWay}" Grid.Column="1" Grid.Row="8" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
+                        <TextBlock Text="ScreenScraper ID : " FontWeight="Bold" Grid.Row="9"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBox Text="{x:Bind ViewModel.Source.ScreenScraperID,Mode=TwoWay}" Grid.Column="1" Grid.Row="9" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
+                        <TextBlock Text="SteamGridDB ID : " FontWeight="Bold" Grid.Row="10"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBox Text="{x:Bind ViewModel.Source.SteamGridDBID,Mode=TwoWay}" Grid.Column="1" Grid.Row="10" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
+                        <TextBlock Text="Steam ID : " FontWeight="Bold" Grid.Row="11"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBox Text="{x:Bind ViewModel.Source.SteamID,Mode=TwoWay}" Grid.Column="1" Grid.Row="11" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
+                        <TextBlock Text="Origin ID : " FontWeight="Bold" Grid.Row="12"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBox Text="{x:Bind ViewModel.Source.OriginID,Mode=TwoWay}" Grid.Column="1" Grid.Row="12" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
+                        <TextBlock Text="EpicGame ID : " FontWeight="Bold" Grid.Row="13"  Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBox Text="{x:Bind ViewModel.Source.EpicGameID,Mode=TwoWay}" Grid.Column="1" Grid.Row="13" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
+                    </Grid>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="Scrape IGDB" FontSize="30" Style="{StaticResource TextBlockButtonStyle}" Command="{x:Bind ViewModel.ScrapeIGDBCommand}"></Button>
+                        <Button Grid.Column="1" Content="Scrape SteamGrid DB" FontSize="30" Style="{StaticResource TextBlockButtonStyle}" Command="{x:Bind ViewModel.ScrapeSGDBCommand}"></Button>
+                        <Button Grid.Column="2" Content="Scrape ScreenScraper" FontSize="30" Style="{StaticResource TextBlockButtonStyle}" Command="{x:Bind ViewModel.ScrapeSNSPCommand}"></Button>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
 </Page>

@@ -23,6 +23,14 @@
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="20*"></RowDefinition>
         </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Viewbox Width="250">
+                    <AppBarButton Icon="Add" Label="Tous Exporter vers Pegasus" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Center"
+                                  ></AppBarButton>
+                </Viewbox>
+            </StackPanel>
+        </Grid>
         <ToggleButton x:Name="toggleRawBT" IsChecked="{x:Bind ViewModel.ToggleRaw,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" HorizontalAlignment="Right" HorizontalContentAlignment="Center"
                       Content="Voir les données Bruts" Click="toggleRawBT_Click" Style="{StaticResource ToggleButtonRevealStyle}"></ToggleButton>
         <controls:AdaptiveGridView Grid.Row="2" x:Name="presentData"

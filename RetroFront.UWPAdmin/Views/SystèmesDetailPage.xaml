@@ -18,7 +18,28 @@
     </i:Interaction.Behaviors>-->
 
     <Grid>
-        <ScrollViewer VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Viewbox Width="250">
+                    <AppBarButton Icon="Add" Label="Exporter vers Pegasus" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Center"
+                                  ></AppBarButton>
+                </Viewbox>
+                <Viewbox Width="250">
+                    <AppBarButton Icon="Edit" Label="Modifier les Champs" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Center"
+                                   Click="Button_Click"></AppBarButton>
+                </Viewbox>
+                <Viewbox Width="250">
+                    <AppBarButton Icon="Save" Label="Sauvegarder les modifications" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Center"
+                                  Command="{x:Bind ViewModel.SaveAndDLLCommand}"></AppBarButton>
+                </Viewbox>
+            </StackPanel>
+        </Grid>
+        <ScrollViewer VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled" Grid.Row="2">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height=".05*"></RowDefinition>
@@ -37,10 +58,10 @@
                 <Button Style="{StaticResource ButtonRevealStyle}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Command="{x:Bind ViewModel.ScrapeScreenshootCommand}">
                     <controls:ImageEx Height="540" Width="960" Stretch="Fill" Source="{x:Bind ViewModel.Source.Screenshoot,Mode=OneWay}"></controls:ImageEx>
                 </Button>
-                <StackPanel Orientation="Horizontal" Grid.Row="2">
+                <!--<StackPanel Orientation="Horizontal" Grid.Row="2">
                     <Button Content="Modifier les Champs" Click="Button_Click"></Button>
                     <Button Content="Sauvegarder les modifications" Command="{x:Bind ViewModel.SaveAndDLLCommand}"></Button>
-                </StackPanel>
+                </StackPanel>-->
                 <Grid x:Name="btTextblock" Grid.Row="1" Grid.Column="1" Visibility="Visible" VerticalAlignment="Stretch">
                     <Button Style="{StaticResource ButtonRevealStyle}" VerticalAlignment="Stretch">
                         <Grid>
