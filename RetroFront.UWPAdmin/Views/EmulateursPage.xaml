@@ -20,17 +20,16 @@
 
     <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
-                <Viewbox Width="250">
-                    <AppBarButton Icon="Add" Label="Ajouter un émulateur" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Center"
-                                  Command="{x:Bind ViewModel.AddPlateformeCommand}"></AppBarButton>
-                </Viewbox>
-            </StackPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+                    <AppBarButton Icon="Add" Label="Ajouter un émulateur" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                   Width="Auto" Command="{x:Bind ViewModel.AddPlateformeCommand}"></AppBarButton>
         </Grid>
         <ToggleButton x:Name="toggleRawBT" IsChecked="{x:Bind ViewModel.ToggleRaw,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" HorizontalAlignment="Right" HorizontalContentAlignment="Center"
                       Content="Voir les données Bruts" Click="toggleRawBT_Click" Style="{StaticResource ToggleButtonRevealStyle}"></ToggleButton>

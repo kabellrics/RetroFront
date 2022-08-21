@@ -19,19 +19,18 @@
 
     <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
-                <Viewbox Width="250">
-                    <AppBarButton Icon="Add" Label="Tous Exporter vers Pegasus" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Center"
-                                  ></AppBarButton>
-                </Viewbox>
-            </StackPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <AppBarButton Grid.Column="0" Icon="Add" Label="Tous Exporter vers Pegasus" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                   IsCompact="False" Width="Auto"></AppBarButton>
         </Grid>
-        <ToggleButton x:Name="toggleRawBT" IsChecked="{x:Bind ViewModel.ToggleRaw,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" HorizontalAlignment="Right" HorizontalContentAlignment="Center"
+        <ToggleButton x:Name="toggleRawBT" IsChecked="{x:Bind ViewModel.ToggleRaw,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Right" HorizontalContentAlignment="Center"
                       Content="Voir les données Bruts" Click="toggleRawBT_Click" Style="{StaticResource ToggleButtonRevealStyle}"></ToggleButton>
         <controls:AdaptiveGridView Grid.Row="2" x:Name="presentData"
             Padding="{StaticResource MediumLeftRightMargin}"

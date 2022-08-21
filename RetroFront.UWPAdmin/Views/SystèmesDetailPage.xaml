@@ -19,27 +19,26 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="20*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
-                <Viewbox Width="250">
-                    <AppBarButton Icon="Add" Label="Exporter vers Pegasus" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Center"
-                                  ></AppBarButton>
-                </Viewbox>
-                <Viewbox Width="250">
-                    <AppBarButton Icon="Edit" Label="Modifier les Champs" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Center"
-                                   Click="Button_Click"></AppBarButton>
-                </Viewbox>
-                <Viewbox Width="250">
-                    <AppBarButton Icon="Save" Label="Sauvegarder les modifications" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Center"
-                                  Command="{x:Bind ViewModel.SaveAndDLLCommand}"></AppBarButton>
-                </Viewbox>
-            </StackPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+                    <AppBarButton Grid.Column="0" Icon="Add" Label="Exporter vers Pegasus" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                   Width="Auto"></AppBarButton>
+            <AppBarButton Grid.Column="1" Icon="Edit" Label="Modifier les Champs" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                   Click="Button_Click" Width="Auto"></AppBarButton>
+            <AppBarButton Grid.Column="2" Icon="Save" Label="Sauvegarder les modifications" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                  Command="{x:Bind ViewModel.SaveAndDLLCommand}" Width="Auto"></AppBarButton>
+            <AppBarButton Grid.Column="3" Icon="Delete" Label="Supprimer" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                   Width="Auto"></AppBarButton>
         </Grid>
-        <ScrollViewer VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled" Grid.Row="2">
+        <ScrollViewer VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled" Grid.Row="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height=".05*"></RowDefinition>

@@ -18,46 +18,44 @@
     </i:Interaction.Behaviors>-->
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"></RowDefinition>
-            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
-                <Viewbox Width="250">
-                    <AppBarButton Icon="Save" Label="Sauvegarder les modifications" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
-                                  Command="{x:Bind ViewModel.SaveAndDLLCommand}"></AppBarButton>
-                </Viewbox>
-                <Viewbox Width="250">
-                    <AppBarButton Icon="Edit" Label="Modifier les Champs" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
-                                   Click="btshowIntel_Click"></AppBarButton>
-                </Viewbox>
-                <Viewbox Width="250">
-                    <AppBarButton Icon="Globe" Label="Scraper les Champs" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
-                                  Command="{x:Bind ViewModel.ScrapeMetadataCommand}"></AppBarButton>
-                </Viewbox>
-                <Viewbox Width="250">
-                    <AppBarButton Label="Scrape IGDB" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
-                                  Command="{x:Bind ViewModel.ScrapeIGDBCommand}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+                    <AppBarButton Grid.Column="0" Icon="Save" Label="Sauvegarder" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                  Command="{x:Bind ViewModel.SaveAndDLLCommand}" Width="Auto"></AppBarButton>
+            <AppBarButton Grid.Column="1" Icon="Edit" Label="Modifier les Champs" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                   Click="btshowIntel_Click" Width="Auto"></AppBarButton>
+            <AppBarButton Grid.Column="2" Icon="Globe" Label="Scraper les Champs" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                  Command="{x:Bind ViewModel.ScrapeMetadataCommand}" Width="Auto"></AppBarButton>
+            <AppBarButton Grid.Column="3" Label="Scrape IGDB" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                  Command="{x:Bind ViewModel.ScrapeIGDBCommand}" Width="Auto">
                         <AppBarButton.Icon>
                             <BitmapIcon UriSource="ms-appx:///Assets/igdb_logo.png"/>
                         </AppBarButton.Icon>
                     </AppBarButton>
-                </Viewbox>
-                <Viewbox Width="250">
-                    <AppBarButton Label="Scrape SteamGrid DB" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
-                                  Command="{x:Bind ViewModel.ScrapeSGDBCommand}">
+            <AppBarButton Grid.Column="4" Label="Scrape SteamGrid DB" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                  Command="{x:Bind ViewModel.ScrapeSGDBCommand}" Width="Auto">
                         <AppBarButton.Icon>
                             <BitmapIcon UriSource="ms-appx:///Assets/sgdb.png"/>
                         </AppBarButton.Icon></AppBarButton>
-                </Viewbox>
-                <Viewbox Width="250">
-                    <AppBarButton Label="Scrape ScreenScraper" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
-                                  Command="{x:Bind ViewModel.ScrapeSNSPCommand}">
+            <AppBarButton Grid.Column="5" Label="Scrape ScreenScraper" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                  Command="{x:Bind ViewModel.ScrapeSNSPCommand}" Width="Auto">
                         <AppBarButton.Icon>
                             <BitmapIcon UriSource="ms-appx:///Assets/sscp.png"/>
-                        </AppBarButton.Icon></AppBarButton>
-                </Viewbox>
-            </StackPanel>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Grid.Column="6" Icon="Delete" Label="Supprimer" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                   Width="Auto"></AppBarButton>
         </Grid>
         <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollMode="Enabled" Grid.Row="1">
             <Grid>

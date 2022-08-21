@@ -45,8 +45,19 @@ namespace RetroFront.UWPAdmin.Core.Models
                 var edit = game.Dev.Substring(0, game.Dev.IndexOf(","));
                 game.Dev = edit;
             }
+            InitImg();
         }
-
+        private void InitImg()
+        {
+            Logo = string.Empty;
+            Logo = string.Format(LogoWebPath, ID);
+            Screenshoot = string.Empty;
+            Screenshoot = string.Format(ScreenshootWebPath, ID);
+            Boxart = string.Empty;
+            Boxart = string.Format(BoxartWebPath, ID);
+            Banner = string.Empty;
+            Banner = string.Format(BannerWebPath, ID);
+        }
         public GameRom Game { get; }
         public int ID
         {
@@ -227,6 +238,7 @@ namespace RetroFront.UWPAdmin.Core.Models
             {
                 SetProperty(Game.Logo, value, Game, (game, item) => Game.Logo = item);
                 ChangeStatus();
+                InitImg();
             }
         }
         public string ScreenshootPath
@@ -236,6 +248,7 @@ namespace RetroFront.UWPAdmin.Core.Models
             {
                 SetProperty(Game.Screenshoot, value, Game, (game, item) => Game.Screenshoot = item);
                 ChangeStatus();
+                InitImg();
             }
         }
         public string BoxartPath
@@ -245,6 +258,7 @@ namespace RetroFront.UWPAdmin.Core.Models
             {
                 SetProperty(Game.Boxart, value, Game, (game, item) => Game.Boxart = item);
                 ChangeStatus();
+                InitImg();
             }
         }
         public string BannerPath
@@ -254,6 +268,7 @@ namespace RetroFront.UWPAdmin.Core.Models
             {
                 SetProperty(Game.Fanart, value, Game, (game, item) => Game.Fanart = item);
                 ChangeStatus();
+                InitImg();
             }
         }
         public string VideoPath
@@ -265,25 +280,49 @@ namespace RetroFront.UWPAdmin.Core.Models
                 ChangeStatus();
             }
         }
+        private string _logo;
         public string Logo
         {
-            get => $"http://localhost:34322/api/Img/GetLogoForGame/{ID}";
+            get => _logo;
+            set
+            {
+                SetProperty(ref _logo, value);
+            }
         }
+        private string _screenshoot;
         public string Screenshoot
         {
-            get => $"http://localhost:34322/api/Img/GetScreenshootForGame/{ID}";
+            get => _screenshoot;
+            set
+            {
+                SetProperty(ref _screenshoot, value);
+            }
         }
+        private string _boxart;
         public string Boxart
         {
-            get => $"http://localhost:34322/api/Img/GetBoxartForGame/{ID}";
+            get => _boxart;
+            set
+            {
+                SetProperty(ref _boxart, value);
+            }
         }
+        private string _banner;
         public string Banner
         {
-            get => $"http://localhost:34322/api/Img/GetFanartForGame/{ID}";
+            get => _banner;
+            set
+            {
+                SetProperty(ref _banner, value);
+            }
         }
         public string Video
         {
             get => $"http://localhost:34322/api/Img/GetVideoForGame/{ID}";
         }
+        private string LogoWebPath = "http://localhost:34322/api/Img/GetLogoForGame/{0}";
+        private string ScreenshootWebPath = "http://localhost:34322/api/Img/GetScreenshootForGame/{0}";
+        private string BoxartWebPath = "http://localhost:34322/api/Img/GetBoxartForGame/{0}";
+        private string BannerWebPath = "http://localhost:34322/api/Img/GetFanartForGame/{0}";
     }
 }
