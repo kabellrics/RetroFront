@@ -9,9 +9,16 @@ namespace RetroFront.UWPAdmin.Core.Models
     {
         public DisplaySysteme(Systeme systeme) : base()
         {
-            Systeme = systeme;
+            Systeme = systeme; InitImg();
         }
         public Systeme Systeme { get; }
+        private void InitImg()
+        {
+            Logo = string.Empty;
+            Logo = string.Format(LogoWebPath, ID);
+            Screenshoot = string.Empty;
+            Screenshoot = string.Format(ScreenshootWebPath, ID);
+        }
         public int ID
         {
             get => Systeme.SystemeID;
@@ -58,6 +65,8 @@ namespace RetroFront.UWPAdmin.Core.Models
             {
                 SetProperty(Systeme.Logo, value, Systeme, (syteme, item) => Systeme.Logo = item);
                 ChangeStatus();
+                Logo = string.Empty;
+                Logo = string.Format(LogoWebPath, ID);
             }
         }
         public string ScreenshootPath
@@ -67,17 +76,27 @@ namespace RetroFront.UWPAdmin.Core.Models
             {
                 SetProperty(Systeme.Screenshoot, value, Systeme, (syteme, item) => Systeme.Screenshoot = item);
                 ChangeStatus();
+                Screenshoot = string.Empty;
+                Screenshoot = string.Format(ScreenshootWebPath, ID);
             }
         }
+        private string _logo;
         public string Logo
         {
-            get => string.Format(LogoWebPath,ID);
-            private set { }
+            get => _logo;
+            set
+            {
+                SetProperty(ref _logo, value);
+            }
         }
+        private string _screenshoot;
         public string Screenshoot
         {
-            get => string.Format(ScreenshootWebPath,ID);
-            private set { }
+            get => _screenshoot;
+            set
+            {
+                SetProperty(ref _screenshoot, value);
+            }
         }
         private string LogoWebPath = "http://localhost:34322/api/Img/GetLogoForSystem/{0}";
         private string ScreenshootWebPath =  "http://localhost:34322/api/Img/GetScreenshootForSystem/{0}";
