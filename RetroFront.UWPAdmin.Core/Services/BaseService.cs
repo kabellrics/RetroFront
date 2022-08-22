@@ -2,6 +2,7 @@
 using RetroFront.UWPAdmin.Core.APIHelper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,6 +54,37 @@ namespace RetroFront.UWPAdmin.Core.Services
             obj.Source = source;
             obj.Dest = dest;
             await computerClient.ByteArrayDLLAsync(dest, obj);
+        }
+
+        public async Task DeleteGame(GameRom game)
+        {
+            await gameClient.GameDeleteAsync(game.Id);
+        }
+        public async Task DeleteEmulator(Emulator emulator) 
+        {
+            await emulatorClient.EmulatorDeleteAsync(emulator.EmulatorID);
+        }
+        public async Task DeleteSystems(Systeme systeme)
+        {
+            await systemeClient.SystemeDeleteAsync(systeme.SystemeID);
+        }
+
+        public async Task<int> GetNbGamesInEmulateur(Emulator emulator)
+        {
+            var result = await gameClient.GameGetAsync();
+            return result.Result.Count(x => x.EmulatorID == emulator.EmulatorID);
+        }
+        public async Task<int> GetNbEmulatorsInSystemes(Systeme systeme)
+        {
+            var result = await emulatorClient.EmulatorGetAsync();
+            return result.Result.Count(x => x.SystemeID == systeme.SystemeID);
+        }
+        public async Task<int> GetNbGamesInSystemes(Systeme systeme)
+        {
+            var resultemu = await emulatorClient.EmulatorGetAsync();
+            var emus = resultemu.Result.Where(x => x.SystemeID == systeme.SystemeID);
+            var result = await gameClient.GameGetAsync();
+            return result.Result.Count(x=> emus.Any(y=> y.EmulatorID == x.EmulatorID));
         }
     }
 }
