@@ -73,6 +73,7 @@ namespace RetroFront.Services.Implementation
         {
             Models.Pegasus.Collection collection = new Models.Pegasus.Collection();
             collection.Name = sys.Name;
+            collection.shortname = sys.Shortname;
             collection.Extension = emulator.Extension.Replace(".",string.Empty);
             if (sys.Type == SysType.GameStore)
             {
@@ -92,6 +93,7 @@ namespace RetroFront.Services.Implementation
         {
             var builder = new StringBuilder();
             builder.AppendLine($"collection : {collection.Name}");
+            builder.AppendLine($"shortname : {collection.shortname}");
             builder.AppendLine($"extension : {collection.Extension}");
             builder.AppendLine($"launch : { collection.launch}");
             builder.AppendLine($"assets.logo : { collection.Logo}");

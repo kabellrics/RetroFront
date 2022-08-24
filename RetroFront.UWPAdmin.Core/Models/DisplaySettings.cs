@@ -84,5 +84,32 @@ namespace RetroFront.UWPAdmin.Core.Models
                 ChangeStatus();
             }
         }
+        public string PegasusPCGroupName
+        {
+            get => Settings.PegasusPCGroupName;
+            set
+            {
+                SetProperty(Settings.PegasusPCGroupName, value, Settings, (emulator, item) => Settings.PegasusPCGroupName = item);
+                ChangeStatus();
+            }
+        }
+        public string PegasusIconFolderPath
+        {
+            get => Settings.PegasusIconFolderPath;
+            set
+            {
+                SetProperty(Settings.PegasusIconFolderPath, value, Settings, (emulator, item) => Settings.PegasusIconFolderPath = item);
+                ChangeStatus();
+            }
+        }
+        public bool RegroupPCGamesForPegasus
+        {
+            get => Settings.RegroupPCGamesForPegasus;
+            set
+            {
+                SetProperty(Settings.RegroupPCGamesForPegasus, value, Settings, (emulator, item) => Settings.RegroupPCGamesForPegasus = item);
+                ChangeStatus();
+            }
+        }
     }
 }

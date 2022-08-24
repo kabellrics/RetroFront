@@ -12,5 +12,10 @@ namespace RetroFront.UWPAdmin.Core.Services
             var setting = settingsClient.SettingsGet().Result;
             return new DisplaySettings(setting);
         }
+        public DisplaySettings SaveSetting(DisplaySettings settings)
+        {
+            var setting = settingsClient.SettingsPost(settings.Settings).Result;
+            return new DisplaySettings(setting);
+        }
     }
 }

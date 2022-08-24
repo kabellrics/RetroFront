@@ -23,6 +23,9 @@ namespace RetroFront.Models
         public bool ShowFav { get; set; }
         public bool ShowLastPlayed { get; set; }
         public bool ShowMostPlayed { get; set; }
+        public bool RegroupPCGamesForPegasus { get; set; }
+        public string PegasusPCGroupName { get; set; }
+        public string PegasusIconFolderPath { get; set; }
 
     }
 }

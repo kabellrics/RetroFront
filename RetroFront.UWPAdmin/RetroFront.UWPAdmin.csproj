@@ -326,6 +326,7 @@
     <Compile Include="Helpers\ResourceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\folder.png" />
     <Content Include="Assets\igdb_logo.png" />
     <Content Include="Assets\pegasus.png" />
     <Content Include="Assets\PlaceholderImage.png" />

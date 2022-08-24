@@ -7,6 +7,7 @@ namespace RetroFront.Models.Pegasus
     public class Collection
     {
         public string Name { get; set; }
+        public string shortname { get; set; }
         public string Extension { get; set; }
         public string launch { get; set; }
         public string Logo { get; set; }

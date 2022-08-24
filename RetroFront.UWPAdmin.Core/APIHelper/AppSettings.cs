@@ -52,8 +52,15 @@ namespace RetroFront.UWPAdmin.Core.APIHelper
 
         [Newtonsoft.Json.JsonProperty("showMostPlayed", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool ShowMostPlayed { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("RegroupPCGamesForPegasus", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool RegroupPCGamesForPegasus { get; set; }
         [Newtonsoft.Json.JsonProperty("RetroarchPath", Required = Newtonsoft.Json.Required.AllowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string RetroarchPath { get; set; }
+        [Newtonsoft.Json.JsonProperty("PegasusPCGroupName", Required = Newtonsoft.Json.Required.AllowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string PegasusPCGroupName { get; set; }
+        [Newtonsoft.Json.JsonProperty("PegasusIconFolderPath", Required = Newtonsoft.Json.Required.AllowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string PegasusIconFolderPath { get; set; }
 
     }
 }
