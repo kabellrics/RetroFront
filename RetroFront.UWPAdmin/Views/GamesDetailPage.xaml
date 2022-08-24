@@ -55,7 +55,7 @@
                 </AppBarButton.Icon>
             </AppBarButton>
             <AppBarButton Grid.Column="6" Icon="Delete" Label="Supprimer" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
-                                   Width="Auto"></AppBarButton>
+                                   Command="{x:Bind ViewModel.DeleteCommand}" Width="Auto"></AppBarButton>
         </Grid>
         <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollMode="Enabled" Grid.Row="1">
             <Grid>

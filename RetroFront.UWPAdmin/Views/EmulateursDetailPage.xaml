@@ -30,9 +30,9 @@
             <AppBarButton Grid.Column="0" Icon="Add" Label="Ajouter des jeux" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
                                   Command="{x:Bind ViewModel.AddGameCommand}" Width="Auto"></AppBarButton>
             <AppBarButton Grid.Column="1" Icon="Save" Label="Sauvegarder les changements" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
-                                   Width="Auto"></AppBarButton>
+                                   Command="{x:Bind ViewModel.SaveChangeCommand}" Width="Auto"></AppBarButton>
             <AppBarButton Grid.Column="2" Icon="Delete" Label="Supprimer" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
-                                   Width="Auto"></AppBarButton>
+                                   Command="{x:Bind ViewModel.DeleteCommand}" Width="Auto"></AppBarButton>
         </Grid>
         <Grid Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <StackPanel Orientation="Vertical">

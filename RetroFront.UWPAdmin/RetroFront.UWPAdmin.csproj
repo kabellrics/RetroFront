@@ -327,6 +327,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\igdb_logo.png" />
+    <Content Include="Assets\pegasus.png" />
     <Content Include="Assets\PlaceholderImage.png" />
     <Content Include="Assets\SampleData\SamplePhoto1.png" />
     <Content Include="Assets\SampleData\SamplePhoto10.png" />

@@ -1,5 +1,6 @@
 ﻿using RetroFront.UWPAdmin.Core.APIClient;
 using RetroFront.UWPAdmin.Core.APIHelper;
+using RetroFront.UWPAdmin.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,6 +79,16 @@ namespace RetroFront.UWPAdmin.Core.Services
         {
             var result = await emulatorClient.EmulatorGetAsync();
             return result.Result.Count(x => x.SystemeID == systeme.SystemeID);
+        }
+        public async Task<IEnumerable<Emulator>> GetEmulatorsInSystemes(Systeme systeme)
+        {
+            var result = await emulatorClient.EmulatorGetAsync();
+            return result.Result.Where(x => x.SystemeID == systeme.SystemeID);
+        }
+        public async Task<IEnumerable<GameRom>> GetGameForEmulator(Emulator emulator)
+        {
+            var result = await gameClient.GameGetAsync();
+            return result.Result.Where(x => x.EmulatorID == emulator.EmulatorID);
         }
         public async Task<int> GetNbGamesInSystemes(Systeme systeme)
         {

@@ -67,6 +67,9 @@ namespace RetroFront.UWPAdmin.ViewModels
                 SetProperty(ref _newBanner, value);
             }
         }
+        private ICommand _deleteCommand;
+        public ICommand DeleteCommand => _deleteCommand ?? (_deleteCommand = new RelayCommand(DeleteElement));
+
         private ICommand _SaveChangeCommand;
         public ICommand SaveChangeCommand => _SaveChangeCommand ?? (_SaveChangeCommand = new RelayCommand(SavingChange));
 
@@ -107,6 +110,17 @@ namespace RetroFront.UWPAdmin.ViewModels
                 {
                     await gameDetailService.UpdateGame(Source).ContinueWith(task => SendNewBck());
                 }
+            }
+        }
+
+        private async void DeleteElement()
+        {
+            var dialogresult = await dialogService.ConfirmationDialogAsync("Etes vous sure de vouloir supprimer ce jeu ?");
+            if(dialogresult.HasValue && dialogresult==true)
+            {
+                var t = Task.Run(async () => await gameDetailService.DeleteGame(Source.Game));
+                await dialogService.ConfirmationDialogAsync($"Jeu {Source.Name} Supprimé");
+                NavigationService.GoBack();
             }
         }
         private void SendNewBck()

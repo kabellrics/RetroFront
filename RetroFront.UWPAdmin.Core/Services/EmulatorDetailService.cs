@@ -24,10 +24,5 @@ namespace RetroFront.UWPAdmin.Core.Services
         {
             return (await gameClient.GamePostAsync(game)).Result;
         }
-        public async Task<IEnumerable<DisplayGame>> GetGameForEmulator(DisplayEmulator emulator)
-        {
-            var result = await gameClient.GameGetAsync();
-            return result.Result.Where(x=>x.EmulatorID == emulator.ID).Select(x => new DisplayGame(x));
-        }
     }
 }

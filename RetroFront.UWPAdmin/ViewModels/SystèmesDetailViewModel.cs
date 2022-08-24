@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -19,6 +20,8 @@ namespace RetroFront.UWPAdmin.ViewModels
     {
         private SystemeDetailService systemeDetailService;
         private DialogService dialogService;
+        private ICommand _deleteCommand;
+        public ICommand DeleteCommand => _deleteCommand ?? (_deleteCommand = new RelayCommand(DeleteElement));
         private ICommand _SaveChangeCommand;
         public ICommand SaveChangeCommand => _SaveChangeCommand ?? (_SaveChangeCommand = new RelayCommand(SaveChange));
         private ICommand _ScrapeLogoCommand;
@@ -81,6 +84,36 @@ namespace RetroFront.UWPAdmin.ViewModels
             //}
         }
 
+        private async void DeleteElement()
+        {
+            var textdialog = new StringBuilder();
+            var nbemus = await systemeDetailService.GetNbEmulatorsInSystemes(Source.Systeme);
+            var nbgames = await systemeDetailService.GetNbGamesInSystemes(Source.Systeme);
+            textdialog.AppendLine("Etes vous sure de vouloir supprimer ce système ?");
+            if (nbemus > 0)
+                textdialog.AppendLine($"Cela supprimera les {nbemus} emulateurs liées à ce système");
+            if(nbgames > 0)
+                textdialog.AppendLine($"Cela supprimera les {nbgames} jeux liées à ce système");
+            var dialogresult = await dialogService.ConfirmationDialogAsync(textdialog.ToString());
+            if (dialogresult.HasValue && dialogresult == true)
+            {
+                var emus = await systemeDetailService.GetEmulatorsInSystemes(Source.Systeme);
+                foreach(var emu in emus)
+                {
+                    var games = await systemeDetailService.GetGameForEmulator(emu);
+                    foreach(var game in games)
+                    {
+                        var t = Task.Run(async () => await systemeDetailService.DeleteGame(game));
+                        await dialogService.ConfirmationDialogAsync($"Jeu {game.Name} Supprimé");
+                    }
+                    var temu = Task.Run(async () => await systemeDetailService.DeleteEmulator(emu));
+                    await dialogService.ConfirmationDialogAsync($"Emulateur {emu.Name} Supprimé");
+                }
+                var tsys = Task.Run(async () => await systemeDetailService.DeleteSystems(Source.Systeme));
+                await dialogService.ConfirmationDialogAsync($"Système {Source.Name} Supprimé");
+                NavigationService.GoBack();
+            }
+        }
         public void Initialize(string selectedsysID)
         {
             if (!string.IsNullOrEmpty(selectedsysID))

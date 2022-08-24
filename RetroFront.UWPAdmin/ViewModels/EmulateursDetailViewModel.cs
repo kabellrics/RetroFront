@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -32,6 +33,8 @@ namespace RetroFront.UWPAdmin.ViewModels
             }
         }
         public ObservableCollection<DisplayGame> Roms { get; } = new ObservableCollection<DisplayGame>();
+        private ICommand _deleteCommand;
+        public ICommand DeleteCommand => _deleteCommand ?? (_deleteCommand = new RelayCommand(DeleteElement));
         private ICommand _SaveChangeCommand;
         public ICommand SaveChangeCommand => _SaveChangeCommand ?? (_SaveChangeCommand = new RelayCommand(SaveChange));
         private ICommand _AddGameCommand;
@@ -46,6 +49,26 @@ namespace RetroFront.UWPAdmin.ViewModels
                 {
                         await emulatorDetailService.UpdateEmulator(Source);
                 }
+            }
+        }
+
+        private async void DeleteElement()
+        {
+            var textdialog = new StringBuilder();
+            textdialog.AppendLine("Etes vous sure de vouloir supprimer cette emulateur ?");
+            if(Roms.Count > 0)
+                textdialog.AppendLine($"Cela supprimera les {Roms.Count} jeux liées à cette emulateur");
+            var dialogresult = await dialogService.ConfirmationDialogAsync(textdialog.ToString());
+            if (dialogresult.HasValue && dialogresult == true)
+            {
+                foreach(var item in Roms)
+                {
+                    var tgame = Task.Run(async () => await emulatorDetailService.DeleteGame(item.Game));
+                    await dialogService.ConfirmationDialogAsync($"Jeu {item.Name} Supprimé");
+                }
+                var temu = Task.Run(async () => await emulatorDetailService.DeleteEmulator(Source.Emulator));
+                await dialogService.ConfirmationDialogAsync($"Emulateur {Source.Name} Supprimé");
+                NavigationService.GoBack();
             }
         }
         public EmulateursDetailViewModel()
@@ -125,9 +148,9 @@ namespace RetroFront.UWPAdmin.ViewModels
             {
                 Source = emulatorDetailService.GetEmulator(int.Parse(selectedsysID));
                 Roms.Clear();
-                var games = await emulatorDetailService.GetGameForEmulator(Source);
+                var games = await emulatorDetailService.GetGameForEmulator(Source.Emulator);
                 foreach (var rom in games)
-                    Roms.Add(rom);
+                    Roms.Add(new DisplayGame(rom));
             }
         }
     }

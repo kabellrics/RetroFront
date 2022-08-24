@@ -29,14 +29,18 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-                    <AppBarButton Grid.Column="0" Icon="Add" Label="Exporter vers Pegasus" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
-                                   Width="Auto"></AppBarButton>
+                    <AppBarButton Grid.Column="0" Label="Exporter vers Pegasus" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
+                                   Width="Auto">
+                <AppBarButton.Icon>
+                    <BitmapIcon UriSource="ms-appx:///Assets/pegasus.png"/>
+                </AppBarButton.Icon>
+                    </AppBarButton>
             <AppBarButton Grid.Column="1" Icon="Edit" Label="Modifier les Champs" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
                                    Click="Button_Click" Width="Auto"></AppBarButton>
             <AppBarButton Grid.Column="2" Icon="Save" Label="Sauvegarder les modifications" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
                                   Command="{x:Bind ViewModel.SaveAndDLLCommand}" Width="Auto"></AppBarButton>
             <AppBarButton Grid.Column="3" Icon="Delete" Label="Supprimer" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
-                                   Width="Auto"></AppBarButton>
+                                   Command="{x:Bind ViewModel.DeleteCommand}" Width="Auto"></AppBarButton>
         </Grid>
         <ScrollViewer VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled" Grid.Row="1">
             <Grid>

@@ -27,9 +27,16 @@
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
                     <AppBarButton Icon="Add" Label="Ajouter un émulateur" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
                                    Width="Auto" Command="{x:Bind ViewModel.AddPlateformeCommand}"></AppBarButton>
+            <AppBarButton Grid.Column="1" Label="Tous Exporter vers Pegasus" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                   IsCompact="False" Width="Auto">
+                <AppBarButton.Icon>
+                    <BitmapIcon UriSource="ms-appx:///Assets/pegasus.png"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
         </Grid>
         <ToggleButton x:Name="toggleRawBT" IsChecked="{x:Bind ViewModel.ToggleRaw,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" HorizontalAlignment="Right" HorizontalContentAlignment="Center"
                       Content="Voir les données Bruts" Click="toggleRawBT_Click" Style="{StaticResource ToggleButtonRevealStyle}"></ToggleButton>

@@ -27,8 +27,11 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <AppBarButton Grid.Column="0" Icon="Add" Label="Tous Exporter vers Pegasus" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                                   IsCompact="False" Width="Auto"></AppBarButton>
+            <AppBarButton Grid.Column="0" Label="Tous Exporter vers Pegasus" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                   IsCompact="False" Width="Auto">
+                <AppBarButton.Icon>
+                    <BitmapIcon UriSource="ms-appx:///Assets/pegasus.png"/>
+                </AppBarButton.Icon></AppBarButton>
         </Grid>
         <ToggleButton x:Name="toggleRawBT" IsChecked="{x:Bind ViewModel.ToggleRaw,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Right" HorizontalContentAlignment="Center"
                       Content="Voir les données Bruts" Click="toggleRawBT_Click" Style="{StaticResource ToggleButtonRevealStyle}"></ToggleButton>
