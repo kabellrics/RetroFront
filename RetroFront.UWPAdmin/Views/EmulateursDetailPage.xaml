@@ -27,12 +27,36 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <AppBarButton Grid.Column="0" Icon="Add" Label="Ajouter des jeux" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
-                                  Command="{x:Bind ViewModel.AddGameCommand}" Width="Auto"></AppBarButton>
-            <AppBarButton Grid.Column="1" Icon="Save" Label="Sauvegarder les changements" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
-                                   Command="{x:Bind ViewModel.SaveChangeCommand}" Width="Auto"></AppBarButton>
-            <AppBarButton Grid.Column="2" Icon="Delete" Label="Supprimer" VerticalAlignment="Stretch" IsCompact="False" HorizontalAlignment="Stretch"
-                                   Command="{x:Bind ViewModel.DeleteCommand}" Width="Auto"></AppBarButton>
+            <Button  Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.AddGameCommand}" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Image Grid.Row="0" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Source="ms-appx:///Assets/Icons/plus.png"></Image>
+                    <TextBlock Grid.Row="1" Text="Ajouter des jeux" TextAlignment="Center" TextWrapping="WrapWholeWords"/>
+                </Grid>
+            </Button>
+            <Button  Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.SaveChangeCommand}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Image Grid.Row="0" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Source="ms-appx:///Assets/Icons/save.png"></Image>
+                    <TextBlock Grid.Row="1" Text="Sauvegarder les changements" TextAlignment="Center" TextWrapping="WrapWholeWords"/>
+                </Grid>
+            </Button>
+            <Button  Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.DeleteCommand}" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Image Grid.Row="0" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Source="ms-appx:///Assets/Icons/delete.png"></Image>
+                    <TextBlock Grid.Row="1" Text="Supprimer" TextAlignment="Center" TextWrapping="WrapWholeWords"/>
+                </Grid>
+            </Button>
         </Grid>
         <Grid Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <StackPanel Orientation="Vertical">
