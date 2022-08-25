@@ -31,7 +31,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button  Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.SaveAndDLLCommand}" >
+            <Button  Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.SaveAndDLLCommand}"  Background="Transparent">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"></RowDefinition>
@@ -41,7 +41,7 @@
                     <TextBlock Grid.Row="1" Text="Sauvegarder" TextAlignment="Center" TextWrapping="WrapWholeWords"/>
                 </Grid>
             </Button>
-            <Button  Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="btshowIntel_Click" >
+            <Button  Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="btshowIntel_Click"  Background="Transparent">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"></RowDefinition>
@@ -51,7 +51,7 @@
                     <TextBlock Grid.Row="1" Text="Modifier les Champs" TextAlignment="Center" TextWrapping="WrapWholeWords"/>
                 </Grid>
             </Button>
-            <Button  Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.ScrapeMetadataCommand}" >
+            <Button  Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.ScrapeMetadataCommand}"  Background="Transparent">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"></RowDefinition>
@@ -61,7 +61,7 @@
                     <TextBlock Grid.Row="1" Text="Scraper les Champs" TextAlignment="Center" TextWrapping="WrapWholeWords"/>
                 </Grid>
             </Button>
-            <Button Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.ScrapeIGDBCommand}" >
+            <Button Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.ScrapeIGDBCommand}"  Background="Transparent">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"></RowDefinition>
@@ -71,7 +71,7 @@
                     <TextBlock Grid.Row="1" Text="Scrape IGDB" TextAlignment="Center" TextWrapping="WrapWholeWords"/>
                 </Grid>
             </Button>
-            <Button  Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.ScrapeSGDBCommand}" >
+            <Button  Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.ScrapeSGDBCommand}"  Background="Transparent">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"></RowDefinition>
@@ -81,7 +81,7 @@
                     <TextBlock Grid.Row="1" Text="Scrape SteamGrid DB" TextAlignment="Center" TextWrapping="WrapWholeWords"/>
                 </Grid>
             </Button>
-            <Button  Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.ScrapeSNSPCommand}" >
+            <Button  Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.ScrapeSNSPCommand}"  Background="Transparent">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"></RowDefinition>
@@ -91,7 +91,7 @@
                     <TextBlock Grid.Row="1" Text="Scrape ScreenScraper" TextAlignment="Center" TextWrapping="WrapWholeWords"/>
                 </Grid>
             </Button>
-            <Button  Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.DeleteCommand}" >
+            <Button  Grid.Column="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.DeleteCommand}"  Background="Transparent">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"></RowDefinition>
