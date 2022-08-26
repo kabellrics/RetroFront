@@ -14,7 +14,8 @@ namespace RetroFront.UWPAdmin.Core.Services
         protected SystemeClient systemeClient = new SystemeClient();
         protected GameClient gameClient = new GameClient();
         protected EmulatorClient emulatorClient = new EmulatorClient();
-        protected GameDataProviderClient gameDataProvider;
+        protected GameDataProviderClient gameDataProvider = new GameDataProviderClient();
+        protected GameAppClient GameAppClient = new GameAppClient();
         protected ComputerClient computerClient = new ComputerClient();
         protected HelperModelClient helperModelClient = new HelperModelClient();
         protected ThemeClient themeClient = new ThemeClient();

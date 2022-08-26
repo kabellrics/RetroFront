@@ -170,6 +170,7 @@
     <Compile Include="ViewModels\Modals\ImgProposalViewModel.cs" />
     <Compile Include="ViewModels\Modals\ImgScrapeChoiceViewModel.cs" />
     <Compile Include="ViewModels\Modals\MetadataScrapeChooseViewModel.cs" />
+    <Compile Include="ViewModels\Modals\PickLocalGameViewModel.cs" />
     <Compile Include="ViewModels\Modals\ScrapeResolverViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
@@ -204,6 +205,9 @@
     </Compile>
     <Compile Include="Views\Modals\MetadataScrapeChooseContentDialog.xaml.cs">
       <DependentUpon>MetadataScrapeChooseContentDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Modals\PickLocalGameDialog.xaml.cs">
+      <DependentUpon>PickLocalGameDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Modals\ScrapeResolverContentDialog.xaml.cs">
       <DependentUpon>ScrapeResolverContentDialog.xaml</DependentUpon>
@@ -295,6 +299,10 @@
     <Page Include="Views\Modals\MetadataScrapeChooseContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Modals\PickLocalGameDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Modals\ScrapeResolverContentDialog.xaml">
       <SubType>Designer</SubType>

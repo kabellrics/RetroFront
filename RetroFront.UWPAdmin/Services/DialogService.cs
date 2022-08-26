@@ -1,5 +1,6 @@
 ﻿using RetroFront.UWPAdmin.Core.APIHelper;
 using RetroFront.UWPAdmin.Core.Models;
+using RetroFront.UWPAdmin.Helpers;
 using RetroFront.UWPAdmin.ViewModels.Modals;
 using RetroFront.UWPAdmin.Views.Modals;
 using System;
@@ -135,6 +136,17 @@ namespace RetroFront.UWPAdmin.Services
             if (dialog == ContentDialogResult.Secondary)
             {
                 return vm.Resultgame;
+            }
+            return null;
+        }
+        public async Task<IEnumerable<DisplayGame>> GetInstalledGame(LocalGame store)
+        {
+            var vm = new PickLocalGameViewModel(store);
+            PickLocalGameDialog contentDialog = new PickLocalGameDialog(vm);
+            var dialog = await contentDialog.ShowAsync();
+            if (dialog == ContentDialogResult.Secondary)
+            {
+                return vm.SelectedGame;
             }
             return null;
         }

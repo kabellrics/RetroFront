@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RetroFront.UWPAdmin.ViewModels.Modals;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,9 +20,12 @@ namespace RetroFront.UWPAdmin.Views.Modals
 {
     public sealed partial class PickLocalGameDialog : ContentDialog
     {
-        public PickLocalGameDialog()
+        public PickLocalGameViewModel ViewModel { get; } = new PickLocalGameViewModel();
+        public PickLocalGameDialog(PickLocalGameViewModel vm)
         {
             this.InitializeComponent();
+            ViewModel = vm;
+            ViewModel.LoadDataAsync();
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
