@@ -97,5 +97,15 @@ namespace RetroFront.UWPAdmin.Core.Services
             var result = await gameClient.GameGetAsync();
             return result.Result.Count(x=> emus.Any(y=> y.EmulatorID == x.EmulatorID));
         }
+        public async Task<IEnumerable<DisplaySysteme>> GetSystemes()
+        {
+            List<DisplaySysteme> displaySystemes = new List<DisplaySysteme>();
+            var result = await systemeClient.SystemeGetAsync();
+            foreach (var sys in result.Result.OrderBy(x => x.Type).ThenBy(x => x.Name))
+            {
+                displaySystemes.Add(new DisplaySysteme(sys));
+            }
+            return displaySystemes;
+        }
     }
 }

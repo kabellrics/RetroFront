@@ -8,7 +8,7 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Uwp.UI.Animations;
-
+using RetroFront.UWPAdmin.Core.APIHelper;
 using RetroFront.UWPAdmin.Core.Models;
 using RetroFront.UWPAdmin.Core.Services;
 using RetroFront.UWPAdmin.Helpers;
@@ -52,8 +52,19 @@ namespace RetroFront.UWPAdmin.ViewModels
                 var emupath = await dialogService.FilePicker(new System.Collections.Generic.List<string>() { ".exe" });
                 if (!string.IsNullOrEmpty(emupath))
                 {
-                    var sys = result.systeme;
-                    sys = await emulatorsService.CreateSysteme(sys);
+
+                    var syss = await emulatorsService.GetSystemes();
+                    var sysdis = syss.FirstOrDefault(x => x.ShortName == result.systeme.Shortname);
+                    Systeme sys = new Systeme();
+                    if(sysdis == null)
+                    {
+                        sys = result.systeme;
+                        sys = await emulatorsService.CreateSysteme(sys);
+                    }
+                    else
+                    {
+                        sys = sysdis.Systeme;
+                    }
                     var emu = result.emulator;
                     emu.SystemeID = sys.SystemeID;
                     emu.Chemin = emupath;

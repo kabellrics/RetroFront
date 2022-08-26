@@ -10,16 +10,6 @@ namespace RetroFront.UWPAdmin.Core.Services
 {
     public class SystemesService: BaseService
     {
-        public async Task<IEnumerable<DisplaySysteme>> GetSystemes()
-        {
-            List<DisplaySysteme> displaySystemes = new List<DisplaySysteme>();
-            var result = await systemeClient.SystemeGetAsync();
-            foreach (var sys in result.Result.OrderBy(x=>x.Type).ThenBy(x=>x.Name))
-            {
-                displaySystemes.Add(new DisplaySysteme(sys));
-            }
-            return displaySystemes;
-        }
         public async Task UpdateSysteme(DisplaySysteme system)
         {
             await systemeClient.SystemePutAsync(system.ID, system.Systeme);

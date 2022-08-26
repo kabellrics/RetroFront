@@ -17,6 +17,16 @@ namespace RetroFront.UWPAdmin.Core.Models
                 SetProperty(ref _hasChanged, value);
             }
         }
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                SetProperty(ref _isSelected, value);
+            }
+        }
         protected void ChangeStatus() { HasChanged = true; }
         public DisplayBase()
         {

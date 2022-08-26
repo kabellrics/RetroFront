@@ -13,4 +13,10 @@ namespace RetroFront.UWPAdmin.Helpers
         {
         }
     }
+    public enum LocalGame
+    {
+        Steam,
+        Epic,
+        Origin
+    }
 }
