@@ -24,6 +24,33 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
                 SetProperty(ref _title, value);
             }
         }
+        private bool _ShowSteamId;
+        public bool ShowSteamId
+        {
+            get => _ShowSteamId;
+            set
+            {
+                SetProperty(ref _ShowSteamId, value);
+            }
+        }
+        private bool _ShowOriginId;
+        public bool ShowOriginId
+        {
+            get => _ShowOriginId;
+            set
+            {
+                SetProperty(ref _ShowOriginId, value);
+            }
+        }
+        private bool _ShowEpicId;
+        public bool ShowEpicId
+        {
+            get => _ShowEpicId;
+            set
+            {
+                SetProperty(ref _ShowEpicId, value);
+            }
+        }
         private LocalGame _gamestore;
         public LocalGame GameStore
         {
@@ -39,8 +66,8 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
             get { return _foundedgame; }
             set { SetProperty(ref _foundedgame, value); }
         }
-        private ObservableCollection<DisplayGame> _selectedgame;
-        public ObservableCollection<DisplayGame> SelectedGame
+        private IEnumerable<DisplayGame> _selectedgame;
+        public IEnumerable<DisplayGame> SelectedGame
         {
             get { return _selectedgame; }
             set { SetProperty(ref _selectedgame, value); }
@@ -49,6 +76,24 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
     public PickLocalGameViewModel(LocalGame store)
         {
             GameStore = store;
+            if(GameStore == LocalGame.Steam)
+            {
+                ShowSteamId = true;
+                ShowOriginId = false;
+                ShowEpicId = false;
+            }
+            else if(GameStore == LocalGame.Epic)
+            {
+                ShowSteamId = false;
+                ShowOriginId = false;
+                ShowEpicId = true;
+            }
+            else if(GameStore != LocalGame.Origin)
+            {
+                ShowSteamId = false;
+                ShowOriginId = true;
+                ShowEpicId = false;
+            }
             FoundedGame = new ObservableCollection<DisplayGame>();
             SelectedGame = new ObservableCollection<DisplayGame>();
         }
@@ -70,25 +115,29 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
             FoundedGame.Clear();
             if(GameStore == LocalGame.Steam)
             {
-                foreach(var game = await service.GetInstalledSteamGame())
+                foreach(var game in await service.GetInstalledSteamGame())
                 {
                     FoundedGame.Add(game);
                 }
             }
             else if(GameStore == LocalGame.Origin)
             {
-                foreach (var game = await service.GetInstalledOriginGame())
+                foreach (var game in await service.GetInstalledOriginGame())
                 {
                     FoundedGame.Add(game);
                 }
             }
             else if(GameStore == LocalGame.Epic)
             {
-                foreach (var game = await service.GetInstalledEpicGame())
+                foreach (var game in await service.GetInstalledEpicGame())
                 {
                     FoundedGame.Add(game);
                 }
             }
+        }
+        public void SetUSerChoice()
+        {
+            SelectedGame = FoundedGame.Where(x => x.IsSelected);
         }
     }
 }

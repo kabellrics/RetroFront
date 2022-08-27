@@ -5,13 +5,47 @@
     xmlns:local="using:RetroFront.UWPAdmin.Views.Modals"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"    
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
     mc:Ignorable="d"
     Title="TITLE"
-    PrimaryButtonText="Button1"
-    SecondaryButtonText="Button2"
+    PrimaryButtonText="Annuler"
+    SecondaryButtonText="Valider"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    <ContentDialog.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </ContentDialog.Resources>
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".25*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <controls:DataGrid x:Name="rawData" Grid.Row="1" Grid.Column="1"
+        AreRowGroupHeadersFrozen="True"
+        CanUserSortColumns="False"
+        CanUserReorderColumns="False"
+        CanUserResizeColumns="True"
+        AutoGenerateColumns="False"
+        MinHeight="400"
+        IsReadOnly="False"
+            ItemsSource="{x:Bind ViewModel.FoundedGame, Mode=TwoWay}"
+                               ScrollViewer.VerticalScrollMode="Enabled"
+                               VerticalScrollBarVisibility="Visible">
+            <controls:DataGrid.Columns>
+                <controls:DataGridCheckBoxColumn Binding="{Binding IsSelected}" Width="25"/>
+                <controls:DataGridTextColumn Header="Id" Binding="{Binding SteamID}" MinWidth="150" Visibility="{x:Bind ViewModel.ShowSteamId, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <controls:DataGridTextColumn Header="Id" Binding="{Binding OriginID}" MinWidth="150" Visibility="{x:Bind ViewModel.ShowOriginId, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <controls:DataGridTextColumn Header="Id" Binding="{Binding EpicGameID}" MinWidth="150" Visibility="{x:Bind ViewModel.ShowEpicId, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <controls:DataGridTextColumn Header="Name" Binding="{Binding Name}" MinWidth="500"/>
+                <controls:DataGridTextColumn Header="Coomand" Binding="{Binding Path}" MinWidth="150"/>
+            </controls:DataGrid.Columns>
+        </controls:DataGrid>
     </Grid>
 </ContentDialog>

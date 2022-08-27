@@ -13,11 +13,13 @@ namespace RetroFront.UWPAdmin.Core.Services
 
         public async Task<IEnumerable<DisplayGame>> GetInstalledSteamGame()
         {
-            var result = await GameAppClient.GetSteamGameAsync();
+            Emulator emu = new Emulator();
+            var result = await GameAppClient.GetSteamGameAsync(emu);
             var installedsteamgames = result.Result.ToList();
             var resultcurrentsteamgames = await gameClient.GameGetAsync();
             var currentsteamgames = resultcurrentsteamgames.Result.ToList();
-            var InstallGames = installedsteamgames.Select(x => new DisplayGame(x)).ToList();
+            var distinctgames = installedsteamgames.GroupBy(p => p.SteamID).Select(g => g.First()).ToList();
+            var InstallGames = distinctgames.Select(x => new DisplayGame(x)).ToList();
             InstallGames.ForEach(game => 
             {
                 if(currentsteamgames.Any(x=> x.SteamID == game.SteamID))
@@ -33,11 +35,13 @@ namespace RetroFront.UWPAdmin.Core.Services
         }
         public async Task<IEnumerable<DisplayGame>> GetInstalledEpicGame()
         {
-            var result = await GameAppClient.GetEpicGameAsync();
+            Emulator emu = new Emulator();
+            var result = await GameAppClient.GetEpicGameAsync(emu);
             var installedsteamgames = result.Result.ToList();
             var resultcurrentsteamgames = await gameClient.GameGetAsync();
             var currentsteamgames = resultcurrentsteamgames.Result.ToList();
-            var InstallGames = installedsteamgames.Select(x => new DisplayGame(x)).ToList();
+            var distinctgames = installedsteamgames.GroupBy(p => p.EpicID).Select(g => g.First()).ToList();
+            var InstallGames = distinctgames.Select(x => new DisplayGame(x)).ToList();
             InstallGames.ForEach(game => 
             {
                 if(currentsteamgames.Any(x=> x.EpicID == game.Game.EpicID))
@@ -53,11 +57,13 @@ namespace RetroFront.UWPAdmin.Core.Services
         }
         public async Task<IEnumerable<DisplayGame>> GetInstalledOriginGame()
         {
-            var result = await GameAppClient.GetOriginGameAsync();
+            Emulator emu = new Emulator();
+            var result = await GameAppClient.GetOriginGameAsync(emu);
             var installedsteamgames = result.Result.ToList();
             var resultcurrentsteamgames = await gameClient.GameGetAsync();
             var currentsteamgames = resultcurrentsteamgames.Result.ToList();
-            var InstallGames = installedsteamgames.Select(x => new DisplayGame(x)).ToList();
+            var distinctgames = installedsteamgames.GroupBy(p => p.OriginID).Select(g => g.First()).ToList();
+            var InstallGames = distinctgames.Select(x => new DisplayGame(x)).ToList();
             InstallGames.ForEach(game => 
             {
                 if(currentsteamgames.Any(x=> x.OriginID == game.Game.OriginID))

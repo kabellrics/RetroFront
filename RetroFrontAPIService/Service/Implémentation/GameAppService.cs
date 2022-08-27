@@ -148,13 +148,20 @@ namespace RetroFrontAPIService.Service.Implémentation
 
                 foreach (var file in appmanifestfiles)
                 {
-                    dynamic appfile = VdfConvert.Deserialize(File.ReadAllText(file));
-                    GameRom game = new GameRom();
-                    game.EmulatorID = emu.EmulatorID;
-                    game.SteamID = int.Parse(appfile.Value.appid.Value);
-                    game.Name = appfile.Value.name.Value;
+                    try
+                    {
+                        dynamic appfile = VdfConvert.Deserialize(File.ReadAllText(file));
+                        GameRom game = new GameRom();
+                        game.EmulatorID = emu.EmulatorID;
+                        game.SteamID = int.Parse(appfile.Value.appid.Value);
+                        game.Name = appfile.Value.name.Value;
 
-                    gamesfind.Add(game);
+                        gamesfind.Add(game);
+                    }
+                    catch (Exception ex)
+                    {
+                        //throw;
+                    }
                 }
                 return gamesfind;
             }

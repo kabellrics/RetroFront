@@ -27,6 +27,25 @@ namespace RetroFront.UWPAdmin.ViewModels
         private ICommand _itemSelectedCommand;
         private ICommand _SaveChangeCommand;
         public ICommand SaveChangeCommand => _SaveChangeCommand ?? (_SaveChangeCommand = new RelayCommand(SaveChange));
+        private ICommand _AddSteamCommand;
+        public ICommand AddSteamCommand => _AddSteamCommand ?? (_AddSteamCommand = new RelayCommand(AddSteam));
+        private ICommand _AddEpicCommand;
+        public ICommand AddEpicCommand => _AddEpicCommand ?? (_AddEpicCommand = new RelayCommand(AddEpic));
+        private ICommand _AddOriginCommand;
+        public ICommand AddOriginCommand => _AddOriginCommand ?? (_AddOriginCommand = new RelayCommand(AddOrigin));
+
+        private async void AddOrigin()
+        {
+            var games = await dialogService.GetInstalledGame(LocalGame.Origin);
+        }
+        private async void AddSteam()
+        {
+            var games = await dialogService.GetInstalledGame(LocalGame.Steam);
+        }
+        private async void AddEpic()
+        {
+            var games = await dialogService.GetInstalledGame(LocalGame.Epic);
+        }
 
         private async void SaveChange()
         {

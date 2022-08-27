@@ -34,6 +34,7 @@ namespace RetroFront.UWPAdmin.Views.Modals
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            ViewModel.SetUSerChoice();
         }
     }
 }
