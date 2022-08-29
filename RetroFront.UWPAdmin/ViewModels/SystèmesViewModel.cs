@@ -8,7 +8,7 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Uwp.UI.Animations;
-
+using RetroFront.UWPAdmin.Core.APIHelper;
 using RetroFront.UWPAdmin.Core.Models;
 using RetroFront.UWPAdmin.Core.Services;
 using RetroFront.UWPAdmin.Helpers;
@@ -41,6 +41,28 @@ namespace RetroFront.UWPAdmin.ViewModels
         private async void AddSteam()
         {
             var games = await dialogService.GetInstalledGame(LocalGame.Steam);
+            if(games != null)
+            {
+                var steamsys = await systemesService.GetSystemeByShortname("steam");
+                if(steamsys == null)
+                {
+                    var sysSteam = new Systeme();
+                    sysSteam.Name = "Steam";
+                    sysSteam.Type = SysType.GameStore;
+                    sysSteam.Shortname = "steam";
+                    steamsys = await systemesService.CreateSysteme(sysSteam);
+                }
+                var steamemus = (await systemesService.GetEmulatorsInSystemes(steamsys.Systeme)).FirstOrDefault();
+                if(steamemus == null)
+                {
+                    var emusteam = new Emulator();
+                    emusteam.SystemeID = steamsys.ID;
+                    emusteam.Name = "Steam Executable";
+                    emusteam.Chemin = @"C:\Windows\explorer.exe";
+                    emusteam.Extension = ".exe .EXE .lnk .LNK";
+                    steamemus = await systemesService.CreateEmulator(emusteam);
+                }
+            }
         }
         private async void AddEpic()
         {
