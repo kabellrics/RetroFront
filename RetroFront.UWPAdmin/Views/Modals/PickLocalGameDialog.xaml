@@ -39,12 +39,12 @@
                                ScrollViewer.VerticalScrollMode="Enabled"
                                VerticalScrollBarVisibility="Visible">
             <controls:DataGrid.Columns>
-                <controls:DataGridCheckBoxColumn Binding="{Binding IsSelected}" Width="25"/>
+                <controls:DataGridCheckBoxColumn Binding="{Binding IsSelected}" MinWidth="25"/>
                 <controls:DataGridTextColumn Header="Id" Binding="{Binding SteamID}" MinWidth="150" Visibility="{x:Bind ViewModel.ShowSteamId, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <controls:DataGridTextColumn Header="Id" Binding="{Binding OriginID}" MinWidth="150" Visibility="{x:Bind ViewModel.ShowOriginId, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <controls:DataGridTextColumn Header="Id" Binding="{Binding EpicGameID}" MinWidth="150" Visibility="{x:Bind ViewModel.ShowEpicId, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <controls:DataGridTextColumn Header="Name" Binding="{Binding Name}" MinWidth="500"/>
-                <controls:DataGridTextColumn Header="Coomand" Binding="{Binding Path}" MinWidth="150"/>
+                <controls:DataGridTextColumn Header="Command" Binding="{Binding Path}" MinWidth="150"/>
             </controls:DataGrid.Columns>
         </controls:DataGrid>
     </Grid>
