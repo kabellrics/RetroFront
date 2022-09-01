@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,36 +38,21 @@ namespace RetroFront.UWPAdmin.ViewModels
         private async void AddOrigin()
         {
             var games = await dialogService.GetInstalledGame(LocalGame.Origin);
+            await Task.Run(async () => await systemesService.CreateOriginGames(games));
+            await dialogService.ConfirmationDialogAsync("Jeux Origins ajoutés");
         }
         private async void AddSteam()
         {
             var games = await dialogService.GetInstalledGame(LocalGame.Steam);
-            if(games != null)
-            {
-                var steamsys = await systemesService.GetSystemeByShortname("steam");
-                if(steamsys == null)
-                {
-                    var sysSteam = new Systeme();
-                    sysSteam.Name = "Steam";
-                    sysSteam.Type = SysType.GameStore;
-                    sysSteam.Shortname = "steam";
-                    steamsys = await systemesService.CreateSysteme(sysSteam);
-                }
-                var steamemus = (await systemesService.GetEmulatorsInSystemes(steamsys.Systeme)).FirstOrDefault();
-                if(steamemus == null)
-                {
-                    var emusteam = new Emulator();
-                    emusteam.SystemeID = steamsys.ID;
-                    emusteam.Name = "Steam Executable";
-                    emusteam.Chemin = @"C:\Windows\explorer.exe";
-                    emusteam.Extension = ".exe .EXE .lnk .LNK";
-                    steamemus = await systemesService.CreateEmulator(emusteam);
-                }
-            }
+            await Task.Run(async () => await systemesService.CreateSteamGames(games));
+            await dialogService.ConfirmationDialogAsync("Jeux Steams ajoutés");
         }
+
         private async void AddEpic()
         {
             var games = await dialogService.GetInstalledGame(LocalGame.Epic);
+            await Task.Run(async () => await systemesService.CreateEpicGames(games));
+            await dialogService.ConfirmationDialogAsync("Jeux Epics ajoutés");
         }
 
         private async void SaveChange()
