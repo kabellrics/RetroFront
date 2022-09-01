@@ -301,6 +301,8 @@ namespace RetroFrontAPIService.Service.Implémentation
         public IEnumerable<RetroFront.Models.IGDB.Company> GetDevByGameId(int id)
         {
             var involvedComps = this.GetInvolvedCompanyByGameId(id);
+            if (involvedComps != null)
+            {
                 var devlist = involvedComps.Where(x => x.developer == true || x.supporting == true);
                 IList<RetroFront.Models.IGDB.Company> searchResults = new List<RetroFront.Models.IGDB.Company>();
                 foreach (var dev in devlist)
@@ -319,6 +321,9 @@ namespace RetroFrontAPIService.Service.Implémentation
                     searchResults.Add(comp);
                 }
                 return searchResults;
+            }
+            else
+                return null;
         }
         public IEnumerable<RetroFront.Models.IGDB.Company> GetPublishersByGameId(int id)
         {
