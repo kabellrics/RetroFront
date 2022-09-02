@@ -122,25 +122,21 @@ namespace RetroFront.UWPAdmin.Core.APIClient
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual SwaggerResponse<string> ExportToPegasus(int emuID, int sysID)
+        public virtual SwaggerResponse<string> ExportToPegasus(int sysID)
         {
-            return System.Threading.Tasks.Task.Run(async () => await ExportToPegasusAsync(emuID, sysID, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await ExportToPegasusAsync(sysID, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<SwaggerResponse<string>> ExportToPegasusAsync(int emuID, int sysID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<SwaggerResponse<string>> ExportToPegasusAsync(int sysID, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            if (emuID == null)
-                throw new System.ArgumentNullException("emuID");
-
             if (sysID == null)
                 throw new System.ArgumentNullException("sysID");
 
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ExternalApp/ExportToPegasus/{emuID}/{sysID}");
-            urlBuilder_.Replace("{emuID}", System.Uri.EscapeDataString(ConvertToString(emuID, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{sysID}", System.Uri.EscapeDataString(ConvertToString(sysID, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;

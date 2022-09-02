@@ -23,10 +23,10 @@ namespace RetroFrontAPIService.Controllers
         {
             return Ok(_externalAppService.GetInstalledCore(retroarchpath));
         }
-        [HttpGet("ExportToPegasus/{emuID}/{sysID}")]
-        public ActionResult<string> ExportToPegasus(int emuID, int sysID)
+        [HttpGet("ExportToPegasus/{sysID}")]
+        public ActionResult<string> ExportToPegasus( int sysID)
         {
-            return Ok(_externalAppService.ExportToPegasus(emuID, sysID));
+            return Ok(_externalAppService.ExportToPegasus( sysID));
         }
     }
 }

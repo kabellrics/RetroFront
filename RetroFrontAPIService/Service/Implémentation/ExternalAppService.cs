@@ -137,17 +137,16 @@ namespace RetroFrontAPIService.Service.Implémentation
             builder.AppendLine($"assets.banner : { game.Fanart}");
             return builder.ToString();
         }
-        public string ExportToPegasus(int emuID, int sysID)
+        public string ExportToPegasus(int sysID)
         {
-            var emu = databaseService.GetEmulator(emuID);
             var sys = databaseService.GetSysteme(sysID);
             var builder = new StringBuilder();
-            builder.Append(StringFromPegasusCollection(PegasusCollectionFromEmulator(emu, sys)));
-            builder.AppendLine();
-            foreach (var game in databaseService.GetGamesForemulator(emu.EmulatorID))
-            {
-                builder.AppendLine(StringFromPegasusGame(PegasusGameFromGameRom(game)));
-            }
+            //builder.Append(StringFromPegasusCollection(PegasusCollectionFromEmulator(emu, sys)));
+            //builder.AppendLine();
+            //foreach (var game in databaseService.GetGamesForemulator(emu.EmulatorID))
+            //{
+            //    builder.AppendLine(StringFromPegasusGame(PegasusGameFromGameRom(game)));
+            //}
             return builder.ToString();
         }
     }

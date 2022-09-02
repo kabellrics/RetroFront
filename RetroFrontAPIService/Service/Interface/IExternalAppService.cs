@@ -5,7 +5,7 @@ namespace RetroFrontAPIService.Service.Interface
 {
     public interface IExternalAppService
     {
-        string ExportToPegasus(int emuID, int sysID);
+        string ExportToPegasus(int sysID);
         IEnumerable<RetroarchCore> GetInstalledCore(string retroarchpath);
     }
 }
