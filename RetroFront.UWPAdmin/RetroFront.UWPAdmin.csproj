@@ -335,10 +335,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\defaut\apps\bck.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\defaut\apps\logo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\defaut\epic\bck.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

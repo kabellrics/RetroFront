@@ -15,6 +15,7 @@ namespace RetroFrontAPIService.Service.Implémentation
         private GameDataProviderService gameDataProviderService = new GameDataProviderService();
         private DatabaseService databaseService = new DatabaseService();
         private FileJSONService fileJSONService = new FileJSONService();
+        private ComputerService computerService = new ComputerService();
         public IEnumerable<RetroarchCore> GetInstalledCore(string retroarchpath)
         {
             FileInfo fi = new FileInfo(retroarchpath);
@@ -162,6 +163,8 @@ namespace RetroFrontAPIService.Service.Implémentation
                     builder.AppendLine(StringFromPegasusGame(PegasusGameFromGameRom(game)));
                 }
                 File.WriteAllText(stringpath, builder.ToString());
+                var setting = fileJSONService.appSettings;
+                computerService.FileCopy(sys.Logo, Path.Combine(setting.PegasusIconFolderPath,sys.Shortname+".png"));
             }
             return string.Empty;
         }

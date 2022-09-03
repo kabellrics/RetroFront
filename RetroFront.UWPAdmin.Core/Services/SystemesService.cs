@@ -184,8 +184,8 @@ namespace RetroFront.UWPAdmin.Core.Services
         {
             if (!string.IsNullOrEmpty(exepath))
             {
-                if (File.Exists(exepath))
-                {
+                //if (File.Exists(exepath))
+                //{
                     var steamsys = await GetSystemeByShortname("windows");
                     if (steamsys == null)
                     {
@@ -194,7 +194,7 @@ namespace RetroFront.UWPAdmin.Core.Services
                         sysSteam.Type = SysType.Standalone;
                         sysSteam.Shortname = "windows";
                         sysSteam.Logo = "ms-appx:///Assets/defaut/apps/logo.png";
-                        sysSteam.Screenshoot = "ms-appx:///Assets/defaut/apps/bck.jpg";
+                        sysSteam.Screenshoot = "ms-appx:///Assets/defaut/apps/bck.png";
                         steamsys = await CreateSysteme(sysSteam);
                     }
                     var steamemus = (await GetEmulatorsInSystemes(steamsys.Systeme)).FirstOrDefault();
@@ -212,7 +212,7 @@ namespace RetroFront.UWPAdmin.Core.Services
                     app.Path = exepath;
                     app.Name = Path.GetFileNameWithoutExtension(exepath);
                     await gameClient.GamePostAsync(app);
-                }
+                //}
             }
         }
     }

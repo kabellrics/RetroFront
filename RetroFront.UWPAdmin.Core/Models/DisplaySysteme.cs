@@ -15,9 +15,23 @@ namespace RetroFront.UWPAdmin.Core.Models
         private void InitImg()
         {
             Logo = string.Empty;
-            Logo = string.Format(LogoWebPath, ID);
+            if (LogoPath.Contains("ms-appx"))
+            {
+                Logo = LogoPath;
+            }
+            else
+            {
+                Logo = string.Format(LogoWebPath, ID);
+            }
             Screenshoot = string.Empty;
-            Screenshoot = string.Format(ScreenshootWebPath, ID);
+            if (ScreenshootPath.Contains("ms-appx"))
+            {
+                Screenshoot = ScreenshootPath;
+            }
+            else
+            {
+                Screenshoot = string.Format(ScreenshootWebPath, ID);
+            }
         }
         public int ID
         {
@@ -66,7 +80,14 @@ namespace RetroFront.UWPAdmin.Core.Models
                 SetProperty(Systeme.Logo, value, Systeme, (syteme, item) => Systeme.Logo = item);
                 ChangeStatus();
                 Logo = string.Empty;
-                Logo = string.Format(LogoWebPath, ID);
+                if (LogoPath.Contains("ms-appx"))
+                {
+                    Logo = LogoPath;
+                }
+                else
+                {
+                    Logo = string.Format(LogoWebPath, ID);
+                }
             }
         }
         public string ScreenshootPath
@@ -77,7 +98,14 @@ namespace RetroFront.UWPAdmin.Core.Models
                 SetProperty(Systeme.Screenshoot, value, Systeme, (syteme, item) => Systeme.Screenshoot = item);
                 ChangeStatus();
                 Screenshoot = string.Empty;
-                Screenshoot = string.Format(ScreenshootWebPath, ID);
+                if (ScreenshootPath.Contains("ms-appx"))
+                {
+                    Screenshoot = ScreenshootPath;
+                }
+                else
+                {
+                    Screenshoot = string.Format(ScreenshootWebPath, ID);
+                }
             }
         }
         private string _logo;

@@ -43,7 +43,7 @@ namespace RetroFront.UWPAdmin.ViewModels
         {
             var appexe = await dialogService.FilePicker(new System.Collections.Generic.List<string>() { ".exe", ".lnk"});
             await Task.Run(async () => await systemesService.AddWindowsApp(appexe));
-            await dialogService.ConfirmationDialogAsync("Jeux Origins ajoutés");
+            await dialogService.ConfirmationDialogAsync("Applications ajoutés");
         }
 
         private async void AllExportPegasus()
