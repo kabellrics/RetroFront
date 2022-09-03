@@ -29,7 +29,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button  Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent">
+            <Button  Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent" Command="{x:Bind ViewModel.ExportPegasusCommand}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"></RowDefinition>

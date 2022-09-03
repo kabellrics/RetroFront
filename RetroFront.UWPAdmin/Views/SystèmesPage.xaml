@@ -29,13 +29,9 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <!--<AppBarButton Grid.Column="0" Label="Tous Exporter vers Pegasus" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                                   IsCompact="False" Width="Auto">
-                <AppBarButton.Icon>
-                    <BitmapIcon UriSource="ms-appx:///Assets/pegasus.png"/>
-                </AppBarButton.Icon></AppBarButton>-->
-            <Button  Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent">
+            <Button  Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent" Command="{x:Bind ViewModel.AllExportPegasusCommand}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"></RowDefinition>
@@ -73,6 +69,16 @@
                     </Grid.RowDefinitions>
                     <Image Grid.Row="0" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Source="ms-appx:///Assets/Icons/epic.png"></Image>
                     <TextBlock Grid.Row="1" Text="Importer les Jeux Epic Game Store" TextAlignment="Center" TextWrapping="WrapWholeWords"/>
+                </Grid>
+            </Button>
+            <Button Grid.Column="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent" Command="{x:Bind ViewModel.AddAppsCommand}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Image Grid.Row="0" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Source="ms-appx:///Assets/Icons/windows 2.png"></Image>
+                    <TextBlock Grid.Row="1" Text="Ajouter des applications Windows" TextAlignment="Center" TextWrapping="WrapWholeWords"/>
                 </Grid>
             </Button>
         </Grid>

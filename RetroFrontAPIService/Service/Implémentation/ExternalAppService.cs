@@ -14,6 +14,7 @@ namespace RetroFrontAPIService.Service.Implémentation
     {
         private GameDataProviderService gameDataProviderService = new GameDataProviderService();
         private DatabaseService databaseService = new DatabaseService();
+        private FileJSONService fileJSONService = new FileJSONService();
         public IEnumerable<RetroarchCore> GetInstalledCore(string retroarchpath)
         {
             FileInfo fi = new FileInfo(retroarchpath);
@@ -90,12 +91,21 @@ namespace RetroFrontAPIService.Service.Implémentation
         private RetroFront.Models.Pegasus.Collection PegasusCollectionFromEmulator(Emulator emulator, Systeme sys)
         {
             RetroFront.Models.Pegasus.Collection collection = new RetroFront.Models.Pegasus.Collection();
-            collection.Name = sys.Name;
-            collection.shortname = sys.Shortname;
+            var settings = fileJSONService.appSettings;
+            if (settings.RegroupPCGamesForPegasus == true && sys.Type == SysType.GameStore)
+            {
+                collection.Name = settings.PegasusPCGroupName;
+                collection.shortname = "pcgames";
+            }
+            else
+            {
+                collection.Name = sys.Name;
+                collection.shortname = sys.Shortname;
+            }
             collection.Extension = emulator.Extension.Replace(".", string.Empty);
             if (sys.Type == SysType.GameStore)
             {
-                collection.launch = "{file.path}";
+                collection.launch = @"C:\Windows\explorer.exe" + " {file.path}";
             }
             else
             {
@@ -140,14 +150,25 @@ namespace RetroFrontAPIService.Service.Implémentation
         public string ExportToPegasus(int sysID)
         {
             var sys = databaseService.GetSysteme(sysID);
-            var builder = new StringBuilder();
-            //builder.Append(StringFromPegasusCollection(PegasusCollectionFromEmulator(emu, sys)));
-            //builder.AppendLine();
-            //foreach (var game in databaseService.GetGamesForemulator(emu.EmulatorID))
-            //{
-            //    builder.AppendLine(StringFromPegasusGame(PegasusGameFromGameRom(game)));
-            //}
-            return builder.ToString();
+            var emus = databaseService.GetEmulatorsForSysteme(sys.SystemeID);
+            foreach (var emu in emus)
+            {
+                var builder = new StringBuilder();
+                string stringpath = CreatePegasusFile(sys, emu);
+                builder.Append(StringFromPegasusCollection(PegasusCollectionFromEmulator(emu, sys)));
+                builder.AppendLine();
+                foreach (var game in databaseService.GetGamesForemulator(emu.EmulatorID))
+                {
+                    builder.AppendLine(StringFromPegasusGame(PegasusGameFromGameRom(game)));
+                }
+                File.WriteAllText(stringpath, builder.ToString());
+            }
+            return string.Empty;
+        }
+
+        private string CreatePegasusFile(Systeme sys, Emulator emu)
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),"Pegasus",sys.Name+"-"+emu.Name+".metadata.pegasus.txt");
         }
     }
 }

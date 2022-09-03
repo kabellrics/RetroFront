@@ -28,5 +28,9 @@ namespace RetroFront.UWPAdmin.Core.Services
             var result = await themeClient.GetImagePathForThemeAsync(system.Systeme.Shortname);
             return result.Result.Path;
         }
+        public async Task ExportToPegasus(DisplaySysteme system)
+        {
+            await externalAppClient.ExportToPegasusAsync(system.ID);
+        }
     }
 }

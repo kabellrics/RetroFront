@@ -3,6 +3,7 @@ using RetroFront.UWPAdmin.Core.APIHelper;
 using RetroFront.UWPAdmin.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,13 @@ namespace RetroFront.UWPAdmin.Core.Services
             else
                 return new DisplaySysteme(dissys);
         }
+        public async Task AllExportToPegasus(IEnumerable<DisplaySysteme> systems)
+        {
+            foreach (var system in systems)
+            {
+               await Task.Run(async ()=> await externalAppClient.ExportToPegasusAsync(system.ID)); 
+            }
+        }
         public async Task CreateSteamGames(IEnumerable<DisplayGame> games)
         {
             if (games != null)
@@ -54,7 +62,7 @@ namespace RetroFront.UWPAdmin.Core.Services
                     var emusteam = new Emulator();
                     emusteam.SystemeID = steamsys.ID;
                     emusteam.Name = "Steam Executable";
-                    emusteam.Chemin = @"C:\Windows\explorer.exe";
+                    emusteam.Chemin = @"C:\Windows\explorer.exe {filepath}";
                     emusteam.Extension = ".exe .EXE .lnk .LNK";
                     steamemus = await CreateEmulator(emusteam);
                 }
@@ -66,6 +74,7 @@ namespace RetroFront.UWPAdmin.Core.Services
                     else
                     {
                         game.Game.EmulatorID = steamemus.EmulatorID;
+                        game.Path = @"steam://rungameid/"+game.SteamID;
                         await gameClient.GamePostAsync(game.Game);
                     }
                 }
@@ -100,7 +109,7 @@ namespace RetroFront.UWPAdmin.Core.Services
                     var emusteam = new Emulator();
                     emusteam.SystemeID = steamsys.ID;
                     emusteam.Name = "Epic Executable";
-                    emusteam.Chemin = @"C:\Windows\explorer.exe";
+                    emusteam.Chemin = @"C:\Windows\explorer.exe {filepath}";
                     emusteam.Extension = ".exe .EXE .lnk .LNK";
                     steamemus = await CreateEmulator(emusteam);
                 }
@@ -146,28 +155,63 @@ namespace RetroFront.UWPAdmin.Core.Services
                     var emusteam = new Emulator();
                     emusteam.SystemeID = steamsys.ID;
                     emusteam.Name = "Origin Executable";
-                    emusteam.Chemin = @"C:\Windows\explorer.exe";
+                    emusteam.Chemin = @"C:\Windows\explorer.exe {filepath}";
                     emusteam.Extension = ".exe .EXE .lnk .LNK";
                     steamemus = await CreateEmulator(emusteam);
                 }
                 var registergames = await gameClient.GameGetAsync();
-                var registerSteamGame = registergames.Result.Where(x=>!string.IsNullOrEmpty(x.OriginID));
-                foreach(var game in games)
+                var registerSteamGame = registergames.Result.Where(x => !string.IsNullOrEmpty(x.OriginID));
+                foreach (var game in games)
                 {
-                    if(registerSteamGame.Any(x=>x.OriginID == game.OriginID)) { }
+                    if (registerSteamGame.Any(x => x.OriginID == game.OriginID)) { }
                     else
                     {
                         game.Game.EmulatorID = steamemus.EmulatorID;
                         await gameClient.GamePostAsync(game.Game);
                     }
                 }
-                foreach(var game in registerSteamGame)
+                foreach (var game in registerSteamGame)
                 {
-                    if(games.Any(x=>x.OriginID == game.OriginID)) { }
+                    if (games.Any(x => x.OriginID == game.OriginID)) { }
                     else
                     {
                         await gameClient.GameDeleteAsync(game.Id);
                     }
+                }
+            }
+        }
+        public async Task AddWindowsApp(string exepath)
+        {
+            if (!string.IsNullOrEmpty(exepath))
+            {
+                if (File.Exists(exepath))
+                {
+                    var steamsys = await GetSystemeByShortname("windows");
+                    if (steamsys == null)
+                    {
+                        var sysSteam = new Systeme();
+                        sysSteam.Name = "Windows Apps";
+                        sysSteam.Type = SysType.Standalone;
+                        sysSteam.Shortname = "windows";
+                        sysSteam.Logo = "ms-appx:///Assets/defaut/apps/logo.png";
+                        sysSteam.Screenshoot = "ms-appx:///Assets/defaut/apps/bck.jpg";
+                        steamsys = await CreateSysteme(sysSteam);
+                    }
+                    var steamemus = (await GetEmulatorsInSystemes(steamsys.Systeme)).FirstOrDefault();
+                    if (steamemus == null)
+                    {
+                        var emusteam = new Emulator();
+                        emusteam.SystemeID = steamsys.ID;
+                        emusteam.Name = "Windows";
+                        emusteam.Chemin = @"{filepath}";
+                        emusteam.Extension = ".exe .EXE .lnk .LNK";
+                        steamemus = await CreateEmulator(emusteam);
+                    }
+                    var app = new GameRom();
+                    app.EmulatorID = steamemus.EmulatorID;
+                    app.Path = exepath;
+                    app.Name = Path.GetFileNameWithoutExtension(exepath);
+                    await gameClient.GamePostAsync(app);
                 }
             }
         }

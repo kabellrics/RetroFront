@@ -34,6 +34,22 @@ namespace RetroFront.UWPAdmin.ViewModels
         public ICommand AddEpicCommand => _AddEpicCommand ?? (_AddEpicCommand = new RelayCommand(AddEpic));
         private ICommand _AddOriginCommand;
         public ICommand AddOriginCommand => _AddOriginCommand ?? (_AddOriginCommand = new RelayCommand(AddOrigin));
+        private ICommand _AllExportPegasusCommand;
+        public ICommand AllExportPegasusCommand => _AllExportPegasusCommand ?? (_AllExportPegasusCommand = new RelayCommand(AllExportPegasus));
+        private ICommand _AddAppsCommand;
+        public ICommand AddAppsCommand => _AddAppsCommand ?? (_AddAppsCommand = new RelayCommand(AddApps));
+
+        private async void AddApps()
+        {
+            var appexe = await dialogService.FilePicker(new System.Collections.Generic.List<string>() { ".exe", ".lnk"});
+            await Task.Run(async () => await systemesService.AddWindowsApp(appexe));
+            await dialogService.ConfirmationDialogAsync("Jeux Origins ajoutés");
+        }
+
+        private async void AllExportPegasus()
+        {
+            await systemesService.AllExportToPegasus(Source);
+        }
 
         private async void AddOrigin()
         {

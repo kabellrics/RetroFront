@@ -30,6 +30,13 @@ namespace RetroFront.UWPAdmin.ViewModels
         public ICommand ScrapeScreenshootCommand => _ScrapeScreenshootCommand ?? (_ScrapeScreenshootCommand = new RelayCommand(ScrapeScreenshoot));
         private ICommand _SaveAndDLLCommand;
         public ICommand SaveAndDLLCommand => _SaveAndDLLCommand ?? (_SaveAndDLLCommand = new RelayCommand(SaveChangeAndDLLImg));
+        private ICommand _ExportPegasusCommand;
+        public ICommand ExportPegasusCommand => _ExportPegasusCommand ?? (_ExportPegasusCommand = new RelayCommand(ExportPegasus));
+
+        private async void ExportPegasus()
+        {
+            await systemeDetailService.ExportToPegasus(Source);
+        }
         private async void SaveChange()
         {
             if (Source.HasChanged == true)
