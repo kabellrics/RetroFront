@@ -166,14 +166,14 @@ namespace RetroFrontAPIService.Service.Implémentation
                 var setting = fileJSONService.appSettings;
                 if (setting.RegroupPCGamesForPegasus == true && sys.Type == SysType.GameStore)
                 {
-                    computerService.FileCopy(sys.Logo, Path.Combine(setting.PegasusIconFolderPath, "pcgames.png"));
+                    computerService.FileCopy(@"Assets/defaut/pcgames/logo.png", Path.Combine(setting.PegasusIconFolderPath, "pcgames.png"));
                 }
                 else
                 {
                     computerService.FileCopy(sys.Logo, Path.Combine(setting.PegasusIconFolderPath, sys.Shortname + ".png"));
                 }
             }
-            return "OK";
+            return string.Empty;
         }
 
         private string CreatePegasusFile(Systeme sys, Emulator emu)

@@ -36,6 +36,7 @@ namespace RetroFront.UWPAdmin.ViewModels
         private async void ExportPegasus()
         {
             await systemeDetailService.ExportToPegasus(Source);
+            await dialogService.ConfirmationDialogAsync("Fichiers générés");
         }
         private async void SaveChange()
         {

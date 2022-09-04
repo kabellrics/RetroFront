@@ -171,10 +171,11 @@ namespace RetroFront.UWPAdmin.Core.APIClient
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
+                            ReadResponseAsString = true;
                             var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                //throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return new SwaggerResponse<string>(status_, headers_, objectResponse_.Object);
                         }
