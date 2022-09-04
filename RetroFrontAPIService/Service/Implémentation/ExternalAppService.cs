@@ -171,6 +171,7 @@ namespace RetroFrontAPIService.Service.Implémentation
 
         private string CreatePegasusFile(Systeme sys, Emulator emu)
         {
+            Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Pegasus"));
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),"Pegasus",sys.Name+"-"+emu.Name+".metadata.pegasus.txt");
         }
     }

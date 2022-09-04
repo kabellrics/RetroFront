@@ -161,6 +161,17 @@ namespace RetroFront.UWPAdmin.Services
             }
             return null;
         }
+        public async Task<String> ShowVideoScrapeChoice(DisplayGame Game)
+        {
+            var vm = new VideoScrapeChoiceViewModel(Game);
+            VideoScrapeChoiceContentDialog contentDialog = new VideoScrapeChoiceContentDialog(vm);
+            var dialog = await contentDialog.ShowAsync();
+            if (dialog == ContentDialogResult.Secondary)
+            {
+                return vm.VideoToChange;
+            }
+            return null;
+        }
         public async Task<DisplayGame> ShowMetadataScrapeChoice(DisplayGame Game)
         {
             var vm = new MetadataScrapeChooseViewModel(Game);

@@ -58,6 +58,15 @@ namespace RetroFront.UWPAdmin.ViewModels
                 SetProperty(ref _newArtwork, value);
             }
         }
+        private String _newVideo;
+        public String NewVideo
+        {
+            get => _newVideo;
+            set
+            {
+                SetProperty(ref _newVideo, value);
+            }
+        }
         private String _newBanner;
         public String NewBanner
         {
@@ -90,6 +99,8 @@ namespace RetroFront.UWPAdmin.ViewModels
 
         private ICommand _ScrapeBannerCommand;
         public ICommand ScrapeBannerCommand => _ScrapeBannerCommand ?? (_ScrapeBannerCommand = new RelayCommand(ScrapeBanner));
+        private ICommand _ScrapeVideoCommand;
+        public ICommand ScrapeVideoCommand => _ScrapeVideoCommand ?? (_ScrapeVideoCommand = new RelayCommand(ScrapeVideo));
         private ICommand _ScrapeScreenshootCommand;
         public ICommand ScrapeScreenshootCommand => _ScrapeScreenshootCommand ?? (_ScrapeScreenshootCommand = new RelayCommand(ScrapeScreenshoot));
         private ICommand _ScrapeMetadataCommand;
@@ -220,6 +231,14 @@ namespace RetroFront.UWPAdmin.ViewModels
             if (findgame != null)
             {
                 NewArtwork = findgame;
+            }
+        }
+        private async void ScrapeVideo()
+        {
+            var findgame = await dialogService.ShowVideoScrapeChoice(Source);
+            if (findgame != null)
+            {
+                NewVideo = findgame;
             }
         }
         private async void SaveChangeAndDLLImg()

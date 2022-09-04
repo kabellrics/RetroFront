@@ -1,0 +1,88 @@
+﻿<ContentDialog
+    x:Class="RetroFront.UWPAdmin.Views.Modals.VideoScrapeChoiceContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RetroFront.UWPAdmin.Views.Modals"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="{x:Bind ViewModel.Title,Mode=OneWay}"
+    PrimaryButtonText="Annuler"
+    SecondaryButtonText="Valider"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <Grid
+     Background="{StaticResource ApplicationForegroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".25*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width=".25*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width=".25*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width=".25*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".25*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height=".25*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="1" Grid.Row="1"
+                          Height="600" Width="600">
+            <StackPanel Orientation="Vertical">
+                    <MediaPlayerElement x:Name="player"
+            AreTransportControlsEnabled="False"
+            AutoPlay="False"
+            HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+            VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+            Stretch="Uniform"
+            Source="{x:Bind ViewModel.CurrentGame.Video,Mode=OneWay,Converter={StaticResource GameVideoConverter}}">
+                    </MediaPlayerElement>
+                <Button HorizontalAlignment="Center" x:Name="playpauseBT" Click="playpauseBT_Click" Content="Play"></Button>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="3" Padding="20" Width="300">
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".05*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height=".5*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height=".5*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height=".5*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height=".05*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="1" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
+                    Command="{x:Bind ViewModel.ScrapeSNSPCommand}" Click="Button_Click"
+                    Content="ScreenScraper" IsEnabled="{x:Bind ViewModel.EnableSCSP,Mode=OneWay}"></Button>
+            <Button Grid.Row="3" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
+                    Content="SteamGridDB" IsEnabled="{x:Bind ViewModel.EnableSGDB,Mode=OneWay}"></Button>
+            <Button Grid.Row="5" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
+                    Command="{x:Bind ViewModel.ScrapeIGDBCommand}" Click="Button_Click"
+                    Content="IGDB" IsEnabled="{x:Bind ViewModel.EnableIGDB,Mode=OneWay}"></Button>
+            <Button Grid.Row="7" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
+                    Command="{x:Bind ViewModel.ScrapeLocalCommand}"
+                    Content="Fichier Local"></Button>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="5" x:Name="ProposalGrid" Width="600" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="75"></RowDefinition>
+            </Grid.RowDefinitions>
+            <FlipView Grid.Row="0" ItemsSource="{x:Bind ViewModel.VideoProposal,Mode=OneWay}" Height="600" Width="600"
+                      SelectedItem="{x:Bind ViewModel.Result,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Background="Transparent">
+                <FlipView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="25">
+                            <WebView Name="webViewUWP" Source="{Binding}"/>
+                        </Grid>
+                    </DataTemplate>
+                </FlipView.ItemTemplate>
+            </FlipView>
+            <Button Grid.Row="1" Margin="5" Padding="5" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}"
+                    Content="Utiliser cette image ?" Click="Button_Click_1" Command="{x:Bind ViewModel.ChooseImgCommand}"></Button>
+        </Grid>
+    </Grid>
+</ContentDialog>

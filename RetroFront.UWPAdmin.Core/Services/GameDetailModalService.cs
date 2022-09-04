@@ -42,6 +42,34 @@ namespace RetroFront.UWPAdmin.Core.Services
             return FoundedGame;
         }
 
+        public async Task<List<String>> GetVideoProposal(int gameId, ScraperSource CurrentScrapeSource)
+        {
+            var ResultVideos = new List<String>();
+            if (CurrentScrapeSource == ScraperSource.IGDB)
+            {
+                var detailvideo = gameDataProvider.GetVideosByGameId(gameId).Result;
+                if (detailvideo != null)
+                {
+                    foreach (var video in detailvideo)
+                    {
+                        ResultVideos.Add(string.Format("https://www.youtube.com/embed/{0}", video.Video_id));
+                    }
+                }
+            }
+            if (CurrentScrapeSource == ScraperSource.Screenscraper)
+            {
+                var result = await gameDataProvider.GetJeuxMediasAsync(gameId);
+                if (result != null)
+                {
+                    var vid = result.FirstOrDefault(x => x.Type == "video");
+                    if(vid != null)
+                    {
+                        ResultVideos.Add(vid.Url);
+                    }
+                }
+            }
+            return ResultVideos;
+        }
         public async Task<List<String>> GetImgProposal(int gameId, ScraperSource CurrentScrapeSource, ScraperType CurrentScraperType)
         {
             var ResultImgs = new List<String>();
