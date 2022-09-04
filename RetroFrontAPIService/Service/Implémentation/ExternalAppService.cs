@@ -110,7 +110,7 @@ namespace RetroFrontAPIService.Service.Implémentation
             }
             else
             {
-                collection.launch = $"{emulator.Chemin} {emulator.Command.Replace("{ImagePath}", "{file.path}")}";
+                collection.launch = $"{emulator.Chemin} {emulator.Command?.Replace("{ImagePath}", "{file.path}")}";
                 collection.launch = $"{collection.launch.Replace("%ROMPATH%", "{file.path}")}";
             }
             collection.Logo = sys.Logo;
@@ -164,9 +164,16 @@ namespace RetroFrontAPIService.Service.Implémentation
                 }
                 File.WriteAllText(stringpath, builder.ToString());
                 var setting = fileJSONService.appSettings;
-                computerService.FileCopy(sys.Logo, Path.Combine(setting.PegasusIconFolderPath,sys.Shortname+".png"));
+                if (setting.RegroupPCGamesForPegasus == true && sys.Type == SysType.GameStore)
+                {
+                    computerService.FileCopy(sys.Logo, Path.Combine(setting.PegasusIconFolderPath, "pcgames.png"));
+                }
+                else
+                {
+                    computerService.FileCopy(sys.Logo, Path.Combine(setting.PegasusIconFolderPath, sys.Shortname + ".png"));
+                }
             }
-            return string.Empty;
+            return "OK";
         }
 
         private string CreatePegasusFile(Systeme sys, Emulator emu)

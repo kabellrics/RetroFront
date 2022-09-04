@@ -49,6 +49,7 @@ namespace RetroFront.UWPAdmin.ViewModels
         private async void AllExportPegasus()
         {
             await systemesService.AllExportToPegasus(Source);
+            await dialogService.ConfirmationDialogAsync("Fichiers générés");
         }
 
         private async void AddOrigin()

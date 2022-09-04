@@ -38,18 +38,14 @@ namespace RetroFront.UWPAdmin.Core.Services
         {
             foreach (var system in systems)
             {
-                var task = Task.Run(async () =>
+                try
                 {
-                    try
-                    {
-                        await externalAppClient.ExportToPegasusAsync(system.ID);
-                    }
-                    catch (Exception ex )
-                    {
-                        //throw;
-                    }
-                });
-                task.Wait();
+                    await externalAppClient.ExportToPegasusAsync(system.ID);
+                }
+                catch (Exception ex)
+                {
+                    //throw;
+                }
             }
         }
         public async Task CreateSteamGames(IEnumerable<DisplayGame> games)

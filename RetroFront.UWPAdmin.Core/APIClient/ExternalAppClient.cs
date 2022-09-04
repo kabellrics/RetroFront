@@ -136,7 +136,7 @@ namespace RetroFront.UWPAdmin.Core.APIClient
                 throw new System.ArgumentNullException("sysID");
 
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ExternalApp/ExportToPegasus/{emuID}/{sysID}");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ExternalApp/ExportToPegasus/{sysID}");
             urlBuilder_.Replace("{sysID}", System.Uri.EscapeDataString(ConvertToString(sysID, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = _httpClient;

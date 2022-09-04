@@ -444,7 +444,7 @@ namespace RetroFrontAPIService.Service.Implémentation
                 request.AddParameter("gameid", id.ToString());
 
                 var response = sscpclient.Execute<SCSPGameSpecificRequest>(request);
-                return response.Data.response.jeu;
+                return response?.Data?.response?.jeu;
             }
             catch (Exception ex)
             {
