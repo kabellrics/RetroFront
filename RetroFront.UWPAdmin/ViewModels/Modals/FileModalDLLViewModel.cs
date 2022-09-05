@@ -67,6 +67,7 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
             SourceByte = source;
             Dest = dest;
             Title = $"Récupération pour {nameElement} de {typeElement}";
+            Start();
         }
 
         public FileModalDLLViewModel()
@@ -79,7 +80,11 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
                 ProgressRolling = false;
             });
         }
-        public async void StartLoading()
+        public async void Start()
+        {
+            await StartLoading();
+        }
+        public async Task StartLoading()
         {
             //EnableNextButton = false;
             ProgressRolling = true;

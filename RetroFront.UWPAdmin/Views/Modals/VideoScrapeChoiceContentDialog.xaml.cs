@@ -30,10 +30,12 @@ namespace RetroFront.UWPAdmin.Views.Modals
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            player.MediaPlayer.Pause();
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            player.MediaPlayer.Pause();
         }
         private void playpauseBT_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {

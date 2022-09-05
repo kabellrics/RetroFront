@@ -55,20 +55,20 @@ namespace RetroFront.UWPAdmin.ViewModels
         private async void AddOrigin()
         {
             var games = await dialogService.GetInstalledGame(LocalGame.Origin);
-            await Task.Run(async () => await systemesService.CreateOriginGames(games));
+            await Task.Run(() => systemesService.CreateOriginGames(games));
             await dialogService.ConfirmationDialogAsync("Jeux Origins ajoutés");
         }
         private async void AddSteam()
         {
             var games = await dialogService.GetInstalledGame(LocalGame.Steam);
-            await Task.Run(async () => await systemesService.CreateSteamGames(games));
+            await Task.Run(() => systemesService.CreateSteamGames(games));
             await dialogService.ConfirmationDialogAsync("Jeux Steams ajoutés");
         }
 
         private async void AddEpic()
         {
             var games = await dialogService.GetInstalledGame(LocalGame.Epic);
-            await Task.Run(async () => await systemesService.CreateEpicGames(games));
+            await Task.Run(() => systemesService.CreateEpicGames(games));
             await dialogService.ConfirmationDialogAsync("Jeux Epics ajoutés");
         }
 

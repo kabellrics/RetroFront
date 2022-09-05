@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using VideoLibrary;
 
 namespace RetroFront.UWPAdmin.Core.Services
 {
@@ -22,6 +23,12 @@ namespace RetroFront.UWPAdmin.Core.Services
         {
             var result = await helperModelClient.GetImgPathForGameAsync(sGDBType, game.Game);
             return result.Result.Path;
+        }
+        public async Task<byte[]> GetByteFromYoutubeVideo(string youtubePath)
+        {
+            var youTube = YouTube.Default;
+            var video = youTube.GetVideo(youtubePath.Replace("embed/", "watch?v="));
+            return video.GetBytes();
         }
     }
 }

@@ -81,7 +81,7 @@ namespace RetroFront.UWPAdmin.Core.Services
                     else
                     {
                         game.Game.EmulatorID = steamemus.EmulatorID;
-                        game.Path = @"steam://rungameid/"+game.SteamID;
+                        game.Game.Path = @"steam://rungameid/"+game.SteamID;
                         await gameClient.GamePostAsync(game.Game);
                     }
                 }

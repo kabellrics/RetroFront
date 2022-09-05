@@ -127,7 +127,7 @@ namespace RetroFront.UWPAdmin.ViewModels
         private async void DeleteElement()
         {
             var dialogresult = await dialogService.ConfirmationDialogAsync("Etes vous sure de vouloir supprimer ce jeu ?");
-            if(dialogresult.HasValue && dialogresult==true)
+            if (dialogresult.HasValue && dialogresult == true)
             {
                 var t = Task.Run(async () => await gameDetailService.DeleteGame(Source.Game));
                 await dialogService.ConfirmationDialogAsync($"Jeu {Source.Name} Supprimé");
@@ -164,6 +164,7 @@ namespace RetroFront.UWPAdmin.ViewModels
                 NewBoxart = Source.BoxartPath;
                 NewBanner = Source.BannerPath;
                 NewArtwork = Source.ScreenshootPath;
+                NewVideo = Source.VideoPath;
             }
         }
         public async void Initialize(string selectedGameID)
@@ -175,6 +176,7 @@ namespace RetroFront.UWPAdmin.ViewModels
                 NewBoxart = Source.BoxartPath;
                 NewBanner = Source.BannerPath;
                 NewArtwork = Source.ScreenshootPath;
+                NewVideo = Source.VideoPath;
             }
         }
         private async void ScrapeIGDB()
@@ -256,9 +258,10 @@ namespace RetroFront.UWPAdmin.ViewModels
                     path += ".jpeg";
                 await dialogService.DLLFile(NewLogo, path, "Logo", Source.Name).ContinueWith(async task =>
                 {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => {
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                    {
                         Source.LogoPath = path;
-                });
+                    });
                 });
             }
             if (Source.BoxartPath != NewBoxart)
@@ -274,9 +277,10 @@ namespace RetroFront.UWPAdmin.ViewModels
                     path += ".jpeg";
                 await dialogService.DLLFile(NewBoxart, path, "Boxart", Source.Name).ContinueWith(async task =>
                 {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => {
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                    {
                         Source.BoxartPath = path;
-                });
+                    });
                 });
             }
             if (Source.BannerPath != NewBanner)
@@ -292,9 +296,10 @@ namespace RetroFront.UWPAdmin.ViewModels
                     path += ".jpeg";
                 await dialogService.DLLFile(NewBanner, path, "Banner", Source.Name).ContinueWith(async task =>
                 {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => {
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                    {
                         Source.BannerPath = path;
-                });
+                    });
                 });
             }
             if (Source.ScreenshootPath != NewArtwork)
@@ -310,12 +315,33 @@ namespace RetroFront.UWPAdmin.ViewModels
                     path += ".jpeg";
                 await dialogService.DLLFile(NewArtwork, path, "Artwork", Source.Name).ContinueWith(async task =>
                 {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => {
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                    {
                         Source.ScreenshootPath = path;
+                    });
                 });
-                });
-
-
+            }
+            if (Source.VideoPath != NewVideo)
+            {
+                var path = await gameDetailService.GetNewImgPath(Source, (int)ScraperType.Video);
+                if (NewVideo.Contains("youtube"))
+                    path += ".mp4";
+                if (NewVideo.Contains("screenscraper"))
+                    path += ".mp4";
+                else if (NewVideo.Contains("avi"))
+                    path += ".avi";
+                else if (NewVideo.Contains("mp4"))
+                    path += ".mp4";
+                else if (NewVideo.Contains("mkv"))
+                    path += ".mkv";
+                    await dialogService.DLLFile(NewVideo, path, "Video", Source.Name).ContinueWith(async task =>
+                    {
+                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                        {
+                            Source.VideoPath = path;
+                        });
+                    });
+                 
             }
             await SaveChange();
             var saveID = Source.ID;

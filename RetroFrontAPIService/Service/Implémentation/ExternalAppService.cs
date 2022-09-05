@@ -166,7 +166,7 @@ namespace RetroFrontAPIService.Service.Implémentation
                 var setting = fileJSONService.appSettings;
                 if (setting.RegroupPCGamesForPegasus == true && sys.Type == SysType.GameStore)
                 {
-                    computerService.FileCopy(@"Assets/defaut/pcgames/logo.png", Path.Combine(setting.PegasusIconFolderPath, "pcgames.png"));
+                    computerService.FileCopy(@"Assets/defaut/pcgames/logo2.png", Path.Combine(setting.PegasusIconFolderPath, "pcgames.png"));
                 }
                 else
                 {

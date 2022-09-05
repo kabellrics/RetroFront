@@ -11,7 +11,8 @@
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
     IsSecondaryButtonEnabled="{x:Bind ViewModel.EnableNextButton,Mode=OneWay}"
     Loaded="ContentDialog_Loaded"
-    GotFocus="ContentDialog_Loaded">
+    GotFocus="ContentDialog_Loaded"
+    >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
@@ -29,6 +30,6 @@
         <TextBlock Grid.Row="3" Text="{x:Bind ViewModel.Source}" FontSize="25" Style="{StaticResource SubheaderTextBlockStyle}"></TextBlock>
         <TextBlock Grid.Row="4" Text="Vers :" FontSize="25" Style="{StaticResource SubheaderTextBlockStyle}"></TextBlock>
         <TextBlock Grid.Row="5" Text="{x:Bind ViewModel.Dest}" FontSize="25" Style="{StaticResource SubheaderTextBlockStyle}"></TextBlock>
-        <ProgressBar Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Stretch" IsIndeterminate="True" FontSize="35" Height="50"></ProgressBar>
+        <ProgressBar Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Stretch" IsIndeterminate="{x:Bind ViewModel.ProgressRolling}" FontSize="35" Height="50" ></ProgressBar>
     </Grid>
 </ContentDialog>
