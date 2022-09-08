@@ -45,7 +45,7 @@ namespace RetroFront.UWPAdmin.Views.Modals
 
         private void ContentDialog_Loaded(object sender, RoutedEventArgs e)
         {
-            //ViewModel.StartLoading();
+            ViewModel.Start();
         }
     }
 }

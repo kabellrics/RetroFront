@@ -46,6 +46,7 @@ namespace RetroFrontAPIService.Service.Implémentation
             pggame.Logo = gamerom.Logo;
             pggame.Video = gamerom.Video;
             pggame.Fanart = gamerom.Fanart;
+            pggame.Screenshoot.Add(gamerom.Fanart);
             pggame.Screenshoot.Add(gamerom.Screenshoot);
             try
             {

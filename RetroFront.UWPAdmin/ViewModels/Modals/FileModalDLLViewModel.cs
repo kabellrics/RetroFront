@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VideoLibrary;
 using Windows.ApplicationModel.Core;
 
 namespace RetroFront.UWPAdmin.ViewModels.Modals
@@ -67,7 +68,6 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
             SourceByte = source;
             Dest = dest;
             Title = $"Récupération pour {nameElement} de {typeElement}";
-            Start();
         }
 
         public FileModalDLLViewModel()
@@ -75,21 +75,29 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
         }
         public async void FinishedTask()
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
                 EnableNextButton = true;
                 ProgressRolling = false;
             });
         }
         public async void Start()
         {
-            await StartLoading();
+            EnableNextButton = false;
+            ProgressRolling = true;
+            await Task.Run( ()=> StartLoading());
         }
         public async Task StartLoading()
         {
-            //EnableNextButton = false;
-            ProgressRolling = true;
             if (SourceByte != null)
             {
+                await service.WriteByte(SourceByte, Dest).ContinueWith(task => FinishedTask());
+            }
+            else if (Source.Contains("youtube"))
+            {
+                var youTube = YouTube.Default;
+                var video = youTube.GetVideo(Source.Replace("embed/", "watch?v="));
+                SourceByte = video.GetBytes();
                 await service.WriteByte(SourceByte, Dest).ContinueWith(task => FinishedTask());
             }
             else if (Source.StartsWith("http"))

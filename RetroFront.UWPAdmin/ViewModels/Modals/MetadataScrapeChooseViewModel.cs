@@ -75,12 +75,19 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
         }
         private async void ScrapeIGDB()
         {
-            var data = await service.GetMetadataIGDB(CurrentGame.IGDBID);
-            CurrentGame.Genre = data.Genres;
-            CurrentGame.Editeur = data.Editeur;
-            CurrentGame.Developpeur = data.Developpeur;
-            CurrentGame.Description = data.Synopsis;
-            CurrentGame.Year = data.Year;
+            try
+            {
+                var data = await service.GetMetadataIGDB(CurrentGame.IGDBID);
+                CurrentGame.Genre = data.Genres;
+                CurrentGame.Editeur = data.Editeur;
+                CurrentGame.Developpeur = data.Developpeur;
+                CurrentGame.Description = data.Synopsis;
+                CurrentGame.Year = data.Year;
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
         }
     }
 }
