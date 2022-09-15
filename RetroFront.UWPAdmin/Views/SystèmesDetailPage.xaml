@@ -78,23 +78,25 @@
                     <RowDefinition Height="2*"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height=".25*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height=".25*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Style="{StaticResource ButtonRevealStyle}" Grid.Row="1" Grid.Column="0" Command="{x:Bind ViewModel.ScrapeLogoCommand}">
+                <Button Style="{StaticResource ButtonRevealStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.ScrapeLogoCommand}">
                     <controls:ImageEx x:Name="thumbnailImage" Height="500" Width="500" Stretch="Uniform" Source="{x:Bind ViewModel.Source.Logo,Mode=OneWay}"></controls:ImageEx>
                 </Button>
-                <Button Style="{StaticResource ButtonRevealStyle}" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Command="{x:Bind ViewModel.ScrapeScreenshootCommand}">
+                <Button Style="{StaticResource ButtonRevealStyle}" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Command="{x:Bind ViewModel.ScrapeScreenshootCommand}">
                     <controls:ImageEx Height="540" Width="960" Stretch="Fill" Source="{x:Bind ViewModel.Source.Screenshoot,Mode=OneWay}"></controls:ImageEx>
                 </Button>
                 <!--<StackPanel Orientation="Horizontal" Grid.Row="2">
                     <Button Content="Modifier les Champs" Click="Button_Click"></Button>
                     <Button Content="Sauvegarder les modifications" Command="{x:Bind ViewModel.SaveAndDLLCommand}"></Button>
                 </StackPanel>-->
-                <Grid x:Name="btTextblock" Grid.Row="1" Grid.Column="1" Visibility="Visible" VerticalAlignment="Stretch">
-                    <Button Style="{StaticResource ButtonRevealStyle}" VerticalAlignment="Stretch">
+                <Grid x:Name="btTextblock" Grid.Row="3" Grid.Column="1" Visibility="Visible" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <Button Style="{StaticResource ButtonRevealStyle}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -124,8 +126,8 @@
                         </Grid>
                     </Button>
                 </Grid>
-                <Grid x:Name="btTextbox" Grid.Row="1" Grid.Column="1" Visibility="Collapsed" VerticalAlignment="Stretch">
-                    <Button Style="{StaticResource ButtonRevealStyle}" VerticalAlignment="Stretch">
+                <Grid x:Name="btTextbox" Grid.Row="3" Grid.Column="1" Visibility="Collapsed" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <Button Style="{StaticResource ButtonRevealStyle}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -155,6 +157,15 @@
                         </Grid>
                     </Button>
                 </Grid>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
+                    <TextBlock  Style="{StaticResource TitleTextBlockStyle}" Text="Emulateurs pour ce système"/>
+                    <controls:AdaptiveGridView
+            Padding="{StaticResource MediumLeftRightMargin}" ItemClick="AdaptiveGridView_ItemClick"
+            IsItemClickEnabled="True" ItemHeight="300" DesiredWidth="400"
+            ItemsSource="{x:Bind ViewModel.Emulators, Mode=OneWay}" OneRowModeEnabled="True"
+            SelectionMode="Single" ItemTemplate="{StaticResource TemplateEmulator}">
+                    </controls:AdaptiveGridView>
+                </StackPanel>
             </Grid>
         </ScrollViewer>
     </Grid>

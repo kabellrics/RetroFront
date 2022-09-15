@@ -7,10 +7,12 @@ using System.Windows.Input;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 using RetroFront.UWPAdmin.Core.Models;
 using RetroFront.UWPAdmin.Core.Services;
 using RetroFront.UWPAdmin.Helpers;
 using RetroFront.UWPAdmin.Services;
+using RetroFront.UWPAdmin.Views;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml.Navigation;
 
@@ -20,6 +22,7 @@ namespace RetroFront.UWPAdmin.ViewModels
     {
         private SystemeDetailService systemeDetailService;
         private DialogService dialogService;
+        public ObservableCollection<DisplayEmulator> Emulators { get; } = new ObservableCollection<DisplayEmulator>();
         private ICommand _deleteCommand;
         public ICommand DeleteCommand => _deleteCommand ?? (_deleteCommand = new RelayCommand(DeleteElement));
         private ICommand _SaveChangeCommand;
@@ -138,7 +141,17 @@ namespace RetroFront.UWPAdmin.ViewModels
                 Source = systemeDetailService.GetSysteme(int.Parse(selectedsysID));
                 NewLogo = Source.LogoPath;
                 NewArtwork = Source.ScreenshootPath;
+                var emus = systemeDetailService.GetEmus(Source.ID);
+                foreach (var emu in emus)
+                    Emulators.Add(emu);
             }
+        }
+        internal void OnItemSelected(DisplayEmulator args)
+        {
+            var selected = args;
+            //ImagesNavigationHelper.AddImageId(GamesSelectedIdKey, selected.ID);
+            NavigationService.Frame.SetListDataItemForNextConnectedAnimation(selected);
+            NavigationService.Navigate<EmulateursDetailPage>(selected.ID.ToString());
         }
         private async void ScrapeLogo()
         {

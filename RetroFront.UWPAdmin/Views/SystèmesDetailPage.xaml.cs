@@ -66,5 +66,10 @@ namespace RetroFront.UWPAdmin.Views
                 btTextbox.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             }
         }
+
+        private void AdaptiveGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ViewModel.OnItemSelected(e.ClickedItem as DisplayEmulator);
+        }
     }
 }

@@ -419,7 +419,7 @@ namespace RetroFrontAPIService.Service.Implémentation
             request.AddParameter("recherche", name);
             //request.AddHeader("Cookie", "PHPSESSID=b03ec97508aac291eaea253d453b6af9; SERVERID=clone");
             var response = sscpclient.Execute<SCSPGameRequest>(request);
-            var result = response.Data.response.jeux;
+            var result = response?.Data?.response?.jeux;
             foreach (var game in result)
             {
                 if (game.noms != null)

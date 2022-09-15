@@ -15,7 +15,7 @@ namespace RetroFront.UWPAdmin.Core.Models
         private void InitImg()
         {
             Logo = string.Empty;
-            if (LogoPath.Contains("ms-appx"))
+            if (!string.IsNullOrEmpty(LogoPath) && LogoPath.Contains("ms-appx"))
             {
                 Logo = LogoPath;
             }
@@ -24,7 +24,7 @@ namespace RetroFront.UWPAdmin.Core.Models
                 Logo = string.Format(LogoWebPath, ID);
             }
             Screenshoot = string.Empty;
-            if (ScreenshootPath.Contains("ms-appx"))
+            if (!string.IsNullOrEmpty(ScreenshootPath) && ScreenshootPath.Contains("ms-appx"))
             {
                 Screenshoot = ScreenshootPath;
             }

@@ -58,43 +58,45 @@
                 </Grid>
             </Button>
         </Grid>
-        <Grid Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <StackPanel Orientation="Vertical">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="25" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Name : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                    <TextBox Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.Source.Name}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Chemin : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.Source.Chemin}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Command : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.Source.Command}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Extension : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.Source.Extension}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="SystemeID : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                    <TextBox Grid.Row="4" Grid.Column="1" Text="{x:Bind ViewModel.Source.SystemeID}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
-                </Grid>
-                <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                    <TextBlock  Style="{StaticResource TitleTextBlockStyle}" Text="Jeux lancés par cette émulateur"/>
-                    <controls:AdaptiveGridView ItemClick="AdaptiveGridView_ItemClick"
+        <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollMode="Enabled" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Grid>
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Name : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.Source.Name}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Chemin : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.Source.Chemin}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Command : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.Source.Command}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Extension : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.Source.Extension}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="SystemeID : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{x:Bind ViewModel.Source.SystemeID}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
+                    </Grid>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <TextBlock  Style="{StaticResource TitleTextBlockStyle}" Text="Jeux lancés par cette émulateur"/>
+                        <controls:AdaptiveGridView ItemClick="AdaptiveGridView_ItemClick"
             Padding="{StaticResource MediumLeftRightMargin}"
             IsItemClickEnabled="True" ItemHeight="450" DesiredWidth="300"
-            ItemsSource="{x:Bind ViewModel.Roms, Mode=OneWay}" OneRowModeEnabled="True"
+            ItemsSource="{x:Bind ViewModel.Roms, Mode=OneWay}"
             SelectionMode="Single" ItemTemplate="{StaticResource TemplateGame}">
-                    </controls:AdaptiveGridView>
+                        </controls:AdaptiveGridView>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
-        </Grid>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>

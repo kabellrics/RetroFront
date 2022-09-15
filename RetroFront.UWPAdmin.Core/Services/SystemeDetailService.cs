@@ -2,6 +2,7 @@
 using RetroFront.UWPAdmin.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,6 +14,12 @@ namespace RetroFront.UWPAdmin.Core.Services
         {
             var sys = systemeClient.SystemeGet(ID).Result;
             return new DisplaySysteme(sys);
+        }
+        public IEnumerable<DisplayEmulator> GetEmus(int ID)
+        {
+            var result = emulatorClient.EmulatorGet();
+            var emus = result.Result;
+            return emus.Where(x=>x.SystemeID == ID).Select(x=>new DisplayEmulator(x));
         }
         public async Task UpdateSysteme(DisplaySysteme system)
         {

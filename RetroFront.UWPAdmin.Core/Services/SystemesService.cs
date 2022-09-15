@@ -69,7 +69,8 @@ namespace RetroFront.UWPAdmin.Core.Services
                     var emusteam = new Emulator();
                     emusteam.SystemeID = steamsys.ID;
                     emusteam.Name = "Steam Executable";
-                    emusteam.Chemin = @"C:\Windows\explorer.exe {filepath}";
+                    var filepath = $"\"{{filepath}}\"";
+                    emusteam.Chemin = @"C:\Windows\explorer.exe "+ filepath;
                     emusteam.Extension = ".exe .EXE .lnk .LNK";
                     steamemus = await CreateEmulator(emusteam);
                 }
@@ -116,7 +117,8 @@ namespace RetroFront.UWPAdmin.Core.Services
                     var emusteam = new Emulator();
                     emusteam.SystemeID = steamsys.ID;
                     emusteam.Name = "Epic Executable";
-                    emusteam.Chemin = @"C:\Windows\explorer.exe {filepath}";
+                    var filepath = $"\"{{file.path}}\"";
+                    emusteam.Chemin = @"C:\Windows\explorer.exe " + filepath;
                     emusteam.Extension = ".exe .EXE .lnk .LNK";
                     steamemus = await CreateEmulator(emusteam);
                 }
@@ -162,7 +164,8 @@ namespace RetroFront.UWPAdmin.Core.Services
                     var emusteam = new Emulator();
                     emusteam.SystemeID = steamsys.ID;
                     emusteam.Name = "Origin Executable";
-                    emusteam.Chemin = @"C:\Windows\explorer.exe {filepath}";
+                    var filepath = $"\"{{file.path}}\"";
+                    emusteam.Chemin = @"C:\Windows\explorer.exe " + filepath;
                     emusteam.Extension = ".exe .EXE .lnk .LNK";
                     steamemus = await CreateEmulator(emusteam);
                 }
@@ -210,8 +213,9 @@ namespace RetroFront.UWPAdmin.Core.Services
                         var emusteam = new Emulator();
                         emusteam.SystemeID = steamsys.ID;
                         emusteam.Name = "Windows";
-                        emusteam.Chemin = @"{filepath}";
-                        emusteam.Extension = ".exe .EXE .lnk .LNK";
+                    var filepath = $"\"{{file.path}}\"";
+                    emusteam.Chemin =  filepath;
+                    emusteam.Extension = ".exe .EXE .lnk .LNK";
                         steamemus = await CreateEmulator(emusteam);
                     }
                     var app = new GameRom();

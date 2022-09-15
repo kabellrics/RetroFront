@@ -38,7 +38,14 @@ namespace RetroFrontAPIService.Service.Implémentation
             pggame.Name = gamerom.Name;
             pggame.SortName = gamerom.Name;
             //pggame.File = System.IO.Path.GetFileName(gamerom.Path);
-            pggame.File = gamerom.Path;
+            if (gamerom.SteamID > 0)
+            {
+                pggame.File = "steam:" + gamerom.SteamID;
+            }
+            else
+            {
+                pggame.File = gamerom.Path;
+            }
             pggame.Developer = gamerom.Dev;
             pggame.Genre = gamerom.Genre;
             pggame.Description = gamerom.Desc;
@@ -94,7 +101,7 @@ namespace RetroFrontAPIService.Service.Implémentation
         {
             RetroFront.Models.Pegasus.Collection collection = new RetroFront.Models.Pegasus.Collection();
             var settings = fileJSONService.appSettings;
-            if (settings.RegroupPCGamesForPegasus == true && sys.Type == SysType.GameStore)
+            if (settings.RegroupPCGamesForPegasus == true && sys.Type == SysType.GameStore && sys.Shortname != "steam")
             {
                 collection.Name = settings.PegasusPCGroupName;
                 collection.shortname = "pcgames";
@@ -105,15 +112,15 @@ namespace RetroFrontAPIService.Service.Implémentation
                 collection.shortname = sys.Shortname;
             }
             collection.Extension = emulator.Extension.Replace(".", string.Empty);
-            if (sys.Type == SysType.GameStore)
-            {
-                collection.launch = @"C:\Windows\explorer.exe" + " {file.path}";
-            }
-            else
-            {
-                collection.launch = $"{emulator.Chemin} {emulator.Command?.Replace("{ImagePath}", "{file.path}")}";
+            //if (sys.Type == SysType.GameStore)
+            //{
+            //    collection.launch = @"C:\Windows\explorer.exe" + " {file.path}";
+            //}
+            //else
+            //{
+                collection.launch = $"\"{emulator.Chemin}\" {emulator.Command?.Replace("{ImagePath}", "{file.path}")}";
                 collection.launch = $"{collection.launch.Replace("%ROMPATH%", "{file.path}")}";
-            }
+            //}
             collection.Logo = sys.Logo;
             collection.Background = sys.Screenshoot;
             collection.Video = sys.Video;
@@ -180,7 +187,10 @@ namespace RetroFrontAPIService.Service.Implémentation
         private string CreatePegasusFile(Systeme sys, Emulator emu)
         {
             Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Pegasus"));
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),"Pegasus",sys.Name+"-"+emu.Name+".metadata.pegasus.txt");
+            var filepath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Pegasus", sys.Name + "-" + emu.Name + ".metadata.pegasus.txt");
+            if (File.Exists(filepath))
+                File.Delete(filepath);
+            return filepath;
         }
     }
 }
