@@ -1,4 +1,5 @@
-﻿using RetroFront.Models;
+﻿using Microsoft.Win32;
+using RetroFront.Models;
 using RetroFrontAPIService.Service.Interface;
 using System;
 using System.Collections.Generic;
@@ -112,15 +113,24 @@ namespace RetroFrontAPIService.Service.Implémentation
                 collection.shortname = sys.Shortname;
             }
             collection.Extension = emulator.Extension.Replace(".", string.Empty);
-            //if (sys.Type == SysType.GameStore)
+            ///*if (sys.Shortname == "steam")
             //{
-            //    collection.launch = @"C:\Windows\explorer.exe" + " {file.path}";
+            //    collection.launch = GetSteamExecutable() + " {file.path}";
             //}
-            //else
+            //else*/ if (sys.Shortname == "epic")
             //{
+            //    collection.launch = $"\"{GetEpicExecutable()}\"" + " {file.path}";
+            //}
+            //else if (sys.Shortname == "origin")
+            //{
+            //    collection.launch = $"\"{GetOriginExecutable()}\"" + " {file.path}";
+
+            if (sys.Type != SysType.GameStore)
+            {
                 collection.launch = $"\"{emulator.Chemin}\" {emulator.Command?.Replace("{ImagePath}", "{file.path}")}";
                 collection.launch = $"{collection.launch.Replace("%ROMPATH%", "{file.path}")}";
-            //}
+            }
+
             collection.Logo = sys.Logo;
             collection.Background = sys.Screenshoot;
             collection.Video = sys.Video;
@@ -132,8 +142,8 @@ namespace RetroFrontAPIService.Service.Implémentation
             builder.AppendLine($"collection : {collection.Name}");
             builder.AppendLine($"shortname : {collection.shortname}");
             builder.AppendLine($"extension : {collection.Extension}");
-            builder.AppendLine($"launch : { collection.launch}");
-            builder.AppendLine($"assets.logo : { collection.Logo}");
+            builder.AppendLine($"launch : {collection.launch}");
+            builder.AppendLine($"assets.logo : {collection.Logo}");
             return builder.ToString();
         }
         private string StringFromPegasusGame(RetroFront.Models.Pegasus.Game game)
@@ -141,19 +151,19 @@ namespace RetroFrontAPIService.Service.Implémentation
             var builder = new StringBuilder();
             builder.AppendLine($"game : {game.Name}");
             builder.AppendLine($"sort_title : {game.Name}");
-            builder.AppendLine($"file : { game.File}");
-            builder.AppendLine($"developer : { game.Developer}");
-            builder.AppendLine($"genre : { game.Genre}");
-            builder.AppendLine($"description : { game.Description}");
-            builder.AppendLine($"assets.box_front : { game.BoxFront}");
-            builder.AppendLine($"assets.poster : { game.BoxFront}");
-            builder.AppendLine($"assets.logo : { game.Logo}");
-            builder.AppendLine($"assets.video : { game.Video}");
+            builder.AppendLine($"file : {game.File}");
+            builder.AppendLine($"developer : {game.Developer}");
+            builder.AppendLine($"genre : {game.Genre}");
+            builder.AppendLine($"description : {game.Description}");
+            builder.AppendLine($"assets.box_front : {game.BoxFront}");
+            builder.AppendLine($"assets.poster : {game.BoxFront}");
+            builder.AppendLine($"assets.logo : {game.Logo}");
+            builder.AppendLine($"assets.video : {game.Video}");
             foreach (var img in game.Screenshoot)
-                builder.AppendLine($"assets.screenshot : { img}");
+                builder.AppendLine($"assets.screenshot : {img}");
             //builder.AppendLine($"assets.background : { game.}");
-            builder.AppendLine($"assets.steam : { game.Fanart}");
-            builder.AppendLine($"assets.banner : { game.Fanart}");
+            builder.AppendLine($"assets.steam : {game.Fanart}");
+            builder.AppendLine($"assets.banner : {game.Fanart}");
             return builder.ToString();
         }
         public string ExportToPegasus(int sysID)
@@ -191,6 +201,63 @@ namespace RetroFrontAPIService.Service.Implémentation
             if (File.Exists(filepath))
                 File.Delete(filepath);
             return filepath;
+        }
+        private static string? GetSteamExecutable()
+        {
+            string? executablePath = null;
+
+            executablePath ??= RegistryUtil.GetShellCommand("steam");
+            executablePath ??= RegistryUtil.GetValue(RegistryHive.CurrentUser, @"Software\Valve\Steam", "SteamExe");
+            executablePath ??= RegistryUtil.GetValue(RegistryHive.CurrentUser, @"Software\Valve\Steam", "SteamPath");
+            executablePath ??= RegistryUtil.GetValue(RegistryHive.LocalMachine, @"Software\Valve\Steam", "InstallPath");
+
+            executablePath = PathUtil.Sanitize(executablePath);
+
+            if (!string.IsNullOrEmpty(executablePath) && !PathUtil.IsExecutable(executablePath))
+            {
+                executablePath = Path.Combine(executablePath, "steam.exe");
+            }
+
+            if (!PathUtil.IsExecutable(executablePath))
+            {
+                executablePath = null;
+            }
+
+            return executablePath;
+        }
+        private static string? GetEpicExecutable()
+        {
+            string? executablePath = null;
+
+            executablePath ??= RegistryUtil.GetShellCommand("com.epicgames.launcher");
+            executablePath ??= RegistryUtil.GetValue(RegistryHive.CurrentUser, @"Software\Epic Games\EOS", "ModSdkCommand");
+
+            executablePath = PathUtil.Sanitize(executablePath);
+
+            if (!PathUtil.IsExecutable(executablePath))
+            {
+                executablePath = null;
+            }
+
+            return executablePath;
+        }
+        private static string? GetOriginExecutable()
+        {
+            string? executablePath = null;
+
+            executablePath ??= RegistryUtil.GetShellCommand("origin");
+            executablePath ??= RegistryUtil.GetShellCommand("origin2");
+            executablePath ??= RegistryUtil.GetValue(RegistryHive.LocalMachine, @"SOFTWARE\Origin", "ClientPath");
+            executablePath ??= RegistryUtil.GetValue(RegistryHive.LocalMachine, @"SOFTWARE\Origin", "OriginPath");
+
+            executablePath = PathUtil.Sanitize(executablePath);
+
+            if (!PathUtil.IsExecutable(executablePath))
+            {
+                executablePath = null;
+            }
+
+            return executablePath;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroFront.Admin", "RetroFront.Admin\RetroFront.Admin.csproj", "{1029DC19-23A9-4EDC-807C-645B6C783955}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -33,6 +33,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroFront.UWPAdmin", "RetroFront.UWPAdmin\RetroFront.UWPAdmin.csproj", "{42AC8218-F9DE-469D-9071-7421454492D9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroFront.UWPAdmin.Core", "RetroFront.UWPAdmin.Core\RetroFront.UWPAdmin.Core.csproj", "{FE2E6D9F-23DA-4DCF-A3E9-BE11B97ED803}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameByURLLauncher", "GameByURLLauncher\GameByURLLauncher.csproj", "{7B39AD12-3015-4C29-8804-F034262DDA43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -300,6 +302,26 @@ Global
 		{FE2E6D9F-23DA-4DCF-A3E9-BE11B97ED803}.Release|x64.Build.0 = Release|Any CPU
 		{FE2E6D9F-23DA-4DCF-A3E9-BE11B97ED803}.Release|x86.ActiveCfg = Release|Any CPU
 		{FE2E6D9F-23DA-4DCF-A3E9-BE11B97ED803}.Release|x86.Build.0 = Release|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Debug|ARM.Build.0 = Debug|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Debug|x64.Build.0 = Debug|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Debug|x86.Build.0 = Debug|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Release|ARM.ActiveCfg = Release|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Release|ARM.Build.0 = Release|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Release|ARM64.Build.0 = Release|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Release|x64.ActiveCfg = Release|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Release|x64.Build.0 = Release|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Release|x86.ActiveCfg = Release|Any CPU
+		{7B39AD12-3015-4C29-8804-F034262DDA43}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

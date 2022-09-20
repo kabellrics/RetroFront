@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RetroFront.Models;
 using RetroFront.Models.EAOrigin;
+using RetroFront.Models.Pegasus;
 using RetroFrontAPIService.Service.Interface;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,9 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace RetroFrontAPIService.Service.Implémentation
 {
@@ -32,11 +36,13 @@ namespace RetroFrontAPIService.Service.Implémentation
                 var manifestObject = JObject.Parse(File.ReadAllText(manifestsFile));
                 var name = (string)manifestObject["DisplayName"];
                 var appId = (string)manifestObject["AppName"];
+                var command = $"com.epicgames.launcher://apps/{appId}?action=launch&silent=true";
+                var processName = (string)manifestObject["MainWindowProcessName"]; 
                 GameRom game = new GameRom();
                 game.Name = name;
                 game.EpicID = appId;
                 game.EmulatorID = emu.EmulatorID;
-                game.Path = $"com.epicgames.launcher://apps/{appId}?action=launch&silent=true";
+                game.Path = command+" "+Path.GetFileNameWithoutExtension(processName);
                 gamesfind.Add(game);
             }
             return gamesfind;
@@ -76,7 +82,7 @@ namespace RetroFrontAPIService.Service.Implémentation
                             game.Name = origindata.localizableAttributes.displayName;
                             game.Desc = origindata.localizableAttributes.longDescription;
                             game.OriginID = gameId;
-                            game.Path = $"origin://launchgame/{gameId}";
+                            game.Path = $"origin://launchgame/{gameId} " + Path.GetFileNameWithoutExtension(GetOriginGameExe(files));
                             gamesfind.Add(game);
                         }
                     }
@@ -104,6 +110,40 @@ namespace RetroFrontAPIService.Service.Implémentation
             {
                 return null;
             }
+        }
+        public string GetOriginGameExe(string manifestfile)
+        {
+            var manifestText = File.ReadAllText(manifestfile);
+            var valueCollection = HttpUtility.ParseQueryString(HttpUtility.UrlDecode(manifestText));
+            var InstallDir = PathUtil.Sanitize(valueCollection["dipInstallPath"]) ?? string.Empty;
+            if(InstallDir != string.Empty)
+            {
+                var installerXmlPath = Path.Combine(InstallDir, "__Installer", "installerdata.xml");
+                OriginDiPManifest? diPManifest = null;
+                try
+                {
+                    var ser = new XmlSerializer(typeof(OriginDiPManifest));
+                    diPManifest = ser.Deserialize(XmlReader.Create(installerXmlPath)) as OriginDiPManifest;
+                    var filePath = diPManifest.runtime?.FirstOrDefault(x=>!x.trial)?.filePath;
+                    string exename = string.Empty;
+                    if (!string.IsNullOrEmpty(filePath))
+                    {
+                        exename = filePath;
+                        if (filePath.StartsWith('[') && filePath.Contains(']'))
+                        {
+                            exename = PathUtil.Sanitize(Path.Combine(InstallDir, filePath[(filePath.LastIndexOf(']') + 1)..]))!;
+                        }
+
+                        if (!PathUtil.IsExecutable(exename) && !File.Exists(exename))
+                        {
+                            exename = string.Empty;
+                        }
+                        return exename;
+                    }
+                }
+                catch { /* ignore */ }
+            }
+            return string.Empty;
         }
         public List<GameRom> GetSteamGame(Emulator emu)
         {
