@@ -42,6 +42,7 @@ namespace RetroFrontAPIService.Service.Implémentation
                 appSettings.RegroupPCGamesForPegasus = false;
                 appSettings.PegasusPCGroupName = string.Empty;
                 appSettings.PegasusIconFolderPath = string.Empty;
+                appSettings.URLGameLauncherPath = string.Empty;
                 var jsonApp = JsonConvert.SerializeObject(appSettings,Formatting.Indented);
                 File.WriteAllText(appSettings.AppSettingsLocation, jsonApp);
             }

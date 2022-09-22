@@ -26,6 +26,7 @@ namespace RetroFront.Models
         public bool RegroupPCGamesForPegasus { get; set; }
         public string PegasusPCGroupName { get; set; }
         public string PegasusIconFolderPath { get; set; }
+        public string URLGameLauncherPath { get; set; }
 
     }
 }

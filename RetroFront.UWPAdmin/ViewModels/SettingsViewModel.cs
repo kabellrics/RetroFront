@@ -100,10 +100,22 @@ namespace RetroFront.UWPAdmin.ViewModels
 
         private async void FolderRetroarch()
         {
-            var folder = await dialogService.FilePicker(new List<string>() {"retroarch.exe" });
+            var folder = await dialogService.FilePicker(new List<string>() {".exe" });
             if (!string.IsNullOrEmpty(folder))
             {
                 Settings.RetroarchPath = folder;
+            }
+        }
+
+        private ICommand _URLGameLauncherPathCommand;
+        public ICommand URLGameLauncherPathCommand => _URLGameLauncherPathCommand ?? (_URLGameLauncherPathCommand = new RelayCommand(URLGameLauncherPath));
+
+        private async void URLGameLauncherPath()
+        {
+            var folder = await dialogService.FilePicker(new List<string>() { ".exe" });
+            if (!string.IsNullOrEmpty(folder))
+            {
+                Settings.URLGameLauncherPath = folder;
             }
         }
 

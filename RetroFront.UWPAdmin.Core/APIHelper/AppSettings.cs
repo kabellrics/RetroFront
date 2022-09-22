@@ -61,6 +61,8 @@ namespace RetroFront.UWPAdmin.Core.APIHelper
         public string PegasusPCGroupName { get; set; }
         [Newtonsoft.Json.JsonProperty("PegasusIconFolderPath", Required = Newtonsoft.Json.Required.AllowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string PegasusIconFolderPath { get; set; }
+        [Newtonsoft.Json.JsonProperty("URLGameLauncherPath", Required = Newtonsoft.Json.Required.AllowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string URLGameLauncherPath { get; set; }
 
     }
 }

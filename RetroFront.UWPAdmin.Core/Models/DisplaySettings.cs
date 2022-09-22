@@ -102,6 +102,15 @@ namespace RetroFront.UWPAdmin.Core.Models
                 ChangeStatus();
             }
         }
+        public string URLGameLauncherPath
+        {
+            get => Settings.URLGameLauncherPath;
+            set
+            {
+                SetProperty(Settings.URLGameLauncherPath, value, Settings, (emulator, item) => Settings.URLGameLauncherPath = item);
+                ChangeStatus();
+            }
+        }
         public bool RegroupPCGamesForPegasus
         {
             get => Settings.RegroupPCGamesForPegasus;

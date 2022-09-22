@@ -54,7 +54,7 @@ namespace RetroFrontAPIService.Service.Implémentation
             pggame.Logo = gamerom.Logo;
             pggame.Video = gamerom.Video;
             pggame.Fanart = gamerom.Fanart;
-            pggame.Screenshoot.Add(gamerom.Fanart);
+            //pggame.Screenshoot.Add(gamerom.Fanart);
             pggame.Screenshoot.Add(gamerom.Screenshoot);
             try
             {
@@ -124,8 +124,12 @@ namespace RetroFrontAPIService.Service.Implémentation
             //else if (sys.Shortname == "origin")
             //{
             //    collection.launch = $"\"{GetOriginExecutable()}\"" + " {file.path}";
-
-            if (sys.Type != SysType.GameStore)
+            if(sys.Type == SysType.GameStore && sys.Shortname != "steam")
+            {
+                collection.launch = $"\"{fileJSONService.appSettings.URLGameLauncherPath}\" \" {{file.path}}\"";
+                collection.Extension = String.Empty;
+            }
+            else if (sys.Type != SysType.GameStore)
             {
                 collection.launch = $"\"{emulator.Chemin}\" {emulator.Command?.Replace("{ImagePath}", "{file.path}")}";
                 collection.launch = $"{collection.launch.Replace("%ROMPATH%", "{file.path}")}";
@@ -201,63 +205,6 @@ namespace RetroFrontAPIService.Service.Implémentation
             if (File.Exists(filepath))
                 File.Delete(filepath);
             return filepath;
-        }
-        private static string? GetSteamExecutable()
-        {
-            string? executablePath = null;
-
-            executablePath ??= RegistryUtil.GetShellCommand("steam");
-            executablePath ??= RegistryUtil.GetValue(RegistryHive.CurrentUser, @"Software\Valve\Steam", "SteamExe");
-            executablePath ??= RegistryUtil.GetValue(RegistryHive.CurrentUser, @"Software\Valve\Steam", "SteamPath");
-            executablePath ??= RegistryUtil.GetValue(RegistryHive.LocalMachine, @"Software\Valve\Steam", "InstallPath");
-
-            executablePath = PathUtil.Sanitize(executablePath);
-
-            if (!string.IsNullOrEmpty(executablePath) && !PathUtil.IsExecutable(executablePath))
-            {
-                executablePath = Path.Combine(executablePath, "steam.exe");
-            }
-
-            if (!PathUtil.IsExecutable(executablePath))
-            {
-                executablePath = null;
-            }
-
-            return executablePath;
-        }
-        private static string? GetEpicExecutable()
-        {
-            string? executablePath = null;
-
-            executablePath ??= RegistryUtil.GetShellCommand("com.epicgames.launcher");
-            executablePath ??= RegistryUtil.GetValue(RegistryHive.CurrentUser, @"Software\Epic Games\EOS", "ModSdkCommand");
-
-            executablePath = PathUtil.Sanitize(executablePath);
-
-            if (!PathUtil.IsExecutable(executablePath))
-            {
-                executablePath = null;
-            }
-
-            return executablePath;
-        }
-        private static string? GetOriginExecutable()
-        {
-            string? executablePath = null;
-
-            executablePath ??= RegistryUtil.GetShellCommand("origin");
-            executablePath ??= RegistryUtil.GetShellCommand("origin2");
-            executablePath ??= RegistryUtil.GetValue(RegistryHive.LocalMachine, @"SOFTWARE\Origin", "ClientPath");
-            executablePath ??= RegistryUtil.GetValue(RegistryHive.LocalMachine, @"SOFTWARE\Origin", "OriginPath");
-
-            executablePath = PathUtil.Sanitize(executablePath);
-
-            if (!PathUtil.IsExecutable(executablePath))
-            {
-                executablePath = null;
-            }
-
-            return executablePath;
         }
     }
 }
