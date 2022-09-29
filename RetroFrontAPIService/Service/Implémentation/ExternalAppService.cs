@@ -126,7 +126,7 @@ namespace RetroFrontAPIService.Service.Implémentation
             //    collection.launch = $"\"{GetOriginExecutable()}\"" + " {file.path}";
             if(sys.Type == SysType.GameStore && sys.Shortname != "steam")
             {
-                collection.launch = $"\"{fileJSONService.appSettings.URLGameLauncherPath}\" \" {{file.path}}\"";
+                collection.launch = $"\"{fileJSONService.appSettings.URLGameLauncherPath}\""+" {file.path}";
                 collection.Extension = String.Empty;
             }
             else if (sys.Type != SysType.GameStore)
@@ -145,6 +145,7 @@ namespace RetroFrontAPIService.Service.Implémentation
             var builder = new StringBuilder();
             builder.AppendLine($"collection : {collection.Name}");
             builder.AppendLine($"shortname : {collection.shortname}");
+            if(!string.IsNullOrEmpty(collection.Extension))
             builder.AppendLine($"extension : {collection.Extension}");
             builder.AppendLine($"launch : {collection.launch}");
             builder.AppendLine($"assets.logo : {collection.Logo}");
