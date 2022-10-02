@@ -116,12 +116,20 @@ namespace GameByURLLauncher
                 };
                 if (!string.IsNullOrEmpty(argsexe))
                 {
-                    var arglist = argsexe.Split('\"');
+                    var arglist = argsexe.Split('\"', StringSplitOptions.RemoveEmptyEntries);
+                    var extlist = emu.Extension.Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
                     foreach (var arg in arglist)
                     {
                         if (arg != " " && arg !="\"\"" && arg != "\" \"" && !string.IsNullOrEmpty(arg) && !string.IsNullOrWhiteSpace(arg))
-                        {                            
-                            ps.ArgumentList.Add(arg.Trim()); 
+                        {
+                            if (arg.Trim().Contains(" ") /*|| arg.Trim().Contains("cores")*/)
+                            {
+                                ps.ArgumentList.Add($"\"{arg.Trim()}\"");
+                            }
+                            else
+                            {
+                                ps.ArgumentList.Add(arg.Trim());
+                            }
                         }
                     }
                     //ps.Arguments = argsexe;
@@ -131,7 +139,7 @@ namespace GameByURLLauncher
                 Log.Information($"gamepath : {gamepath}");
                 Log.Information($"gameexe : {gameexe}");
 
-                Log.Information($"Starting : {ps.FileName} with args {ps.Arguments}");
+                Log.Information($"Starting : {ps.FileName} with args {string.Join(" ",ps.ArgumentList)}");
                 Process.Start(ps);
 
                 Thread.Sleep(5000);
