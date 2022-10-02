@@ -36,7 +36,7 @@ namespace RetroFrontAPIService.Service.Implémentation
                 var manifestObject = JObject.Parse(File.ReadAllText(manifestsFile));
                 var name = (string)manifestObject["DisplayName"];
                 var appId = (string)manifestObject["AppName"];
-                var command = $"com.epicgames.launcher://apps/{appId}?action=launch&silent=true";
+                var command = $"com.epicgames.launcher://apps/{appId}";
                 var processName = (string)manifestObject["MainWindowProcessName"]; 
                 GameRom game = new GameRom();
                 game.Name = name;

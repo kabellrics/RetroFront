@@ -45,8 +45,9 @@ namespace RetroFrontAPIService.Service.Implémentation
             }
             else
             {
-                pggame.File = gamerom.Path;
+                pggame.File = $"{gamerom.ID}.id";
             }
+            pggame.Id = gamerom.ID;
             pggame.Developer = gamerom.Dev;
             pggame.Genre = gamerom.Genre;
             pggame.Description = gamerom.Desc;
@@ -112,28 +113,20 @@ namespace RetroFrontAPIService.Service.Implémentation
                 collection.Name = sys.Name;
                 collection.shortname = sys.Shortname;
             }
-            collection.Extension = emulator.Extension.Replace(".", string.Empty);
-            ///*if (sys.Shortname == "steam")
+            //collection.Extension = emulator.Extension.Replace(".", string.Empty);
+            //if(sys.Type == SysType.GameStore && sys.Shortname != "steam")
             //{
-            //    collection.launch = GetSteamExecutable() + " {file.path}";
+            //    collection.launch = $"\"{fileJSONService.appSettings.URLGameLauncherPath}\""+" {file.path}";
+            //    collection.Extension = String.Empty;
             //}
-            //else*/ if (sys.Shortname == "epic")
+            //else if (sys.Type != SysType.GameStore)
             //{
-            //    collection.launch = $"\"{GetEpicExecutable()}\"" + " {file.path}";
+            //    collection.launch = $"\"{emulator.Chemin}\" {emulator.Command?.Replace("{ImagePath}", "{file.path}")}";
+            //    collection.launch = $"{collection.launch.Replace("%ROMPATH%", "{file.path}")}";
             //}
-            //else if (sys.Shortname == "origin")
-            //{
-            //    collection.launch = $"\"{GetOriginExecutable()}\"" + " {file.path}";
-            if(sys.Type == SysType.GameStore && sys.Shortname != "steam")
-            {
-                collection.launch = $"\"{fileJSONService.appSettings.URLGameLauncherPath}\""+" {file.path}";
-                collection.Extension = String.Empty;
-            }
-            else if (sys.Type != SysType.GameStore)
-            {
-                collection.launch = $"\"{emulator.Chemin}\" {emulator.Command?.Replace("{ImagePath}", "{file.path}")}";
-                collection.launch = $"{collection.launch.Replace("%ROMPATH%", "{file.path}")}";
-            }
+
+            collection.launch = $"\"{fileJSONService.appSettings.URLGameLauncherPath}\"" + " {file.path}";
+            collection.Extension = "id";
 
             collection.Logo = sys.Logo;
             collection.Background = sys.Screenshoot;

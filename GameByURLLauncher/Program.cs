@@ -58,21 +58,33 @@ namespace GameByURLLauncher
 
             try
             {
-                var GameID = args;
+                var GameID = Path.GetFileNameWithoutExtension(args);
                 var game = await APIService.GetGameRomByID(GameID);
                 if (game == null)
                 {
-                    Log.Error("ERROR: Impossible de trouver un jeux avec cette ID"); return;
+                    Log.Error($"ERROR: Impossible de trouver un jeux avec cette ID {GameID}"); return;
+                }
+                else
+                {
+                    Log.Information($" ID Game {GameID} pour {game.Name}");
                 }
                 var emu = await APIService.GetEmulatorByID(game.EmulatorID.ToString());
                 if(emu == null)
                 {
                     Log.Error($"ERROR: Impossible de trouver l'émulateur pour le jeu {game.Name}"); return;
                 }
+                else
+                {
+                    Log.Information($"ID Emulateur {emu.EmulatorID} pour {emu.Name}");
+                }
                 var sys = await APIService.GetSystemeByID(emu.SystemeID.ToString());
                 if(sys == null)
                 {
-                    Log.Error($"ERROR: Impossible de trouver le systeme pour l'émulateur {emu.Name}"); return;
+                    Log.Error($"ERROR: Impossible de trouver le systeme pour l'émulateur {sys.Name}"); return;
+                }
+                else
+                {
+                    Log.Information($"ID Systeme {sys.SystemeID} pour {sys.Name}");
                 }
                 string appexe = string.Empty;
                 string argsexe = string.Empty;
@@ -93,20 +105,33 @@ namespace GameByURLLauncher
                 else
                 {
                     appexe = emu.Chemin;
-                    argsexe = emu.Command.Replace("{ImagePath}",$"\"{game.Path}\"");
+                    argsexe = emu.Command.Replace("{ImagePath}",$"{game.Path}");
                     gameexe = Path.GetFileNameWithoutExtension(appexe);
                 }
 
                 var ps = new ProcessStartInfo(appexe)
                 {
-                    UseShellExecute = true,
+                    UseShellExecute = false,
                     Verb = "open"
                 };
-                if(!string.IsNullOrEmpty(argsexe))
+                if (!string.IsNullOrEmpty(argsexe))
                 {
-                    ps.Arguments = argsexe;
+                    var arglist = argsexe.Split('\"');
+                    foreach (var arg in arglist)
+                    {
+                        if (arg != " " && arg !="\"\"" && arg != "\" \"" && !string.IsNullOrEmpty(arg) && !string.IsNullOrWhiteSpace(arg))
+                        {                            
+                            ps.ArgumentList.Add(arg.Trim()); 
+                        }
+                    }
+                    //ps.Arguments = argsexe;
                 }
-                Log.Information($"Starting : {appexe} with args {argsexe}");
+                Log.Information($"appexe : {appexe}");
+                Log.Information($"argsexe : {argsexe}");
+                Log.Information($"gamepath : {gamepath}");
+                Log.Information($"gameexe : {gameexe}");
+
+                Log.Information($"Starting : {ps.FileName} with args {ps.Arguments}");
                 Process.Start(ps);
 
                 Thread.Sleep(5000);
