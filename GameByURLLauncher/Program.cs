@@ -122,7 +122,13 @@ namespace GameByURLLauncher
                     {
                         if (arg != " " && arg !="\"\"" && arg != "\" \"" && !string.IsNullOrEmpty(arg) && !string.IsNullOrWhiteSpace(arg))
                         {
-                            if (arg.Trim().Contains(" ") /*|| arg.Trim().Contains("cores")*/)
+                            if (ps.ArgumentList.Any() && ps.ArgumentList.LastOrDefault().EndsWith("="))
+                            {
+                                var argfull = ps.ArgumentList.Last() + arg.Trim();
+                                ps.ArgumentList.Remove(ps.ArgumentList.Last());
+                                ps.ArgumentList.Add(argfull);
+                            }
+                            else if (arg.Trim().Contains(" ") /*|| arg.Trim().Contains("cores")*/)
                             {
                                 ps.ArgumentList.Add($"\"{arg.Trim()}\"");
                             }
@@ -139,7 +145,7 @@ namespace GameByURLLauncher
                 Log.Information($"gamepath : {gamepath}");
                 Log.Information($"gameexe : {gameexe}");
 
-                Log.Information($"Starting : {ps.FileName} with args {string.Join(" ",ps.ArgumentList)}");
+                Log.Information($"Starting : {ps.FileName} with args {string.Join("",ps.ArgumentList)}");
                 Process.Start(ps);
 
                 Thread.Sleep(5000);
