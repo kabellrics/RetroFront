@@ -76,15 +76,15 @@
                             <RowDefinition Height="25" />
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Grid.Column="0" Text="Name : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                        <TextBox Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.Source.Name}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.Source.Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
                         <TextBlock Grid.Row="1" Grid.Column="0" Text="Chemin : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                        <TextBox Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.Source.Chemin}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.Source.Chemin,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
                         <TextBlock Grid.Row="2" Grid.Column="0" Text="Command : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                        <TextBox Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.Source.Command}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.Source.Command,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="Extension : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                        <TextBox Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.Source.Extension}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{x:Bind ViewModel.Source.Extension,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
                         <TextBlock Grid.Row="4" Grid.Column="0" Text="SystemeID : " Style="{StaticResource TitleTextBlockStyle}"></TextBlock>
-                        <TextBox Grid.Row="4" Grid.Column="1" Text="{x:Bind ViewModel.Source.SystemeID}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{x:Bind ViewModel.Source.SystemeID,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboBoxTextBoxStyle}"></TextBox>
                     </Grid>
                     <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <TextBlock  Style="{StaticResource TitleTextBlockStyle}" Text="Jeux lancés par cette émulateur"/>
