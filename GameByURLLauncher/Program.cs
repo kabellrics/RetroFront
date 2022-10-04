@@ -1,6 +1,7 @@
 ﻿using Serilog;
 using Serilog.Events;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace GameByURLLauncher
         {
             await Task.Run(() =>
             {
-                while (true)
+                while (!process.HasExited)
                 {
                     watcher.Update();
                     if (
@@ -47,6 +48,7 @@ namespace GameByURLLauncher
                       )
                     {
                         process.Kill(true);
+                        Log.Information($"Game Closed.");
                         return;
                     }
                 }
@@ -118,34 +120,36 @@ namespace GameByURLLauncher
                 {
                     var arglist = argsexe.Split('\"', StringSplitOptions.RemoveEmptyEntries);
                     var extlist = emu.Extension.Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
+                    var argslist = new List<string>();
                     foreach (var arg in arglist)
                     {
                         if (arg != " " && arg !="\"\"" && arg != "\" \"" && !string.IsNullOrEmpty(arg) && !string.IsNullOrWhiteSpace(arg))
                         {
-                            if (ps.ArgumentList.Any() && ps.ArgumentList.LastOrDefault().EndsWith("="))
+                            if (argslist.Any() && argslist.LastOrDefault().EndsWith("="))
                             {
-                                var argfull = ps.ArgumentList.Last() + arg.Trim();
-                                ps.ArgumentList.Remove(ps.ArgumentList.Last());
-                                ps.ArgumentList.Add(argfull);
+                                var argfull = argslist.Last() + arg.Trim();
+                                argslist.Remove(ps.ArgumentList.Last());
+                                argslist.Add(argfull);
                             }
                             else if (arg.Trim().Contains(" ") /*|| arg.Trim().Contains("cores")*/)
                             {
-                                ps.ArgumentList.Add($"\"{arg.Trim()}\"");
+                                argslist.Add($" \"{arg.Trim()}\"");
                             }
                             else
                             {
-                                ps.ArgumentList.Add(arg.Trim());
+                                argslist.Add(arg.Trim());
                             }
                         }
                     }
                     //ps.Arguments = argsexe;
+                    ps.Arguments = String.Join(" ", argslist);
                 }
                 Log.Information($"appexe : {appexe}");
                 Log.Information($"argsexe : {argsexe}");
                 Log.Information($"gamepath : {gamepath}");
                 Log.Information($"gameexe : {gameexe}");
 
-                Log.Information($"Starting : {ps.FileName} with args {string.Join("",ps.ArgumentList)}");
+                Log.Information($"Starting : {ps.FileName} with args {ps.Arguments}");
                 Process.Start(ps);
 
                 Thread.Sleep(5000);
