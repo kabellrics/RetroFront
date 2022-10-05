@@ -4,7 +4,7 @@
     {
       "Name": "3DO Interactive Multiplayer",
       "Shortname": "3do",
-      "StartupArguments": "-L \".\\cores\\4do_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"4do_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "3do"
       ],
@@ -21,7 +21,7 @@
     {
       "Name": "Sinclair ZX81",
       "Shortname": "sinclair_zx81",
-      "StartupArguments": "-L \".\\cores\\81_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"81_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sinclair_zx81"
       ],
@@ -37,7 +37,7 @@
     {
       "Name": "Atari 8-bit",
       "Shortname": "atari_8bit",
-      "StartupArguments": "-L \".\\cores\\atari800_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"atari800_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "atari_8bit"
       ],
@@ -58,7 +58,7 @@
     {
       "Name": "Sega Genesis",
       "Shortname": "sega_genesis",
-      "StartupArguments": "-L \".\\cores\\blastem_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"blastem_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sega_genesis"
       ],
@@ -74,7 +74,7 @@
     {
       "Name": "Nintendo Entertainment System",
       "Shortname": "nintendo_nes",
-      "StartupArguments": "-L \".\\cores\\bnes_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"bnes_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_nes"
       ],
@@ -88,7 +88,7 @@
     {
       "Name": "Nintendo SNES",
       "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\bsnes_cplusplus98_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"bsnes_cplusplus98_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_super_nes"
       ],
@@ -103,24 +103,7 @@
     {
       "Name": "Nintendo SNES",
       "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\bsnes_hd_beta_libretro.dll\" \"{ImagePath}\"",
-      "Platforms": [
-        "nintendo_super_nes"
-      ],
-      "ImageExtensions": [
-        "sfc",
-        "smc",
-        "gb",
-        "gbc",
-        "zip",
-        "7z"
-      ],
-      "StartupExecutable": "^retroarch\\.exe$"
-    },
-    {
-      "Name": "Nintendo SNES",
-      "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\bsnes_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"bsnes_hd_beta_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_super_nes"
       ],
@@ -137,7 +120,24 @@
     {
       "Name": "Nintendo SNES",
       "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\bsnes_mercury_accuracy_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"bsnes_libretro.dll\" \"{ImagePath}\"",
+      "Platforms": [
+        "nintendo_super_nes"
+      ],
+      "ImageExtensions": [
+        "sfc",
+        "smc",
+        "gb",
+        "gbc",
+        "zip",
+        "7z"
+      ],
+      "StartupExecutable": "^retroarch\\.exe$"
+    },
+    {
+      "Name": "Nintendo SNES",
+      "Shortname": "nintendo_super_nes",
+      "StartupArguments": "-L \"bsnes_mercury_accuracy_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_super_nes"
       ],
@@ -153,7 +153,7 @@
     {
       "Name": "Nintendo SNES",
       "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\bsnes_mercury_balanced_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"bsnes_mercury_balanced_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_super_nes"
       ],
@@ -169,7 +169,7 @@
     {
       "Name": "Nintendo SNES",
       "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\bsnes_mercury_performance_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"bsnes_mercury_performance_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_super_nes"
       ],
@@ -185,7 +185,7 @@
     {
       "Name": "Nintendo SNES",
       "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\bsnes2014_accuracy_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"bsnes2014_accuracy_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_super_nes"
       ],
@@ -201,7 +201,7 @@
     {
       "Name": "Nintendo SNES",
       "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\bsnes2014_balanced_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"bsnes2014_balanced_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_super_nes"
       ],
@@ -217,7 +217,7 @@
     {
       "Name": "Nintendo SNES",
       "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\bsnes2014_performance_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"bsnes2014_performance_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_super_nes"
       ],
@@ -233,7 +233,7 @@
     {
       "Name": "Amstrad CPC",
       "Shortname": "amstrad_cpc",
-      "StartupArguments": "-L \".\\cores\\cap32_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"cap32_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "amstrad_cpc"
       ],
@@ -252,7 +252,7 @@
     {
       "Name": "Nintendo 3DS",
       "Shortname": "nintendo_3ds",
-      "StartupArguments": "-L \".\\cores\\citra_canary_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"citra_canary_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_3ds"
       ],
@@ -272,7 +272,7 @@
     {
       "Name": "Nintendo 3DS",
       "Shortname": "nintendo_3ds",
-      "StartupArguments": "-L \".\\cores\\citra_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"citra_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_3ds"
       ],
@@ -292,7 +292,7 @@
     {
       "Name": "Amstrad CPC",
       "Shortname": "amstrad_cpc",
-      "StartupArguments": "-L \".\\cores\\crocods_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"crocods_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "amstrad_cpc"
       ],
@@ -308,7 +308,7 @@
     {
       "Name": "Nintendo DS",
       "Shortname": "nintendo_ds",
-      "StartupArguments": "-L \".\\cores\\desmume_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"desmume_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_ds"
       ],
@@ -323,7 +323,7 @@
     {
       "Name": "Nintendo DS",
       "Shortname": "nintendo_ds",
-      "StartupArguments": "-L \".\\cores\\desmume2015_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"desmume2015_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_ds"
       ],
@@ -338,7 +338,7 @@
     {
       "Name": "Nintendo GameCube",
       "Shortname": "nintendo_gamecube",
-      "StartupArguments": "-L \".\\cores\\dolphin_launcher_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"dolphin_launcher_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_gamecube",
         "nintendo_wii"
@@ -360,7 +360,7 @@
     {
       "Name": "Nintendo GameCube",
       "Shortname": "nintendo_gamecube",
-      "StartupArguments": "-L \".\\cores\\dolphin_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"dolphin_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_gamecube",
         "nintendo_wii"
@@ -385,7 +385,7 @@
     {
       "Name": "PC (DOS)",
       "Shortname": "pc_dos",
-      "StartupArguments": "-L \".\\cores\\dosbox_core_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"dosbox_core_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "pc_dos"
       ],
@@ -404,7 +404,7 @@
     {
       "Name": "PC (DOS)",
       "Shortname": "pc_dos",
-      "StartupArguments": "-L \".\\cores\\dosbox_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"dosbox_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "pc_dos"
       ],
@@ -421,7 +421,7 @@
     {
       "Name": "PC (DOS)",
       "Shortname": "pc_dos",
-      "StartupArguments": "-L \".\\cores\\dosbox_svn_ce_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"dosbox_svn_ce_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "pc_dos"
       ],
@@ -440,7 +440,7 @@
     {
       "Name": "PC (DOS)",
       "Shortname": "pc_dos",
-      "StartupArguments": "-L \".\\cores\\dosbox_svn_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"dosbox_svn_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "pc_dos"
       ],
@@ -459,7 +459,7 @@
     {
       "Name": "Nintendo Game Boy",
       "Shortname": "nintendo_gameboy",
-      "StartupArguments": "-L \".\\cores\\emux_gb_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"emux_gb_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_gameboy",
         "nintendo_gameboycolor"
@@ -476,7 +476,7 @@
     {
       "Name": "Nintendo Entertainment System",
       "Shortname": "nintendo_nes",
-      "StartupArguments": "-L \".\\cores\\emux_nes_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"emux_nes_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_nes"
       ],
@@ -492,7 +492,7 @@
     {
       "Name": "Sega Master System",
       "Shortname": "sega_mastersystem",
-      "StartupArguments": "-L \".\\cores\\emux_sms_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"emux_sms_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sega_mastersystem"
       ],
@@ -508,7 +508,7 @@
     {
       "Name": "Nintendo Entertainment System",
       "Shortname": "nintendo_nes",
-      "StartupArguments": "-L \".\\cores\\fceumm_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"fceumm_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_nes",
         "nintendo_famicom_disk"
@@ -526,7 +526,7 @@
     {
       "Name": "Nintendo Game Boy",
       "Shortname": "nintendo_gameboy",
-      "StartupArguments": "-L \".\\cores\\fixgb_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"fixgb_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_gameboy",
         "nintendo_gameboycolor"
@@ -543,7 +543,7 @@
     {
       "Name": "Nintendo Entertainment System",
       "Shortname": "nintendo_nes",
-      "StartupArguments": "-L \".\\cores\\fixnes_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"fixnes_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_nes",
         "nintendo_famicom_disk"
@@ -561,7 +561,7 @@
     {
       "Name": "Sega Dreamcast",
       "Shortname": "sega_dreamcast",
-      "StartupArguments": "-L \".\\cores\\flycast_gles2_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"flycast_gles2_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sega_dreamcast"
       ],
@@ -584,7 +584,7 @@
     {
       "Name": "Sega Dreamcast",
       "Shortname": "sega_dreamcast",
-      "StartupArguments": "-L \".\\cores\\flycast_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"flycast_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sega_dreamcast"
       ],
@@ -607,7 +607,7 @@
     {
       "Name": "Mattel Intellivision",
       "Shortname": "mattel_intellivision",
-      "StartupArguments": "-L \".\\cores\\freeintv_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"freeintv_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "mattel_intellivision"
       ],
@@ -623,7 +623,7 @@
     {
       "Name": "Commodore 64",
       "Shortname": "commodore_64",
-      "StartupArguments": "-L \".\\cores\\frodo_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"frodo_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "commodore_64"
       ],
@@ -641,7 +641,7 @@
     {
       "Name": "Commodore Amiga",
       "Shortname": "commodore_amiga",
-      "StartupArguments": "-L \".\\cores\\fsuae_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"fsuae_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "commodore_amiga"
       ],
@@ -657,7 +657,7 @@
     {
       "Name": "Sinclair ZX Spectrum +3",
       "Shortname": "sinclair_zxspectrum3",
-      "StartupArguments": "-L \".\\cores\\fuse_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"fuse_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sinclair_zxspectrum3",
         "sinclair_zxspectrum"
@@ -677,7 +677,7 @@
     {
       "Name": "Nintendo Game Boy",
       "Shortname": "nintendo_gameboy",
-      "StartupArguments": "-L \".\\cores\\gambatte_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"gambatte_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_gameboy",
         "nintendo_gameboycolor"
@@ -694,7 +694,7 @@
     {
       "Name": "Nintendo Game Boy",
       "Shortname": "nintendo_gameboy",
-      "StartupArguments": "-L \".\\cores\\gearboy_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"gearboy_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_gameboy",
         "nintendo_gameboycolor"
@@ -713,7 +713,7 @@
     {
       "Name": "Sega Game Gear",
       "Shortname": "sega_gamegear",
-      "StartupArguments": "-L \".\\cores\\gearsystem_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"gearsystem_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sega_gamegear",
         "sega_mastersystem"
@@ -732,7 +732,7 @@
     {
       "Name": "Sega Game Gear",
       "Shortname": "sega_gamegear",
-      "StartupArguments": "-L \".\\cores\\genesis_plus_gx_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"genesis_plus_gx_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sega_gamegear",
         "sega_mastersystem",
@@ -760,7 +760,7 @@
     {
       "Name": "Sega Game Gear",
       "Shortname": "sega_gamegear",
-      "StartupArguments": "-L \".\\cores\\genesis_plus_gx_wide_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"genesis_plus_gx_wide_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sega_gamegear",
         "sega_mastersystem",
@@ -788,7 +788,7 @@
     {
       "Name": "Nintendo Game Boy Advance",
       "Shortname": "nintendo_gameboyadvance",
-      "StartupArguments": "-L \".\\cores\\gpsp_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"gpsp_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_gameboyadvance"
       ],
@@ -803,7 +803,7 @@
     {
       "Name": "Atari Lynx",
       "Shortname": "atari_lynx",
-      "StartupArguments": "-L \".\\cores\\handy_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"handy_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "atari_lynx"
       ],
@@ -818,7 +818,7 @@
     {
       "Name": "Atari ST/STE",
       "Shortname": "atari_st",
-      "StartupArguments": "-L \".\\cores\\hatari_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"hatari_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "atari_st"
       ],
@@ -837,7 +837,7 @@
     {
       "Name": "Nintendo SNES",
       "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\higan_sfc_balanced_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"higan_sfc_balanced_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_super_nes",
         "nintendo_gameboy",
@@ -858,7 +858,7 @@
     {
       "Name": "Nintendo SNES",
       "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\higan_sfc_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"higan_sfc_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_super_nes",
         "nintendo_gameboy",
@@ -879,7 +879,7 @@
     {
       "Name": "Nintendo GameCube",
       "Shortname": "nintendo_gamecube",
-      "StartupArguments": "-L \".\\cores\\ishiiruka_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"ishiiruka_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_gamecube",
         "nintendo_wii"
@@ -903,7 +903,7 @@
     {
       "Name": "Sega Saturn",
       "Shortname": "sega_saturn",
-      "StartupArguments": "-L \".\\cores\\kronos_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"kronos_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sega_saturn"
       ],
@@ -922,7 +922,7 @@
     {
       "Name": "Nintendo Game Boy Advance",
       "Shortname": "nintendo_gameboyadvance",
-      "StartupArguments": "-L \".\\cores\\mednafen_gba_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mednafen_gba_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_gameboyadvance"
       ],
@@ -938,7 +938,7 @@
     {
       "Name": "Atari Lynx",
       "Shortname": "atari_lynx",
-      "StartupArguments": "-L \".\\cores\\mednafen_lynx_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mednafen_lynx_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "atari_lynx"
       ],
@@ -953,7 +953,7 @@
     {
       "Name": "SNK Neo Geo Pocket",
       "Shortname": "snk_neogeopocket",
-      "StartupArguments": "-L \".\\cores\\mednafen_ngp_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mednafen_ngp_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "snk_neogeopocket",
         "snk_neogeopocket_color"
@@ -971,7 +971,7 @@
     {
       "Name": "NEC TurboGrafx 16",
       "Shortname": "nec_turbografx_16",
-      "StartupArguments": "-L \".\\cores\\mednafen_pce_fast_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mednafen_pce_fast_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nec_turbografx_16",
         "nec_turbografx_cd"
@@ -992,7 +992,7 @@
     {
       "Name": "NEC SuperGrafx",
       "Shortname": "nec_supergrafx",
-      "StartupArguments": "-L \".\\cores\\mednafen_pce_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mednafen_pce_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nec_supergrafx",
         "nec_turbografx_16",
@@ -1014,7 +1014,7 @@
     {
       "Name": "NEC PC-FX",
       "Shortname": "nec_pcfx",
-      "StartupArguments": "-L \".\\cores\\mednafen_pcfx_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mednafen_pcfx_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nec_pcfx"
       ],
@@ -1031,7 +1031,7 @@
     {
       "Name": "Sony PlayStation",
       "Shortname": "sony_playstation",
-      "StartupArguments": "-L \".\\cores\\mednafen_psx_hw_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mednafen_psx_hw_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sony_playstation"
       ],
@@ -1051,7 +1051,7 @@
     {
       "Name": "Sony PlayStation",
       "Shortname": "sony_playstation",
-      "StartupArguments": "-L \".\\cores\\mednafen_psx_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mednafen_psx_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sony_playstation"
       ],
@@ -1071,7 +1071,7 @@
     {
       "Name": "Sega Saturn",
       "Shortname": "sega_saturn",
-      "StartupArguments": "-L \".\\cores\\mednafen_saturn_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mednafen_saturn_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sega_saturn"
       ],
@@ -1089,7 +1089,7 @@
     {
       "Name": "Nintendo SNES",
       "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\mednafen_snes_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mednafen_snes_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_super_nes"
       ],
@@ -1107,7 +1107,7 @@
     {
       "Name": "NEC SuperGrafx",
       "Shortname": "nec_supergrafx",
-      "StartupArguments": "-L \".\\cores\\mednafen_supergrafx_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mednafen_supergrafx_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nec_supergrafx",
         "nec_turbografx_16",
@@ -1127,7 +1127,7 @@
     {
       "Name": "Nintendo Virtual Boy",
       "Shortname": "nintendo_virtualboy",
-      "StartupArguments": "-L \".\\cores\\mednafen_vb_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mednafen_vb_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_virtualboy"
       ],
@@ -1143,7 +1143,7 @@
     {
       "Name": "Bandai WonderSwan",
       "Shortname": "bandai_wonderswan",
-      "StartupArguments": "-L \".\\cores\\mednafen_wswan_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mednafen_wswan_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "bandai_wonderswan",
         "bandai_wonderswan_color"
@@ -1160,7 +1160,7 @@
     {
       "Name": "Nintendo DS",
       "Shortname": "nintendo_ds",
-      "StartupArguments": "-L \".\\cores\\melonds_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"melonds_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_ds"
       ],
@@ -1174,7 +1174,7 @@
     {
       "Name": "Nintendo Entertainment System",
       "Shortname": "nintendo_nes",
-      "StartupArguments": "-L \".\\cores\\mesen_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mesen_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_nes",
         "nintendo_famicom_disk"
@@ -1192,7 +1192,7 @@
     {
       "Name": "Nintendo SNES",
       "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\mesen-s_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mesen-s_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_super_nes"
       ],
@@ -1209,7 +1209,7 @@
     {
       "Name": "Nintendo Game Boy Advance",
       "Shortname": "nintendo_gameboyadvance",
-      "StartupArguments": "-L \".\\cores\\meteor_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"meteor_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_gameboyadvance"
       ],
@@ -1223,7 +1223,7 @@
     {
       "Name": "Nintendo Game Boy",
       "Shortname": "nintendo_gameboy",
-      "StartupArguments": "-L \".\\cores\\mgba_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mgba_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_gameboy",
         "nintendo_gameboycolor",
@@ -1241,7 +1241,7 @@
     {
       "Name": "Nintendo 64",
       "Shortname": "nintendo_64",
-      "StartupArguments": "-L \".\\cores\\mupen64plus_next_develop_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mupen64plus_next_develop_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_64"
       ],
@@ -1259,7 +1259,7 @@
     {
       "Name": "Nintendo 64",
       "Shortname": "nintendo_64",
-      "StartupArguments": "-L \".\\cores\\mupen64plus_next_gles3_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mupen64plus_next_gles3_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_64"
       ],
@@ -1277,7 +1277,7 @@
     {
       "Name": "Nintendo 64",
       "Shortname": "nintendo_64",
-      "StartupArguments": "-L \".\\cores\\mupen64plus_next_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"mupen64plus_next_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_64"
       ],
@@ -1295,7 +1295,7 @@
     {
       "Name": "SNK Neo Geo CD",
       "Shortname": "snk_neogeo_cd",
-      "StartupArguments": "-L \".\\cores\\neocd_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"neocd_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "snk_neogeo_cd"
       ],
@@ -1310,7 +1310,7 @@
     {
       "Name": "Nintendo Entertainment System",
       "Shortname": "nintendo_nes",
-      "StartupArguments": "-L \".\\cores\\nestopia_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"nestopia_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_nes",
         "nintendo_famicom_disk"
@@ -1328,7 +1328,7 @@
     {
       "Name": "3DO Interactive Multiplayer",
       "Shortname": "3do",
-      "StartupArguments": "-L \".\\cores\\opera_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"opera_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "3do"
       ],
@@ -1345,7 +1345,7 @@
     {
       "Name": "Nintendo 64",
       "Shortname": "nintendo_64",
-      "StartupArguments": "-L \".\\cores\\parallel_n64_debug_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"parallel_n64_debug_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_64"
       ],
@@ -1364,7 +1364,7 @@
     {
       "Name": "Nintendo 64",
       "Shortname": "nintendo_64",
-      "StartupArguments": "-L \".\\cores\\parallel_n64_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"parallel_n64_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_64"
       ],
@@ -1383,7 +1383,7 @@
     {
       "Name": "Sony PlayStation",
       "Shortname": "sony_playstation",
-      "StartupArguments": "-L \".\\cores\\pcsx_rearmed_interpreter_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"pcsx_rearmed_interpreter_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sony_playstation"
       ],
@@ -1404,7 +1404,7 @@
     {
       "Name": "Sony PlayStation",
       "Shortname": "sony_playstation",
-      "StartupArguments": "-L \".\\cores\\pcsx_rearmed_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"pcsx_rearmed_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sony_playstation"
       ],
@@ -1427,7 +1427,7 @@
     {
       "Name": "Sony PlayStation",
       "Shortname": "sony_playstation",
-      "StartupArguments": "-L \".\\cores\\pcsx_rearmed_libretro_neon.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"pcsx_rearmed_libretro_neon.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sony_playstation"
       ],
@@ -1449,7 +1449,7 @@
     {
       "Name": "Sony PlayStation",
       "Shortname": "sony_playstation",
-      "StartupArguments": "-L \".\\cores\\pcsx1_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"pcsx1_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sony_playstation"
       ],
@@ -1470,7 +1470,7 @@
     {
       "Name": "Sega Master System",
       "Shortname": "sega_mastersystem",
-      "StartupArguments": "-L \".\\cores\\picodrive_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"picodrive_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sega_mastersystem",
         "sega_cd",
@@ -1495,7 +1495,7 @@
     {
       "Name": "Sony PlayStation 2",
       "Shortname": "sony_playstation2",
-      "StartupArguments": "-L \".\\cores\\play_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"play_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sony_playstation2"
       ],
@@ -1513,7 +1513,7 @@
     {
       "Name": "Sony PlayStation Portable",
       "Shortname": "sony_psp",
-      "StartupArguments": "-L \".\\cores\\ppsspp_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"ppsspp_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sony_psp"
       ],
@@ -1531,7 +1531,7 @@
     {
       "Name": "Atari 7800",
       "Shortname": "atari_7800",
-      "StartupArguments": "-L \".\\cores\\prosystem_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"prosystem_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "atari_7800"
       ],
@@ -1546,7 +1546,7 @@
     {
       "Name": "Commodore Amiga",
       "Shortname": "commodore_amiga",
-      "StartupArguments": "-L \".\\cores\\puae_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"puae_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "commodore_amiga"
       ],
@@ -1574,7 +1574,7 @@
     {
       "Name": "Nintendo Entertainment System",
       "Shortname": "nintendo_nes",
-      "StartupArguments": "-L \".\\cores\\quicknes_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"quicknes_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_nes"
       ],
@@ -1588,7 +1588,7 @@
     {
       "Name": "SNK Neo Geo Pocket",
       "Shortname": "snk_neogeopocket",
-      "StartupArguments": "-L \".\\cores\\race_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"race_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "snk_neogeopocket",
         "snk_neogeopocket_color"
@@ -1606,7 +1606,7 @@
     {
       "Name": "Sega Dreamcast",
       "Shortname": "sega_dreamcast",
-      "StartupArguments": "-L \".\\cores\\redream_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"redream_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sega_dreamcast"
       ],
@@ -1622,7 +1622,7 @@
     {
       "Name": "Sony PlayStation",
       "Shortname": "sony_playstation",
-      "StartupArguments": "-L \".\\cores\\rustation_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"rustation_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sony_playstation"
       ],
@@ -1640,7 +1640,7 @@
     {
       "Name": "Nintendo Game Boy",
       "Shortname": "nintendo_gameboy",
-      "StartupArguments": "-L \".\\cores\\sameboy_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"sameboy_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_gameboy",
         "nintendo_gameboycolor"
@@ -1656,7 +1656,7 @@
     {
       "Name": "Sega Game Gear",
       "Shortname": "sega_gamegear",
-      "StartupArguments": "-L \".\\cores\\smsplus_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"smsplus_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sega_gamegear",
         "sega_mastersystem"
@@ -1675,7 +1675,7 @@
     {
       "Name": "Nintendo SNES",
       "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\snes9x_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"snes9x_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_super_nes"
       ],
@@ -1693,7 +1693,7 @@
     {
       "Name": "Nintendo SNES",
       "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\snes9x2002_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"snes9x2002_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_super_nes"
       ],
@@ -1714,7 +1714,7 @@
     {
       "Name": "Nintendo SNES",
       "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\snes9x2005_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"snes9x2005_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_super_nes"
       ],
@@ -1735,7 +1735,7 @@
     {
       "Name": "Nintendo SNES",
       "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\snes9x2005_plus_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"snes9x2005_plus_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_super_nes"
       ],
@@ -1756,7 +1756,7 @@
     {
       "Name": "Nintendo SNES",
       "Shortname": "nintendo_super_nes",
-      "StartupArguments": "-L \".\\cores\\snes9x2010_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"snes9x2010_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_super_nes"
       ],
@@ -1777,7 +1777,7 @@
     {
       "Name": "Atari 2600",
       "Shortname": "atari_2600",
-      "StartupArguments": "-L \".\\cores\\stella_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"stella_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "atari_2600"
       ],
@@ -1792,7 +1792,7 @@
     {
       "Name": "Atari 2600",
       "Shortname": "atari_2600",
-      "StartupArguments": "-L \".\\cores\\stella2014_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"stella2014_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "atari_2600"
       ],
@@ -1807,7 +1807,7 @@
     {
       "Name": "Sony PlayStation",
       "Shortname": "sony_playstation",
-      "StartupArguments": "-L \".\\cores\\swanstation_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"swanstation_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sony_playstation"
       ],
@@ -1830,7 +1830,7 @@
     {
       "Name": "Nintendo Game Boy Advance",
       "Shortname": "nintendo_gameboyadvance",
-      "StartupArguments": "-L \".\\cores\\tempgba_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"tempgba_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_gameboyadvance"
       ],
@@ -1847,7 +1847,7 @@
     {
       "Name": "Nintendo Game Boy",
       "Shortname": "nintendo_gameboy",
-      "StartupArguments": "-L \".\\cores\\tgbdual_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"tgbdual_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_gameboy",
         "nintendo_gameboycolor"
@@ -1864,7 +1864,7 @@
     {
       "Name": "Commodore Amiga",
       "Shortname": "commodore_amiga",
-      "StartupArguments": "-L \".\\cores\\uae4arm_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"uae4arm_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "commodore_amiga"
       ],
@@ -1882,7 +1882,7 @@
     {
       "Name": "Nintendo Game Boy Advance",
       "Shortname": "nintendo_gameboyadvance",
-      "StartupArguments": "-L \".\\cores\\vba_next_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"vba_next_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_gameboyadvance"
       ],
@@ -1896,7 +1896,7 @@
     {
       "Name": "Nintendo Game Boy",
       "Shortname": "nintendo_gameboy",
-      "StartupArguments": "-L \".\\cores\\vbam_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"vbam_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "nintendo_gameboy",
         "nintendo_gameboycolor",
@@ -1917,7 +1917,7 @@
     {
       "Name": "GCE Vectrex",
       "Shortname": "vectrex",
-      "StartupArguments": "-L \".\\cores\\vecx_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"vecx_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "vectrex"
       ],
@@ -1932,7 +1932,7 @@
     {
       "Name": "Atari Jaguar",
       "Shortname": "atari_jaguar",
-      "StartupArguments": "-L \".\\cores\\virtualjaguar_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"virtualjaguar_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "atari_jaguar"
       ],
@@ -1952,7 +1952,7 @@
     {
       "Name": "Sega Saturn",
       "Shortname": "sega_saturn",
-      "StartupArguments": "-L \".\\cores\\yabasanshiro_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"yabasanshiro_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sega_saturn"
       ],
@@ -1971,7 +1971,7 @@
     {
       "Name": "Sega Saturn",
       "Shortname": "sega_saturn",
-      "StartupArguments": "-L \".\\cores\\yabause_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"yabause_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sega_saturn"
       ],
@@ -1990,7 +1990,7 @@
     {
       "Name": "Sony PlayStation 2",
       "Shortname": "sony_playstation2",
-      "StartupArguments": "-L \".\\cores\\pcsx2_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"pcsx2_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sony_playstation2"
       ],
@@ -2013,7 +2013,7 @@
     {
       "Name": "Sony PlayStation",
       "Shortname": "sony_playstation",
-      "StartupArguments": "-L \".\\cores\\duckstation_libretro.dll\" \"{ImagePath}\"",
+      "StartupArguments": "-L \"duckstation_libretro.dll\" \"{ImagePath}\"",
       "Platforms": [
         "sony_playstation"
       ],

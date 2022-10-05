@@ -21,6 +21,9 @@ namespace GameByURLLauncher
                 .WriteTo.File($"Log/{DateTime.Now.ToString("dd.MM.yyyy")}.txt")
                 .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information)
               .CreateLogger();
+            Log.Information("----------------------------------------------------------------------------------");
+            Log.Information("------------------------Lancement d'un jeu grâce au Launcher----------------------");
+            Log.Information("----------------------------------------------------------------------------------");
             if (args.Length != 1)
             {
                 Log.Error("ERROR: Pas d'Id de jeux renseigner");
@@ -68,7 +71,7 @@ namespace GameByURLLauncher
                 }
                 else
                 {
-                    Log.Information($" ID Game {GameID} pour {game.Name}");
+                    Log.Information($"ID Game {GameID} pour {game.Name}");
                 }
                 var emu = await APIService.GetEmulatorByID(game.EmulatorID.ToString());
                 if(emu == null)
@@ -96,8 +99,8 @@ namespace GameByURLLauncher
                 if(sys.Type == Models.SysType.GameStore)
                 {
                     var gameargs = game.Path.Split(" ").ToArray();
-                    appexe = gameargs[0];
-                    gameexe = gameargs[1];
+                    appexe = gameargs[0].Trim();
+                    gameexe = gameargs[1].Trim();
                 }
                 else if(sys.Type == Models.SysType.Standalone)
                 {
@@ -113,7 +116,7 @@ namespace GameByURLLauncher
 
                 var ps = new ProcessStartInfo(appexe)
                 {
-                    UseShellExecute = false,
+                    UseShellExecute = true,
                     Verb = "open"
                 };
                 if (!string.IsNullOrEmpty(argsexe))
@@ -159,7 +162,7 @@ namespace GameByURLLauncher
                 if (gameProcesses.Length != 1)
                 {
                     Log.Error($"Could not find a single process with name: {gameexe}");
-                    Thread.Sleep(10000);
+                    Thread.Sleep(20000);
                     gameProcesses = Process.GetProcessesByName(gameexe);
                     if (gameProcesses.Length != 1)
                     {
