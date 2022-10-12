@@ -31,15 +31,21 @@
     <None Include="Emulator\Dolphin.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Emulator\DuckStation.json" />
-    <None Include="Emulator\PCSX2.json" />
+    <None Include="Emulator\DuckStation.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Emulator\PCSX2.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Emulator\ppsspp.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Emulator\redream.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Emulator\RetroArch.json" />
+    <None Include="Emulator\RetroArch.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

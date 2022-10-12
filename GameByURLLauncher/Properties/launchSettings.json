@@ -7,7 +7,8 @@
       //"commandLineArgs": "24" //Dolphin OK
       //"commandLineArgs": "2" //Portable GBA OK
       //"commandLineArgs": "13" //PPSSPP OK
-      "commandLineArgs": "156" //Epic
+      //"commandLineArgs": "145" //PCSX2 OK
+      //"commandLineArgs": "156" //Epic OK
       //"commandLineArgs": "128" //Standalone
     }
   }

@@ -26,7 +26,8 @@ namespace GameByURLLauncher
         // Call this method to update all class values
         public void Update()
         {
-            if (!connected)
+            //if (!connected)
+            if (!controller.IsConnected)
                 return;
 
             gamepad = controller.GetState().Gamepad;

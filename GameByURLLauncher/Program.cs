@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -41,17 +42,10 @@ namespace GameByURLLauncher
                     watcher.Update();
                     if (
                         watcher.gamepad.Buttons == (SharpDX.XInput.GamepadButtonFlags.LeftShoulder | SharpDX.XInput.GamepadButtonFlags.RightShoulder| SharpDX.XInput.GamepadButtonFlags.Start | SharpDX.XInput.GamepadButtonFlags.Back)
-                        //&&
-                        //watcher.gamepad.Buttons == SharpDX.XInput.GamepadButtonFlags.RightShoulder
-                        //&&
-                        //watcher.gamepad.Buttons == SharpDX.XInput.GamepadButtonFlags.Start
-                        //&&
-                        //watcher.gamepad.Buttons == SharpDX.XInput.GamepadButtonFlags.Back
-
                       )
                     {
                         process.Kill(true);
-                        Log.Information($"Game Closed.");
+                        Log.Information($"Game Closed by Gamepad.");
                         return;
                     }
                 }
@@ -121,7 +115,8 @@ namespace GameByURLLauncher
                 };
                 if (!string.IsNullOrEmpty(argsexe))
                 {
-                    var arglist = argsexe.Split('\"', StringSplitOptions.RemoveEmptyEntries);
+                    var arglist = argsexe.Split('\"', StringSplitOptions.RemoveEmptyEntries|StringSplitOptions.TrimEntries);
+
                     var extlist = emu.Extension.Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
                     var argslist = new List<string>();
                     foreach (var arg in arglist)
@@ -162,14 +157,19 @@ namespace GameByURLLauncher
                 if (gameProcesses.Length != 1)
                 {
                     Log.Error($"Could not find a single process with name: {gameexe}");
-                    Thread.Sleep(20000);
+                    Thread.Sleep(10000);
                     gameProcesses = Process.GetProcessesByName(gameexe);
                     if (gameProcesses.Length != 1)
                     {
                         Log.Error($"Could not find a single process with name: {gameexe} In second try");
-                        return;
-                    }
-                    
+                        Thread.Sleep(10000);
+                        gameProcesses = Process.GetProcessesByName(gameexe);
+                        if (gameProcesses.Length != 1)
+                        {
+                            Log.Error($"Could not find a single process with name: {gameexe} In third try");
+                            return;
+                        }
+                    }                    
                 }
                 gameprocess = gameProcesses[0];
                 Log.Information($"Game started.");
