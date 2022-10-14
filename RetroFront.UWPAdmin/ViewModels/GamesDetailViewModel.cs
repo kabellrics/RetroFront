@@ -76,6 +76,8 @@ namespace RetroFront.UWPAdmin.ViewModels
                 SetProperty(ref _newBanner, value);
             }
         }
+        private ICommand _nointrosearchCommand;
+        public ICommand NoIntroCommand => _nointrosearchCommand ?? (_nointrosearchCommand = new RelayCommand(NoIntroSearch));
         private ICommand _deleteCommand;
         public ICommand DeleteCommand => _deleteCommand ?? (_deleteCommand = new RelayCommand(DeleteElement));
 
@@ -124,6 +126,34 @@ namespace RetroFront.UWPAdmin.ViewModels
             }
         }
 
+        private async void NoIntroSearch()
+        {
+            var emus = await gameDetailService.GetEmulators();
+            var emu = emus.FirstOrDefault(x => x.ID == Source.EmulatorID);
+            if(emu != null)
+            {
+                var syss = await gameDetailService.GetSystemes();
+                var sys = syss.FirstOrDefault(x => x.ID == emu.SystemeID);
+                if(sys != null)
+                {
+                    var result = await dialogService.SearchNoIntroName(Source.Name,sys.ShortName);
+                    if (result != null)
+                    {
+                        try
+                        {
+                            var filename = Path.GetFileNameWithoutExtension(Source.Path);
+                            var newpath = Source.Path.Replace(filename, result.Value);
+                            await gameDetailService.MoveFile(Source.Path, newpath);
+                            Source.Path = newpath;
+                        }
+                        catch (Exception ex)
+                        {
+                            //throw;
+                        }
+                    }
+                }
+            }
+        }
         private async void DeleteElement()
         {
             var dialogresult = await dialogService.ConfirmationDialogAsync("Etes vous sure de vouloir supprimer ce jeu ?");

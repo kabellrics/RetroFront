@@ -4,7 +4,7 @@
   "Plateformes": [
     {
       "Name": "Playstation",
-      "Shortname": "psx",
+      "Shortname": "sony_playstation",
       "Platforms": [
         "sony_playstation"
       ],

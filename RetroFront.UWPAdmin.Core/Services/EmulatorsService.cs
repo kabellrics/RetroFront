@@ -11,16 +11,7 @@ namespace RetroFront.UWPAdmin.Core.Services
 {
     public class EmulatorsService: BaseService
     {
-        public async Task<IEnumerable<DisplayEmulator>> GetEmulators()
-        {
-            List<DisplayEmulator> displayEmus = new List<DisplayEmulator>();
-            var result = await emulatorClient.EmulatorGetAsync();
-            foreach (var sys in result.Result.OrderBy(x => x.Name).ThenBy(x => x.Command))
-            {
-                displayEmus.Add(new DisplayEmulator(sys));
-            }
-            return displayEmus;
-        }
+
         public async Task UpdateEmulator(DisplayEmulator emulator)
         {
             await emulatorClient.EmulatorPutAsync(emulator.ID, emulator.Emulator);

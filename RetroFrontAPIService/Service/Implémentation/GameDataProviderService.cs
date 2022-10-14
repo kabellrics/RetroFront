@@ -15,6 +15,7 @@ using System.Net;
 using RetroFront.Models.ScreenScraper.GameSearch;
 using RetroFront.Models.SteamGridDB;
 using RetroFrontAPIService.Service.Interface;
+using Microsoft.AspNetCore.Mvc;
 
 namespace RetroFrontAPIService.Service.Implémentation
 {
@@ -38,6 +39,56 @@ namespace RetroFrontAPIService.Service.Implémentation
             sscpclient.Timeout = -1;
             GetBearer();
         }
+        #region No-Intro
+        public IEnumerable<NoIntroSearchResult> GetNoIntroName(string romname,string plateformeName)
+        {
+            List<NoIntroSearchResult> replist = new List<NoIntroSearchResult>();
+            string workingDirectory = Environment.CurrentDirectory;
+            var truefolder = Path.Combine(workingDirectory, "NoIntro");
+            var filename = Path.Combine(truefolder, $"{plateformeName}.dat");
+            if (!File.Exists(filename))
+            {
+                replist.Add(new NoIntroSearchResult() { Value = "Pas de normes NOIntro pour ce systeme", NbMatchingWord = 1 });
+            }
+            else
+            {
+                var lines = File.ReadAllLines(filename);
+
+                foreach (var line in lines)
+                {
+                    if (line.Contains("name \"") && !line.Contains("rom"))
+                    {
+                        var trimline = line.Trim();
+                        var dataline = trimline.Substring(6);
+                        var nointroname = dataline.Remove(dataline.Length - 1);
+                        var result = NoIntroMatching(romname, nointroname);
+                        if (result != null)
+                            replist.Add(result);
+                    }
+                }
+            }
+            return replist.OrderByDescending(x=>x.NbMatchingWord);
+        }
+
+        private NoIntroSearchResult NoIntroMatching(string romname,string nointroproposal)
+        {
+            var hashSet = new HashSet<string>(
+            romname.Split(" ", StringSplitOptions.RemoveEmptyEntries));
+            var nboccur = nointroproposal
+              .Split(" ", StringSplitOptions.RemoveEmptyEntries)
+              .Count(x => hashSet.Contains(x));
+            if(nboccur > 0)
+            {
+                return new NoIntroSearchResult() { Value = nointroproposal, NbMatchingWord = nboccur };
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        #endregion
+
         #region IGDB
         private void GetBearer()
         {

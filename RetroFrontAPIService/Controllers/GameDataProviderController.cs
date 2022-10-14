@@ -21,6 +21,15 @@ namespace RetroFrontAPIService.Controllers
         {
             _gameDataProviderService = gameDataProviderService;
         }
+
+        #region NoIntro
+        [HttpGet("NoIntroProposal/{romname}/{plateforme}")]
+        public ActionResult<IEnumerable<NoIntroSearchResult>> GetNoIntroName(string romname, string plateforme)
+        {
+            return Ok(_gameDataProviderService.GetNoIntroName(romname, plateforme));
+        }
+        #endregion
+
         #region SteamGridDB
         [HttpGet("SteamGridDB/SearchByName/{name}")]
         public ActionResult<IEnumerable<Search>> SearchByName(string name)

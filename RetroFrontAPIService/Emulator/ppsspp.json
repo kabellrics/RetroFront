@@ -4,7 +4,7 @@
   "Plateformes": [
     {
       "Name": "PPSSPP 64bit",
-      "Shortname": "psp",
+      "Shortname": "sony_psp",
       "StartupArguments": "\"{ImagePath}\" --pause-menu-exit --fullscreen",
       "Platforms": [
         "sony_psp"
@@ -18,7 +18,7 @@
     },
     {
       "Name": "PPSSPP 32bit",
-      "Shortname": "psp",
+      "Shortname": "sony_psp",
       "StartupArguments": "\"{ImagePath}\" --pause-menu-exit --fullscreen",
       "Platforms": [
         "sony_psp"

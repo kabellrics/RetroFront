@@ -61,4 +61,28 @@
     <ProjectReference Include="..\RetroFront.Models\RetroFront.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="NoIntro\nintendo_gamecube.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NoIntro\nintendo_64.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NoIntro\nintendo_gameboyadvance.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NoIntro\sony_psp.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NoIntro\sony_playstation.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NoIntro\sega_dreamcast.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NoIntro\sega_gamegear.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -22,6 +22,11 @@ namespace RetroFront.UWPAdmin.Core.Services
         protected SettingsClient settingsClient = new SettingsClient();
         protected ExternalAppClient externalAppClient = new ExternalAppClient();
 
+        public async Task<IEnumerable<NoIntroSearchResult>> GetNoIntroProposal(string romname, string plateforme)
+        {
+            return await gameDataProvider.NoIntroProposalAsync(romname, plateforme);
+        }
+
         public async Task CopyDLLFile(String source,String dest)
         {
             var obj = new CopyAndDLLObject();
@@ -42,6 +47,13 @@ namespace RetroFront.UWPAdmin.Core.Services
             obj.Dest = dest;
             obj.Source = source;
             await computerClient.FileCopyAsync(dest, obj);
+        }
+        public async Task MoveFile(String source,String dest)
+        {
+            var obj = new CopyAndDLLObject();
+            obj.Dest = dest;
+            obj.Source = source;
+            await computerClient.FileMoveAsync(dest, obj);
         }
         public async Task DLLFile(String source, String dest)
         {
@@ -107,6 +119,16 @@ namespace RetroFront.UWPAdmin.Core.Services
                 displaySystemes.Add(new DisplaySysteme(sys));
             }
             return displaySystemes;
+        }
+        public async Task<IEnumerable<DisplayEmulator>> GetEmulators()
+        {
+            List<DisplayEmulator> displayEmus = new List<DisplayEmulator>();
+            var result = await emulatorClient.EmulatorGetAsync();
+            foreach (var sys in result.Result.OrderBy(x => x.Name).ThenBy(x => x.Command))
+            {
+                displayEmus.Add(new DisplayEmulator(sys));
+            }
+            return displayEmus;
         }
     }
 }

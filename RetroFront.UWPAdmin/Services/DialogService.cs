@@ -139,6 +139,17 @@ namespace RetroFront.UWPAdmin.Services
             }
             return null;
         }
+        public async Task<NoIntroSearchResult> SearchNoIntroName(string name, string plateforme)
+        {
+            var vm = new NoIntroResolverViewModel(name, plateforme);
+            NoIntroResolverContentDialog contentDialog = new NoIntroResolverContentDialog(vm);
+            var dialog = await contentDialog.ShowAsync();
+            if (dialog == ContentDialogResult.Secondary)
+            {
+                return vm.Resultgame;
+            }
+            return null;
+        }
         public async Task<IEnumerable<DisplayGame>> GetInstalledGame(LocalGame store)
         {
             var vm = new PickLocalGameViewModel(store);

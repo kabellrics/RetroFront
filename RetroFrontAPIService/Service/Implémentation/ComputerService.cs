@@ -22,6 +22,20 @@ namespace RetroFrontAPIService.Service.Implémentation
                 return false;
             }
         }
+        public bool FileMove(string sourcefile, string destfile)
+        {
+            try
+            {
+                System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(destfile));
+                //System.IO.File.Create(destfile);
+                System.IO.File.Move(sourcefile, destfile, true);
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                return false;
+            }
+        }
         public bool FileDownload(string sourcefile, string destfile)
         {
             try

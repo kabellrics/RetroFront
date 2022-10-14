@@ -32,6 +32,19 @@ namespace RetroFrontAPIService.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPost("FileMove/{data}")]
+        public ActionResult FileMove(CopyAndDLLObject data)
+        {
+            try
+            {
+                _computerservice.FileMove(data.Source, data.Dest);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPost("FileDLL/{data}")]
         public ActionResult FileDLL(CopyAndDLLObject data)
         {

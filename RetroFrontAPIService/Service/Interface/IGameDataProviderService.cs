@@ -34,5 +34,6 @@ namespace RetroFrontAPIService.Service.Interface
         IEnumerable<Video> GetVideosByGameId(int id);
         IEnumerable<Search> SearchByName(string name);
         IEnumerable<GameRom> SearchGame(string name);
+        IEnumerable<NoIntroSearchResult> GetNoIntroName(string romname, string plateformeName);
     }
 }

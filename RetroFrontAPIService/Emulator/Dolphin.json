@@ -3,7 +3,7 @@
   "Plateformes": [
     {
       "Name": "Nintendo GameCube",
-      "Shortname": "gamecube",
+      "Shortname": "nintendo_gamecube",
       "StartupArguments": "--exec={ImagePath} --batch",
       "Platforms": [
         "nintendo_gamecube"

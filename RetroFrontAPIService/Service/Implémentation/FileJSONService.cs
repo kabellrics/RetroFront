@@ -79,8 +79,8 @@ namespace RetroFrontAPIService.Service.Implémentation
         {
 
             string workingDirectory = Environment.CurrentDirectory;
-            var shortWDirectory = workingDirectory.Substring(0, workingDirectory.IndexOf("RetroFront") + 10);
-            var truefolder = Path.Combine(shortWDirectory, "RetroFront.Admin", "Emulator");
+            //var shortWDirectory = workingDirectory.Substring(0, workingDirectory.IndexOf("RetroFront") + 10);
+            var truefolder = Path.Combine(workingDirectory, "Emulator");
             var files = Directory.GetFiles(truefolder).ToList();
             foreach (var file in files.Where(x => x.EndsWith("json")))
             {

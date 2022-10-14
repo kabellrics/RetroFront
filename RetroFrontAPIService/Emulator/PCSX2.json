@@ -5,7 +5,7 @@
   "Plateformes": [
     {
       "Name": "Playstation 2",
-      "Shortname": "ps2",
+      "Shortname": "sony_playstation2",
       "StartupArguments": "\"{ImagePath}\" -nogui -fullscreen",
       //"StartupArguments": "\"{ImagePath}\" --nogui --fullscreen",
       "Platforms": [
