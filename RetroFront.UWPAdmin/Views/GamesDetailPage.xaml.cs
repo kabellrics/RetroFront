@@ -83,5 +83,9 @@ namespace RetroFront.UWPAdmin.Views
             }
         }
 
+        private void ImageEx_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            ViewModel.ScrapeBezelCommand.Execute(true);
+        }
     }
 }

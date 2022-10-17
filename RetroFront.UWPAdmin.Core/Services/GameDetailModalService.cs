@@ -14,7 +14,7 @@ namespace RetroFront.UWPAdmin.Core.Services
     {
         public GameDetailModalService()
         {
-            gameDataProvider = new GameDataProviderClient();
+            //gameDataProvider = new GameDataProviderClient();
         }
 
         public async Task<List<Search>> ResolveByName(String Name, ScraperSource Source) 
@@ -89,6 +89,20 @@ namespace RetroFront.UWPAdmin.Core.Services
                     if (result != null)
                     {
                         foreach (var img in result.Where(x => x.Type == "wheel"))
+                        {
+                            ResultImgs.Add(img.Url);
+                        }
+                    }
+                }
+            }
+            else if (CurrentScraperType == ScraperType.Bezel)
+            {
+                if (CurrentScrapeSource == ScraperSource.Screenscraper)
+                {
+                    var result = await gameDataProvider.GetJeuxMediasAsync(gameId);
+                    if (result != null)
+                    {
+                        foreach (var img in result.Where(x => x.Type == "bezel-16-9"))
                         {
                             ResultImgs.Add(img.Url);
                         }

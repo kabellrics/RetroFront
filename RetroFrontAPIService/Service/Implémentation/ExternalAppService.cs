@@ -33,6 +33,89 @@ namespace RetroFrontAPIService.Service.Implémentation
                 yield return rcore;
             }
         }
+
+        public string CreateCFGFileForRetroarch(int gameid)
+        {
+            var rom = databaseService.GetGame(gameid);
+            if(rom != null) 
+            {
+                List<string> replist = new List<string>();
+                var settings = fileJSONService.appSettings;
+                var retroarchpath = Path.GetDirectoryName(settings.RetroarchPath);
+                Directory.CreateDirectory(Path.Combine(retroarchpath,"overlays","GameBezels"));
+                var romname = Path.GetFileNameWithoutExtension(rom.Path);
+                var bezelcfgname = $"{romname}.cfg";
+                //var bezelpngname = $"{romname}.png";
+                var bezelcfgpath = Path.Combine(retroarchpath, "overlays", "GameBezels",  bezelcfgname);
+                var cfgcontent = GenerateCFGContent(rom.RecalView);
+                var cfggamecontent = GenerateRomCFGContent(bezelcfgpath);
+                //var cfgcontent = GenerateCFGContent(bezelpngname);
+                if (File.Exists(bezelcfgpath))
+                    File.Delete(bezelcfgpath);
+                File.WriteAllText(bezelcfgpath, cfgcontent);
+
+                var filecfgrom = Path.Combine(retroarchpath,"config", GetCoreFolderForCFG(rom), $"{Path.GetFileNameWithoutExtension(rom.Path)}.cfg");
+                Directory.CreateDirectory(Path.Combine(retroarchpath, "config", GetCoreFolderForCFG(rom)));
+                File.WriteAllText(filecfgrom, cfggamecontent);
+
+                //computerService.FileCopy(rom.RecalView,Path.Combine(retroarchpath, "overlays", "GameBezels", sys.Shortname, bezelpngname));
+                return bezelcfgpath;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+        public string GetCoreFolderForCFG(GameRom rom)
+        {
+            var emu = databaseService.GetEmulator(rom.EmulatorID);
+            if(emu != null)
+            {
+                var corename = emu.Command.Split("\"", StringSplitOptions.RemoveEmptyEntries).FirstOrDefault(x => x.Contains(".dll"));
+                if (corename != null)
+                {
+                    var settings = fileJSONService.appSettings;
+                    var retroarchpath = Path.GetDirectoryName(settings.RetroarchPath);
+                    var infolefilename = $"{Path.GetFileNameWithoutExtension(corename)}.info";
+                    var infofile = Path.Combine(retroarchpath, "info", infolefilename);
+                    var lines = File.ReadAllLines(infofile);
+                    foreach(var line in lines)
+                    {
+                        if(line.StartsWith("corename = \""))
+                        {
+                            var trimline = line.Trim();
+                            var dataline = trimline.Substring(12);
+                            return dataline.Remove(dataline.Length - 1);
+                        }
+                    }
+                    return String.Empty;
+                }
+                else return String.Empty;
+            }
+            else return String.Empty;
+        }
+        private string GenerateRomCFGContent(string cfgpath)
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine($"input_overlay_enable = true");
+            builder.AppendLine($"input_overlay = \"{cfgpath}\"");
+            builder.AppendLine($"input_overlay_opacity = 1.0");
+            builder.AppendLine($"input_overlay_scale = 1.0");
+            return builder.ToString();
+        }
+        private string GenerateCFGContent(string bezelPath)
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine($"overlays = 1");
+            builder.AppendLine();
+            builder.AppendLine($"overlay0_overlay = \"{bezelPath}\"");
+            builder.AppendLine();
+            builder.AppendLine($"overlay0_full_screen = true");
+            builder.AppendLine();
+            builder.AppendLine($"overlay0_descs = 0");
+            builder.AppendLine();
+            return builder.ToString();
+        }
         private RetroFront.Models.Pegasus.Game PegasusGameFromGameRom(GameRom gamerom)
         {
             RetroFront.Models.Pegasus.Game pggame = new RetroFront.Models.Pegasus.Game();

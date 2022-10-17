@@ -2,6 +2,7 @@
   "profiles": {
     "Profil 1": {
       "commandName": "Project",
+      //"commandLineArgs": "157" //Retroarch OK
       //"commandLineArgs": "162" //Retroarch OK
       //"commandLineArgs": "154" //Origin OK
       //"commandLineArgs": "24" //Dolphin OK

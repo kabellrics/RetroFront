@@ -15,7 +15,8 @@ namespace RetroFront.UWPAdmin.Core.APIHelper
         Boxart,
         ArtWork,
         Banner,
-        Video
+        Video,
+        Bezel
     }
     public enum ScraperSource
     {

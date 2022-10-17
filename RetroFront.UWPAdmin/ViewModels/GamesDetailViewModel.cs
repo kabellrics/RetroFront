@@ -76,8 +76,21 @@ namespace RetroFront.UWPAdmin.ViewModels
                 SetProperty(ref _newBanner, value);
             }
         }
+        private String _newBezel;
+        public String NewBezel
+        {
+            get => _newBezel;
+            set
+            {
+                SetProperty(ref _newBezel, value);
+            }
+        }
         private ICommand _nointrosearchCommand;
         public ICommand NoIntroCommand => _nointrosearchCommand ?? (_nointrosearchCommand = new RelayCommand(NoIntroSearch));
+
+        private ICommand _CfgRetroarchCommand;
+        public ICommand CfgRetroarchCommand => _CfgRetroarchCommand ?? (_CfgRetroarchCommand = new RelayCommand(CfgRetroarch));
+
         private ICommand _deleteCommand;
         public ICommand DeleteCommand => _deleteCommand ?? (_deleteCommand = new RelayCommand(DeleteElement));
 
@@ -95,6 +108,9 @@ namespace RetroFront.UWPAdmin.ViewModels
 
         private ICommand _ScrapeLogoCommand;
         public ICommand ScrapeLogoCommand => _ScrapeLogoCommand ?? (_ScrapeLogoCommand = new RelayCommand(ScrapeLogo));
+
+        private ICommand _ScrapeBezelCommand;
+        public ICommand ScrapeBezelCommand => _ScrapeBezelCommand ?? (_ScrapeBezelCommand = new RelayCommand(ScrapeBezel));
 
         private ICommand _ScrapeBoxartCommand;
         public ICommand ScrapeBoxartCommand => _ScrapeBoxartCommand ?? (_ScrapeBoxartCommand = new RelayCommand(ScrapeBoxart));
@@ -154,6 +170,11 @@ namespace RetroFront.UWPAdmin.ViewModels
                 }
             }
         }
+        private async void CfgRetroarch()
+        {
+           await Task.Run(async () => await gameDetailService.GenerateBezelCFGForRetroarch(Source.ID));
+           await dialogService.ConfirmationDialogAsync("Fichiers générés");
+        }
         private async void DeleteElement()
         {
             var dialogresult = await dialogService.ConfirmationDialogAsync("Etes vous sure de vouloir supprimer ce jeu ?");
@@ -195,6 +216,7 @@ namespace RetroFront.UWPAdmin.ViewModels
                 NewBanner = Source.BannerPath;
                 NewArtwork = Source.ScreenshootPath;
                 NewVideo = Source.VideoPath;
+                NewBezel = Source.BezelPath;
             }
         }
         public async void Initialize(string selectedGameID)
@@ -207,6 +229,7 @@ namespace RetroFront.UWPAdmin.ViewModels
                 NewBanner = Source.BannerPath;
                 NewArtwork = Source.ScreenshootPath;
                 NewVideo = Source.VideoPath;
+                NewBezel = Source.BezelPath;
             }
         }
         private async void ScrapeIGDB()
@@ -239,6 +262,14 @@ namespace RetroFront.UWPAdmin.ViewModels
             if (findgame != null)
             {
                 NewLogo = findgame;
+            }
+        }
+        private async void ScrapeBezel()
+        {
+            var findgame = await dialogService.ShowImgScrapeChoice(Source, Core.APIHelper.ScraperType.Bezel);
+            if (findgame != null)
+            {
+                NewBezel = findgame;
             }
         }
         private async void ScrapeBoxart()
@@ -291,6 +322,25 @@ namespace RetroFront.UWPAdmin.ViewModels
                     await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
                     {
                         Source.LogoPath = path;
+                    });
+                });
+            }
+            if (Source.BezelPath != NewBezel)
+            {
+                var path = await gameDetailService.GetNewImgPath(Source, (int)ScraperType.Bezel);
+                if (NewLogo.Contains("screenscraper"))
+                    path += ".png";
+                else if (NewLogo.Contains("png"))
+                    path += ".png";
+                else if (NewLogo.Contains("jpg"))
+                    path += ".jpg";
+                else if (NewLogo.Contains("jpeg"))
+                    path += ".jpeg";
+                await dialogService.DLLFile(NewBezel, path, "Bezel", Source.Name).ContinueWith(async task =>
+                {
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                    {
+                        Source.BezelPath = path;
                     });
                 });
             }

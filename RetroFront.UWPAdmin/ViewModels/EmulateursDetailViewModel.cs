@@ -101,46 +101,49 @@ namespace RetroFront.UWPAdmin.ViewModels
         private async void AddGame()
         {
             var files = await dialogService.MultipleFilePicker(Source.Extension.Split(" ").ToList());
-            foreach(var file in files)
+            if (files != null)
             {
-                GameRom rom = new GameRom();
-                rom.Path = file;
-                rom.Name = Path.GetFileNameWithoutExtension(file);
-                rom.EmulatorID = Source.ID;
-                var resolveSSCP = await dialogService.ConfirmationDialogAsync($"Voules-vous résoudre le jeu {rom.Name} pour Screenscraper ?");
-                if (resolveSSCP.HasValue && resolveSSCP == true)
+                foreach (var file in files)
                 {
-                    var result = await dialogService.SearchSteamGridDBByName(rom.Name, ScraperSource.Screenscraper);
-                    if(result != null)
+                    GameRom rom = new GameRom();
+                    rom.Path = file;
+                    rom.Name = Path.GetFileNameWithoutExtension(file);
+                    rom.EmulatorID = Source.ID;
+                    var resolveSSCP = await dialogService.ConfirmationDialogAsync($"Voules-vous résoudre le jeu {rom.Name} pour Screenscraper ?");
+                    if (resolveSSCP.HasValue && resolveSSCP == true)
                     {
-                        rom.ScreenScraperID = result.Id;
-                        rom.Name = result.Name;
+                        var result = await dialogService.SearchSteamGridDBByName(rom.Name, ScraperSource.Screenscraper);
+                        if (result != null)
+                        {
+                            rom.ScreenScraperID = result.Id;
+                            rom.Name = result.Name;
+                        }
                     }
-                }
-                var resolveSGDB = await dialogService.ConfirmationDialogAsync($"Voules-vous résoudre le jeu {rom.Name} pour SteamGridDB ?");
-                if (resolveSGDB.HasValue && resolveSGDB == true)
-                {
-                    var result = await dialogService.SearchSteamGridDBByName(rom.Name, ScraperSource.SGDB);
-                    if (result != null)
+                    var resolveSGDB = await dialogService.ConfirmationDialogAsync($"Voules-vous résoudre le jeu {rom.Name} pour SteamGridDB ?");
+                    if (resolveSGDB.HasValue && resolveSGDB == true)
                     {
-                        rom.Sgdbid = result.Id;
-                        rom.Name = result.Name;
+                        var result = await dialogService.SearchSteamGridDBByName(rom.Name, ScraperSource.SGDB);
+                        if (result != null)
+                        {
+                            rom.Sgdbid = result.Id;
+                            rom.Name = result.Name;
+                        }
                     }
-                }
-                var resolveIGDB = await dialogService.ConfirmationDialogAsync($"Voules-vous résoudre le jeu {rom.Name} pour IGDB ?");
-                if (resolveIGDB.HasValue && resolveIGDB == true)
-                {
-                    var result = await dialogService.SearchSteamGridDBByName(rom.Name, ScraperSource.IGDB);
-                    if (result != null)
+                    var resolveIGDB = await dialogService.ConfirmationDialogAsync($"Voules-vous résoudre le jeu {rom.Name} pour IGDB ?");
+                    if (resolveIGDB.HasValue && resolveIGDB == true)
                     {
-                        rom.Igdbid = result.Id;
-                        rom.Name = result.Name;
+                        var result = await dialogService.SearchSteamGridDBByName(rom.Name, ScraperSource.IGDB);
+                        if (result != null)
+                        {
+                            rom.Igdbid = result.Id;
+                            rom.Name = result.Name;
+                        }
                     }
+                    var t = Task.Run(async () => await emulatorDetailService.CreateGame(rom));
+                    await dialogService.ConfirmationDialogAsync($"Création en base de la rom : {rom.Name}");
                 }
-                var t = Task.Run(async () => await emulatorDetailService.CreateGame(rom));
-                await dialogService.ConfirmationDialogAsync($"Création en base de la rom : {rom.Name}");
+                await dialogService.ConfirmationDialogAsync($"Fin du traitement de l'ajout des jeux"); 
             }
-            await dialogService.ConfirmationDialogAsync($"Fin du traitement de l'ajout des jeux");
         }
         public async void Initialize(string selectedsysID, NavigationMode navigationMode)
         {

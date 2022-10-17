@@ -10,6 +10,10 @@ namespace RetroFront.UWPAdmin.Core.Services
 {
     public class GameDetailService: BaseService
     {
+        public async Task GenerateBezelCFGForRetroarch(int gameID)
+        {
+            await externalAppClient.CreateCFGFileForRetroarchAsync(gameID);
+        }
         public async Task<DisplayGame> GetGame(int ID)
         {
             var sys = await gameClient.GameGetAsync(ID);

@@ -407,6 +407,7 @@
     <Content Include="Assets\Icons\plus.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Icons\retroarch.png" />
     <Content Include="Assets\Icons\save.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

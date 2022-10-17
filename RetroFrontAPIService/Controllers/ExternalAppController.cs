@@ -28,5 +28,10 @@ namespace RetroFrontAPIService.Controllers
         {
             return Ok(_externalAppService.ExportToPegasus(sysID));
         }
+        [HttpGet("CreateCFGFileForRetroarch/{gameid}")]
+        public ActionResult CreateCFGFileForRetroarch(int gameid)
+        {
+            return Ok(_externalAppService.CreateCFGFileForRetroarch(gameid));
+        }
     }
 }

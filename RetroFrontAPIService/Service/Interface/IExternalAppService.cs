@@ -7,5 +7,6 @@ namespace RetroFrontAPIService.Service.Interface
     {
         string ExportToPegasus(int sysID);
         IEnumerable<RetroarchCore> GetInstalledCore(string retroarchpath);
+        string CreateCFGFileForRetroarch(int gameid);
     }
 }

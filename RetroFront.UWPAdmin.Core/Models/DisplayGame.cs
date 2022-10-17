@@ -57,6 +57,8 @@ namespace RetroFront.UWPAdmin.Core.Models
             Boxart = string.Format(BoxartWebPath, ID);
             Banner = string.Empty;
             Banner = string.Format(BannerWebPath, ID);
+            Bezel = string.Empty;
+            Bezel = string.Format(BezelWebPath, ID);
         }
         public GameRom Game { get; }
         public int ID
@@ -271,6 +273,16 @@ namespace RetroFront.UWPAdmin.Core.Models
                 InitImg();
             }
         }
+        public string BezelPath
+        {
+            get => Game.RecalView;
+            set
+            {
+                SetProperty(Game.RecalView, value, Game, (game, item) => Game.RecalView = item);
+                ChangeStatus();
+                InitImg();
+            }
+        }
         public string VideoPath
         {
             get => Game.Video;
@@ -316,6 +328,15 @@ namespace RetroFront.UWPAdmin.Core.Models
                 SetProperty(ref _banner, value);
             }
         }
+        private string _bezels;
+        public string Bezel
+        {
+            get => _bezels;
+            set
+            {
+                SetProperty(ref _bezels, value);
+            }
+        }
         public string Video
         {
             get => $"http://localhost:34322/api/Img/GetVideoForGame/{ID}";
@@ -324,5 +345,6 @@ namespace RetroFront.UWPAdmin.Core.Models
         private string ScreenshootWebPath = "http://localhost:34322/api/Img/GetScreenshootForGame/{0}";
         private string BoxartWebPath = "http://localhost:34322/api/Img/GetBoxartForGame/{0}";
         private string BannerWebPath = "http://localhost:34322/api/Img/GetFanartForGame/{0}";
+        private string BezelWebPath = "http://localhost:34322/api/Img/GetBezelForGame/{0}";
     }
 }

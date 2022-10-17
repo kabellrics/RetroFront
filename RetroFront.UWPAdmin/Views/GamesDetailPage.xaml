@@ -31,6 +31,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button  Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.SaveAndDLLCommand}"  Background="Transparent">
                 <Grid>
@@ -112,6 +113,16 @@
                     <TextBlock Grid.Row="1" Text="Formatage NoIntro" TextAlignment="Center" TextWrapping="WrapWholeWords"/>
                 </Grid>
             </Button>
+            <Button  Grid.Column="8" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{x:Bind ViewModel.CfgRetroarchCommand}" Background="Transparent">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Image Grid.Row="0" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Source="ms-appx:///Assets/Icons/retroarch.png"></Image>
+                    <TextBlock Grid.Row="1" Text="Générer les fichiers pour RetroArch" TextAlignment="Center" TextWrapping="WrapWholeWords"/>
+                </Grid>
+            </Button>
         </Grid>
         <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollMode="Enabled" Grid.Row="1">
             <Grid>
@@ -155,20 +166,23 @@
                         </StackPanel>
                     </Button>
                 </Grid>
-                <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" >
-                    <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Padding="5" Margin="5" Background="Transparent"
+                <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4">
+                    <controls:ImageEx Stretch="Fill" Source="{x:Bind ViewModel.Source.Bezel,Mode=OneWay}" Tapped="ImageEx_Tapped"></controls:ImageEx>
+                    <StackPanel Orientation="Vertical">
+                        <Button HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Padding="5" Margin="5" Background="Transparent"
                             Command="{x:Bind ViewModel.ScrapeVideoCommand}">
-                        <MediaPlayerElement x:Name="player"
-            AreTransportControlsEnabled="False"
-            AutoPlay="False" Height="540" Width="960" 
-            HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-            VerticalAlignment="Stretch" VerticalContentAlignment="Center"
-            Stretch="Uniform"
-            Source="{x:Bind ViewModel.Source.Video,Mode=OneWay,Converter={StaticResource GameVideoConverter}}">
-                        </MediaPlayerElement>
-                    </Button>
-                    <Button HorizontalAlignment="Center" x:Name="playpauseBT" Click="playpauseBT_Click" Content="Play"></Button>
-                </StackPanel>
+                            <MediaPlayerElement x:Name="player"
+                                        AreTransportControlsEnabled="False"
+                                        AutoPlay="False" Height="1080" Width="1200" 
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                        VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+                                        Stretch="Uniform"
+                                        Source="{x:Bind ViewModel.Source.Video,Mode=OneWay,Converter={StaticResource GameVideoConverter}}">
+                            </MediaPlayerElement>
+                        </Button>
+                        <Button HorizontalAlignment="Center" x:Name="playpauseBT" Click="playpauseBT_Click" Content="Play"></Button>
+                    </StackPanel>
+                </Grid>
                 <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" >
                     <!--<StackPanel Orientation="Horizontal">
                         <Button Click="btshowIntel_Click" Content="Modifier les Champs"></Button>

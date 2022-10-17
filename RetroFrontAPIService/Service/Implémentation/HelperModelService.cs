@@ -184,6 +184,11 @@ namespace RetroFrontAPIService.Service.Implémentation
                 Directory.CreateDirectory(Path.Combine(imgfolder, "videos"));
                 return Path.Combine(imgfolder, "videos", $"{Guid.NewGuid().ToString()}");
             }
+            else if ((ScraperType)sGDBType == ScraperType.Bezel)
+            {
+                Directory.CreateDirectory(Path.Combine(imgfolder, "bezel"));
+                return Path.Combine(imgfolder, "bezel", $"{Guid.NewGuid().ToString()}");
+            }
             else
             {
                 return string.Empty;

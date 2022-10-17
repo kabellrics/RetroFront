@@ -39,7 +39,8 @@ namespace RetroFront.Models
         Boxart,
         ArtWork,
         Banner,
-        Video
+        Video,
+        Bezel
     }
 
     public enum GameDetailDisplay

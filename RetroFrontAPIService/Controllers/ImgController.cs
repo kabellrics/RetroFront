@@ -79,6 +79,19 @@ namespace RetroFrontAPIService.Controllers
             }
             return NotFound();
         }
+        [HttpGet("GetBezelForGame/{idgame}")]
+        public ActionResult GetBezelForGame(int idgame)
+        {
+            var game = _databaseService.GetGame(idgame);
+            if (game != null)
+            {
+                if (System.IO.File.Exists(game.RecalView))
+                {
+                    return GetFile(game.RecalView);
+                }
+            }
+            return NotFound();
+        }
         [HttpGet("GetBoxartForGame/{idgame}")]
         public ActionResult GetBoxartForGame(int idgame)
         {

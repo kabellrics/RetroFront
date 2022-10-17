@@ -131,6 +131,12 @@ namespace RetroFront.UWPAdmin.ViewModels.Modals
             {
                 ImgToChange = CurrentGame.Screenshoot;
             }
+            else if (TypeImg == ScraperType.Bezel)
+            {
+                EnableIGDB = false;
+                EnableSGDB = false;
+                ImgToChange = CurrentGame.Bezel;
+            }
             if (CurrentGame.ScreenScraperID < 1)
             {
                 EnableSCSP = false;
