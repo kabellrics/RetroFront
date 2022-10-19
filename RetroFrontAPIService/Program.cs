@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog.Events;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,24 @@ namespace RetroFrontAPIService
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.File($"Log/{DateTime.Now.ToString("dd.MM.yyyy")}.txt")
+                .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information)
+              .CreateLogger();
+            Log.Information("----------------------------------------------------------------------------------");
+            Log.Information("------------------------Lancement d'un jeu grâce au Launcher----------------------");
+            Log.Information("----------------------------------------------------------------------------------");
+            try
+            {
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message);
+                Log.Error(ex.StackTrace);
+                //throw;
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
