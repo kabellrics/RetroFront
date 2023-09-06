@@ -22,6 +22,7 @@ namespace RetroFront.Services.Implementation
         private DatabaseService dbService = new DatabaseService();
         private string LogoPath = @"https://cdn.cloudflare.steamstatic.com/steam/apps/%STEAMID%/logo.png";
         private string BoxPath = @"https://cdn.cloudflare.steamstatic.com/steam/apps/%STEAMID%/library_600x900.jpg";
+        private string HeroPAth = @"https://steamcdn-a.akamaihd.net/steam/apps/%STEAMID%/library_hero.jpg";
         public List<GameRom> GetSteamGame(Emulator emu)
         {
             string steamfolder;
